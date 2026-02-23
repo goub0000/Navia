@@ -33,7 +33,10 @@ RUN flutter pub get
 COPY lib/ lib/
 COPY assets/ assets/
 COPY web/ web/
-COPY analysis_options.yaml ./
+COPY analysis_options.yaml l10n.yaml ./
+
+# Regenerate localization files from ARB sources
+RUN flutter gen-l10n
 
 # Build Flutter web (credentials are injected at runtime by server.js,
 # so no --dart-define build args needed here).
