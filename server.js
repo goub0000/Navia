@@ -1,9 +1,21 @@
 const express = require('express');
 const compression = require('compression');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const BASE_URL = 'https://web-production-bcafe.up.railway.app';
+
+// ---------- Security headers ----------
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
 
 // Enable gzip/deflate compression for all responses.
 // This is the single biggest performance win: main.dart.js goes from ~17 MB to ~4 MB.
@@ -27,6 +39,214 @@ function env(name) {
   }
   return '';
 }
+
+// ---------- SEO: Route-specific meta tags ----------
+const SEO_ROUTES = {
+  '/': {
+    title: 'Flow | Study Abroad & University Applications for African Students',
+    description: 'Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for African students. Free to start — no credit card required.',
+  },
+  '/universities': {
+    title: 'Browse 18,000+ Universities | Flow',
+    description: 'Search and filter universities worldwide. Compare tuition, acceptance rates, rankings, and programs to find your perfect fit.',
+  },
+  '/find-your-path': {
+    title: 'Find Your Path | AI-Powered University Matching | Flow',
+    description: 'Not sure where to apply? Our AI analyzes your academic profile, interests, and goals to recommend universities and programs tailored to you.',
+  },
+  '/about': {
+    title: 'About Flow | Africa\'s Leading EdTech Platform',
+    description: 'Flow helps African students discover, compare, and apply to universities worldwide with AI-powered recommendations and application tracking.',
+  },
+  '/contact': {
+    title: 'Contact Us | Flow',
+    description: 'Get in touch with the Flow team. We\'re here to help with your university application journey.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | Flow',
+    description: 'Learn how Flow protects your personal data and privacy. Read our complete privacy policy.',
+  },
+  '/terms': {
+    title: 'Terms of Service | Flow',
+    description: 'Read the terms and conditions for using the Flow EdTech platform.',
+  },
+  '/help': {
+    title: 'Help Center | Flow',
+    description: 'Find answers to common questions about using Flow for your university applications.',
+  },
+  '/scholarships': {
+    title: 'Scholarships for African Students | Flow',
+    description: 'Discover scholarships available for African students at universities worldwide.',
+  },
+  '/programs': {
+    title: 'University Programs | Flow',
+    description: 'Browse and compare university programs across disciplines and countries.',
+  },
+  '/cookies': {
+    title: 'Cookie Policy | Flow',
+    description: 'Learn about how Flow uses cookies and similar technologies.',
+  },
+  '/accessibility': {
+    title: 'Accessibility | Flow',
+    description: 'Flow is committed to making our platform accessible to all users.',
+  },
+};
+
+// Known valid route prefixes — used to distinguish real pages from 404s
+const KNOWN_ROUTE_PREFIXES = [
+  '/',
+  '/universities',
+  '/find-your-path',
+  '/about',
+  '/contact',
+  '/privacy',
+  '/terms',
+  '/help',
+  '/scholarships',
+  '/programs',
+  '/cookies',
+  '/accessibility',
+  // Authenticated routes (not indexed, but valid 200s)
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/email-verification',
+  '/onboarding',
+  '/biometric-setup',
+  '/admin',
+  '/student',
+  '/institution',
+  '/parent',
+  '/counselor',
+  '/recommender',
+  '/profile',
+  '/settings',
+];
+
+// Read index.html template once at startup for meta-tag injection
+const INDEX_HTML_PATH = path.join(__dirname, 'build', 'web', 'index.html');
+let indexHtmlTemplate = '';
+try {
+  indexHtmlTemplate = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+} catch (e) {
+  console.warn('Could not read index.html template at startup — will read on demand');
+}
+
+function getIndexHtml() {
+  if (!indexHtmlTemplate) {
+    try {
+      indexHtmlTemplate = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+    } catch (e) {
+      return null;
+    }
+  }
+  return indexHtmlTemplate;
+}
+
+// Inject route-specific <title> and meta description into the HTML
+function injectMeta(html, routeMeta) {
+  if (!routeMeta) return html;
+
+  // Replace <title>
+  html = html.replace(
+    /<title>[^<]*<\/title>/,
+    `<title>${routeMeta.title}</title>`
+  );
+
+  // Replace meta description
+  html = html.replace(
+    /<meta name="description" content="[^"]*">/,
+    `<meta name="description" content="${routeMeta.description}">`
+  );
+
+  // Replace OG title
+  html = html.replace(
+    /<meta property="og:title" content="[^"]*">/,
+    `<meta property="og:title" content="${routeMeta.title}">`
+  );
+
+  // Replace OG description
+  html = html.replace(
+    /<meta property="og:description" content="[^"]*">/,
+    `<meta property="og:description" content="${routeMeta.description}">`
+  );
+
+  // Replace Twitter title
+  html = html.replace(
+    /<meta name="twitter:title" content="[^"]*">/,
+    `<meta name="twitter:title" content="${routeMeta.title}">`
+  );
+
+  // Replace Twitter description
+  html = html.replace(
+    /<meta name="twitter:description" content="[^"]*">/,
+    `<meta name="twitter:description" content="${routeMeta.description}">`
+  );
+
+  return html;
+}
+
+// ---------- robots.txt ----------
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(
+`User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /student/
+Disallow: /institution/
+Disallow: /parent/
+Disallow: /counselor/
+Disallow: /recommender/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /email-verification
+Disallow: /onboarding
+Disallow: /biometric-setup
+Disallow: /profile/
+Disallow: /settings/
+Disallow: /env-config.js
+Sitemap: ${BASE_URL}/sitemap.xml
+`);
+});
+
+// ---------- sitemap.xml ----------
+app.get('/sitemap.xml', (req, res) => {
+  const today = new Date().toISOString().split('T')[0];
+
+  const urls = [
+    { loc: '/',              changefreq: 'daily',   priority: '1.0' },
+    { loc: '/universities',  changefreq: 'weekly',  priority: '0.9' },
+    { loc: '/find-your-path',changefreq: 'monthly', priority: '0.8' },
+    { loc: '/about',         changefreq: 'monthly', priority: '0.7' },
+    { loc: '/contact',       changefreq: 'monthly', priority: '0.7' },
+    { loc: '/scholarships',  changefreq: 'weekly',  priority: '0.7' },
+    { loc: '/programs',      changefreq: 'weekly',  priority: '0.7' },
+    { loc: '/help',          changefreq: 'monthly', priority: '0.5' },
+    { loc: '/privacy',       changefreq: 'monthly', priority: '0.5' },
+    { loc: '/terms',         changefreq: 'monthly', priority: '0.5' },
+    { loc: '/cookies',       changefreq: 'monthly', priority: '0.5' },
+    { loc: '/accessibility', changefreq: 'monthly', priority: '0.5' },
+  ];
+
+  const urlEntries = urls.map(u =>
+`  <url>
+    <loc>${BASE_URL}${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+  ).join('\n');
+
+  res.type('application/xml');
+  res.send(
+`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>
+`);
+});
 
 // Health check endpoint for Railway
 app.get('/health', (req, res) => {
@@ -53,7 +273,7 @@ app.get('/manifest.json', (req, res) => {
   res.json({
     name: 'Flow EdTech Platform',
     short_name: 'Flow',
-    start_url: '.',
+    start_url: '/',
     display: 'standalone',
     background_color: '#373890',
     theme_color: '#373890',
@@ -100,14 +320,32 @@ app.use(express.static(path.join(__dirname, 'build', 'web'), {
   }
 }));
 
-// Only serve index.html for navigation routes (not files with extensions)
+// SPA catch-all: serve index.html with route-specific meta tags or 404 status
 app.get('*', (req, res, next) => {
-  // If the request has a file extension, let static middleware handle it
+  // If the request has a file extension, it's a missing static file — skip
   if (path.extname(req.path)) {
     return next();
   }
-  // Otherwise, serve index.html for client-side routing
-  res.sendFile(path.join(__dirname, 'build', 'web', 'index.html'));
+
+  const html = getIndexHtml();
+  if (!html) {
+    return res.status(500).send('Server error: index.html not found');
+  }
+
+  // Check if the path matches a known route
+  const normalizedPath = req.path.replace(/\/+$/, '') || '/';
+  const isKnownRoute = KNOWN_ROUTE_PREFIXES.some(prefix => {
+    if (prefix === '/') return normalizedPath === '/';
+    return normalizedPath === prefix || normalizedPath.startsWith(prefix + '/');
+  });
+
+  // Inject route-specific meta tags if available
+  const routeMeta = SEO_ROUTES[normalizedPath];
+  const finalHtml = injectMeta(html, routeMeta);
+
+  // Known routes get 200, unknown routes get 404 (so crawlers skip them)
+  const statusCode = isKnownRoute ? 200 : 404;
+  res.status(statusCode).type('html').send(finalHtml);
 });
 
 app.listen(PORT, '0.0.0.0', () => {
