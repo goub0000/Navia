@@ -197,9 +197,11 @@ class FindYourPathLandingScreen extends ConsumerWidget {
 
                 // Secondary Button - View Existing Results
                 FutureBuilder<bool>(
-                  future: ref
-                      .read(findYourPathServiceProvider)
-                      .profileExists(userId),
+                  future: userId.isEmpty
+                      ? Future.value(false)
+                      : ref
+                          .read(findYourPathServiceProvider)
+                          .profileExists(userId),
                   builder: (context, snapshot) {
                     if (snapshot.data == true) {
                       return OutlinedButton(

@@ -78,6 +78,25 @@ def get_student_profile(user_id: str, db: Client = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/students/profile/{user_id}/exists")
+def check_profile_exists(user_id: str, db: Client = Depends(get_db)):
+    """Check if a student profile exists for the given user ID"""
+    try:
+        response = db.table('student_profiles').select('id', count='exact').eq('user_id', user_id).limit(1).execute()
+
+        if response.data and len(response.data) > 0:
+            return {"exists": True}
+
+        # Also check by internal profile id
+        response = db.table('student_profiles').select('id', count='exact').eq('id', user_id).limit(1).execute()
+
+        return {"exists": bool(response.data and len(response.data) > 0)}
+
+    except Exception as e:
+        logger.error(f"Error checking profile existence: {e}")
+        return {"exists": False}
+
+
 @router.put("/students/profile/{user_id}", response_model=StudentProfileResponse)
 def update_student_profile(
     user_id: str, profile_data: StudentProfileUpdate, db: Client = Depends(get_db)
