@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_to_list_in_spreads
 
 import 'package:flutter/material.dart';
+import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
 
 /// Admin Data Table - Reusable table component for admin list screens
@@ -209,7 +210,7 @@ class _AdminDataTableState<T> extends State<AdminDataTable<T>> {
                 ),
               ],
             ),
-            tooltip: 'Show/Hide Columns',
+            tooltip: context.l10n.showHideColumns,
             itemBuilder: (context) {
               return widget.columns.asMap().entries.map((entry) {
                 final index = entry.key;
@@ -312,7 +313,7 @@ class _AdminDataTableState<T> extends State<AdminDataTable<T>> {
                 onPressed: _currentPage > 0
                     ? () => setState(() => _currentPage = 0)
                     : null,
-                tooltip: 'First page',
+                tooltip: context.l10n.firstPage,
               ),
               // Previous page button
               IconButton(
@@ -320,7 +321,7 @@ class _AdminDataTableState<T> extends State<AdminDataTable<T>> {
                 onPressed: _currentPage > 0
                     ? () => setState(() => _currentPage--)
                     : null,
-                tooltip: 'Previous page',
+                tooltip: context.l10n.previousPage,
               ),
               // Page indicator
               Container(
@@ -344,7 +345,7 @@ class _AdminDataTableState<T> extends State<AdminDataTable<T>> {
                 onPressed: _currentPage < totalPages - 1
                     ? () => setState(() => _currentPage++)
                     : null,
-                tooltip: 'Next page',
+                tooltip: context.l10n.nextPage,
               ),
               // Last page button
               IconButton(
@@ -352,7 +353,7 @@ class _AdminDataTableState<T> extends State<AdminDataTable<T>> {
                 onPressed: _currentPage < totalPages - 1
                     ? () => setState(() => _currentPage = totalPages - 1)
                     : null,
-                tooltip: 'Last page',
+                tooltip: context.l10n.lastPage,
               ),
             ],
           ),

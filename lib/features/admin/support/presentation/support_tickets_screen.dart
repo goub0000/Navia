@@ -552,28 +552,28 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
       rowActions: [
         DataTableAction(
           icon: Icons.visibility,
-          tooltip: 'View Details',
+          tooltip: context.l10n.viewDetails,
           onPressed: (ticket) {
             _showTicketDetails(ticket);
           },
         ),
         DataTableAction(
           icon: Icons.reply,
-          tooltip: 'Reply',
+          tooltip: context.l10n.reply,
           onPressed: (ticket) {
             // TODO: Open reply dialog
           },
         ),
         DataTableAction(
           icon: Icons.person_add,
-          tooltip: 'Assign',
+          tooltip: context.l10n.assign,
           onPressed: (ticket) {
             _showAssignDialog(ticket);
           },
         ),
         DataTableAction(
           icon: Icons.check,
-          tooltip: 'Resolve',
+          tooltip: context.l10n.resolve,
           color: AppColors.success,
           onPressed: (ticket) {
             _resolveTicket(ticket);
@@ -736,7 +736,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(context.l10n.close),
           ),
           PermissionGuard(
             permission: AdminPermission.manageTickets,
@@ -745,7 +745,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
                 Navigator.pop(context);
                 // TODO: Open reply dialog
               },
-              child: const Text('Reply'),
+              child: Text(context.l10n.reply),
             ),
           ),
         ],
@@ -792,19 +792,19 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
           children: [
             Icon(Icons.person_add, color: AppColors.primary),
             const SizedBox(width: 12),
-            const Text('Assign Ticket'),
+            Text(context.l10n.adminSupportAssignTicket),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Assign ticket ${ticket.id} to:'),
+            Text(context.l10n.adminSupportAssignTicketTo(id: ticket.id)),
             const SizedBox(height: 16),
             TextField(
               controller: agentController,
-              decoration: const InputDecoration(
-                labelText: 'Agent ID or Name',
-                hintText: 'Enter support agent ID...',
+              decoration: InputDecoration(
+                labelText: context.l10n.adminSupportAssignTicket,
+                hintText: context.l10n.adminSupportEnterAgentId,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -813,7 +813,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -827,14 +827,14 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(success
-                        ? 'Ticket assigned successfully'
-                        : 'Failed to assign ticket'),
+                        ? context.l10n.adminSupportAssignTicket
+                        : context.l10n.error),
                     backgroundColor: success ? AppColors.success : AppColors.error,
                   ),
                 );
               }
             },
-            child: const Text('Assign'),
+            child: Text(context.l10n.assign),
           ),
         ],
       ),
@@ -849,20 +849,20 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
           children: [
             Icon(Icons.check_circle, color: AppColors.success),
             const SizedBox(width: 12),
-            const Text('Resolve Ticket'),
+            Text(context.l10n.adminSupportResolveTicket),
           ],
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Mark ticket ${ticket.id} as resolved?'),
+            Text(context.l10n.adminSupportMarkResolved(id: ticket.id)),
             const SizedBox(height: 16),
-            const TextField(
+            TextField(
               maxLines: 3,
               decoration: InputDecoration(
-                labelText: 'Resolution Notes (Optional)',
-                hintText: 'Add any resolution notes...',
+                labelText: context.l10n.adminSupportResolveTicket,
+                hintText: context.l10n.adminSupportResolutionNotes,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -871,7 +871,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -883,8 +883,8 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(success
-                        ? 'Ticket resolved successfully'
-                        : 'Failed to resolve ticket'),
+                        ? context.l10n.adminSupportResolveTicket
+                        : context.l10n.error),
                     backgroundColor: success ? AppColors.success : AppColors.error,
                   ),
                 );
@@ -893,7 +893,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.success,
             ),
-            child: const Text('Resolve'),
+            child: Text(context.l10n.resolve),
           ),
         ],
       ),

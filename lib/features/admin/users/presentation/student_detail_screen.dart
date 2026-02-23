@@ -866,14 +866,14 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
               // TODO: Download document
             },
             icon: const Icon(Icons.download),
-            tooltip: 'Download',
+            tooltip: context.l10n.download,
           ),
           IconButton(
             onPressed: () {
               // TODO: View document
             },
             icon: const Icon(Icons.visibility),
-            tooltip: 'View',
+            tooltip: context.l10n.view,
           ),
         ],
       ),
@@ -1129,7 +1129,7 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -1142,8 +1142,8 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
                 SnackBar(
                   content: Text(
                     isActive
-                        ? 'Student account suspended'
-                        : 'Student account activated',
+                        ? context.l10n.adminUserDetailSuspend
+                        : context.l10n.adminUserDetailActivate,
                   ),
                 ),
               );
@@ -1151,7 +1151,7 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
             style: ElevatedButton.styleFrom(
               backgroundColor: isActive ? AppColors.warning : AppColors.success,
             ),
-            child: Text(isActive ? 'Suspend' : 'Activate'),
+            child: Text(isActive ? context.l10n.adminUserDetailSuspend : context.l10n.activate),
           ),
         ],
       ),
@@ -1162,14 +1162,14 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Student Account'),
-        content: const Text(
-          'Are you sure you want to delete this student account? This action cannot be undone.',
+        title: Text(context.l10n.adminStudentDeleteAccount),
+        content: Text(
+          context.l10n.adminStudentDeleteAccount,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -1177,15 +1177,15 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
               ref.read(adminUsersProvider.notifier).deleteUser(student.id);
               Navigator.pop(context); // Go back to list
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Student account deleted'),
+                SnackBar(
+                  content: Text(context.l10n.adminStudentAccountDeleted),
                 ),
               );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../utils/export_utils.dart';
 
@@ -35,7 +36,7 @@ class _ExportDialogState extends State<ExportDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Export failed: $e'),
+            content: Text(context.l10n.adminExportFailed(error: '$e')),
             backgroundColor: AppColors.error,
           ),
         );
@@ -99,7 +100,7 @@ class _ExportDialogState extends State<ExportDialog> {
       actions: [
         TextButton(
           onPressed: _isExporting ? null : () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: Text(context.l10n.cancel),
         ),
         ElevatedButton(
           onPressed: _isExporting ? null : _handleExport,
@@ -112,7 +113,7 @@ class _ExportDialogState extends State<ExportDialog> {
                     color: Colors.white,
                   ),
                 )
-              : const Text('Export'),
+              : Text(context.l10n.export),
         ),
       ],
     );

@@ -1164,7 +1164,7 @@ class _ContentManagementScreenState
             actions: [
               TextButton(
                 onPressed: isAssigning ? null : () => Navigator.pop(context),
-                child: const Text('Cancel'),
+                child: Text(context.l10n.cancel),
               ),
               ElevatedButton.icon(
                 onPressed: isAssigning ||
@@ -1478,7 +1478,7 @@ class _ContentManagementScreenState
           actions: [
             TextButton(
               onPressed: isUpdating ? null : () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
             if (isPublished) ...[
               // Unpublish button for published content
@@ -1580,7 +1580,7 @@ class _ContentManagementScreenState
               color: AppColors.error,
             ),
             const SizedBox(width: 12),
-            const Text('Delete Content'),
+            Text(context.l10n.adminContentDeleteContent),
           ],
         ),
         content: Column(
@@ -1604,7 +1604,7 @@ class _ContentManagementScreenState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -1615,8 +1615,8 @@ class _ContentManagementScreenState
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(success
-                      ? 'Content deleted successfully'
-                      : 'Failed to delete content'),
+                      ? context.l10n.adminContentDelete
+                      : context.l10n.error),
                   backgroundColor: success ? AppColors.success : AppColors.error,
                 ),
               );
@@ -1624,7 +1624,7 @@ class _ContentManagementScreenState
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),

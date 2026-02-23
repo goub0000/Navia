@@ -117,7 +117,7 @@
   "onboardingFeatureDetails": "Detailed course information",
   "onboardingFeatureProgress": "Real-time progress tracking",
   "onboardingFeatureAnalytics": "Performance analytics",
-  "onboardingFeatureAchievements": "Achievement system",
+  "onboardingFeatureAchievements": "Achievements",
   "heroTrustBadge": "Trusted by 200+ Universities",
   "heroHeadline": "Find Your Perfect\nUniversity Match",
   "heroSubheadline": "Discover, compare, and apply to 18,000+ universities\nwith personalized recommendations powered by AI",
@@ -3916,7 +3916,7 @@
       }
     }
   },
-  "compliancePageTitle": "Compliance",
+  "compliancePageTitle": "Compliance & Certifications",
   "compliancePageHeadline": "Compliance & Certifications",
   "compliancePageSubtitle": "Our commitment to security, privacy, and regulatory compliance",
   "compliancePageCertifications": "Certifications",
@@ -9370,19 +9370,11 @@
       }
     }
   },
-  "subscriptionsTitle": "Subscriptions",
-  "subscriptionsAvailablePlans": "Available Plans",
-  "subscriptionsBasicPlan": "Basic Plan",
-  "subscriptionsPremiumPlan": "Premium Plan",
-  "subscriptionsInstitutionPlan": "Institution Plan",
   "subscriptionsFree": "Free",
   "subscriptionsActive": "Active",
   "subscriptionsStatus": "Status",
   "subscriptionsPlan": "Plan",
   "subscriptionsStarted": "Started",
-  "subscriptionsUpgradePlan": "Upgrade Plan",
-  "subscriptionsCurrent": "Current",
-  "subscriptionsSelectPlan": "Select Plan",
   "subscriptionsBasicFree": "Basic (Free)",
   "subscriptionsBasicFeature1": "Access to basic courses",
   "subscriptionsBasicFeature2": "Limited storage",
@@ -9397,7 +9389,6 @@
   "subscriptionsInstitutionFeature3": "Analytics dashboard",
   "subscriptionsInstitutionFeature4": "Custom branding",
   "subscriptionsInstitutionFeature5": "API access",
-  "studyScheduleTitle": "Study Schedule",
   "studyScheduleSave": "Save",
   "studyScheduleDailyGoal": "Daily Study Goal",
   "studyScheduleMinutesPerDay": "{minutes} minutes per day",
@@ -9415,7 +9406,6 @@
   "studyScheduleAddTime": "Add time",
   "studyScheduleNoTime": "No study time set",
   "studyScheduleSaved": "Study schedule saved successfully",
-  "progressReportsTitle": "Progress Reports",
   "progressReportsExport": "Export Report",
   "progressReportsOverview": "Overview",
   "progressReportsCourses": "Courses",
@@ -9438,11 +9428,8 @@
     }
   },
   "progressReportsExported": "Report exported successfully",
-  "privacyPolicyTitle": "Privacy Policy",
-  "privacyPolicyShare": "Share",
   "privacyPolicyShareSoon": "Share functionality coming soon",
   "privacyPolicyFlowTitle": "Flow EdTech Privacy Policy",
-  "privacyPolicyLastUpdated": "Last Updated: October 28, 2025",
   "privacyPolicyIntro": "This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.",
   "privacyPolicySection1": "1. Information We Collect",
   "privacyPolicySection2": "2. How We Use Your Information",
@@ -9454,8 +9441,6 @@
   "privacyPolicySection8": "8. International Data Transfers",
   "privacyPolicySection9": "9. Changes to This Privacy Policy",
   "privacyPolicySection10": "10. Contact Us",
-  "termsOfServiceTitle": "Terms of Service",
-  "termsOfServiceShare": "Share",
   "termsOfServiceShareSoon": "Share functionality coming soon",
   "termsOfServiceFlowTitle": "Flow EdTech Terms of Service",
   "termsOfServiceEffective": "Effective Date: October 28, 2025",
@@ -9474,7 +9459,6 @@
   "termsOfServiceSection12": "12. Governing Law",
   "termsOfServiceSection13": "13. Changes to Terms of Service",
   "termsOfServiceSection14": "14. Contact Information",
-  "termsOfServiceAcknowledgment": "By using Flow EdTech, you acknowledge that you have read and understood these Terms of Service.",
   "appearanceTitle": "Appearance",
   "appearanceBack": "Back",
   "appearanceRefreshApp": "Refresh App",
@@ -9789,7 +9773,6 @@
       }
     }
   },
-  "onboardingWelcomeTitle": "Welcome to Flow",
   "onboardingWelcomeDescription": "Your all-in-one platform for discovering courses, managing applications, and achieving your educational goals.",
   "onboardingDiscoverCoursesTitle": "Discover Courses",
   "onboardingDiscoverCoursesDescription": "Browse thousands of courses from top institutions. Filter by subject, level, duration, and more to find the perfect fit.",
@@ -9800,8 +9783,6 @@
   "onboardingStayConnectedTitle": "Stay Connected",
   "onboardingStayConnectedDescription": "Message institutions directly, get personalized counseling, and receive instant notifications for important updates.",
   "onboardingWelcomeToFlow": "Welcome to Flow!",
-  "onboardingSkip": "Skip",
-  "onboardingGetStarted": "Get Started",
   "onboardingFeatureCategoryCore": "Core Features",
   "onboardingFeatureCategoryStudyTools": "Study Tools",
   "onboardingFeatureCategoryProductivity": "Productivity",
@@ -9818,7 +9799,6 @@
   "onboardingFeatureNotesDesc": "Take, organize, and sync notes across all your devices",
   "onboardingFeatureBookmarks": "Bookmarks",
   "onboardingFeatureBookmarksDesc": "Save courses and resources for quick access later",
-  "onboardingFeatureAchievements": "Achievements",
   "onboardingFeatureAchievementsDesc": "Earn badges and track milestones as you progress",
   "onboardingFeatureProgressAnalytics": "Progress Analytics",
   "onboardingFeatureProgressAnalyticsDesc": "Visualize your learning journey with detailed statistics",
@@ -9989,9 +9969,6 @@
       }
     }
   },
-  "apiDocsPageTitle": "API Reference",
-  "apiDocsPageSubtitle": "Integrate Flow into your applications",
-  "apiDocsPageQuickStart": "Quick Start",
   "apiDocsPageQuickStartCode": "curl -X GET \"https://api.flowedtech.com/v1/universities\" \\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\n  -H \"Content-Type: application/json\"",
   "apiDocsPageEndpointsTitle": "API Endpoints",
   "apiDocsPageUniversitiesSection": "Universities",
@@ -10025,8 +10002,6 @@
   "apiDocsPageContactTitle": "Need API Access?",
   "apiDocsPageContactDescription": "Contact us to get your API credentials",
   "apiDocsPageContactButton": "Contact Us",
-  "compliancePageTitle": "Compliance & Certifications",
-  "compliancePageSubtitle": "Our commitment to security, privacy, and regulatory compliance",
   "compliancePageCertificationsTitle": "Certifications",
   "compliancePageCertSoc2Title": "SOC 2 Type II",
   "compliancePageCertSoc2Description": "Certified for security, availability, and confidentiality",
@@ -10035,13 +10010,9 @@
   "compliancePageCertGdprTitle": "GDPR Compliant",
   "compliancePageCertGdprDescription": "EU General Data Protection Regulation",
   "compliancePageDataProtectionTitle": "Data Protection",
-  "compliancePageDataProtectionContent": "We implement comprehensive data protection measures to safeguard your information:\n\n• End-to-end encryption for data in transit\n• AES-256 encryption for data at rest\n• Regular security audits and penetration testing\n• Multi-factor authentication support\n• Role-based access control\n• Automated backup and disaster recovery",
   "compliancePagePrivacyTitle": "Privacy Practices",
-  "compliancePagePrivacyContent": "Our privacy practices are designed to protect your rights:\n\n• Transparent data collection and usage policies\n• User consent management for data processing\n• Data minimization principles\n• Right to access, rectify, and delete personal data\n• Data portability support\n• Regular privacy impact assessments",
   "compliancePageRegulatoryTitle": "Regulatory Compliance",
-  "compliancePageRegulatoryContent": "Flow adheres to international and regional regulations:\n\n• General Data Protection Regulation (GDPR) - EU\n• Protection of Personal Information Act (POPIA) - South Africa\n• Data Protection Act - Ghana, Kenya, Nigeria\n• Children's Online Privacy Protection Act (COPPA)\n• California Consumer Privacy Act (CCPA)",
   "compliancePageThirdPartyTitle": "Third-Party Security",
-  "compliancePageThirdPartyContent": "We carefully vet and monitor our third-party service providers:\n\n• Vendor security assessments\n• Data processing agreements\n• Subprocessor transparency\n• Regular compliance reviews\n• Incident response coordination",
   "compliancePageSecurityTitle": "Security Practices",
   "compliancePageSecurityUpdatesTitle": "Regular Updates",
   "compliancePageSecurityUpdatesDescription": "Security patches and updates deployed continuously",
@@ -10086,8 +10057,197 @@
   "dataProtectionPageRelatedCookies": "Cookie Policy",
   "dataProtectionPageRelatedTerms": "Terms of Service",
   "dataProtectionPageRelatedCompliance": "Compliance",
-  "docsPageTitle": "Documentation",
-  "docsPageSubtitle": "Everything you need to know about using Flow",
   "mobileAppsPageHeroTitle": "Flow on Mobile",
-  "mobileAppsPageHeroSubtitle": "Take your education journey with you.\nDownload the Flow app on your favorite platform."
+  "mobileAppsPageHeroSubtitle": "Take your education journey with you.\nDownload the Flow app on your favorite platform.",
+  "retry": "Retry",
+  "export": "Export",
+  "edit": "Edit",
+  "back": "Back",
+  "submit": "Submit",
+  "send": "Send",
+  "confirm": "Confirm",
+  "search": "Search",
+  "refresh": "Refresh",
+  "view": "View",
+  "download": "Download",
+  "ok": "OK",
+  "assign": "Assign",
+  "reply": "Reply",
+  "resolve": "Resolve",
+  "activate": "Activate",
+  "deactivate": "Deactivate",
+  "error": "Error",
+  "errorGeneric": "Error: {error}",
+  "@errorGeneric": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "editProfile": "Edit Profile",
+  "deactivateAccount": "Deactivate Account",
+  "showHideColumns": "Show/Hide Columns",
+  "firstPage": "First page",
+  "previousPage": "Previous page",
+  "nextPage": "Next page",
+  "lastPage": "Last page",
+  "statusAll": "All Status",
+  "statusActive": "Active",
+  "statusInactive": "Inactive",
+  "statusPending": "Pending",
+  "statusPendingVerification": "Pending Verification",
+  "statusInProgress": "In Progress",
+  "statusResolved": "Resolved",
+  "statusAssigned": "Assigned",
+  "priorityAll": "All Priorities",
+  "priorityUrgent": "Urgent",
+  "priorityHigh": "High",
+  "priorityMedium": "Medium",
+  "priorityLow": "Low",
+  "adminCommCampaignType": "Campaign Type",
+  "adminCommTargetAudience": "Target Audience",
+  "adminCommSendImmediately": "Send immediately after creation",
+  "adminCommEnterTitle": "Please enter a campaign title",
+  "adminCommEnterMessage": "Please enter a message",
+  "adminCommSelectRole": "Please select at least one target role",
+  "adminCommMessageContent": "Message Content",
+  "adminCommEnterMessageHint": "Enter your message...",
+  "adminCookiesUserDetails": "User Details: {name}",
+  "@adminCookiesUserDetails": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "adminCookiesUserId": "User ID: {id}",
+  "@adminCookiesUserId": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "adminCookiesCategoriesEnabled": "Categories enabled: {enabled} / {total}",
+  "@adminCookiesCategoriesEnabled": {
+    "placeholders": {
+      "enabled": {},
+      "total": {}
+    }
+  },
+  "adminCookiesFirstConsent": "First consent: {date}",
+  "@adminCookiesFirstConsent": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "adminCookiesLastUpdated": "Last updated: {date}",
+  "@adminCookiesLastUpdated": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "adminCookiesDataExported": "Data exported for user {id}",
+  "@adminCookiesDataExported": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "adminCookiesErrorExporting": "Error exporting data: {error}",
+  "@adminCookiesErrorExporting": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "adminCookiesDeleteUserData": "Delete User Data",
+  "adminCookiesDataDeleted": "Data deleted for user {id}",
+  "@adminCookiesDataDeleted": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "adminCookiesErrorDeleting": "Error deleting data: {error}",
+  "@adminCookiesErrorDeleting": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "adminCookiesExportAllConfirm": "This will export cookie data for all users. Continue?",
+  "adminCookiesExportingAll": "Exporting all user data...",
+  "adminSupportViewDetails": "View Details",
+  "adminSupportReply": "Reply",
+  "adminSupportAssign": "Assign",
+  "adminSupportResolve": "Resolve",
+  "adminSupportAssignTicket": "Assign Ticket",
+  "adminSupportAssignTicketTo": "Assign ticket {id} to:",
+  "@adminSupportAssignTicketTo": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "adminSupportEnterAgentId": "Enter support agent ID...",
+  "adminSupportResolveTicket": "Resolve Ticket",
+  "adminSupportMarkResolved": "Mark ticket {id} as resolved?",
+  "@adminSupportMarkResolved": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "adminSupportResolutionNotes": "Add any resolution notes...",
+  "adminLiveChatAssignToSelf": "Assign to Self",
+  "adminLiveChatViewConversation": "View Conversation",
+  "adminLiveChatAssigned": "Conversation assigned to you",
+  "adminLiveChatReplyTo": "Reply to {name}",
+  "@adminLiveChatReplyTo": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "adminLiveChatTypeResponse": "Type your response...",
+  "adminLiveChatMarkResolved": "Mark as resolved",
+  "adminLiveChatSendReply": "Send Reply",
+  "adminLiveChatConversation": "Conversation: {name}",
+  "@adminLiveChatConversation": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "adminContentEditContentAction": "Edit Content",
+  "adminContentDeleteContent": "Delete Content",
+  "adminParentsSearchHint": "Search by name, email, or parent ID...",
+  "adminParentsAddParent": "Add Parent",
+  "adminParentsEditParent": "Edit Parent",
+  "adminParentsActivateTitle": "Activate Parents",
+  "adminParentsActivateConfirm": "Are you sure you want to activate {count} parent(s)?",
+  "@adminParentsActivateConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "adminParentsDeactivateTitle": "Deactivate Parents",
+  "adminRecommendersSearchHint": "Search by name, email, or recommender ID...",
+  "adminRecommendersEditRecommender": "Edit Recommender",
+  "adminRecommendersActivateTitle": "Activate Recommenders",
+  "adminRecommendersActivateConfirm": "Are you sure you want to activate {count} recommender(s)?",
+  "@adminRecommendersActivateConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "adminRecommendersDeactivateTitle": "Deactivate Recommenders",
+  "adminRecommendersDeactivateConfirm": "Are you sure you want to deactivate {count} recommender(s)?",
+  "@adminRecommendersDeactivateConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "adminUserLookupSearchHint": "Search by name, email, ID, or role...",
+  "adminUserLookupAdditionalInfo": "Additional Info",
+  "adminDataTableSearch": "Search (demo data) - Press ⌘K or Ctrl+K",
+  "adminStudentDownload": "Download",
+  "adminStudentView": "View",
+  "adminStudentDeleteAccount": "Delete Student Account",
+  "adminStudentAccountDeleted": "Student account deleted",
+  "adminSystemCreateBackup": "Create Backup Now",
+  "adminExportFailed": "Export failed: {error}",
+  "@adminExportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  }
 }

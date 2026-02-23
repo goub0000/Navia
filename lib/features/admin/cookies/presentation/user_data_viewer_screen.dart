@@ -262,7 +262,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
             ElevatedButton.icon(
               onPressed: () => ref.invalidate(adminConsentUsersProvider),
               icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+              label: Text(context.l10n.retry),
             ),
           ],
         ),
@@ -336,7 +336,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () => _viewUserDetails(userId),
                         icon: const Icon(Icons.visibility, size: 18),
-                        label: const Text('View Details'),
+                        label: Text(context.l10n.viewDetails),
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -344,7 +344,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () => _exportUserData(userId),
                         icon: const Icon(Icons.download, size: 18),
-                        label: const Text('Export Data'),
+                        label: Text(context.l10n.adminExportsExportData),
                       ),
                     ),
                   ],
@@ -355,7 +355,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                   child: OutlinedButton.icon(
                     onPressed: () => _deleteUserData(userId),
                     icon: const Icon(Icons.delete, size: 18),
-                    label: const Text('Delete Data'),
+                    label: Text(context.l10n.delete),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.error,
                     ),
@@ -535,7 +535,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Data exported for user $userId'),
+            content: Text(context.l10n.adminCookiesDataExported(id: userId)),
             backgroundColor: AppColors.success,
             action: SnackBarAction(
               label: 'View',
@@ -551,7 +551,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error exporting data: $e'),
+            content: Text(context.l10n.adminCookiesErrorExporting(error: '$e')),
             backgroundColor: AppColors.error,
           ),
         );
@@ -563,14 +563,14 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete User Data'),
+        title: Text(context.l10n.adminCookiesDeleteUserData),
         content: Text(
-          'Are you sure you want to delete all cookie data for user $userId? This action cannot be undone.',
+          context.l10n.adminCookiesDeleteUserData,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -583,7 +583,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Data deleted for user $userId'),
+                    content: Text(context.l10n.adminCookiesDataDeleted(id: userId)),
                     backgroundColor: AppColors.success,
                   ),
                 );
@@ -591,7 +591,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Error deleting data: $e'),
+                    content: Text(context.l10n.adminCookiesErrorDeleting(error: '$e')),
                     backgroundColor: AppColors.error,
                   ),
                 );
@@ -600,7 +600,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(context.l10n.delete),
           ),
         ],
       ),
@@ -611,26 +611,26 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Export All Data'),
-        content: const Text(
-          'This will export cookie data for all users. Continue?',
+        title: Text(context.l10n.adminCookiesExportAllData),
+        content: Text(
+          context.l10n.adminCookiesExportAllConfirm,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Exporting all user data...'),
+                SnackBar(
+                  content: Text(context.l10n.adminCookiesExportingAll),
                   backgroundColor: AppColors.info,
                 ),
               );
             },
-            child: const Text('Export'),
+            child: Text(context.l10n.export),
           ),
         ],
       ),

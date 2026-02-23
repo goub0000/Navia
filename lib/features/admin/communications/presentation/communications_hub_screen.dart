@@ -948,7 +948,7 @@ class _CommunicationsHubScreenState
                   const SizedBox(height: 16),
 
                   // Campaign Type
-                  const Text('Campaign Type', style: TextStyle(fontWeight: FontWeight.w500)),
+                  Text(context.l10n.adminCommCampaignType, style: const TextStyle(fontWeight: FontWeight.w500)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -967,7 +967,7 @@ class _CommunicationsHubScreenState
                   const SizedBox(height: 16),
 
                   // Target Audience
-                  const Text('Target Audience', style: TextStyle(fontWeight: FontWeight.w500)),
+                  Text(context.l10n.adminCommTargetAudience, style: const TextStyle(fontWeight: FontWeight.w500)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -994,9 +994,9 @@ class _CommunicationsHubScreenState
                   TextField(
                     controller: messageController,
                     maxLines: 5,
-                    decoration: const InputDecoration(
-                      labelText: 'Message Content',
-                      hintText: 'Enter your message...',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.adminCommMessageContent,
+                      hintText: context.l10n.adminCommEnterMessageHint,
                       border: OutlineInputBorder(),
                       alignLabelWithHint: true,
                     ),
@@ -1005,7 +1005,7 @@ class _CommunicationsHubScreenState
 
                   // Send Now Option
                   CheckboxListTile(
-                    title: const Text('Send immediately after creation'),
+                    title: Text(context.l10n.adminCommSendImmediately),
                     value: sendNow,
                     onChanged: (value) {
                       setDialogState(() => sendNow = value ?? false);
@@ -1019,25 +1019,25 @@ class _CommunicationsHubScreenState
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () async {
                 if (titleController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter a campaign title')),
+                    SnackBar(content: Text(context.l10n.adminCommEnterTitle)),
                   );
                   return;
                 }
                 if (messageController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter a message')),
+                    SnackBar(content: Text(context.l10n.adminCommEnterMessage)),
                   );
                   return;
                 }
                 if (selectedRoles.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please select at least one target role')),
+                    SnackBar(content: Text(context.l10n.adminCommSelectRole)),
                   );
                   return;
                 }
