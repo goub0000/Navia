@@ -44,9 +44,9 @@ class BlogPage extends ConsumerWidget {
               _buildFeaturedPost(
                 context,
                 theme,
-                title: 'The Future of Education Technology in Africa',
+                title: 'The Future of Education Technology Worldwide',
                 excerpt:
-                    'How digital platforms are transforming access to quality education across the continent and what this means for the next generation of students.',
+                    'How digital platforms are transforming access to quality education around the world and what this means for the next generation of students.',
                 author: 'Dr. Amina Mensah',
                 date: 'January 15, 2026',
                 readTime: '8 min read',
@@ -117,8 +117,8 @@ class BlogPage extends ConsumerWidget {
               ),
               _buildBlogPost(
                 theme,
-                title: 'Top 20 Universities in Africa for Engineering',
-                excerpt: 'A comprehensive ranking of the best engineering programs on the continent.',
+                title: 'Top 20 Universities Worldwide for Engineering',
+                excerpt: 'A comprehensive ranking of the best engineering programs worldwide.',
                 author: 'Flow Research Team',
                 date: 'January 5, 2026',
                 readTime: '12 min read',

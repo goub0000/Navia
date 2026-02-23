@@ -175,7 +175,7 @@ class Applicant {
         ),
       ],
       statementOfPurpose:
-          'I am passionate about technology and want to contribute to Africa\'s digital transformation.',
+          'I am passionate about technology and want to contribute to the global digital transformation.',
       testScores: {'SAT': 1400 + (index * 10), 'TOEFL': 100 + index},
     );
   }
@@ -214,7 +214,7 @@ class Applicant {
           ),
         ],
         statementOfPurpose:
-            'I am passionate about technology and want to contribute to Africa\'s digital transformation. With my strong academic background and programming experience, I believe this program will help me achieve my goals.',
+            'I am passionate about technology and want to contribute to the global digital transformation. With my strong academic background and programming experience, I believe this program will help me achieve my goals.',
       ),
       Applicant(
         id: 'app2',
@@ -248,7 +248,7 @@ class Applicant {
           ),
         ],
         statementOfPurpose:
-            'Growing up in Accra, I witnessed the impact of technology on our daily lives. I want to be part of creating innovative solutions for African challenges.',
+            'Growing up in Accra, I witnessed the impact of technology on our daily lives. I want to be part of creating innovative solutions for global challenges.',
       ),
       Applicant(
         id: 'app3',

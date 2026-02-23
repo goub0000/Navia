@@ -77,7 +77,7 @@ class Testimonials {
       role: 'Director of Enrollment',
       university: 'Ashesi University',
       quote:
-          'Flow has become essential to our recruitment strategy. We\'re reaching qualified students from across the continent like never before.',
+          'Flow has become essential to our recruitment strategy. We\'re reaching qualified students from around the world like never before.',
       outcome: '40% increase in diverse applicants',
       country: 'Ghana',
     ),

@@ -125,8 +125,8 @@ class PressPage extends ConsumerWidget {
                 _buildNewsCard(
                   theme,
                   date: 'January 2026',
-                  title: 'Flow Expands to East Africa',
-                  description: 'Flow EdTech announces expansion to Kenya, Tanzania, and Uganda with new regional partnerships.',
+                  title: 'Flow Expands to New Markets',
+                  description: 'Flow EdTech announces expansion into new markets with regional partnerships across multiple continents.',
                 ),
                 _buildNewsCard(
                   theme,
@@ -137,8 +137,8 @@ class PressPage extends ConsumerWidget {
                 _buildNewsCard(
                   theme,
                   date: 'November 2025',
-                  title: 'Partnership with African Union Education Initiative',
-                  description: 'Flow joins continental effort to improve education access across Africa.',
+                  title: 'Partnership with Global Education Initiative',
+                  description: 'Flow joins international effort to improve education access worldwide.',
                 ),
 
                 const SizedBox(height: 32),

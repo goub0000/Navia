@@ -43,8 +43,8 @@ function env(name) {
 // ---------- SEO: Route-specific meta tags ----------
 const SEO_ROUTES = {
   '/': {
-    title: 'Flow | Study Abroad & University Applications for African Students',
-    description: 'Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for African students. Free to start — no credit card required.',
+    title: 'Flow | Discover, Compare & Apply to Universities Worldwide',
+    description: 'Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for students everywhere. Free to start — no credit card required.',
   },
   '/universities': {
     title: 'Browse 18,000+ Universities | Flow',
@@ -55,8 +55,8 @@ const SEO_ROUTES = {
     description: 'Not sure where to apply? Our AI analyzes your academic profile, interests, and goals to recommend universities and programs tailored to you.',
   },
   '/about': {
-    title: 'About Flow | Africa\'s Leading EdTech Platform',
-    description: 'Flow helps African students discover, compare, and apply to universities worldwide with AI-powered recommendations and application tracking.',
+    title: 'About Flow | The Global EdTech Platform',
+    description: 'Flow helps students discover, compare, and apply to universities worldwide with AI-powered recommendations and application tracking.',
   },
   '/contact': {
     title: 'Contact Us | Flow',
@@ -75,8 +75,8 @@ const SEO_ROUTES = {
     description: 'Find answers to common questions about using Flow for your university applications.',
   },
   '/scholarships': {
-    title: 'Scholarships for African Students | Flow',
-    description: 'Discover scholarships available for African students at universities worldwide.',
+    title: 'Scholarships for Students | Flow',
+    description: 'Discover scholarships available for students at universities worldwide.',
   },
   '/programs': {
     title: 'University Programs | Flow',
@@ -277,7 +277,7 @@ app.get('/manifest.json', (req, res) => {
     display: 'standalone',
     background_color: '#373890',
     theme_color: '#373890',
-    description: 'African EdTech platform for students, institutions, parents, counselors, and recommenders.',
+    description: 'Global EdTech platform for students, institutions, parents, counselors, and recommenders.',
     orientation: 'portrait-primary',
     prefer_related_applications: false,
     icons: [

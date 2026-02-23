@@ -93,7 +93,7 @@ enum AdminPermission {
 /// Admin permissions set with scope
 class AdminPermissions {
   final Set<AdminPermission> permissions;
-  final String? regionalScope; // For Regional Admins (e.g., "Kenya", "South Africa")
+  final String? regionalScope; // For Regional Admins (e.g., "Europe", "Asia-Pacific")
 
   const AdminPermissions({
     required this.permissions,

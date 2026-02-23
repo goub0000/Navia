@@ -25,7 +25,7 @@ class AppColors {
   // Use accentDark for text on light backgrounds to meet WCAG AA
   static const Color accentOnLight = Color(0xFF8B5E10); // 4.5:1 contrast on white
 
-  // African Warmth Palette
+  // Warmth Palette
   static const Color terracotta = Color(0xFFC4704F);
   static const Color coral = Color(0xFFE07A5F);
   static const Color warmSand = Color(0xFFF4E8DC);
