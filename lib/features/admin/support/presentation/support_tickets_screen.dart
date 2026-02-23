@@ -798,7 +798,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(context.l10n.adminSupportAssignTicketTo(id: ticket.id)),
+            Text(context.l10n.adminSupportAssignTicketTo(ticket.id)),
             const SizedBox(height: 16),
             TextField(
               controller: agentController,
@@ -856,7 +856,7 @@ class _SupportTicketsScreenState extends ConsumerState<SupportTicketsScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.l10n.adminSupportMarkResolved(id: ticket.id)),
+            Text(context.l10n.adminSupportMarkResolved(ticket.id)),
             const SizedBox(height: 16),
             TextField(
               maxLines: 3,

@@ -36,7 +36,7 @@ class _ExportDialogState extends State<ExportDialog> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(context.l10n.adminExportFailed(error: '$e')),
+            content: Text(context.l10n.adminExportFailed('$e')),
             backgroundColor: AppColors.error,
           ),
         );

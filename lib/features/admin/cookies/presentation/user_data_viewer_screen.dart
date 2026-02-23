@@ -535,7 +535,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(context.l10n.adminCookiesDataExported(id: userId)),
+            content: Text(context.l10n.adminCookiesDataExported(userId)),
             backgroundColor: AppColors.success,
             action: SnackBarAction(
               label: 'View',
@@ -551,7 +551,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(context.l10n.adminCookiesErrorExporting(error: '$e')),
+            content: Text(context.l10n.adminCookiesErrorExporting('$e')),
             backgroundColor: AppColors.error,
           ),
         );
@@ -583,7 +583,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(context.l10n.adminCookiesDataDeleted(id: userId)),
+                    content: Text(context.l10n.adminCookiesDataDeleted(userId)),
                     backgroundColor: AppColors.success,
                   ),
                 );
@@ -591,7 +591,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(context.l10n.adminCookiesErrorDeleting(error: '$e')),
+                    content: Text(context.l10n.adminCookiesErrorDeleting('$e')),
                     backgroundColor: AppColors.error,
                   ),
                 );
