@@ -396,7 +396,7 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
               Navigator.pop(context); // Close results
               // The quiz list will handle starting a new attempt
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text(context.l10n.quizStartingNewAttempt),
                 ),
               );
