@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/authentication/providers/auth_provider.dart';
+
 /// Appearance preferences state
 class AppearancePreferences {
   final ThemeMode themeMode;
@@ -58,19 +60,33 @@ class AppearancePreferences {
   }
 }
 
-/// Appearance preferences notifier
+/// Appearance preferences notifier — scoped per user.
+///
+/// Storage keys are prefixed with the user ID so that each account keeps its
+/// own theme, font size, accent color, etc.  When [_userId] is null (logged
+/// out) the notifier falls back to the defaults without touching storage.
 class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
-  AppearanceNotifier() : super(const AppearancePreferences()) {
+  AppearanceNotifier(this._userId) : super(const AppearancePreferences()) {
     _loadPreferences();
   }
 
+  final String? _userId;
+
+  /// Build a per-user storage key.  Falls back to the bare [key] when there is
+  /// no authenticated user (shouldn't normally persist in that case).
+  String _key(String key) =>
+      _userId != null ? 'appearance_${_userId}_$key' : key;
+
   Future<void> _loadPreferences() async {
+    // No user → keep defaults; don't read stale global keys.
+    if (_userId == null) return;
+
     final prefs = await SharedPreferences.getInstance();
-    final themeModeIndex = prefs.getInt('themeMode') ?? 0;
-    final fontSize = prefs.getDouble('fontSize') ?? 16.0;
-    final fontFamily = prefs.getString('fontFamily') ?? 'System Default';
-    final compactMode = prefs.getBool('compactMode') ?? false;
-    final accentColor = prefs.getInt('accentColor') ?? 0xFF6B4CE6;
+    final themeModeIndex = prefs.getInt(_key('themeMode')) ?? 0;
+    final fontSize = prefs.getDouble(_key('fontSize')) ?? 16.0;
+    final fontFamily = prefs.getString(_key('fontFamily')) ?? 'System Default';
+    final compactMode = prefs.getBool(_key('compactMode')) ?? false;
+    final accentColor = prefs.getInt(_key('accentColor')) ?? 0xFF6B4CE6;
 
     state = AppearancePreferences(
       themeMode: ThemeMode.values[themeModeIndex],
@@ -83,32 +99,37 @@ class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
 
   Future<void> setThemeMode(ThemeMode mode) async {
     state = state.copyWith(themeMode: mode);
+    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('themeMode', mode.index);
+    await prefs.setInt(_key('themeMode'), mode.index);
   }
 
   Future<void> setFontSize(double size) async {
     state = state.copyWith(fontSize: size);
+    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble('fontSize', size);
+    await prefs.setDouble(_key('fontSize'), size);
   }
 
   Future<void> setFontFamily(String family) async {
     state = state.copyWith(fontFamily: family);
+    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('fontFamily', family);
+    await prefs.setString(_key('fontFamily'), family);
   }
 
   Future<void> setCompactMode(bool compact) async {
     state = state.copyWith(compactMode: compact);
+    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('compactMode', compact);
+    await prefs.setBool(_key('compactMode'), compact);
   }
 
   Future<void> setAccentColor(Color color) async {
     state = state.copyWith(accentColor: color);
+    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('accentColor', color.value);
+    await prefs.setInt(_key('accentColor'), color.value);
   }
 }
 
@@ -124,10 +145,13 @@ const availableFonts = [
   'Ubuntu',
 ];
 
-/// Provider for appearance preferences
+/// Provider for appearance preferences — rebuilds when the user changes so
+/// each account gets its own stored theme settings.
 final appearanceProvider =
     StateNotifierProvider<AppearanceNotifier, AppearancePreferences>((ref) {
-  return AppearanceNotifier();
+  final authState = ref.watch(authProvider);
+  final userId = authState.user?.id;
+  return AppearanceNotifier(userId);
 });
 
 /// Provider for current theme mode
