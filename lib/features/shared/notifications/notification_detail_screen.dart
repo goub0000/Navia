@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../widgets/notification_widgets.dart' as notif_widgets;
 
@@ -171,12 +172,12 @@ class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
           if (!_notification.isRead)
             IconButton(
               icon: const Icon(Icons.mark_email_read),
-              tooltip: 'Mark as read',
+              tooltip: context.l10n.notifMarkAsRead,
               onPressed: _markAsRead,
             ),
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'Delete',
+            tooltip: context.l10n.commonDelete,
             onPressed: _deleteNotification,
           ),
         ],

@@ -251,7 +251,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: _showSettings,
-            tooltip: 'Settings',
+            tooltip: context.l10n.focusSettings,
           ),
         ],
       ),
@@ -313,7 +313,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
                 TextButton.icon(
                   onPressed: _setTask,
                   icon: const Icon(Icons.add),
-                  label: const Text('Add Task'),
+                  label: Text(context.l10n.focusAddTask),
                 ),
                 const SizedBox(height: 24),
               ],
@@ -405,7 +405,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
           OutlinedButton.icon(
             onPressed: _resetTimer,
             icon: const Icon(Icons.refresh),
-            label: const Text('Reset'),
+            label: Text(context.l10n.focusReset),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(
                 horizontal: 24,
@@ -537,11 +537,11 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('What are you working on?'),
+        title: Text(context.l10n.focusWorkingOn),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'e.g., Study for exam, Complete assignment...',
+          decoration: InputDecoration(
+            hintText: context.l10n.focusWorkingOnHint,
             border: OutlineInputBorder(),
           ),
           autofocus: true,
@@ -550,7 +550,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           FilledButton(
             onPressed: () {
@@ -562,7 +562,7 @@ class _FocusTimerScreenState extends State<FocusTimerScreen> {
               }
               Navigator.pop(context);
             },
-            child: const Text('Set'),
+            child: Text(context.l10n.focusSet),
           ),
         ],
       ),
@@ -615,14 +615,14 @@ class _SettingsScreenState extends State<_SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timer Settings'),
+        title: Text(context.l10n.focusTimerSettings),
         actions: [
           TextButton(
             onPressed: () {
               widget.onSave(_settings);
               Navigator.pop(context);
             },
-            child: const Text('Save'),
+            child: Text(context.l10n.commonSave),
           ),
         ],
       ),
@@ -676,9 +676,9 @@ class _SettingsScreenState extends State<_SettingsScreen> {
           ),
           const SizedBox(height: 16),
           SwitchListTile(
-            title: const Text('Auto-start breaks'),
+            title: Text(context.l10n.focusAutoStartBreaks),
             subtitle:
-                const Text('Automatically start break when focus session ends'),
+                Text(context.l10n.focusAutoStartBreaksDesc),
             value: _settings.autoStartBreaks,
             onChanged: (value) {
               setState(() {
@@ -687,9 +687,9 @@ class _SettingsScreenState extends State<_SettingsScreen> {
             },
           ),
           SwitchListTile(
-            title: const Text('Auto-start focus sessions'),
+            title: Text(context.l10n.focusAutoStartFocus),
             subtitle:
-                const Text('Automatically start focus when break ends'),
+                Text(context.l10n.focusAutoStartFocusDesc),
             value: _settings.autoStartPomodoros,
             onChanged: (value) {
               setState(() {
@@ -707,8 +707,8 @@ class _SettingsScreenState extends State<_SettingsScreen> {
           ),
           const SizedBox(height: 16),
           SwitchListTile(
-            title: const Text('Sound'),
-            subtitle: const Text('Play sound when session ends'),
+            title: Text(context.l10n.focusSound),
+            subtitle: Text(context.l10n.focusSoundDesc),
             value: _settings.soundEnabled,
             onChanged: (value) {
               setState(() {
@@ -717,8 +717,8 @@ class _SettingsScreenState extends State<_SettingsScreen> {
             },
           ),
           SwitchListTile(
-            title: const Text('Vibration'),
-            subtitle: const Text('Vibrate when session ends'),
+            title: Text(context.l10n.focusVibration),
+            subtitle: Text(context.l10n.focusVibrationDesc),
             value: _settings.vibrationEnabled,
             onChanged: (value) {
               setState(() {

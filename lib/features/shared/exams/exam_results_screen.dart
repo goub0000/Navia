@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../features/authentication/providers/auth_provider.dart';
 import '../widgets/exam_widgets.dart';
@@ -216,19 +217,19 @@ class _ExamResultsScreenState extends ConsumerState<ExamResultsScreen>
               }
             }
           },
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
-        title: const Text('Exam Results'),
+        title: Text(context.l10n.examsResults),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: _shareResults,
-            tooltip: 'Share',
+            tooltip: context.l10n.commonShare,
           ),
           IconButton(
             icon: const Icon(Icons.download),
             onPressed: _downloadCertificate,
-            tooltip: 'Download Certificate',
+            tooltip: context.l10n.examsDownloadCertificate,
           ),
         ],
       ),

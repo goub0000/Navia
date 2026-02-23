@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 
 /// Terms of Service Screen
@@ -17,7 +18,7 @@ class TermsOfServiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Terms of Service'),
+        title: Text(context.l10n.settingsTermsOfService),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
@@ -29,7 +30,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                 ),
               );
             },
-            tooltip: 'Share',
+            tooltip: context.l10n.commonShare,
           ),
         ],
       ),

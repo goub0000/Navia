@@ -1395,7 +1395,7 @@ class _ContentManagementScreenState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(context.l10n.commonClose),
           ),
           PermissionGuard(
             permission: AdminPermission.editContent,
@@ -1406,7 +1406,7 @@ class _ContentManagementScreenState
                 context.go('/admin/content/${content.id}/edit');
               },
               icon: const Icon(Icons.edit, size: 18),
-              label: const Text('Edit Content'),
+              label: Text(context.l10n.adminContentEditContent),
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 
 /// Subscriptions Management Screen
@@ -29,7 +30,7 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subscriptions'),
+        title: Text(context.l10n.settingsSubscriptions),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -138,7 +139,7 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
                 onPressed: () {
                   // TODO: Show upgrade dialog
                 },
-                child: const Text('Upgrade Plan'),
+                child: Text(context.l10n.settingsUpgradePlan),
               ),
             ),
           ],
@@ -244,7 +245,7 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
                   onPressed: () {
                     // TODO: Handle subscription upgrade
                   },
-                  child: const Text('Select Plan'),
+                  child: Text(context.l10n.settingsSelectPlan),
                 ),
               ),
           ],

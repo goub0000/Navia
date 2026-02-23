@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/models/conversation_model.dart';
 import '../widgets/custom_card.dart';
@@ -44,14 +45,14 @@ class _ConversationsScreenState extends ConsumerState<ConversationsScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
-        title: const Text('Messages'),
+        title: Text(context.l10n.messagingMessages),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_comment),
             onPressed: _showNewConversationDialog,
-            tooltip: 'New Message',
+            tooltip: context.l10n.messagingNewMessage,
           ),
         ],
       ),
@@ -62,7 +63,7 @@ class _ConversationsScreenState extends ConsumerState<ConversationsScreen> {
             padding: const EdgeInsets.all(16),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search conversations...',
+                hintText: context.l10n.messagingSearchConversations,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -176,7 +177,7 @@ class _ConversationsScreenState extends ConsumerState<ConversationsScreen> {
               // Search Bar
               TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search for a person...',
+                  hintText: context.l10n.messagingSearchPerson,
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),

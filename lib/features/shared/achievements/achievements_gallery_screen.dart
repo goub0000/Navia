@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../features/authentication/providers/auth_provider.dart';
@@ -285,12 +286,12 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
           },
           tooltip: 'Back',
         ),
-        title: const Text('Achievements'),
+        title: Text(context.l10n.achievementsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
-            tooltip: 'Filter',
+            tooltip: context.l10n.commonFilter,
           ),
         ],
         bottom: TabBar(
@@ -702,7 +703,7 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Close'),
+                  child: Text(context.l10n.commonClose),
                 ),
               ),
             ],
@@ -744,7 +745,7 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
                   runSpacing: 8,
                   children: [
                     FilterChip(
-                      label: const Text('All'),
+                      label: Text(context.l10n.commonAll),
                       selected: _selectedCategory == null,
                       onSelected: (selected) {
                         setSheetState(() {
@@ -782,12 +783,12 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
                         });
                         Navigator.pop(context);
                       },
-                      child: const Text('Clear All'),
+                      child: Text(context.l10n.commonClearAll),
                     ),
                     const SizedBox(width: 8),
                     FilledButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text('Apply'),
+                      child: Text(context.l10n.commonApply),
                     ),
                   ],
                 ),

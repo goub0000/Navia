@@ -14,6 +14,7 @@ import '../../shared/services/export_service.dart';
 import '../../shared/services/bulk_operations_service.dart';
 import '../../shared/utils/debouncer.dart';
 import '../../shared/providers/admin_users_provider.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// Recommenders List Screen - Manage recommender accounts
 ///
@@ -154,7 +155,7 @@ class _RecommendersListScreenState
                     );
                   },
                   icon: const Icon(Icons.download, size: 20),
-                  label: const Text('Export'),
+                  label: Text(context.l10n.commonExport),
                 ),
               ),
               const SizedBox(width: 12),
@@ -164,7 +165,7 @@ class _RecommendersListScreenState
                 child: ElevatedButton.icon(
                   onPressed: () => context.go('/admin/users/recommenders/create'),
                   icon: const Icon(Icons.add, size: 20),
-                  label: const Text('Add Recommender'),
+                  label: Text(context.l10n.adminRecAddRecommender),
                 ),
               ),
             ],
@@ -219,12 +220,12 @@ class _RecommendersListScreenState
                   vertical: 12,
                 ),
               ),
-              items: const [
-                DropdownMenuItem(value: 'all', child: Text('All Status')),
-                DropdownMenuItem(value: 'active', child: Text('Active')),
-                DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
+              items: [
+                DropdownMenuItem(value: 'all', child: Text(context.l10n.statusAllStatus)),
+                DropdownMenuItem(value: 'active', child: Text(context.l10n.statusActive)),
+                DropdownMenuItem(value: 'inactive', child: Text(context.l10n.statusInactive)),
                 DropdownMenuItem(
-                    value: 'pending', child: Text('Pending Verification')),
+                    value: 'pending', child: Text(context.l10n.statusPendingVerification)),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -249,12 +250,12 @@ class _RecommendersListScreenState
                   vertical: 12,
                 ),
               ),
-              items: const [
-                DropdownMenuItem(value: 'all', child: Text('All Types')),
-                DropdownMenuItem(value: 'teacher', child: Text('Teacher')),
-                DropdownMenuItem(value: 'professor', child: Text('Professor')),
-                DropdownMenuItem(value: 'employer', child: Text('Employer')),
-                DropdownMenuItem(value: 'mentor', child: Text('Mentor')),
+              items: [
+                DropdownMenuItem(value: 'all', child: Text(context.l10n.adminRecAllTypes)),
+                DropdownMenuItem(value: 'teacher', child: Text(context.l10n.adminRecTeacher)),
+                DropdownMenuItem(value: 'professor', child: Text(context.l10n.adminRecProfessor)),
+                DropdownMenuItem(value: 'employer', child: Text(context.l10n.adminRecEmployer)),
+                DropdownMenuItem(value: 'mentor', child: Text(context.l10n.adminRecMentor)),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -395,7 +396,7 @@ class _RecommendersListScreenState
       rowActions: [
         DataTableAction(
           icon: Icons.visibility,
-          tooltip: 'View Details',
+          tooltip: context.l10n.adminRecViewDetails,
           onPressed: (recommender) {
             // TODO: Navigate to recommender detail screen
             _showRecommenderDetails(recommender);
@@ -403,14 +404,14 @@ class _RecommendersListScreenState
         ),
         DataTableAction(
           icon: Icons.edit,
-          tooltip: 'Edit Recommender',
+          tooltip: context.l10n.adminRecEditRecommender,
           onPressed: (recommender) {
             // TODO: Navigate to edit recommender screen
           },
         ),
         DataTableAction(
           icon: Icons.block,
-          tooltip: 'Deactivate Account',
+          tooltip: context.l10n.adminRecDeactivateAccount,
           color: AppColors.error,
           onPressed: (recommender) {
             // TODO: Show confirmation dialog
@@ -483,11 +484,11 @@ class _RecommendersListScreenState
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Activate Recommenders'),
+        title: Text(context.l10n.adminRecActivateRecommenders),
         content: Text('Are you sure you want to activate ${_selectedItems.length} recommender(s)?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('Activate')),
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(context.l10n.commonCancel)),
+          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), child: Text(context.l10n.adminRecActivate)),
         ],
       ),
     );
@@ -511,11 +512,11 @@ class _RecommendersListScreenState
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Deactivate Recommenders'),
+        title: Text(context.l10n.adminRecDeactivateRecommenders),
         content: Text('Are you sure you want to deactivate ${_selectedItems.length} recommender(s)?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: const Text('Deactivate')),
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(context.l10n.commonCancel)),
+          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: Text(context.l10n.adminRecDeactivate)),
         ],
       ),
     );

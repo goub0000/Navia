@@ -602,10 +602,10 @@ class _NotificationFilterSheetState
           ),
           const SizedBox(height: 8),
           SegmentedButton<bool?>(
-            segments: const [
-              ButtonSegment(value: null, label: Text('All')),
-              ButtonSegment(value: false, label: Text('Unread')),
-              ButtonSegment(value: true, label: Text('Read')),
+            segments: [
+              ButtonSegment(value: null, label: Text(context.l10n.commonAll)),
+              ButtonSegment(value: false, label: Text(context.l10n.notifUnread)),
+              ButtonSegment(value: true, label: Text(context.l10n.notifRead)),
             ],
             selected: {_filterIsRead},
             onSelectionChanged: (Set<bool?> selected) {

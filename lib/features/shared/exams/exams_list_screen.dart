@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../features/authentication/providers/auth_provider.dart';
 import '../widgets/exam_widgets.dart';
@@ -250,14 +251,14 @@ class _ExamsListScreenState extends ConsumerState<ExamsListScreen>
               }
             }
           },
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
-        title: const Text('Exams'),
+        title: Text(context.l10n.examsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterSheet,
-            tooltip: 'Filter',
+            tooltip: context.l10n.commonFilter,
           ),
         ],
         bottom: TabBar(
@@ -284,7 +285,7 @@ class _ExamsListScreenState extends ConsumerState<ExamsListScreen>
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search exams...',
+                hintText: context.l10n.examsSearchExams,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
@@ -492,7 +493,7 @@ class _ExamsListScreenState extends ConsumerState<ExamsListScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Start Exam?'),
+        title: Text(context.l10n.examsStartExam),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

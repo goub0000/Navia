@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../widgets/task_widgets.dart';
 
 /// Add/Edit Task Screen
@@ -86,7 +87,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
         title: Text(_isEditing ? 'Edit Task' : 'Add Task'),
         actions: [
@@ -106,8 +107,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             const SizedBox(height: 8),
             TextFormField(
               controller: _titleController,
-              decoration: const InputDecoration(
-                hintText: 'Enter task title',
+              decoration: InputDecoration(
+                hintText: context.l10n.tasksEnterTitle,
                 border: OutlineInputBorder(),
               ),
               textCapitalization: TextCapitalization.sentences,
@@ -125,8 +126,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             const SizedBox(height: 8),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(
-                hintText: 'Add description',
+              decoration: InputDecoration(
+                hintText: context.l10n.tasksAddDescription,
                 border: OutlineInputBorder(),
               ),
               maxLines: 3,
@@ -243,8 +244,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
               initialValue: _selectedCourseId,
-              decoration: const InputDecoration(
-                hintText: 'Select course',
+              decoration: InputDecoration(
+                hintText: context.l10n.tasksSelectCourse,
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.class_),
               ),
@@ -336,8 +337,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         Expanded(
                           child: TextField(
                             controller: _tagController,
-                            decoration: const InputDecoration(
-                              hintText: 'Add tag',
+                            decoration: InputDecoration(
+                              hintText: context.l10n.tasksAddTag,
                               border: OutlineInputBorder(),
                               isDense: true,
                             ),

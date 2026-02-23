@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/models/document_model.dart';
 import '../widgets/custom_card.dart';
 import '../widgets/empty_state.dart';
@@ -49,9 +50,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
-        title: const Text('My Documents'),
+        title: Text(context.l10n.documentsMyDocuments),
         bottom: TabBar(
           controller: _tabController,
           labelColor: Colors.white,
@@ -65,7 +66,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
           IconButton(
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterDialog,
-            tooltip: 'Filter',
+            tooltip: context.l10n.commonFilter,
           ),
         ],
       ),
@@ -82,7 +83,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                     onPressed: () {
                       ref.read(documentsProvider.notifier).fetchDocuments();
                     },
-                    child: const Text('Retry'),
+                    child: Text(context.l10n.commonRetry),
                   ),
                 ],
               ),
@@ -115,7 +116,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showUploadOptions,
         icon: const Icon(Icons.add),
-        label: const Text('Upload'),
+        label: Text(context.l10n.commonUpload),
         backgroundColor: AppColors.primary,
       ),
     );
@@ -138,7 +139,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
           padding: const EdgeInsets.all(16),
           child: TextField(
             decoration: InputDecoration(
-              hintText: 'Search documents...',
+              hintText: context.l10n.documentsSearchDocuments,
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _searchQuery.isNotEmpty
                   ? IconButton(
@@ -379,7 +380,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Filter by Category'),
+        title: Text(context.l10n.documentsFilterByCategory),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -517,7 +518,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                             );
                           },
                           icon: const Icon(Icons.camera_alt),
-                          label: const Text('Camera'),
+                          label: Text(context.l10n.documentsCamera),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -536,7 +537,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                             );
                           },
                           icon: const Icon(Icons.photo_library),
-                          label: const Text('Gallery'),
+                          label: Text(context.l10n.documentsGallery),
                         ),
                       ),
                     ],
@@ -592,8 +593,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                 ),
                 child: const Icon(Icons.link, color: AppColors.info),
               ),
-              title: const Text('Copy Link'),
-              subtitle: const Text('Share via link'),
+              title: Text(context.l10n.documentsCopyLink),
+              subtitle: Text(context.l10n.documentsCopyLinkDesc),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement actual link generation with backend
@@ -616,8 +617,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                 ),
                 child: const Icon(Icons.email, color: AppColors.primary),
               ),
-              title: const Text('Share via Email'),
-              subtitle: const Text('Send document link by email'),
+              title: Text(context.l10n.documentsShareEmail),
+              subtitle: Text(context.l10n.documentsShareEmailDesc),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement email sharing with url_launcher
@@ -638,8 +639,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
                 ),
                 child: const Icon(Icons.people, color: AppColors.success),
               ),
-              title: const Text('Share with Users'),
-              subtitle: const Text('Share with specific users in the app'),
+              title: Text(context.l10n.documentsShareUsers),
+              subtitle: Text(context.l10n.documentsShareUsersDesc),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement user selection dialog
@@ -662,12 +663,12 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Document?'),
+        title: Text(context.l10n.documentsDeleteTitle),
         content: Text('Are you sure you want to delete "${document.name}"?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -694,7 +695,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Delete'),
+            child: Text(context.l10n.commonDelete),
           ),
         ],
       ),

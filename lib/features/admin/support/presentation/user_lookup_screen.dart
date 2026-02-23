@@ -8,6 +8,7 @@ import '../../../../core/models/user_model.dart';
 import '../../../../core/constants/user_roles.dart';
 import '../../shared/widgets/admin_data_table.dart';
 import '../../shared/providers/admin_user_lookup_provider.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// User Lookup Screen - Search and view user details
 class UserLookupScreen extends ConsumerStatefulWidget {
@@ -71,7 +72,7 @@ class _UserLookupScreenState extends ConsumerState<UserLookupScreen> {
                   IconButton(
                     icon: const Icon(Icons.refresh, size: 18),
                     onPressed: () => ref.read(adminUserLookupProvider.notifier).fetchAllUsers(),
-                    tooltip: 'Retry',
+                    tooltip: context.l10n.commonRetry,
                   ),
                 ],
               ),
@@ -123,7 +124,7 @@ class _UserLookupScreenState extends ConsumerState<UserLookupScreen> {
           IconButton(
             onPressed: () => ref.read(adminUserLookupProvider.notifier).fetchAllUsers(),
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.commonRefresh,
           ),
         ],
       ),
@@ -136,7 +137,7 @@ class _UserLookupScreenState extends ConsumerState<UserLookupScreen> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: 'Search by name, email, ID, or role...',
+          hintText: context.l10n.adminUserLookupSearchHint,
           prefixIcon: const Icon(Icons.search, size: 24),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -269,7 +270,7 @@ class _UserLookupScreenState extends ConsumerState<UserLookupScreen> {
       rowActions: [
         DataTableAction(
           icon: Icons.visibility,
-          tooltip: 'View Details',
+          tooltip: context.l10n.adminRecViewDetails,
           onPressed: (user) => _showUserDetails(user),
         ),
       ],
@@ -380,7 +381,7 @@ class _UserLookupScreenState extends ConsumerState<UserLookupScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(context.l10n.commonClose),
           ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../features/authentication/providers/auth_provider.dart';
 import '../widgets/quiz_widgets.dart';
@@ -88,9 +89,9 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
               }
             }
           },
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
-        title: const Text('Quiz Results'),
+        title: Text(context.l10n.quizResultsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.close),
@@ -234,7 +235,7 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
               child: FilledButton.icon(
                 onPressed: _retakeQuiz,
                 icon: const Icon(Icons.replay),
-                label: const Text('Retake Quiz'),
+                label: Text(context.l10n.quizRetake),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
@@ -246,7 +247,7 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
             child: OutlinedButton.icon(
               onPressed: () => _tabController.animateTo(1),
               icon: const Icon(Icons.visibility),
-              label: const Text('Review Answers'),
+              label: Text(context.l10n.quizReviewAnswers),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
@@ -258,7 +259,7 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
             child: OutlinedButton.icon(
               onPressed: _downloadCertificate,
               icon: const Icon(Icons.download),
-              label: const Text('Download Certificate'),
+              label: Text(context.l10n.examsDownloadCertificate),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
@@ -380,14 +381,14 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Retake Quiz?'),
+        title: Text(context.l10n.quizRetakeTitle),
         content: const Text(
           'Are you sure you want to retake this quiz? This will count as a new attempt.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           FilledButton(
             onPressed: () {
@@ -396,7 +397,7 @@ class _QuizResultsScreenState extends ConsumerState<QuizResultsScreen>
               // The quiz list will handle starting a new attempt
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Starting new attempt...'),
+                  content: Text(context.l10n.quizStartingNewAttempt),
                 ),
               );
             },

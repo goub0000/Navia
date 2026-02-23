@@ -963,7 +963,7 @@ class _SystemSettingsScreenState extends ConsumerState<SystemSettingsScreen> {
                 // TODO: Trigger manual backup
               },
               icon: const Icon(Icons.backup, size: 20),
-              label: const Text('Create Backup Now'),
+              label: Text(context.l10n.adminSystemCreateBackup),
             ),
           ),
 

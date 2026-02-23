@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/l10n_extension.dart';
 import '../models/counseling_models.dart';
 
 /// Session status badge widget
@@ -302,7 +303,7 @@ class CounselorCard extends StatelessWidget {
                   child: ElevatedButton.icon(
                     onPressed: onBookSession,
                     icon: const Icon(Icons.add, size: 18),
-                    label: const Text('Book Session'),
+                    label: Text(context.l10n.counselingBookSession),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
@@ -496,7 +497,7 @@ class SessionCard extends StatelessWidget {
                   if (session.canCancel && onCancel != null)
                     TextButton(
                       onPressed: onCancel,
-                      child: const Text('Cancel'),
+                      child: Text(context.l10n.commonCancel),
                       style: TextButton.styleFrom(
                         foregroundColor: AppColors.error,
                         padding: EdgeInsets.zero,
@@ -605,7 +606,7 @@ class NoCounselorAssigned extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: onContactAdmin,
                 icon: const Icon(Icons.mail_outline),
-                label: const Text('Contact Admin'),
+                label: Text(context.l10n.counselingContactAdmin),
               ),
             ],
           ],
@@ -652,7 +653,7 @@ class NoSessions extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: onBookSession,
                 icon: const Icon(Icons.add),
-                label: const Text('Book a Session'),
+                label: Text(context.l10n.counselingBookASession),
               ),
             ],
           ],

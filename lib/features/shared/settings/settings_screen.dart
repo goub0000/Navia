@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../authentication/providers/auth_provider.dart';
 import '../widgets/settings_widgets.dart';
@@ -359,7 +360,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               _showLogoutDialog();
             },
             icon: const Icon(Icons.logout),
-            label: const Text('Logout'),
+            label: Text(context.l10n.commonLogout),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -375,12 +376,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(context.l10n.commonLogout),
+        content: Text(context.l10n.commonLogoutConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -390,7 +391,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.error,
             ),
-            child: const Text('Logout'),
+            child: Text(context.l10n.commonLogout),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 
 /// Study Schedule Screen
@@ -35,7 +36,7 @@ class _StudyScheduleScreenState extends State<StudyScheduleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Study Schedule'),
+        title: Text(context.l10n.settingsStudySchedule),
         actions: [
           TextButton(
             onPressed: _saveSchedule,
@@ -107,8 +108,8 @@ class _StudyScheduleScreenState extends State<StudyScheduleScreen> {
           // Reminders Toggle
           Card(
             child: SwitchListTile(
-              title: const Text('Study Reminders'),
-              subtitle: const Text('Get notified at scheduled times'),
+              title: Text(context.l10n.settingsStudyReminders),
+              subtitle: Text(context.l10n.settingsStudyRemindersDesc),
               value: _enableReminders,
               onChanged: (value) {
                 setState(() => _enableReminders = value);
@@ -147,11 +148,11 @@ class _StudyScheduleScreenState extends State<StudyScheduleScreen> {
                         )
                       : TextButton(
                           onPressed: () => _selectTime(day),
-                          child: const Text('Add time'),
+                          child: Text(context.l10n.settingsAddTime),
                         ),
                   subtitle: _schedule[day] != null
                       ? null
-                      : const Text('No study time set'),
+                      : Text(context.l10n.settingsNoStudyTime),
                 );
               }).toList(),
             ),

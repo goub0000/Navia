@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../shared/widgets/admin_data_table.dart';
 import '../../shared/providers/admin_live_chat_provider.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// Live Chat Screen - Manage escalated chat support queue
 class LiveChatScreen extends ConsumerStatefulWidget {
@@ -66,7 +67,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                   IconButton(
                     icon: const Icon(Icons.refresh, size: 18),
                     onPressed: () => ref.read(adminLiveChatProvider.notifier).fetchQueue(),
-                    tooltip: 'Retry',
+                    tooltip: context.l10n.commonRetry,
                   ),
                 ],
               ),
@@ -123,7 +124,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
               ref.read(adminLiveChatProvider.notifier).fetchStats();
             },
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.commonRefresh,
           ),
         ],
       ),
@@ -187,12 +188,12 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-              items: const [
-                DropdownMenuItem(value: '', child: Text('All Status')),
-                DropdownMenuItem(value: 'pending', child: Text('Pending')),
-                DropdownMenuItem(value: 'assigned', child: Text('Assigned')),
-                DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
-                DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
+              items: [
+                DropdownMenuItem(value: '', child: Text(context.l10n.statusAllStatus)),
+                DropdownMenuItem(value: 'pending', child: Text(context.l10n.statusPending)),
+                DropdownMenuItem(value: 'assigned', child: Text(context.l10n.statusAssigned)),
+                DropdownMenuItem(value: 'in_progress', child: Text(context.l10n.statusInProgress)),
+                DropdownMenuItem(value: 'resolved', child: Text(context.l10n.statusResolved)),
               ],
               onChanged: (value) {
                 if (value != null) setState(() => _selectedStatus = value);
@@ -208,12 +209,12 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-              items: const [
-                DropdownMenuItem(value: '', child: Text('All Priorities')),
-                DropdownMenuItem(value: 'urgent', child: Text('Urgent')),
-                DropdownMenuItem(value: 'high', child: Text('High')),
-                DropdownMenuItem(value: 'medium', child: Text('Medium')),
-                DropdownMenuItem(value: 'low', child: Text('Low')),
+              items: [
+                DropdownMenuItem(value: '', child: Text(context.l10n.priorityAllPriorities)),
+                DropdownMenuItem(value: 'urgent', child: Text(context.l10n.priorityUrgent)),
+                DropdownMenuItem(value: 'high', child: Text(context.l10n.priorityHigh)),
+                DropdownMenuItem(value: 'medium', child: Text(context.l10n.priorityMedium)),
+                DropdownMenuItem(value: 'low', child: Text(context.l10n.priorityLow)),
               ],
               onChanged: (value) {
                 if (value != null) setState(() => _selectedPriority = value);
@@ -293,18 +294,18 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
       rowActions: [
         DataTableAction(
           icon: Icons.person_add,
-          tooltip: 'Assign to Self',
+          tooltip: context.l10n.adminLiveChatAssignToSelf,
           color: AppColors.primary,
           onPressed: (item) => _assignToSelf(item),
         ),
         DataTableAction(
           icon: Icons.reply,
-          tooltip: 'Reply',
+          tooltip: context.l10n.adminLiveChatReply,
           onPressed: (item) => _showReplyDialog(item),
         ),
         DataTableAction(
           icon: Icons.visibility,
-          tooltip: 'View Conversation',
+          tooltip: context.l10n.adminLiveChatViewConversation,
           onPressed: (item) => _showConversationDetails(item),
         ),
       ],
@@ -417,10 +418,10 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 const SizedBox(height: 16),
                 TextField(
                   controller: replyController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Your reply',
-                    border: OutlineInputBorder(),
-                    hintText: 'Type your response...',
+                    border: const OutlineInputBorder(),
+                    hintText: context.l10n.adminLiveChatTypeResponse,
                   ),
                   maxLines: 5,
                 ),
@@ -430,7 +431,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                   onChanged: (value) {
                     setDialogState(() => markResolved = value ?? false);
                   },
-                  title: const Text('Mark as resolved'),
+                  title: Text(context.l10n.adminLiveChatMarkResolved),
                   controlAffinity: ListTileControlAffinity.leading,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -440,7 +441,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.commonCancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -463,7 +464,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.textOnPrimary,
               ),
-              child: const Text('Send Reply'),
+              child: Text(context.l10n.adminLiveChatSendReply),
             ),
           ],
         ),
@@ -505,7 +506,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(context.l10n.commonClose),
           ),
           if (item.status == 'pending')
             ElevatedButton.icon(
@@ -514,7 +515,7 @@ class _LiveChatScreenState extends ConsumerState<LiveChatScreen> {
                 _assignToSelf(item);
               },
               icon: const Icon(Icons.person_add, size: 18),
-              label: const Text('Assign to Self'),
+              label: Text(context.l10n.adminLiveChatAssignToSelf),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.textOnPrimary,

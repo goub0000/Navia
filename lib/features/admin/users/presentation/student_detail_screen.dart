@@ -461,7 +461,7 @@ class _StudentDetailScreenState extends ConsumerState<StudentDetailScreen>
                   // TODO: Upload document
                 },
                 icon: const Icon(Icons.upload, size: 18),
-                label: const Text('Upload'),
+                label: Text(context.l10n.commonUpload),
               ),
             ],
           ),

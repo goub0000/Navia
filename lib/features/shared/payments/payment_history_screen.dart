@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/l10n_extension.dart';
 import '../../../core/models/payment_model.dart';
 import '../widgets/custom_card.dart';
 import '../widgets/empty_state.dart';
@@ -49,7 +50,7 @@ class _PaymentHistoryScreenState extends ConsumerState<PaymentHistoryScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
-          tooltip: 'Back',
+          tooltip: context.l10n.commonBack,
         ),
         title: const Text('Payment History'),
         bottom: TabBar(
@@ -340,7 +341,7 @@ class _PaymentHistoryScreenState extends ConsumerState<PaymentHistoryScreen>
                 child: const Icon(Icons.picture_as_pdf, color: AppColors.primary),
               ),
               title: const Text('Download as PDF'),
-              subtitle: const Text('Save receipt to device'),
+              subtitle: Text(context.l10n.paymentSaveReceipt),
               onTap: () async {
                 Navigator.pop(context);
                 // TODO: Implement PDF generation with pdf package
@@ -362,7 +363,7 @@ class _PaymentHistoryScreenState extends ConsumerState<PaymentHistoryScreen>
                 child: const Icon(Icons.email, color: AppColors.info),
               ),
               title: const Text('Email Receipt'),
-              subtitle: const Text('Send to your email address'),
+              subtitle: Text(context.l10n.paymentSendEmail),
               onTap: () async {
                 Navigator.pop(context);
                 // TODO: Implement email functionality
@@ -384,7 +385,7 @@ class _PaymentHistoryScreenState extends ConsumerState<PaymentHistoryScreen>
                 child: const Icon(Icons.share, color: AppColors.success),
               ),
               title: const Text('Share Receipt'),
-              subtitle: const Text('Share via other apps'),
+              subtitle: Text(context.l10n.paymentShareApps),
               onTap: () async {
                 Navigator.pop(context);
                 // TODO: Implement share functionality with share_plus package

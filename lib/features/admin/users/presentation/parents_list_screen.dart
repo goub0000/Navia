@@ -14,6 +14,7 @@ import '../../shared/services/export_service.dart';
 import '../../shared/services/bulk_operations_service.dart';
 import '../../shared/utils/debouncer.dart';
 import '../../shared/providers/admin_users_provider.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// Parents List Screen - Manage parent accounts
 ///
@@ -151,7 +152,7 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
                     );
                   },
                   icon: const Icon(Icons.download, size: 20),
-                  label: const Text('Export'),
+                  label: Text(context.l10n.commonExport),
                 ),
               ),
               const SizedBox(width: 12),
@@ -161,7 +162,7 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
                 child: ElevatedButton.icon(
                   onPressed: () => context.go('/admin/users/parents/create'),
                   icon: const Icon(Icons.add, size: 20),
-                  label: const Text('Add Parent'),
+                  label: Text(context.l10n.adminParentAddParent),
                 ),
               ),
             ],
@@ -216,12 +217,12 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
                   vertical: 12,
                 ),
               ),
-              items: const [
-                DropdownMenuItem(value: 'all', child: Text('All Status')),
-                DropdownMenuItem(value: 'active', child: Text('Active')),
-                DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
+              items: [
+                DropdownMenuItem(value: 'all', child: Text(context.l10n.statusAllStatus)),
+                DropdownMenuItem(value: 'active', child: Text(context.l10n.statusActive)),
+                DropdownMenuItem(value: 'inactive', child: Text(context.l10n.statusInactive)),
                 DropdownMenuItem(
-                    value: 'pending', child: Text('Pending Verification')),
+                    value: 'pending', child: Text(context.l10n.statusPendingVerification)),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -344,7 +345,7 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
       rowActions: [
         DataTableAction(
           icon: Icons.visibility,
-          tooltip: 'View Details',
+          tooltip: context.l10n.adminParentViewDetails,
           onPressed: (parent) {
             // TODO: Navigate to parent detail screen
             _showParentDetails(parent);
@@ -352,14 +353,14 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
         ),
         DataTableAction(
           icon: Icons.edit,
-          tooltip: 'Edit Parent',
+          tooltip: context.l10n.adminParentEditParent,
           onPressed: (parent) {
             // TODO: Navigate to edit parent screen
           },
         ),
         DataTableAction(
           icon: Icons.block,
-          tooltip: 'Deactivate Account',
+          tooltip: context.l10n.adminParentDeactivateAccount,
           color: AppColors.error,
           onPressed: (parent) {
             // TODO: Show confirmation dialog
@@ -432,11 +433,11 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Activate Parents'),
+        title: Text(context.l10n.adminParentActivateParents),
         content: Text('Are you sure you want to activate ${_selectedItems.length} parent(s)?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('Activate')),
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(context.l10n.commonCancel)),
+          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), child: Text(context.l10n.adminRecActivate)),
         ],
       ),
     );
@@ -460,11 +461,11 @@ class _ParentsListScreenState extends ConsumerState<ParentsListScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Deactivate Parents'),
+        title: Text(context.l10n.adminParentDeactivateParents),
         content: Text('Are you sure you want to deactivate ${_selectedItems.length} parent(s)?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: const Text('Deactivate')),
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(context.l10n.commonCancel)),
+          ElevatedButton(onPressed: () => Navigator.of(context).pop(true), style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: Text(context.l10n.adminRecDeactivate)),
         ],
       ),
     );

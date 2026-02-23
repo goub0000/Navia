@@ -394,7 +394,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.search),
-              title: const Text('Search in conversation'),
+              title: Text(context.l10n.messagingSearchInConversation),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -407,7 +407,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.volume_off),
-              title: const Text('Mute notifications'),
+              title: Text(context.l10n.messagingMuteNotifications),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -449,8 +449,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 ),
                 child: const Icon(Icons.photo_library, color: AppColors.primary),
               ),
-              title: const Text('Photo & Video'),
-              subtitle: const Text('From gallery'),
+              title: Text(context.l10n.messagingPhotoVideo),
+              subtitle: Text(context.l10n.messagingFromGallery),
               onTap: () {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(

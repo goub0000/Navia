@@ -7,6 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/constants/admin_permissions.dart';
 // AdminShell is now provided by ShellRoute in admin_routes.dart
 import '../../shared/widgets/permission_guard.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// Recommender Form Screen - Create or edit recommender accounts
 class RecommenderFormScreen extends ConsumerStatefulWidget {
@@ -189,15 +190,15 @@ class _RecommenderFormScreenState extends ConsumerState<RecommenderFormScreen> {
                                   label: 'Type',
                                   value: _selectedType,
                                   required: true,
-                                  items: const [
+                                  items: [
                                     DropdownMenuItem(
-                                        value: 'teacher', child: Text('Teacher')),
+                                        value: 'teacher', child: Text(context.l10n.adminRecTeacher)),
                                     DropdownMenuItem(
-                                        value: 'professor', child: Text('Professor')),
+                                        value: 'professor', child: Text(context.l10n.adminRecProfessor)),
                                     DropdownMenuItem(
-                                        value: 'employer', child: Text('Employer')),
+                                        value: 'employer', child: Text(context.l10n.adminRecEmployer)),
                                     DropdownMenuItem(
-                                        value: 'mentor', child: Text('Mentor')),
+                                        value: 'mentor', child: Text(context.l10n.adminRecMentor)),
                                   ],
                                   onChanged: (value) {
                                     if (value != null) {
@@ -252,13 +253,13 @@ class _RecommenderFormScreenState extends ConsumerState<RecommenderFormScreen> {
                                 child: _buildDropdown(
                                   label: 'Preferred Contact Method',
                                   value: _selectedPreferredContact,
-                                  items: const [
+                                  items: [
                                     DropdownMenuItem(
-                                        value: 'email', child: Text('Email')),
+                                        value: 'email', child: Text(context.l10n.adminRecEmail)),
                                     DropdownMenuItem(
-                                        value: 'phone', child: Text('Phone')),
+                                        value: 'phone', child: Text(context.l10n.adminRecPhone)),
                                     DropdownMenuItem(
-                                        value: 'both', child: Text('Either')),
+                                        value: 'both', child: Text(context.l10n.adminRecEither)),
                                   ],
                                   onChanged: (value) {
                                     if (value != null) {
@@ -279,12 +280,12 @@ class _RecommenderFormScreenState extends ConsumerState<RecommenderFormScreen> {
                             label: 'Status',
                             value: _selectedStatus,
                             required: true,
-                            items: const [
-                              DropdownMenuItem(value: 'active', child: Text('Active')),
+                            items: [
+                              DropdownMenuItem(value: 'active', child: Text(context.l10n.statusActive)),
                               DropdownMenuItem(
-                                  value: 'inactive', child: Text('Inactive')),
+                                  value: 'inactive', child: Text(context.l10n.statusInactive)),
                               DropdownMenuItem(
-                                  value: 'suspended', child: Text('Suspended')),
+                                  value: 'suspended', child: Text(context.l10n.statusSuspended)),
                             ],
                             onChanged: (value) {
                               if (value != null) {
@@ -315,7 +316,7 @@ class _RecommenderFormScreenState extends ConsumerState<RecommenderFormScreen> {
           TextButton.icon(
             onPressed: () => context.go('/admin/users/recommenders'),
             icon: const Icon(Icons.arrow_back, size: 16),
-            label: const Text('Back to Recommenders'),
+            label: Text(context.l10n.adminRecBackToRecommenders),
           ),
         ],
       ),
@@ -441,7 +442,7 @@ class _RecommenderFormScreenState extends ConsumerState<RecommenderFormScreen> {
                 _isLoading ? null : () => context.go('/admin/users/recommenders'),
             style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16)),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
         ),
         const SizedBox(width: 16),

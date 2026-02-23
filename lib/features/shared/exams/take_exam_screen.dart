@@ -481,7 +481,7 @@ class _TakeExamScreenState extends State<TakeExamScreen> {
     return showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Exit Exam?'),
+        title: Text(context.l10n.examsExitExam),
         content: const Text(
           'Are you sure you want to exit? Your progress has been saved, but you cannot return to this exam.',
         ),
@@ -508,7 +508,7 @@ class _TakeExamScreenState extends State<TakeExamScreen> {
       final shouldContinue = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Incomplete Exam'),
+          title: Text(context.l10n.examsIncomplete),
           content: Text(
             'You have answered $_answeredCount out of ${_questions.length} questions. '
             'Do you want to submit anyway?',
@@ -534,7 +534,7 @@ class _TakeExamScreenState extends State<TakeExamScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Submit Exam?'),
+        title: Text(context.l10n.examsSubmitExam),
         content: const Text(
           'Once submitted, you cannot change your answers. Are you sure?',
         ),
@@ -581,7 +581,7 @@ class _TakeExamScreenState extends State<TakeExamScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Time\'s Up!'),
+        title: Text(context.l10n.examsTimesUp),
         content: const Text('Your exam has been automatically submitted.'),
         actions: [
           FilledButton(

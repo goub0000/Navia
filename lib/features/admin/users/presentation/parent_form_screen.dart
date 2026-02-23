@@ -7,6 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/constants/admin_permissions.dart';
 // AdminShell is now provided by ShellRoute in admin_routes.dart
 import '../../shared/widgets/permission_guard.dart';
+import '../../../../core/l10n_extension.dart';
 
 /// Parent Form Screen - Create or edit parent accounts
 class ParentFormScreen extends ConsumerStatefulWidget {
@@ -266,7 +267,7 @@ class _ParentFormScreenState extends ConsumerState<ParentFormScreen> {
           TextButton.icon(
             onPressed: () => context.go('/admin/users/parents'),
             icon: const Icon(Icons.arrow_back, size: 16),
-            label: const Text('Back to Parents'),
+            label: Text(context.l10n.adminParentBackToParents),
           ),
         ],
       ),
@@ -395,7 +396,7 @@ class _ParentFormScreenState extends ConsumerState<ParentFormScreen> {
             onPressed: _isLoading ? null : () => context.go('/admin/users/parents'),
             style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16)),
-            child: const Text('Cancel'),
+            child: Text(context.l10n.commonCancel),
           ),
         ),
         const SizedBox(width: 16),

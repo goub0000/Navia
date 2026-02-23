@@ -303,7 +303,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.pop(),
-            tooltip: 'Back',
+            tooltip: context.l10n.commonBack,
           ),
           title: Text(isEditing ? 'Edit Note' : 'New Note'),
           actions: [
@@ -323,7 +323,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             IconButton(
               icon: const Icon(Icons.check),
               onPressed: _saveNote,
-              tooltip: 'Save',
+              tooltip: context.l10n.commonSave,
             ),
           ],
         ),
@@ -336,8 +336,8 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
-              decoration: const InputDecoration(
-                hintText: 'Note Title',
+              decoration: InputDecoration(
+                hintText: context.l10n.notesNoteTitle,
                 border: InputBorder.none,
               ),
               textCapitalization: TextCapitalization.sentences,
@@ -403,8 +403,8 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             TextField(
               controller: _contentController,
               style: theme.textTheme.bodyLarge,
-              decoration: const InputDecoration(
-                hintText: 'Start typing your note...',
+              decoration: InputDecoration(
+                hintText: context.l10n.notesStartTyping,
                 border: InputBorder.none,
               ),
               maxLines: null,
@@ -443,7 +443,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
                   child: TextField(
                     controller: _tagController,
                     decoration: InputDecoration(
-                      hintText: 'Add tag...',
+                      hintText: context.l10n.notesAddTag,
                       prefixIcon: const Icon(Icons.tag),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -484,21 +484,21 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
                           ),
                         );
                       },
-                      tooltip: 'Bold',
+                      tooltip: context.l10n.notesBold,
                     ),
                     IconButton(
                       icon: const Icon(Icons.format_italic),
                       onPressed: () {
                         // TODO: Apply italic formatting
                       },
-                      tooltip: 'Italic',
+                      tooltip: context.l10n.notesItalic,
                     ),
                     IconButton(
                       icon: const Icon(Icons.format_underlined),
                       onPressed: () {
                         // TODO: Apply underline formatting
                       },
-                      tooltip: 'Underline',
+                      tooltip: context.l10n.notesUnderline,
                     ),
                     const VerticalDivider(),
                     IconButton(
@@ -506,14 +506,14 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
                       onPressed: () {
                         // TODO: Insert bullet list
                       },
-                      tooltip: 'Bullet List',
+                      tooltip: context.l10n.notesBulletList,
                     ),
                     IconButton(
                       icon: const Icon(Icons.format_list_numbered),
                       onPressed: () {
                         // TODO: Insert numbered list
                       },
-                      tooltip: 'Numbered List',
+                      tooltip: context.l10n.notesNumberedList,
                     ),
                     const VerticalDivider(),
                     IconButton(
@@ -527,14 +527,14 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
                           ),
                         );
                       },
-                      tooltip: 'Attach File',
+                      tooltip: context.l10n.notesAttachFile,
                     ),
                     IconButton(
                       icon: const Icon(Icons.image),
                       onPressed: () {
                         // TODO: Insert image
                       },
-                      tooltip: 'Insert Image',
+                      tooltip: context.l10n.notesInsertImage,
                     ),
                   ],
                 ),

@@ -509,7 +509,7 @@ class _UserDataViewerScreenState extends ConsumerState<UserDataViewerScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(context.l10n.commonClose),
           ),
         ],
       ),
