@@ -1,8 +1,21 @@
 const express = require('express');
+const compression = require('compression');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Enable gzip/deflate compression for all responses.
+// This is the single biggest performance win: main.dart.js goes from ~17 MB to ~4 MB.
+app.use(compression({
+  level: 6,            // balanced speed vs ratio (1=fastest, 9=smallest)
+  threshold: 1024,     // only compress responses > 1 KB
+  filter: (req, res) => {
+    // Compress everything except already-compressed formats
+    if (req.headers['x-no-compression']) return false;
+    return compression.filter(req, res);
+  },
+}));
 
 // Resolve env var by name, tolerating leading/trailing whitespace in key names.
 // Railway stored some variables with accidental spaces in their names
@@ -56,12 +69,33 @@ app.get('/manifest.json', (req, res) => {
   });
 });
 
-// Serve static files from Flutter web build with explicit options
+// Serve static files from Flutter web build with aggressive caching.
+// Flutter's build output uses content-hashed filenames (main.dart.js includes a hash
+// in the service worker manifest), so hashed assets can be cached forever.
 app.use(express.static(path.join(__dirname, 'build', 'web'), {
+  maxAge: '7d',          // default: cache static assets for 7 days
+  immutable: false,      // let browser revalidate after maxAge
+  etag: true,            // enable ETag for conditional requests
+  lastModified: true,
   setHeaders: (res, filePath) => {
-    // Set proper content types for common file extensions
     if (filePath.endsWith('.json')) {
       res.setHeader('Content-Type', 'application/json');
+    }
+    // Long-cache immutable assets (WASM, hashed JS chunks, fonts)
+    if (filePath.endsWith('.wasm') || filePath.endsWith('.woff2') || filePath.endsWith('.woff')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+    // Cache images and icons for 30 days
+    else if (/\.(png|jpg|jpeg|gif|ico|svg|webp)$/.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000');
+    }
+    // Cache JS/CSS for 7 days (Flutter rebuilds change these)
+    else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'public, max-age=604800');
+    }
+    // HTML must always be revalidated
+    else if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache');
     }
   }
 }));

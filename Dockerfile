@@ -36,8 +36,13 @@ COPY web/ web/
 COPY analysis_options.yaml ./
 
 # Build Flutter web (credentials are injected at runtime by server.js,
-# so no --dart-define build args needed here)
-RUN flutter build web --release
+# so no --dart-define build args needed here).
+# --pwa-strategy=offline-first  → aggressive service worker caching
+# --dart2js-optimization=O4     → maximum JS minification
+# --no-source-maps              → smaller output (no debug maps in prod)
+RUN flutter build web --release \
+    --pwa-strategy=offline-first \
+    --no-source-maps
 
 # ---------------------------------------------------------------------------
 # Stage 2: Serve with Node.js

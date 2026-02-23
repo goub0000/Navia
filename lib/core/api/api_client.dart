@@ -10,16 +10,33 @@ import 'api_config.dart';
 import 'api_exception.dart';
 import 'api_response.dart';
 
+/// Simple in-memory GET response cache to avoid redundant network requests
+/// when navigating between pages. Entries expire after [_cacheTtl].
+class _CacheEntry {
+  final Response response;
+  final DateTime expiry;
+  _CacheEntry(this.response, this.expiry);
+  bool get isExpired => DateTime.now().isAfter(expiry);
+}
+
 class ApiClient {
   final _logger = Logger('ApiClient');
   late final Dio _dio;
   final SharedPreferences _prefs;
   String? _accessToken;
 
+  // In-memory GET cache (keyed by full URL + query params)
+  static const Duration _cacheTtl = Duration(minutes: 2);
+  static const int _maxCacheEntries = 80;
+  final Map<String, _CacheEntry> _cache = {};
+
   ApiClient(this._prefs) {
     _initializeDio();
     _loadToken();
   }
+
+  /// Clear all cached GET responses (call after mutations).
+  void clearCache() => _cache.clear();
 
   void _initializeDio() {
     _dio = Dio(
@@ -178,24 +195,63 @@ class ApiClient {
     }
   }
 
-  /// GET request
+  /// Build a stable cache key from endpoint + query params.
+  String _cacheKey(String endpoint, Map<String, dynamic>? qp) {
+    final buf = StringBuffer(endpoint);
+    if (qp != null && qp.isNotEmpty) {
+      final sorted = qp.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
+      buf.write('?');
+      buf.writeAll(sorted.map((e) => '${e.key}=${e.value}'), '&');
+    }
+    return buf.toString();
+  }
+
+  /// Evict expired entries and trim to [_maxCacheEntries].
+  void _trimCache() {
+    _cache.removeWhere((_, e) => e.isExpired);
+    if (_cache.length > _maxCacheEntries) {
+      final excess = _cache.length - _maxCacheEntries;
+      final keys = _cache.keys.take(excess).toList();
+      for (final k in keys) {
+        _cache.remove(k);
+      }
+    }
+  }
+
+  /// GET request — returns a cached response when available and fresh.
   Future<ApiResponse<T>> get<T>(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     T Function(dynamic)? fromJson,
+    bool skipCache = false,
   }) async {
+    final key = _cacheKey(endpoint, queryParameters);
+
+    // Return cached response if still valid
+    if (!skipCache) {
+      final cached = _cache[key];
+      if (cached != null && !cached.isExpired) {
+        return _processResponse(cached.response, fromJson);
+      }
+    }
+
     try {
       final response = await _dio.get(
         endpoint,
         queryParameters: queryParameters,
       );
+      // Cache successful GET responses
+      if (response.statusCode != null && response.statusCode! < 300) {
+        _trimCache();
+        _cache[key] = _CacheEntry(response, DateTime.now().add(_cacheTtl));
+      }
       return _processResponse(response, fromJson);
     } on DioException catch (e) {
       return _processError(e);
     }
   }
 
-  /// POST request
+  /// POST request — clears GET cache since server state may have changed.
   Future<ApiResponse<T>> post<T>(
     String endpoint, {
     dynamic data,
@@ -208,6 +264,7 @@ class ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
+      clearCache(); // invalidate after mutation
       return _processResponse(response, fromJson);
     } on DioException catch (e) {
       return _processError(e);
@@ -227,6 +284,7 @@ class ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
+      clearCache();
       return _processResponse(response, fromJson);
     } on DioException catch (e) {
       return _processError(e);
@@ -246,6 +304,7 @@ class ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
+      clearCache();
       return _processResponse(response, fromJson);
     } on DioException catch (e) {
       return _processError(e);
@@ -265,6 +324,7 @@ class ApiClient {
         data: data,
         queryParameters: queryParameters,
       );
+      clearCache();
       return _processResponse(response, fromJson);
     } on DioException catch (e) {
       return _processError(e);

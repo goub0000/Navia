@@ -48,10 +48,10 @@ class ApiConfig {
   // Full API base URL
   static String get apiBaseUrl => '$baseUrl$apiVersion';
 
-  // Timeout durations
-  static const Duration connectTimeout = Duration(seconds: 30);
-  static const Duration receiveTimeout = Duration(seconds: 30);
-  static const Duration sendTimeout = Duration(seconds: 30);
+  // Timeout durations — 15 s is enough for a web app; 30 s made failures feel frozen.
+  static const Duration connectTimeout = Duration(seconds: 15);
+  static const Duration receiveTimeout = Duration(seconds: 15);
+  static const Duration sendTimeout = Duration(seconds: 15);
 
   // ── Supabase credentials (compile-time → runtime fallback) ──
   static String get supabaseUrl =>

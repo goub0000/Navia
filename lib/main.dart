@@ -49,20 +49,31 @@ void main() async {
   // Validate API configuration (will throw if required env vars missing)
   ApiConfig.validateConfig();
 
-  // Initialize Supabase
+  // Initialize Supabase and SharedPreferences in parallel to cut startup time.
+  late final SharedPreferences prefs;
   try {
-    await Supabase.initialize(
-      url: ApiConfig.supabaseUrl,
-      anonKey: ApiConfig.supabaseAnonKey,
-    );
-    mainLogger.info('Supabase initialized successfully');
+    final results = await Future.wait([
+      Supabase.initialize(
+        url: ApiConfig.supabaseUrl,
+        anonKey: ApiConfig.supabaseAnonKey,
+      ),
+      SharedPreferences.getInstance(),
+    ]);
+    mainLogger.info('Supabase + SharedPreferences initialized in parallel');
+    prefs = results[1] as SharedPreferences;
+  } catch (e, stackTrace) {
+    // If Supabase failed but prefs succeeded, try prefs alone
+    mainLogger.severe('Parallel init failed: $e', e, stackTrace);
+    prefs = await SharedPreferences.getInstance();
+  }
 
-    // Clear any invalid sessions from previous deployments
+  // Validate session in the background — don't block app render.
+  // The auth provider will pick up the session state asynchronously.
+  Future<void>.microtask(() async {
     try {
       final session = Supabase.instance.client.auth.currentSession;
       if (session != null) {
         mainLogger.fine('Found existing session, validating...');
-        // Try to refresh - if it fails, clear the session
         final response = await Supabase.instance.client.auth.refreshSession();
         if (response.session == null) {
           mainLogger.warning('Session refresh failed, clearing invalid session...');
@@ -75,25 +86,9 @@ void main() async {
       mainLogger.warning('Invalid session detected, clearing: $e');
       try {
         await Supabase.instance.client.auth.signOut();
-        mainLogger.fine('Cleared invalid session');
-      } catch (signOutError) {
-        mainLogger.warning('Failed to clear session: $signOutError');
-      }
+      } catch (_) {}
     }
-  } catch (e, stackTrace) {
-    mainLogger.severe('Supabase initialization failed: $e', e, stackTrace);
-    // Continue anyway - app can work without Supabase for some features
-  }
-
-  // Initialize SharedPreferences for cookie consent
-  late final SharedPreferences prefs;
-  try {
-    prefs = await SharedPreferences.getInstance();
-    mainLogger.info('SharedPreferences initialized successfully');
-  } catch (e, stackTrace) {
-    mainLogger.severe('SharedPreferences initialization failed: $e', e, stackTrace);
-    rethrow; // This is critical, can't continue without it
-  }
+  });
 
   // Initialize Sentry for crash reporting (optional, skip on web if it causes issues)
   // DSN should be provided via --dart-define=SENTRY_DSN=your_dsn in production

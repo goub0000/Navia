@@ -97,16 +97,23 @@ def get_system_statistics(db: Client = Depends(get_db)):
             "logs": {}
         }
 
-        # University statistics
+        # University statistics — use targeted queries instead of SELECT *
+        # to avoid downloading 17 K+ full rows into memory.
         try:
-            response = db.table('universities').select('*', count='exact').execute()
-            universities = response.data
-            total = response.count if hasattr(response, 'count') else len(universities)
+            # Total count (lightweight)
+            total_resp = db.table('universities').select('id', count='exact').limit(0).execute()
+            total = total_resp.count if hasattr(total_resp, 'count') else 0
 
-            # Count universities with key fields
-            with_acceptance = sum(1 for u in universities if u.get('acceptance_rate'))
-            with_tuition = sum(1 for u in universities if u.get('tuition_out_state'))
-            with_ranking = sum(1 for u in universities if u.get('ranking_national'))
+            # Count universities with specific non-null fields.
+            # PostgREST requires IS NOT NULL via: .not_.is_('field', 'null')
+            acc_resp = db.table('universities').select('id', count='exact').not_.is_('acceptance_rate', 'null').limit(0).execute()
+            with_acceptance = acc_resp.count if hasattr(acc_resp, 'count') else 0
+
+            tui_resp = db.table('universities').select('id', count='exact').not_.is_('tuition_out_state', 'null').limit(0).execute()
+            with_tuition = tui_resp.count if hasattr(tui_resp, 'count') else 0
+
+            rank_resp = db.table('universities').select('id', count='exact').not_.is_('ranking_national', 'null').limit(0).execute()
+            with_ranking = rank_resp.count if hasattr(rank_resp, 'count') else 0
 
             stats["universities"] = {
                 "total": total,
@@ -141,36 +148,39 @@ def get_system_statistics(db: Client = Depends(get_db)):
         except Exception as e:
             stats["students"]["error"] = str(e)
 
-        # Recommendations statistics
+        # Recommendations statistics — use count queries instead of SELECT *
         try:
-            response = db.table('recommendations').select('*', count='exact').execute()
-            recommendations = response.data
-            total_recs = response.count if hasattr(response, 'count') else len(recommendations)
+            total_resp = db.table('recommendations').select('id', count='exact').limit(0).execute()
+            total_recs = total_resp.count if hasattr(total_resp, 'count') else 0
 
-            favorited = sum(1 for r in recommendations if r.get('favorited') == 1)
+            fav_resp = db.table('recommendations').select('id', count='exact').eq('favorited', 1).limit(0).execute()
+            favorited = fav_resp.count if hasattr(fav_resp, 'count') else 0
+
+            safety_resp = db.table('recommendations').select('id', count='exact').eq('category', 'Safety').limit(0).execute()
+            match_resp = db.table('recommendations').select('id', count='exact').eq('category', 'Match').limit(0).execute()
+            reach_resp = db.table('recommendations').select('id', count='exact').eq('category', 'Reach').limit(0).execute()
 
             stats["recommendations"] = {
                 "total": total_recs,
                 "favorited": favorited,
                 "by_category": {
-                    "safety": sum(1 for r in recommendations if r.get('category') == 'Safety'),
-                    "match": sum(1 for r in recommendations if r.get('category') == 'Match'),
-                    "reach": sum(1 for r in recommendations if r.get('category') == 'Reach')
+                    "safety": safety_resp.count if hasattr(safety_resp, 'count') else 0,
+                    "match": match_resp.count if hasattr(match_resp, 'count') else 0,
+                    "reach": reach_resp.count if hasattr(reach_resp, 'count') else 0,
                 }
             }
         except Exception as e:
             stats["recommendations"]["error"] = str(e)
 
-        # Cache statistics
+        # Cache statistics — use count queries
         try:
-            response = db.table('page_cache').select('*', count='exact').execute()
-            cache_entries = response.data
-            total_cache = response.count if hasattr(response, 'count') else len(cache_entries)
+            total_cache_resp = db.table('page_cache').select('url_hash', count='exact').limit(0).execute()
+            total_cache = total_cache_resp.count if hasattr(total_cache_resp, 'count') else 0
 
-            # Count expired vs active
-            now = datetime.now()
-            expired = sum(1 for e in cache_entries
-                         if datetime.fromisoformat(e.get('expires_at', '').replace('Z', '+00:00')) < now.replace(tzinfo=datetime.fromisoformat(e.get('expires_at', '').replace('Z', '+00:00')).tzinfo))
+            # Count expired entries server-side
+            now_iso = datetime.now().isoformat()
+            expired_resp = db.table('page_cache').select('url_hash', count='exact').lt('expires_at', now_iso).limit(0).execute()
+            expired = expired_resp.count if hasattr(expired_resp, 'count') else 0
 
             stats["cache"] = {
                 "total_entries": total_cache,
@@ -213,16 +223,13 @@ def get_data_quality_metrics(db: Client = Depends(get_db)):
         Quality metrics including confidence scores, source tracking
     """
     try:
-        response = db.table('universities').select('*').execute()
-        universities = response.data
+        # Use count queries per field instead of downloading all 17K+ rows
+        total_resp = db.table('universities').select('id', count='exact').limit(0).execute()
+        total = total_resp.count if hasattr(total_resp, 'count') else 0
 
-        if not universities:
+        if total == 0:
             return {"error": "No universities found"}
 
-        # Calculate quality metrics
-        total = len(universities)
-
-        # Fields to check
         critical_fields = [
             'name', 'website', 'country', 'state',
             'acceptance_rate', 'tuition_out_state', 'total_students'
@@ -230,13 +237,13 @@ def get_data_quality_metrics(db: Client = Depends(get_db)):
 
         field_coverage = {}
         for field in critical_fields:
-            count = sum(1 for u in universities if u.get(field))
+            resp = db.table('universities').select('id', count='exact').not_.is_(field, 'null').limit(0).execute()
+            count = resp.count if hasattr(resp, 'count') else 0
             field_coverage[field] = {
                 "count": count,
                 "percentage": round(count / total * 100, 1)
             }
 
-        # Overall completeness score
         total_fields = len(critical_fields)
         total_filled = sum(field_coverage[f]["count"] for f in critical_fields)
         max_possible = total * total_fields

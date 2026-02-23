@@ -118,15 +118,21 @@ async def get_institutions(
             ]
             total = len(institutions_data)
 
-        # Get program counts for each institution
+        # Batch-fetch program counts for ALL institutions in a single query
+        # instead of issuing one query per institution (N+1 → 1).
+        institution_ids = [inst['id'] for inst in institutions_data]
+        program_counts: Dict[str, int] = {}
+        if institution_ids:
+            programs_response = db.table('programs').select(
+                'institution_id'
+            ).in_('institution_id', institution_ids).execute()
+            for prog in (programs_response.data or []):
+                iid = prog.get('institution_id')
+                if iid:
+                    program_counts[iid] = program_counts.get(iid, 0) + 1
+
         institutions = []
         for inst in institutions_data:
-            # Count programs
-            programs_response = db.table('programs').select(
-                'id', count='exact'
-            ).eq('institution_id', inst['id']).execute()
-            programs_count = programs_response.count if hasattr(programs_response, 'count') else 0
-
             institutions.append(InstitutionResponse(
                 id=inst['id'],
                 name=inst.get('display_name', 'Unnamed Institution'),
@@ -135,7 +141,7 @@ async def get_institutions(
                 photo_url=inst.get('photo_url'),
                 created_at=inst.get('created_at'),
                 is_verified=inst.get('email_verified', False),
-                programs_count=programs_count,
+                programs_count=program_counts.get(inst['id'], 0),
                 courses_count=0  # Courses removed from system
             ))
 
@@ -327,8 +333,8 @@ async def get_application_funnel(
         else:  # all_time
             start_date = None
 
-        # Build query for applications
-        query = db.table('applications').select('*').eq('institution_id', institution_id)
+        # Build query for applications — only fetch columns needed for funnel counting
+        query = db.table('applications').select('id, status, created_at').eq('institution_id', institution_id)
 
         if start_date:
             query = query.gte('created_at', start_date.isoformat())
