@@ -31,7 +31,7 @@ class _ConversationDetailScreenState
   static const String baseUrl =
       'https://web-production-51e34.up.railway.app/api/v1';
 
-  final _storageService = ConversationStorageService();
+  ConversationStorageService? _storageService;
   final _replyController = TextEditingController();
   final _scrollController = ScrollController();
 
@@ -68,6 +68,7 @@ class _ConversationDetailScreenState
     try {
       // Try to load from backend first
       final authService = ref.read(authServiceProvider);
+      _storageService ??= ConversationStorageService(authService: authService);
       final token = authService.accessToken;
 
       if (token != null) {
@@ -113,7 +114,7 @@ class _ConversationDetailScreenState
 
       // Fallback to local storage
       final conversation =
-          await _storageService.getConversation(widget.conversationId);
+          await _storageService?.getConversation(widget.conversationId);
       setState(() {
         _conversation = conversation;
         _isLoading = false;
@@ -122,7 +123,7 @@ class _ConversationDetailScreenState
       // Try local storage as fallback
       try {
         final conversation =
-            await _storageService.getConversation(widget.conversationId);
+            await _storageService?.getConversation(widget.conversationId);
         setState(() {
           _conversation = conversation;
           _isLoading = false;
@@ -207,7 +208,9 @@ class _ConversationDetailScreenState
   }
 
   Future<void> _updateStatus(ConversationStatus status) async {
-    await _storageService.updateConversationStatus(
+    final authService = ref.read(authServiceProvider);
+    _storageService ??= ConversationStorageService(authService: authService);
+    await _storageService!.updateConversationStatus(
         widget.conversationId, status);
     await _loadConversation();
   }

@@ -8,13 +8,29 @@ import '../../../../core/services/auth_service.dart';
 
 /// Service for storing and retrieving chat conversations
 /// Uses backend API for persistence instead of direct Supabase access
+///
+/// Storage keys are scoped per user so that switching accounts does not
+/// expose one user's chat history to another on the same device.
 class ConversationStorageService {
-  static const String _conversationsKey = 'chatbot_conversations';
-  static const String _activeConversationKey = 'chatbot_active_conversation';
+  static const String _conversationsKeySuffix = 'chatbot_conversations';
+  static const String _activeConversationKeySuffix = 'chatbot_active_conversation';
 
   final AuthService? authService;
 
   ConversationStorageService({this.authService});
+
+  /// Current user ID from the auth service (null when logged out).
+  String? get _userId => authService?.currentUser?.id;
+
+  /// Per-user storage key for conversations list.
+  String get _conversationsKey => _userId != null
+      ? 'chatbot_${_userId}_conversations'
+      : _conversationsKeySuffix;
+
+  /// Per-user storage key for the active conversation pointer.
+  String get _activeConversationKey => _userId != null
+      ? 'chatbot_${_userId}_active_conversation'
+      : _activeConversationKeySuffix;
 
   String get _baseUrl => ApiConfig.baseUrl;
 
