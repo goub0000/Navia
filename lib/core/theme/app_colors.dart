@@ -161,4 +161,27 @@ class AppColors {
   static Color withOpacity(Color color, double opacity) {
     return color.withValues(alpha: opacity);
   }
+
+  // ── Dark-mode semantic constants ──────────────────────────────────
+
+  // Dark Surfaces
+  static const Color darkBackground = Color(0xFF121212);
+  static const Color darkSurface = Color(0xFF1E1E1E);
+  static const Color darkSurfaceContainer = Color(0xFF252525);
+  static const Color darkSurfaceContainerHigh = Color(0xFF2C2C2C);
+  static const Color darkSurfaceContainerHighest = Color(0xFF353535);
+
+  // Dark Text
+  static const Color darkTextPrimary = Color(0xFFE0E0E0);
+  static const Color darkTextSecondary = Color(0xFFB0B0B0);
+  static const Color darkTextDisabled = Color(0xFF707070);
+
+  // Dark Borders
+  static const Color darkBorder = Color(0xFF404040);
+  static const Color darkDivider = Color(0xFF333333);
+
+  // Dark Section Backgrounds
+  static const Color darkSectionLight = Color(0xFF1A1A2E);
+  static const Color darkSectionWarm = Color(0xFF2A1F1A);
+  static const Color darkSectionDark = Color(0xFF0D0D0D);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/theme_provider.dart';
+import '../../../../core/providers/appearance_provider.dart';
 import '../../../../core/models/admin_user_model.dart';
 import '../../../../core/l10n_extension.dart';
 import '../providers/admin_auth_provider.dart';
@@ -49,18 +49,24 @@ class AdminTopBar extends ConsumerWidget {
           Semantics(
             button: true,
             label: context.l10n.adminSharedToggleDarkMode,
-            child: IconButton(
-              icon: Icon(
-                ref.watch(themeModeProvider) == ThemeMode.dark
-                    ? Icons.light_mode
-                    : Icons.dark_mode,
-              ),
-              onPressed: () {
-                ref.read(themeModeProvider.notifier).toggleTheme();
+            child: Builder(
+              builder: (context) {
+                final currentMode = ref.watch(appearanceProvider).themeMode;
+                final platformBrightness = MediaQuery.platformBrightnessOf(context);
+                final effectivelyDark = currentMode == ThemeMode.dark ||
+                    (currentMode == ThemeMode.system && platformBrightness == Brightness.dark);
+                return IconButton(
+                  icon: Icon(effectivelyDark ? Icons.light_mode : Icons.dark_mode),
+                  onPressed: () {
+                    ref.read(appearanceProvider.notifier).setThemeMode(
+                      effectivelyDark ? ThemeMode.light : ThemeMode.dark,
+                    );
+                  },
+                  tooltip: effectivelyDark
+                      ? context.l10n.adminSharedSwitchToLightMode
+                      : context.l10n.adminSharedSwitchToDarkMode,
+                );
               },
-              tooltip: ref.watch(themeModeProvider) == ThemeMode.dark
-                  ? context.l10n.adminSharedSwitchToLightMode
-                  : context.l10n.adminSharedSwitchToDarkMode,
             ),
           ),
           const SizedBox(width: 8),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/providers/appearance_provider.dart';
 import '../../../core/l10n_extension.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -85,6 +86,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const Spacer(),
                       // Language Toggle + Navigation Links
                       _LanguageToggle(),
+                      const SizedBox(width: 8),
+                      const _ThemeToggle(),
                       const SizedBox(width: 8),
                       if (constraints.maxWidth > 1600) ...[
                         TextButton.icon(
@@ -1344,6 +1347,50 @@ class _LanguageToggle extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ThemeToggle extends ConsumerWidget {
+  const _ThemeToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(appearanceProvider).themeMode;
+    final platformBrightness = MediaQuery.platformBrightnessOf(context);
+    final effectivelyDark = themeMode == ThemeMode.dark ||
+        (themeMode == ThemeMode.system && platformBrightness == Brightness.dark);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        icon: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          transitionBuilder: (child, animation) {
+            return RotationTransition(
+              turns: Tween(begin: 0.75, end: 1.0).animate(animation),
+              child: FadeTransition(opacity: animation, child: child),
+            );
+          },
+          child: Icon(
+            effectivelyDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+            key: ValueKey(effectivelyDark),
+            size: 20,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
+        onPressed: () {
+          ref.read(appearanceProvider.notifier).setThemeMode(
+            effectivelyDark ? ThemeMode.light : ThemeMode.dark,
+          );
+        },
+        tooltip: effectivelyDark ? 'Switch to light mode' : 'Switch to dark mode',
+        padding: const EdgeInsets.all(8),
+        constraints: const BoxConstraints(),
       ),
     );
   }

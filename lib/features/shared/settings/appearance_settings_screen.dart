@@ -72,7 +72,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Theme and accent changes apply automatically. For other changes, tap the refresh button above.',
+                    'All changes apply instantly. For font size or font family changes, tap the refresh button above.',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.info,
                     ),
@@ -105,12 +105,6 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                       mode = ThemeMode.system;
                   }
                   appearanceNotifier.setThemeMode(mode);
-                  // Automatically refresh app to apply theme changes
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    if (context.mounted) {
-                      RestartWidget.restartApp(context);
-                    }
-                  });
                 },
               ),
             ],
@@ -270,6 +264,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                       spacing: 12,
                       runSpacing: 12,
                       children: [
+                        const Color(0xFF6366F1), // Default indigo seed
                         AppColors.primary,
                         Colors.blue,
                         Colors.purple,
@@ -281,12 +276,6 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                         return GestureDetector(
                           onTap: () {
                             appearanceNotifier.setAccentColor(color);
-                            // Automatically refresh app to apply accent color changes
-                            Future.delayed(const Duration(milliseconds: 500), () {
-                              if (context.mounted) {
-                                RestartWidget.restartApp(context);
-                              }
-                            });
                           },
                           child: Container(
                             width: 48,

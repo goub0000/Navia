@@ -20,7 +20,7 @@ class AppearancePreferences {
     this.fontSize = 16.0,
     this.fontFamily = 'System Default',
     this.compactMode = false,
-    this.accentColor = const Color(0xFF6B4CE6), // AppColors.primary
+    this.accentColor = const Color(0xFF6366F1), // Indigo seed
   });
 
   AppearancePreferences copyWith({
@@ -55,7 +55,7 @@ class AppearancePreferences {
       fontSize: json['fontSize']?.toDouble() ?? 16.0,
       fontFamily: json['fontFamily'] ?? 'System Default',
       compactMode: json['compactMode'] ?? false,
-      accentColor: Color(json['accentColor'] ?? 0xFF6B4CE6),
+      accentColor: Color(json['accentColor'] ?? 0xFF6366F1),
     );
   }
 }
@@ -86,7 +86,7 @@ class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
     final fontSize = prefs.getDouble(_key('fontSize')) ?? 16.0;
     final fontFamily = prefs.getString(_key('fontFamily')) ?? 'System Default';
     final compactMode = prefs.getBool(_key('compactMode')) ?? false;
-    final accentColor = prefs.getInt(_key('accentColor')) ?? 0xFF6B4CE6;
+    final accentColor = prefs.getInt(_key('accentColor')) ?? 0xFF6366F1;
 
     state = AppearancePreferences(
       themeMode: ThemeMode.values[themeModeIndex],
