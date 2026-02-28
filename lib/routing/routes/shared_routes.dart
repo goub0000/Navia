@@ -31,6 +31,7 @@ import '../../features/shared/widgets/task_widgets.dart'; // TaskModel
 import '../../features/shared/widgets/exam_widgets.dart'; // ExamModel
 import '../../features/shared/widgets/resource_widgets.dart'; // ResourceModel
 import '../../core/models/document_model.dart' as doc_model; // Document
+import '../transitions/shared_axis_page.dart';
 
 /// Shared routes available to all authenticated users
 List<RouteBase> sharedRoutes = [
@@ -38,37 +39,55 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/profile',
     name: 'profile',
-    builder: (context, state) => const ProfileScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ProfileScreen(),
+    ),
   ),
   GoRoute(
     path: '/profile/edit',
     name: 'edit-profile',
-    builder: (context, state) => const EditProfileScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const EditProfileScreen(),
+    ),
   ),
   GoRoute(
     path: '/profile/change-password',
     name: 'change-password',
-    builder: (context, state) => const ChangePasswordScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ChangePasswordScreen(),
+    ),
   ),
 
   // Settings routes
   GoRoute(
     path: '/settings',
     name: 'settings',
-    builder: (context, state) => const SettingsScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const SettingsScreen(),
+    ),
   ),
   GoRoute(
     path: '/settings/notifications',
     name: 'notification-preferences',
-    builder: (context, state) => const NotificationPreferencesScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const NotificationPreferencesScreen(),
+    ),
   ),
   GoRoute(
     path: '/settings/cookies',
     name: 'cookie-settings',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // Get userId from query parameter or use a default for demo
       final userId = state.uri.queryParameters['userId'] ?? 'demo-user';
-      return CookieSettingsScreen(userId: userId);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CookieSettingsScreen(userId: userId),
+      );
     },
   ),
 
@@ -76,22 +95,31 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/notifications',
     name: 'notifications',
-    builder: (context, state) => const NotificationsScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const NotificationsScreen(),
+    ),
   ),
 
   // Messages
   GoRoute(
     path: '/messages',
     name: 'messages',
-    builder: (context, state) => const MessagesListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const MessagesListScreen(),
+    ),
   ),
   GoRoute(
     path: '/messages/:id',
     name: 'chat',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final conversationId = state.pathParameters['id']!;
-      return ConversationDetailScreen(
-        conversationId: conversationId,
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: ConversationDetailScreen(
+          conversationId: conversationId,
+        ),
       );
     },
   ),
@@ -100,12 +128,15 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/documents',
     name: 'documents',
-    builder: (context, state) => const DocumentsScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const DocumentsScreen(),
+    ),
   ),
   GoRoute(
     path: '/documents/:id',
     name: 'document-viewer',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // Document should be passed via state.extra
       final document = state.extra as doc_model.Document?;
       if (document == null) {
@@ -113,11 +144,17 @@ List<RouteBase> sharedRoutes = [
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/documents');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return DocumentViewerScreen(document: document);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: DocumentViewerScreen(document: document),
+      );
     },
   ),
 
@@ -125,30 +162,39 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/payments/method',
     name: 'payment-method',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final extra = state.extra as Map<String, dynamic>?;
-      return PaymentMethodScreen(
-        itemId: extra?['itemId'] ?? '',
-        itemName: extra?['itemName'] ?? '',
-        itemType: extra?['itemType'] ?? '',
-        amount: extra?['amount'] ?? 0.0,
-        currency: extra?['currency'] ?? 'USD',
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: PaymentMethodScreen(
+          itemId: extra?['itemId'] ?? '',
+          itemName: extra?['itemName'] ?? '',
+          itemType: extra?['itemType'] ?? '',
+          amount: extra?['amount'] ?? 0.0,
+          currency: extra?['currency'] ?? 'USD',
+        ),
       );
     },
   ),
   GoRoute(
     path: '/payments/history',
     name: 'payment-history',
-    builder: (context, state) => const PaymentHistoryScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const PaymentHistoryScreen(),
+    ),
   ),
 
   // Resources routes
   GoRoute(
     path: '/resources/view',
     name: 'resource-viewer',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final resource = state.extra as ResourceModel;
-      return ResourceViewerScreen(resource: resource);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: ResourceViewerScreen(resource: resource),
+      );
     },
   ),
 
@@ -156,25 +202,34 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/schedule/add-event',
     name: 'add-event',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final date = state.extra as DateTime?;
-      return AddEventScreen(initialDate: date);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: AddEventScreen(initialDate: date),
+      );
     },
   ),
   GoRoute(
     path: '/schedule/event-details',
     name: 'event-details',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final event = state.extra as EventModel;
-      return EventDetailsScreen(event: event);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: EventDetailsScreen(event: event),
+      );
     },
   ),
   GoRoute(
     path: '/schedule/edit-event',
     name: 'edit-event',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final event = state.extra as EventModel;
-      return EventDetailsScreen(event: event);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: EventDetailsScreen(event: event),
+      );
     },
   ),
 
@@ -182,25 +237,34 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/exams/results',
     name: 'exam-results',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final exam = state.extra as ExamModel;
-      return ExamResultsScreen(exam: exam);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: ExamResultsScreen(exam: exam),
+      );
     },
   ),
   GoRoute(
     path: '/exams/details',
     name: 'exam-details',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final exam = state.extra as ExamModel;
-      return TakeExamScreen(exam: exam);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: TakeExamScreen(exam: exam),
+      );
     },
   ),
   GoRoute(
     path: '/exams/take',
     name: 'take-exam',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final exam = state.extra as ExamModel;
-      return TakeExamScreen(exam: exam);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: TakeExamScreen(exam: exam),
+      );
     },
   ),
 
@@ -208,15 +272,18 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/quiz/take',
     name: 'take-quiz',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final quiz = state.extra as QuizModel;
-      return QuizTakingScreen(quiz: quiz);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: QuizTakingScreen(quiz: quiz),
+      );
     },
   ),
   GoRoute(
     path: '/quiz/results',
     name: 'quiz-results',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final extraData = state.extra as Map<String, dynamic>;
       final quiz = extraData['quiz'] as QuizModel;
       final score = extraData['score'] as int;
@@ -224,13 +291,16 @@ List<RouteBase> sharedRoutes = [
       final timeTaken = extraData['timeTaken'] as Duration;
       final passed = extraData['passed'] as bool;
       final answers = extraData['answers'] as Map<String, dynamic>;
-      return QuizResultsScreen(
-        quiz: quiz,
-        score: score,
-        totalPoints: totalPoints,
-        timeTaken: timeTaken,
-        passed: passed,
-        answers: answers,
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: QuizResultsScreen(
+          quiz: quiz,
+          score: score,
+          totalPoints: totalPoints,
+          timeTaken: timeTaken,
+          passed: passed,
+          answers: answers,
+        ),
       );
     },
   ),
@@ -239,22 +309,31 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/tasks/add',
     name: 'add-task',
-    builder: (context, state) => const AddTaskScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const AddTaskScreen(),
+    ),
   ),
   GoRoute(
     path: '/tasks/details',
     name: 'task-details',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final task = state.extra as TaskModel;
-      return TaskDetailsScreen(task: task);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: TaskDetailsScreen(task: task),
+      );
     },
   ),
   GoRoute(
     path: '/tasks/edit',
     name: 'edit-task',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final task = state.extra as TaskModel;
-      return TaskDetailsScreen(task: task);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: TaskDetailsScreen(task: task),
+      );
     },
   ),
 
@@ -262,8 +341,9 @@ List<RouteBase> sharedRoutes = [
   GoRoute(
     path: '/collaboration/group',
     name: 'study-group',
-    builder: (context, state) {
-      return const StudyGroupsScreen();
-    },
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const StudyGroupsScreen(),
+    ),
   ),
 ];

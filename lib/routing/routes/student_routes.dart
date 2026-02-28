@@ -19,28 +19,38 @@ import '../../features/shared/counseling/models/counseling_models.dart';
 import '../../features/student/schedule/presentation/schedule_screen.dart';
 import '../../features/student/resources/presentation/resources_screen.dart';
 import '../../features/student/help/presentation/help_screen.dart';
+import '../transitions/shared_axis_page.dart';
 
 /// Student-specific routes
 List<RouteBase> studentRoutes = [
   GoRoute(
     path: '/student/dashboard',
     name: 'student-dashboard',
-    builder: (context, state) => const StudentDashboardScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const StudentDashboardScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/applications',
     name: 'student-applications',
-    builder: (context, state) => const ApplicationsListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ApplicationsListScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/applications/create',
     name: 'student-create-application',
-    builder: (context, state) => const CreateApplicationScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CreateApplicationScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/applications/:id',
     name: 'student-application-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // Application object should be passed via state.extra
       final application = state.extra as Application?;
       if (application == null) {
@@ -48,112 +58,163 @@ List<RouteBase> studentRoutes = [
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/student/applications');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return ApplicationDetailScreen(application: application);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: ApplicationDetailScreen(application: application),
+      );
     },
   ),
   GoRoute(
     path: '/student/progress',
     name: 'student-progress',
-    builder: (context, state) => const ProgressScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ProgressScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/courses',
     name: 'student-courses',
-    builder: (context, state) => const CoursesListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CoursesListScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/courses/:id',
     name: 'student-course-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // final courseId = state.pathParameters['id']!;
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/student/courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return CourseDetailScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CourseDetailScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/student/my-courses',
     name: 'student-my-courses',
-    builder: (context, state) => const MyCoursesScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const MyCoursesScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/courses/:id/learn',
     name: 'student-course-learn',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/student/my-courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return CourseLearningScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CourseLearningScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/student/recommendations',
     name: 'student-recommendations',
-    builder: (context, state) => const RecommendationRequestsScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const RecommendationRequestsScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/parent-linking',
     name: 'student-parent-linking',
-    builder: (context, state) => const ParentLinkingScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ParentLinkingScreen(),
+    ),
   ),
   // Counseling routes
   GoRoute(
     path: '/student/counseling',
     name: 'student-counseling',
-    builder: (context, state) => Scaffold(
-      appBar: AppBar(
-        title: const Text('My Counselor'),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('My Counselor'),
+        ),
+        body: const StudentCounselingTab(),
       ),
-      body: const StudentCounselingTab(),
     ),
   ),
   GoRoute(
     path: '/student/counseling/book',
     name: 'student-counseling-book',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final counselor = state.extra as CounselorInfo?;
       if (counselor == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/student/counseling');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return BookCounselingSessionScreen(counselor: counselor);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: BookCounselingSessionScreen(counselor: counselor),
+      );
     },
   ),
   // Schedule, Resources, Help routes
   GoRoute(
     path: '/student/schedule',
     name: 'student-schedule',
-    builder: (context, state) => const ScheduleScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ScheduleScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/resources',
     name: 'student-resources',
-    builder: (context, state) => const ResourcesScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ResourcesScreen(),
+    ),
   ),
   GoRoute(
     path: '/student/help',
     name: 'student-help',
-    builder: (context, state) => const HelpScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const HelpScreen(),
+    ),
   ),
 ];

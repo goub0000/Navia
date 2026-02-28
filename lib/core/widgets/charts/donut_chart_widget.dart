@@ -23,6 +23,7 @@ class DonutChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final total = data.fold<double>(0, (sum, item) => sum + item.value);
 
     return Column(
@@ -31,8 +32,7 @@ class DonutChartWidget extends StatelessWidget {
         if (title != null) ...[
           Text(
             title!,
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -58,8 +58,8 @@ class DonutChartWidget extends StatelessWidget {
                             title: '${percentage.toStringAsFixed(0)}%',
                             color: item.color,
                             radius: 50,
-                            titleStyle: const TextStyle(
-                              fontSize: 12,
+                            titleStyle: TextStyle(
+                              fontSize: theme.textTheme.labelMedium?.fontSize,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -86,8 +86,7 @@ class DonutChartWidget extends StatelessWidget {
                         if (centerLabel != null)
                           Text(
                             centerLabel!,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: theme.textTheme.labelMedium?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
@@ -123,8 +122,7 @@ class DonutChartWidget extends StatelessWidget {
                             children: [
                               Text(
                                 item.label,
-                                style: const TextStyle(
-                                  fontSize: 13,
+                                style: theme.textTheme.bodySmall?.copyWith(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

@@ -118,6 +118,7 @@ class _HelpCenterStaticContentState extends State<_HelpCenterStaticContent> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () => context.go('/'),
         ),
         title: Text(l10n.helpCenterPageTitle),

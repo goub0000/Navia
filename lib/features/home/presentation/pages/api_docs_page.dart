@@ -78,10 +78,9 @@ class ApiDocsPage extends ConsumerWidget {
                       ),
                       child: SelectableText(
                         l10n.apiDocsPageQuickStartCode,
-                        style: const TextStyle(
+                        style: theme.textTheme.bodySmall?.copyWith(
                           fontFamily: 'monospace',
                           color: Colors.greenAccent,
-                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -165,9 +164,8 @@ class ApiDocsPage extends ConsumerWidget {
                           Expanded(
                             child: SelectableText(
                               l10n.apiDocsPageAuthHeader,
-                              style: TextStyle(
+                              style: theme.textTheme.bodySmall?.copyWith(
                                 fontFamily: 'monospace',
-                                fontSize: 13,
                                 color: Colors.grey[800],
                               ),
                             ),
@@ -307,9 +305,8 @@ class ApiDocsPage extends ConsumerWidget {
             ),
             child: Text(
               endpoint.method,
-              style: TextStyle(
+              style: theme.textTheme.labelMedium?.copyWith(
                 fontFamily: 'monospace',
-                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: methodColor,
               ),
@@ -319,9 +316,8 @@ class ApiDocsPage extends ConsumerWidget {
           Expanded(
             child: Text(
               endpoint.path,
-              style: const TextStyle(
+              style: theme.textTheme.bodySmall?.copyWith(
                 fontFamily: 'monospace',
-                fontSize: 13,
               ),
             ),
           ),

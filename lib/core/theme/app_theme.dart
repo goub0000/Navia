@@ -10,8 +10,8 @@ import 'app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  /// Default seed colour — Indigo 500.
-  static const Color defaultSeed = Color(0xFF6366F1);
+  /// Default seed colour — Indigo 700 (7.8:1 contrast, solid WCAG AA pass).
+  static const Color defaultSeed = Color(0xFF4338CA);
 
   // ────────────────────────────────────────────────────────────────────
   // Public static theme instances (used by the static `lightTheme` /
@@ -235,6 +235,13 @@ class AppTheme {
         ),
         type: BottomNavigationBarType.fixed,
         elevation: 0,
+      ),
+
+      // ── Icon Buttons — enforce 48dp minimum touch target ──
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          minimumSize: const Size(48, 48),
+        ),
       ),
 
       // ── Chips ──

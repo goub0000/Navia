@@ -388,9 +388,8 @@ class BlogPage extends ConsumerWidget {
                   ),
                   child: Text(
                     category,
-                    style: theme.textTheme.bodySmall?.copyWith(
+                    style: theme.textTheme.labelSmall?.copyWith(
                       color: AppColors.primary,
-                      fontSize: 10,
                     ),
                   ),
                 ),

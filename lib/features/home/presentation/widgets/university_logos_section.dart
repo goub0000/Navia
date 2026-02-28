@@ -163,8 +163,7 @@ class _UniversityLogoItemState extends State<_UniversityLogoItem> {
                   // Large initial letter
                   Text(
                     _initial,
-                    style: TextStyle(
-                      fontSize: 20,
+                    style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w800,
                       color: accent,
                       height: 1,

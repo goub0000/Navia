@@ -127,6 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final pages = _buildPages(context);
 
     return Scaffold(
@@ -207,8 +208,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         _currentPage == pages.length - 1
                             ? context.l10n.onboardingGetStarted
                             : context.l10n.onboardingNext,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -256,6 +256,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             padding: const EdgeInsets.all(40),
                             child: Image.asset(
                               'assets/images/logo.png',
+                              semanticLabel: 'Flow onboarding',
                               fit: BoxFit.contain,
                             ),
                           )
@@ -358,8 +359,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(width: 12),
               Text(
                 feature,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: AppColors.textPrimary,
                 ),
               ),

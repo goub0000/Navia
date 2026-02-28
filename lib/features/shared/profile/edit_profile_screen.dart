@@ -590,6 +590,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen>
                   backgroundColor: AppColors.primary,
                   child: IconButton(
                     icon: const Icon(Icons.camera_alt, size: 18, color: AppColors.textOnPrimary),
+                    tooltip: 'Change photo',
                     onPressed: _pickProfilePhoto,
                   ),
                 ),
@@ -1876,6 +1877,7 @@ class _ChipInputFieldState extends State<_ChipInputField> {
             const SizedBox(width: 8),
             IconButton(
               icon: const Icon(Icons.add_circle, color: AppColors.primary),
+              tooltip: 'Add',
               onPressed: () {
                 final value = _controller.text.trim();
                 if (value.isNotEmpty && !widget.items.contains(value)) {

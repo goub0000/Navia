@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n_extension.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../application/providers/chatbot_provider.dart';
+import '../../application/providers/scroll_direction_provider.dart';
 import 'chat_window.dart';
 
 class ChatbotFAB extends ConsumerStatefulWidget {
@@ -47,6 +47,9 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
   @override
   Widget build(BuildContext context) {
     final isVisible = ref.watch(chatbotVisibleProvider);
+    final isScrollingDown = ref.watch(isScrollingDownProvider);
+    final theme = Theme.of(context);
+    final isExtended = !isScrollingDown && !isVisible;
 
     return Stack(
       fit: StackFit.expand,
@@ -71,7 +74,7 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: theme.colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -86,10 +89,7 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
                     children: [
                       Text(
                         context.l10n.chatHiNeedHelp,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: theme.textTheme.labelLarge,
                       ),
                       const SizedBox(width: 4),
                       GestureDetector(
@@ -97,14 +97,15 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
                         child: Icon(
                           Icons.close,
                           size: 16,
-                          color: Colors.grey[600],
+                          semanticLabel: 'Dismiss',
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
                   ),
                 ),
 
-              // Floating Action Button
+              // Floating Action Button — extended or collapsed
               AnimatedBuilder(
                 animation: _pulseController,
                 builder: (context, child) {
@@ -112,18 +113,41 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
                     scale: _showTooltip && !isVisible
                         ? 1.0 + (_pulseController.value * 0.1)
                         : 1.0,
-                    child: FloatingActionButton(
-                      heroTag: 'chatbot_fab',
-                      onPressed: _toggleChat,
-                      backgroundColor: AppColors.primary,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: Icon(
-                          isVisible ? Icons.close : Icons.chat_bubble,
-                          key: ValueKey(isVisible),
-                          color: Colors.white,
-                        ),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      transitionBuilder: (child, animation) => ScaleTransition(
+                        scale: animation,
+                        child: child,
                       ),
+                      child: isExtended
+                          ? FloatingActionButton.extended(
+                              key: const ValueKey('fab-extended'),
+                              heroTag: 'chatbot_fab',
+                              onPressed: _toggleChat,
+                              backgroundColor:
+                                  theme.colorScheme.primaryContainer,
+                              foregroundColor:
+                                  theme.colorScheme.onPrimaryContainer,
+                              icon: const Icon(
+                                Icons.chat_bubble,
+                                semanticLabel: 'Open chat',
+                              ),
+                              label: const Text('Chat'),
+                            )
+                          : FloatingActionButton(
+                              key: const ValueKey('fab-collapsed'),
+                              heroTag: 'chatbot_fab',
+                              onPressed: _toggleChat,
+                              backgroundColor:
+                                  theme.colorScheme.primaryContainer,
+                              foregroundColor:
+                                  theme.colorScheme.onPrimaryContainer,
+                              child: Icon(
+                                isVisible ? Icons.close : Icons.chat_bubble,
+                                semanticLabel:
+                                    isVisible ? 'Close chat' : 'Open chat',
+                              ),
+                            ),
                     ),
                   );
                 },

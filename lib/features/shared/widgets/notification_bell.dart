@@ -24,6 +24,7 @@ class NotificationBell extends ConsumerWidget {
     final hasUnread = unreadCount > 0;
 
     return IconButton(
+      tooltip: context.l10n.swNotifBellNotifications,
       icon: Stack(
         clipBehavior: Clip.none,
         children: [

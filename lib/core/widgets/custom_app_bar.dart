@@ -49,6 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(8),
           child: Image.asset(
             'assets/images/logo.png',
+            semanticLabel: 'Flow logo',
             width: 32,
             height: 32,
             fit: BoxFit.cover,

@@ -208,10 +208,11 @@ class _EmailVerificationScreenState
                       color: AppColors.success.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.check_circle,
                       size: 50,
                       color: AppColors.success,
+                      semanticLabel: context.l10n.emailVerifySuccess,
                     ),
                   ),
                 );
@@ -220,8 +221,7 @@ class _EmailVerificationScreenState
             const SizedBox(height: 24),
             Text(
               context.l10n.emailVerifySuccess,
-              style: const TextStyle(
-                fontSize: 24,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.success,
               ),
@@ -419,7 +419,7 @@ class _EmailVerificationScreenState
                         : const Icon(Icons.check_circle_outline),
                     label: Text(
                       _isChecking ? context.l10n.emailVerifyChecking : context.l10n.emailVerifyCheckButton,
-                      style: const TextStyle(fontSize: 16),
+                      style: theme.textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -435,7 +435,7 @@ class _EmailVerificationScreenState
                       _canResend
                           ? context.l10n.emailVerifyResend
                           : context.l10n.emailVerifyResendIn(_resendCooldown),
-                      style: const TextStyle(fontSize: 16),
+                      style: theme.textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -506,6 +506,7 @@ class _EmailVerificationScreenState
   }
 
   Widget _buildInstructionStep(String number, String text) {
+    final theme = Theme.of(context);
     return Row(
       children: [
         Container(
@@ -518,9 +519,8 @@ class _EmailVerificationScreenState
           alignment: Alignment.center,
           child: Text(
             number,
-            style: const TextStyle(
+            style: theme.textTheme.labelMedium?.copyWith(
               color: Colors.white,
-              fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -529,7 +529,7 @@ class _EmailVerificationScreenState
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 14),
+            style: theme.textTheme.labelLarge,
           ),
         ),
       ],

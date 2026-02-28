@@ -21,6 +21,7 @@ class PressPage extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () => context.go('/'),
         ),
         title: Text(l10n.pressPageTitle),
@@ -280,7 +281,6 @@ class PressPage extends ConsumerWidget {
             label: Text(context.l10n.pressPageDownload),
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
-              minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           ),

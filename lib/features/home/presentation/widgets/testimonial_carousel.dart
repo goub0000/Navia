@@ -265,7 +265,7 @@ class _TestimonialCard extends StatelessWidget {
                   ),
                   child: Text(
                     _getCountryFlag(testimonial.country),
-                    style: const TextStyle(fontSize: 16),
+                    style: theme.textTheme.bodyLarge,
                   ),
                 ),
               ],

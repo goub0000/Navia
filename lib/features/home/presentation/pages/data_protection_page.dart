@@ -21,6 +21,7 @@ class DataProtectionPage extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () => context.go('/'),
         ),
         title: Text(l10n.dataProtectionPageTitle),

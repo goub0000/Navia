@@ -29,14 +29,14 @@ class AreaChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null) ...[
           Text(
             title!,
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -52,10 +52,10 @@ class AreaChartWidget extends StatelessWidget {
                     return touchedSpots.map((spot) {
                       return LineTooltipItem(
                         '${spot.y.toStringAsFixed(1)}',
-                        const TextStyle(
+                        TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                          fontSize: theme.textTheme.labelMedium?.fontSize,
                         ),
                       );
                     }).toList();
@@ -86,8 +86,7 @@ class AreaChartWidget extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
                             data[index].label,
-                            style: TextStyle(
-                              fontSize: 10,
+                            style: theme.textTheme.labelSmall?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),

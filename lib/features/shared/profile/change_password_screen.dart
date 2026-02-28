@@ -79,6 +79,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ? Icons.visibility_off
                           : Icons.visibility,
                     ),
+                    tooltip: _obscureCurrentPassword
+                        ? 'Show password'
+                        : 'Hide password',
                     onPressed: () {
                       setState(() {
                         _obscureCurrentPassword = !_obscureCurrentPassword;
@@ -109,6 +112,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ? Icons.visibility_off
                           : Icons.visibility,
                     ),
+                    tooltip: _obscureNewPassword
+                        ? 'Show password'
+                        : 'Hide password',
                     onPressed: () {
                       setState(() {
                         _obscureNewPassword = !_obscureNewPassword;
@@ -148,6 +154,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           ? Icons.visibility_off
                           : Icons.visibility,
                     ),
+                    tooltip: _obscureConfirmPassword
+                        ? 'Show password'
+                        : 'Hide password',
                     onPressed: () {
                       setState(() {
                         _obscureConfirmPassword = !_obscureConfirmPassword;

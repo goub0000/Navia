@@ -24,6 +24,7 @@ import '../../features/home/presentation/pages/compliance_page.dart';
 import '../../features/home/presentation/pages/cookies_page.dart';
 import '../../features/home/presentation/pages/data_protection_page.dart';
 import '../../features/home/presentation/pages/mobile_apps_page.dart';
+import '../transitions/shared_axis_page.dart';
 
 /// Authentication and public routes
 List<RouteBase> authRoutes = [
@@ -31,50 +32,71 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/',
     name: 'home',
-    builder: (context, state) => const ModernHomeScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ModernHomeScreen(),
+    ),
   ),
 
   // Authentication routes — no navbar needed
   GoRoute(
     path: '/login',
     name: 'login',
-    builder: (context, state) => const LoginScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const LoginScreen(),
+    ),
   ),
   GoRoute(
     path: '/register',
     name: 'register',
-    builder: (context, state) => const RegisterScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const RegisterScreen(),
+    ),
   ),
   GoRoute(
     path: '/forgot-password',
     name: 'forgot-password',
-    builder: (context, state) => const ForgotPasswordScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ForgotPasswordScreen(),
+    ),
   ),
   GoRoute(
     path: '/email-verification',
     name: 'email-verification',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final email = state.uri.queryParameters['email'] ?? '';
-      return EmailVerificationScreen(
-        email: email,
-        onVerified: () {
-          // Navigate to onboarding after verification
-          context.go('/onboarding');
-        },
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: EmailVerificationScreen(
+          email: email,
+          onVerified: () {
+            // Navigate to onboarding after verification
+            context.go('/onboarding');
+          },
+        ),
       );
     },
   ),
   GoRoute(
     path: '/onboarding',
     name: 'onboarding',
-    builder: (context, state) => const OnboardingScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const OnboardingScreen(),
+    ),
   ),
   GoRoute(
     path: '/biometric-setup',
     name: 'biometric-setup',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final isSetup = state.uri.queryParameters['setup'] == 'true';
-      return BiometricSetupScreen(isSetup: isSetup);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: BiometricSetupScreen(isSetup: isSetup),
+      );
     },
   ),
 
@@ -85,82 +107,130 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/about',
         name: 'about',
-        builder: (context, state) => const AboutPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const AboutPage(),
+        ),
       ),
       GoRoute(
         path: '/contact',
         name: 'contact',
-        builder: (context, state) => const ContactPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const ContactPage(),
+        ),
       ),
       GoRoute(
         path: '/privacy',
         name: 'privacy',
-        builder: (context, state) => const PrivacyPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const PrivacyPage(),
+        ),
       ),
       GoRoute(
         path: '/terms',
         name: 'terms',
-        builder: (context, state) => const TermsPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const TermsPage(),
+        ),
       ),
       GoRoute(
         path: '/careers',
         name: 'careers',
-        builder: (context, state) => const CareersPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const CareersPage(),
+        ),
       ),
       GoRoute(
         path: '/press',
         name: 'press',
-        builder: (context, state) => const PressPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const PressPage(),
+        ),
       ),
       GoRoute(
         path: '/partners',
         name: 'partners',
-        builder: (context, state) => const PartnersPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const PartnersPage(),
+        ),
       ),
       GoRoute(
         path: '/help',
         name: 'help',
-        builder: (context, state) => const HelpCenterPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const HelpCenterPage(),
+        ),
       ),
       GoRoute(
         path: '/docs',
         name: 'docs',
-        builder: (context, state) => const DocsPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const DocsPage(),
+        ),
       ),
       GoRoute(
         path: '/api-docs',
         name: 'api-docs',
-        builder: (context, state) => const ApiDocsPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const ApiDocsPage(),
+        ),
       ),
       GoRoute(
         path: '/community',
         name: 'community',
-        builder: (context, state) => const CommunityPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const CommunityPage(),
+        ),
       ),
       GoRoute(
         path: '/blog',
         name: 'blog',
-        builder: (context, state) => const BlogPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const BlogPage(),
+        ),
       ),
       GoRoute(
         path: '/compliance',
         name: 'compliance',
-        builder: (context, state) => const CompliancePage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const CompliancePage(),
+        ),
       ),
       GoRoute(
         path: '/cookies',
         name: 'cookies',
-        builder: (context, state) => const CookiesPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const CookiesPage(),
+        ),
       ),
       GoRoute(
         path: '/data-protection',
         name: 'data-protection',
-        builder: (context, state) => const DataProtectionPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const DataProtectionPage(),
+        ),
       ),
       GoRoute(
         path: '/mobile-apps',
         name: 'mobile-apps',
-        builder: (context, state) => const MobileAppsPage(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const MobileAppsPage(),
+        ),
       ),
     ],
   ),

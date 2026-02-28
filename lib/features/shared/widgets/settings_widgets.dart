@@ -733,6 +733,7 @@ class AboutAppInfo extends StatelessWidget {
           if (logoAsset != null)
             Image.asset(
               logoAsset!,
+              semanticLabel: 'Flow logo',
               width: 80,
               height: 80,
               errorBuilder: (_, __, ___) => const SizedBox(),

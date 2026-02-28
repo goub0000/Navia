@@ -69,6 +69,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
   }
 
   Widget _buildDefaultErrorUI(BuildContext context, Object error, StackTrace stackTrace) {
+    final theme = Theme.of(context);
     return Material(
       color: AppColors.background,
       child: SafeArea(
@@ -86,8 +87,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
                 const SizedBox(height: 24),
                 Text(
                   'Something Went Wrong',
-                  style: TextStyle(
-                    fontSize: 24,
+                  style: theme.textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
@@ -96,8 +96,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
                 const SizedBox(height: 16),
                 Text(
                   'An unexpected error occurred. Please try again.',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.textSecondary,
                   ),
                   textAlign: TextAlign.center,
@@ -126,8 +125,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
                   ExpansionTile(
                     title: Text(
                       'Error Details',
-                      style: TextStyle(
-                        fontSize: 14,
+                      style: theme.textTheme.labelLarge?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -141,8 +139,7 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
                         ),
                         child: SelectableText(
                           error.toString(),
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: theme.textTheme.labelMedium?.copyWith(
                             fontFamily: 'monospace',
                             color: AppColors.textSecondary,
                           ),

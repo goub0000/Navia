@@ -421,15 +421,15 @@ class PositionsListWidget extends StatelessWidget {
                     Row(
                       children: [
                         if (position.department != null) ...[
-                          _buildTag(position.department!),
+                          _buildTag(position.department!, theme: theme),
                           const SizedBox(width: 8),
                         ],
                         if (position.location != null) ...[
-                          _buildTag(position.location!, icon: Icons.location_on),
+                          _buildTag(position.location!, icon: Icons.location_on, theme: theme),
                           const SizedBox(width: 8),
                         ],
                         if (position.type != null)
-                          _buildTag(position.type!, icon: Icons.schedule),
+                          _buildTag(position.type!, icon: Icons.schedule, theme: theme),
                       ],
                     ),
                   ],
@@ -447,7 +447,7 @@ class PositionsListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTag(String text, {IconData? icon}) {
+  Widget _buildTag(String text, {IconData? icon, ThemeData? theme}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -463,7 +463,9 @@ class PositionsListWidget extends StatelessWidget {
           ],
           Text(
             text,
-            style: TextStyle(
+            style: theme?.textTheme.labelMedium?.copyWith(
+              color: AppColors.primary,
+            ) ?? TextStyle(
               fontSize: 12,
               color: AppColors.primary,
             ),
@@ -510,8 +512,7 @@ class BlogPostsWidget extends StatelessWidget {
                   ),
                   child: Text(
                     post.category!,
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: theme.textTheme.labelMedium?.copyWith(
                       color: AppColors.accent,
                       fontWeight: FontWeight.w500,
                     ),

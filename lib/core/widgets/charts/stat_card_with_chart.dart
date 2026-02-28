@@ -27,6 +27,7 @@ class StatCardWithChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final cardColor = color ?? AppColors.primary;
 
     return Container(
@@ -49,8 +50,7 @@ class StatCardWithChart extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
@@ -58,8 +58,7 @@ class StatCardWithChart extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       value,
-                      style: TextStyle(
-                        fontSize: 28,
+                      style: theme.textTheme.displaySmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
@@ -106,8 +105,7 @@ class StatCardWithChart extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   '${changePercentage!.toStringAsFixed(1)}%',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: theme.textTheme.labelMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isPositiveChange ? AppColors.success : AppColors.error,
                   ),

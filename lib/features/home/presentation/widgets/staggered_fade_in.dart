@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/theme/app_motion.dart';
 
 /// A widget that animates its children with a staggered fade-in and slide-up effect.
 ///
@@ -17,8 +18,8 @@ class StaggeredFadeIn extends StatefulWidget {
     super.key,
     required this.children,
     this.staggerDelay = const Duration(milliseconds: 100),
-    this.animationDuration = const Duration(milliseconds: 600),
-    this.curve = Curves.easeOutCubic,
+    this.animationDuration = AppMotion.durationEnter,
+    this.curve = AppMotion.curveEnter,
     this.slideOffset = 30.0,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -119,8 +120,8 @@ class FadeInItem extends StatefulWidget {
     super.key,
     required this.child,
     this.delay = Duration.zero,
-    this.duration = const Duration(milliseconds: 600),
-    this.curve = Curves.easeOutCubic,
+    this.duration = AppMotion.durationEnter,
+    this.curve = AppMotion.curveEnter,
     this.slideOffset = 30.0,
     this.slideDirection = Axis.vertical,
   });
@@ -195,8 +196,8 @@ class _FadeInItemState extends State<FadeInItem>
 extension StaggeredAnimationExtension on Widget {
   Widget fadeIn({
     Duration delay = Duration.zero,
-    Duration duration = const Duration(milliseconds: 600),
-    Curve curve = Curves.easeOutCubic,
+    Duration duration = AppMotion.durationEnter,
+    Curve curve = AppMotion.curveEnter,
     double slideOffset = 30.0,
   }) {
     return FadeInItem(

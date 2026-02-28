@@ -94,6 +94,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
                         'assets/images/logo.png',
+                        semanticLabel: 'Flow logo',
                         height: 40,
                         width: 40,
                         fit: BoxFit.cover,
@@ -864,9 +865,8 @@ class _ValueCardState extends State<_ValueCard> {
             const SizedBox(height: 28),
             Text(
               widget.title,
-              style: theme.textTheme.titleLarge?.copyWith(
+              style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
               ),
               textAlign: TextAlign.center,
             ),
@@ -1728,6 +1728,7 @@ class _MinimalFooter extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.asset(
                                   'assets/images/logo.png',
+                                  semanticLabel: 'Flow logo',
                                   height: 48,
                                   width: 48,
                                   fit: BoxFit.cover,
@@ -1828,6 +1829,7 @@ class _MinimalFooter extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
                             'assets/images/logo.png',
+                            semanticLabel: 'Flow logo',
                             height: 48,
                             width: 48,
                             fit: BoxFit.cover,
@@ -1996,7 +1998,6 @@ class _FooterLink extends StatelessWidget {
         style: TextButton.styleFrom(
           foregroundColor: theme.colorScheme.onSurfaceVariant,
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-          minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         child: Text(
@@ -2112,10 +2113,9 @@ class _FindYourPathSection extends StatelessWidget {
                   // Description
                   Text(
                     context.l10n.homeFindYourPathDesc,
-                    style: theme.textTheme.titleMedium?.copyWith(
+                    style: theme.textTheme.titleLarge?.copyWith(
                       color: Colors.white.withValues(alpha: 0.95),
                       height: 1.6,
-                      fontSize: 18,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -2149,8 +2149,7 @@ class _FindYourPathSection extends StatelessWidget {
                     icon: const Icon(Icons.arrow_forward, size: 24),
                     label: Text(
                       context.l10n.homeStartYourJourney,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                       ),
@@ -2174,9 +2173,8 @@ class _FindYourPathSection extends StatelessWidget {
                   // Subtext
                   Text(
                     context.l10n.homeNoAccountRequired,
-                    style: theme.textTheme.bodyMedium?.copyWith(
+                    style: theme.textTheme.labelLarge?.copyWith(
                       color: Colors.white.withValues(alpha: 0.85),
-                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -2289,10 +2287,9 @@ class _UniversitySearchSection extends StatelessWidget {
                   // Title
                   Text(
                     context.l10n.uniSearchTitle,
-                    style: theme.textTheme.displaySmall?.copyWith(
+                    style: theme.textTheme.displayMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 36,
                       letterSpacing: -0.5,
                     ),
                     textAlign: TextAlign.center,
@@ -2305,7 +2302,6 @@ class _UniversitySearchSection extends StatelessWidget {
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: Colors.white.withValues(alpha:0.95),
                       height: 1.6,
-                      fontSize: 16,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -2342,8 +2338,7 @@ class _UniversitySearchSection extends StatelessWidget {
                     icon: const Icon(Icons.search, size: 22),
                     label: Text(
                       context.l10n.homeBrowseUniversities,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -2385,6 +2380,8 @@ class _UniversityStatChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
@@ -2405,18 +2402,16 @@ class _UniversityStatChip extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             value,
-            style: const TextStyle(
+            style: theme.textTheme.labelLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 14,
             ),
           ),
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
+            style: theme.textTheme.bodySmall?.copyWith(
               color: Colors.white.withValues(alpha:0.85),
-              fontSize: 13,
             ),
           ),
         ],
@@ -2455,8 +2450,7 @@ class _LanguageToggle extends ConsumerWidget {
               ),
               child: Text(
                 'EN',
-                style: TextStyle(
-                  fontSize: 12,
+                style: theme.textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isEnglish
                       ? theme.colorScheme.onPrimary
@@ -2475,8 +2469,7 @@ class _LanguageToggle extends ConsumerWidget {
               ),
               child: Text(
                 'FR',
-                style: TextStyle(
-                  fontSize: 12,
+                style: theme.textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: !isEnglish
                       ? theme.colorScheme.onPrimary

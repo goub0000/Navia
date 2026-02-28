@@ -84,6 +84,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   Widget _buildErrorWidget() {
+    final theme = Theme.of(context);
     if (_errorMessage == null) return const SizedBox.shrink();
 
     final showLoginHint = _errorType == AuthErrorType.emailAlreadyExists;
@@ -115,9 +116,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               Expanded(
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(
+                  style: theme.textTheme.labelLarge?.copyWith(
                     color: AppColors.error,
-                    fontSize: 14,
                     height: 1.4,
                   ),
                 ),
@@ -128,6 +128,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   Icons.close,
                   color: AppColors.error.withValues(alpha: 0.7),
                   size: 18,
+                  semanticLabel: 'Dismiss error',
                 ),
               ),
             ],
@@ -143,7 +144,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   label: Text(context.l10n.registerLoginInstead),
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    minimumSize: Size.zero,
+
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -155,7 +156,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     label: Text(context.l10n.registerResetPassword),
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      minimumSize: Size.zero,
+  
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                   ),
@@ -179,6 +180,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         title: Text(context.l10n.registerAppBarTitle),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () {
             // Use canPop to check if there's something to pop, otherwise go to home
             if (context.canPop()) {
@@ -223,6 +225,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         padding: const EdgeInsets.all(8),
                         child: Image.asset(
                           'assets/images/logo.png',
+                          semanticLabel: 'Flow logo',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -324,6 +327,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                       ),
+                      tooltip: _obscurePassword
+                          ? 'Show password'
+                          : 'Hide password',
                       onPressed: () {
                         setState(() {
                           _obscurePassword = !_obscurePassword;
@@ -357,6 +363,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                       ),
+                      tooltip: _obscureConfirmPassword
+                          ? 'Show password'
+                          : 'Hide password',
                       onPressed: () {
                         setState(() {
                           _obscureConfirmPassword = !_obscureConfirmPassword;
@@ -526,6 +535,7 @@ class _RequirementChip extends StatelessWidget {
           met ? Icons.check_circle : Icons.circle_outlined,
           size: 14,
           color: met ? AppColors.success : theme.colorScheme.outlineVariant,
+          semanticLabel: met ? 'Requirement met' : 'Requirement not met',
         ),
         const SizedBox(width: 4),
         Text(

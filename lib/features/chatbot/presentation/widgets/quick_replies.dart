@@ -24,25 +24,25 @@ class QuickReplies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Wrap(
         spacing: 8,
         runSpacing: 8,
-        children: actions.map((action) => _buildActionChip(action)).toList(),
+        children: actions.map((action) => _buildActionChip(action, theme)).toList(),
       ),
     );
   }
 
-  Widget _buildActionChip(QuickAction action) {
+  Widget _buildActionChip(QuickAction action, ThemeData theme) {
     final actionType = _getActionType(action.action);
     final colors = _getActionColors(actionType);
 
     return ActionChip(
       label: Text(
         action.label,
-        style: TextStyle(
-          fontSize: 13,
+        style: theme.textTheme.bodySmall?.copyWith(
           fontWeight: FontWeight.w500,
           color: colors.foreground,
         ),

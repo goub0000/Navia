@@ -139,6 +139,7 @@ class FilterButton extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.filter_list),
+          tooltip: context.l10n.uniSearchFilters,
           onPressed: onPressed,
         ),
         if (activeFilters > 0)

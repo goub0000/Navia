@@ -40,6 +40,7 @@ class AboutPage extends ConsumerWidget {
                           child: ClipOval(
                             child: Image.asset(
                               'assets/images/logo.png',
+                              semanticLabel: 'Flow logo',
                               fit: BoxFit.contain,
                               errorBuilder: (_, __, ___) => Icon(
                                 Icons.school,

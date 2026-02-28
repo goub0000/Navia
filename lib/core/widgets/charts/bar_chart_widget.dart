@@ -25,14 +25,14 @@ class BarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null) ...[
           Text(
             title!,
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -48,10 +48,10 @@ class BarChartWidget extends StatelessWidget {
                   getTooltipItem: (group, groupIndex, rod, rodIndex) {
                     return BarTooltipItem(
                       '${data[groupIndex].label}\n${rod.toY.toStringAsFixed(0)}',
-                      const TextStyle(
+                      TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                        fontSize: theme.textTheme.labelMedium?.fontSize,
                       ),
                     );
                   },
@@ -83,8 +83,7 @@ class BarChartWidget extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
                             xAxisLabel!,
-                            style: TextStyle(
-                              fontSize: 12,
+                            style: theme.textTheme.labelMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: AppColors.textSecondary,
                             ),
@@ -109,8 +108,7 @@ class BarChartWidget extends StatelessWidget {
                   axisNameWidget: yAxisLabel != null
                       ? Text(
                           yAxisLabel!,
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: theme.textTheme.labelMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.textSecondary,
                           ),

@@ -18,6 +18,7 @@ class FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -34,7 +35,7 @@ class FilterBar extends StatelessWidget {
               spacing: 12,
               runSpacing: 8,
               children: filters.map((filter) {
-                return _buildQuickFilterChip(filter);
+                return _buildQuickFilterChip(filter, theme);
               }).toList(),
             ),
           ),
@@ -75,12 +76,12 @@ class FilterBar extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickFilterChip(QuickFilter filter) {
+  Widget _buildQuickFilterChip(QuickFilter filter, ThemeData theme) {
     return DropdownButton<dynamic>(
       value: filter.selectedValue,
       hint: Text(
         filter.label,
-        style: const TextStyle(fontSize: 13),
+        style: theme.textTheme.bodySmall,
       ),
       underline: const SizedBox(),
       isDense: true,
@@ -89,7 +90,7 @@ class FilterBar extends StatelessWidget {
           value: option['value'],
           child: Text(
             option['label'] ?? option['value'].toString(),
-            style: const TextStyle(fontSize: 13),
+            style: theme.textTheme.bodySmall,
           ),
         );
       }).toList(),

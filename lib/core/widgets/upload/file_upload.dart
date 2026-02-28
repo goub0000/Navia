@@ -47,6 +47,7 @@ class _FileUploadState extends State<FileUpload> {
   }
 
   Widget _buildDropZone() {
+    final theme = Theme.of(context);
     return MouseRegion(
       onEnter: (_) => setState(() => _isDragging = true),
       onExit: (_) => setState(() => _isDragging = false),
@@ -78,8 +79,7 @@ class _FileUploadState extends State<FileUpload> {
               const SizedBox(height: 16),
               Text(
                 widget.hint ?? 'Drag and drop files here',
-                style: TextStyle(
-                  fontSize: 16,
+                style: theme.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: _isDragging ? AppColors.primary : AppColors.textPrimary,
                 ),
@@ -87,8 +87,7 @@ class _FileUploadState extends State<FileUpload> {
               const SizedBox(height: 8),
               Text(
                 'or click to browse',
-                style: TextStyle(
-                  fontSize: 14,
+                style: theme.textTheme.labelLarge?.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -96,8 +95,7 @@ class _FileUploadState extends State<FileUpload> {
                 const SizedBox(height: 12),
                 Text(
                   'Allowed: ${widget.allowedExtensions!.join(", ")}',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: theme.textTheme.labelMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -106,8 +104,7 @@ class _FileUploadState extends State<FileUpload> {
                 const SizedBox(height: 4),
                 Text(
                   'Max size: ${widget.maxSizeInMB}MB per file',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: theme.textTheme.labelMedium?.copyWith(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -120,6 +117,7 @@ class _FileUploadState extends State<FileUpload> {
   }
 
   Widget _buildFileList() {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,8 +126,7 @@ class _FileUploadState extends State<FileUpload> {
           children: [
             Text(
               'Selected Files (${_files.length})',
-              style: TextStyle(
-                fontSize: 14,
+              style: theme.textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -167,12 +164,12 @@ class _FileUploadState extends State<FileUpload> {
   }
 
   Widget _buildFileItem(UploadedFile file, int index) {
+    final theme = Theme.of(context);
     return ListTile(
       leading: _buildFileIcon(file.extension),
       title: Text(
         file.name,
-        style: const TextStyle(
-          fontSize: 14,
+        style: theme.textTheme.labelLarge?.copyWith(
           fontWeight: FontWeight.w500,
         ),
         maxLines: 1,
@@ -182,8 +179,7 @@ class _FileUploadState extends State<FileUpload> {
         children: [
           Text(
             _formatFileSize(file.size),
-            style: TextStyle(
-              fontSize: 12,
+            style: theme.textTheme.labelMedium?.copyWith(
               color: AppColors.textSecondary,
             ),
           ),

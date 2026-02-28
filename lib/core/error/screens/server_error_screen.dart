@@ -14,6 +14,7 @@ class ServerErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -57,8 +58,7 @@ class ServerErrorScreen extends StatelessWidget {
                 Text(
                   message ??
                       'We\'re having trouble connecting to our servers. Please try again in a moment.',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.textSecondary,
                   ),
                   textAlign: TextAlign.center,
@@ -115,8 +115,7 @@ class ServerErrorScreen extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text(
                             'Error Code: 500',
-                            style: TextStyle(
-                              fontSize: 14,
+                            style: theme.textTheme.labelLarge?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),
@@ -125,8 +124,7 @@ class ServerErrorScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         'If this problem persists, please contact our support team.',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: theme.textTheme.labelMedium?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                         textAlign: TextAlign.center,

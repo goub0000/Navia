@@ -341,6 +341,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                     size: 20,
                     color: AppColors.textSecondary,
                   ),
+                  tooltip: 'Clear search',
                   onPressed: () {
                     _controller.clear();
                     setState(() {
@@ -396,7 +397,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
-                            minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: Text(

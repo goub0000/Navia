@@ -33,6 +33,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -53,8 +54,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
                   const SizedBox(width: 12),
                   Text(
                     'Advanced Filters',
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
                     ),
@@ -138,13 +138,13 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
   }
 
   Widget _buildDropdownField(FilterField field) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           field.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -180,6 +180,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
   }
 
   Widget _buildMultiSelectField(FilterField field) {
+    final theme = Theme.of(context);
     final selectedValues = _filterValues[field.key] as List? ?? [];
 
     return Column(
@@ -187,8 +188,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
       children: [
         Text(
           field.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -228,6 +228,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
   }
 
   Widget _buildDateRangeField(FilterField field) {
+    final theme = Theme.of(context);
     final dateRange = _filterValues[field.key] as DateTimeRange?;
 
     return Column(
@@ -235,8 +236,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
       children: [
         Text(
           field.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -259,6 +259,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
   }
 
   Widget _buildNumericRangeField(FilterField field) {
+    final theme = Theme.of(context);
     final min = _filterValues['${field.key}_min'] as num? ?? field.min ?? 0;
     final max = _filterValues['${field.key}_max'] as num? ?? field.max ?? 100;
 
@@ -267,8 +268,7 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
       children: [
         Text(
           field.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -295,15 +295,13 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
           children: [
             Text(
               'Min: ${min.toStringAsFixed(0)}',
-              style: TextStyle(
-                fontSize: 12,
+              style: theme.textTheme.labelMedium?.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
             Text(
               'Max: ${max.toStringAsFixed(0)}',
-              style: TextStyle(
-                fontSize: 12,
+              style: theme.textTheme.labelMedium?.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -329,13 +327,13 @@ class _AdvancedFilterState extends State<AdvancedFilter> {
   }
 
   Widget _buildRadioField(FilterField field) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           field.label,
-          style: TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),

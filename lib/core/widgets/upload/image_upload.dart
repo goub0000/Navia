@@ -39,6 +39,7 @@ class _ImageUploadState extends State<ImageUpload> {
   }
 
   Widget _buildUploadArea() {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: _pickImages,
       borderRadius: BorderRadius.circular(12),
@@ -64,8 +65,7 @@ class _ImageUploadState extends State<ImageUpload> {
             const SizedBox(height: 12),
             Text(
               widget.hint ?? 'Upload Images',
-              style: TextStyle(
-                fontSize: 14,
+              style: theme.textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -73,8 +73,7 @@ class _ImageUploadState extends State<ImageUpload> {
             const SizedBox(height: 4),
             Text(
               'Click to browse',
-              style: TextStyle(
-                fontSize: 12,
+              style: theme.textTheme.labelMedium?.copyWith(
                 color: AppColors.textSecondary,
               ),
             ),
@@ -103,8 +102,7 @@ class _ImageUploadState extends State<ImageUpload> {
           children: [
             Text(
               'Selected Images (${_images.length}/${widget.maxImages})',
-              style: TextStyle(
-                fontSize: 14,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -219,8 +217,7 @@ class _ImageUploadState extends State<ImageUpload> {
                 ),
                 Text(
                   _formatFileSize(image.size),
-                  style: TextStyle(
-                    fontSize: 10,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Colors.white.withValues(alpha: 0.8),
                   ),
                 ),

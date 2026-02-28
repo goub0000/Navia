@@ -24,6 +24,7 @@ class CardMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: const BoxConstraints(maxWidth: 300),
@@ -58,8 +59,7 @@ class CardMessage extends StatelessWidget {
                   // Title
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 2,
@@ -71,8 +71,7 @@ class CardMessage extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       subtitle!,
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.w500,
                       ),
@@ -84,8 +83,7 @@ class CardMessage extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       description!,
-                      style: TextStyle(
-                        fontSize: 13,
+                      style: theme.textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                       maxLines: 3,
@@ -97,7 +95,7 @@ class CardMessage extends StatelessWidget {
             ),
 
             // Actions
-            if (actions != null && actions!.isNotEmpty) _buildActions(),
+            if (actions != null && actions!.isNotEmpty) _buildActions(theme),
           ],
         ),
       ),
@@ -138,7 +136,7 @@ class CardMessage extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildActions(ThemeData theme) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
       child: Wrap(
@@ -152,9 +150,9 @@ class CardMessage extends StatelessWidget {
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                minimumSize: const Size(0, 36),
+                minimumSize: const Size(48, 48),
               ),
-              child: Text(action.label, style: const TextStyle(fontSize: 13)),
+              child: Text(action.label, style: theme.textTheme.bodySmall),
             );
           }
           return TextButton(
@@ -162,9 +160,9 @@ class CardMessage extends StatelessWidget {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              minimumSize: const Size(0, 36),
+              minimumSize: const Size(48, 48),
             ),
-            child: Text(action.label, style: const TextStyle(fontSize: 13)),
+            child: Text(action.label, style: theme.textTheme.bodySmall),
           );
         }).toList(),
       ),

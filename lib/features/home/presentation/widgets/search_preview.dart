@@ -100,6 +100,7 @@ class _SearchPreviewState extends State<SearchPreview> {
                     suffixIcon: _controller.text.isNotEmpty
                         ? IconButton(
                             icon: const Icon(Icons.clear),
+                            tooltip: context.l10n.uniSearchClearAll,
                             onPressed: () {
                               _controller.clear();
                               setState(() {});

@@ -3,6 +3,7 @@ import '../../features/university_search/presentation/university_search_screen.d
 import '../../features/university_search/presentation/university_detail_screen.dart';
 import '../../features/shared/widgets/public_shell.dart';
 import '../../core/models/university_model.dart';
+import '../transitions/shared_axis_page.dart';
 
 /// Routes for university search feature (public, no auth required)
 /// Wrapped in PublicShell for consistent navigation navbar.
@@ -14,19 +15,25 @@ List<RouteBase> universityRoutes = [
       GoRoute(
         path: '/universities',
         name: 'university-search',
-        builder: (context, state) => const UniversitySearchScreen(),
+        pageBuilder: (context, state) => SharedAxisPage(
+          key: state.pageKey,
+          child: const UniversitySearchScreen(),
+        ),
       ),
       // University detail screen
       GoRoute(
         path: '/universities/:id',
         name: 'university-detail',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final idStr = state.pathParameters['id']!;
           final id = int.tryParse(idStr) ?? 0;
           final university = state.extra as University?;
-          return UniversityDetailScreen(
-            universityId: id,
-            university: university,
+          return SharedAxisPage(
+            key: state.pageKey,
+            child: UniversityDetailScreen(
+              universityId: id,
+              university: university,
+            ),
           );
         },
       ),

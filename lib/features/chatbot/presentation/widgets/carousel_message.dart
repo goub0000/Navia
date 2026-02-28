@@ -59,6 +59,7 @@ class _CarouselMessageState extends State<CarouselMessage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: Column(
@@ -71,8 +72,7 @@ class _CarouselMessageState extends State<CarouselMessage> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(
                 widget.title!,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: theme.textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -141,6 +141,7 @@ class _CarouselCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       width: width,
       decoration: BoxDecoration(
@@ -194,8 +195,7 @@ class _CarouselCard extends StatelessWidget {
                     // Title
                     Text(
                       item.title,
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
@@ -207,8 +207,7 @@ class _CarouselCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         item.subtitle!,
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: theme.textTheme.labelMedium?.copyWith(
                           color: AppColors.primary,
                         ),
                         maxLines: 1,
@@ -222,8 +221,7 @@ class _CarouselCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           item.description!,
-                          style: TextStyle(
-                            fontSize: 12,
+                          style: theme.textTheme.labelMedium?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                           maxLines: 2,
@@ -246,11 +244,11 @@ class _CarouselCard extends StatelessWidget {
                                   backgroundColor: AppColors.primary,
                                   foregroundColor: Colors.white,
                                   padding: const EdgeInsets.symmetric(vertical: 8),
-                                  minimumSize: const Size(0, 32),
+                                  minimumSize: const Size(48, 48),
                                 ),
                                 child: Text(
                                   action.label,
-                                  style: const TextStyle(fontSize: 12),
+                                  style: theme.textTheme.labelMedium,
                                 ),
                               ),
                             );
@@ -261,11 +259,11 @@ class _CarouselCard extends StatelessWidget {
                               style: TextButton.styleFrom(
                                 foregroundColor: AppColors.primary,
                                 padding: const EdgeInsets.symmetric(vertical: 8),
-                                minimumSize: const Size(0, 32),
+                                minimumSize: const Size(48, 48),
                               ),
                               child: Text(
                                 action.label,
-                                style: const TextStyle(fontSize: 12),
+                                style: theme.textTheme.labelMedium,
                               ),
                             ),
                           );

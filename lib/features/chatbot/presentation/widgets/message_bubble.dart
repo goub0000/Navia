@@ -31,6 +31,7 @@ class _MessageBubbleState extends State<MessageBubble> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final isUser = widget.message.sender == SenderType.user;
     final isBot = widget.message.sender == SenderType.bot;
     final isAgent = widget.message.sender == SenderType.agent;
@@ -139,11 +140,11 @@ class _MessageBubbleState extends State<MessageBubble> {
 
     // For user messages, just show plain text
     if (isUser) {
+      final theme = Theme.of(context);
       return Text(
         content,
-        style: const TextStyle(
+        style: theme.textTheme.labelLarge?.copyWith(
           color: Colors.white,
-          fontSize: 14,
           height: 1.4,
         ),
       );
@@ -154,17 +155,18 @@ class _MessageBubbleState extends State<MessageBubble> {
 
     if (!hasMarkdown) {
       // Plain text for bot messages without markdown
+      final theme = Theme.of(context);
       return Text(
         content,
-        style: const TextStyle(
+        style: theme.textTheme.labelLarge?.copyWith(
           color: Colors.black87,
-          fontSize: 14,
           height: 1.4,
         ),
       );
     }
 
     // Render markdown for bot messages with formatting
+    final theme = Theme.of(context);
     return MarkdownWidget(
       data: content,
       selectable: true,
@@ -176,29 +178,29 @@ class _MessageBubbleState extends State<MessageBubble> {
               _launchUrl(href);
             },
           ),
-          PConfig(textStyle: const TextStyle(
+          PConfig(textStyle: TextStyle(
             color: Colors.black87,
-            fontSize: 14,
+            fontSize: theme.textTheme.labelLarge?.fontSize,
             height: 1.4,
           )),
-          H1Config(style: const TextStyle(
-            fontSize: 20,
+          H1Config(style: TextStyle(
+            fontSize: theme.textTheme.headlineSmall?.fontSize,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           )),
-          H2Config(style: const TextStyle(
-            fontSize: 18,
+          H2Config(style: TextStyle(
+            fontSize: theme.textTheme.titleLarge?.fontSize,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           )),
-          H3Config(style: const TextStyle(
-            fontSize: 16,
+          H3Config(style: TextStyle(
+            fontSize: theme.textTheme.titleMedium?.fontSize,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
           )),
           CodeConfig(style: TextStyle(
             fontFamily: 'monospace',
-            fontSize: 13,
+            fontSize: theme.textTheme.bodySmall?.fontSize,
             backgroundColor: Colors.grey[200],
             color: Colors.black87,
           )),
@@ -265,6 +267,11 @@ class _MessageBubbleState extends State<MessageBubble> {
                 ? Colors.amber[700]
                 : AppColors.primary,
         size: 20,
+        semanticLabel: isAgent
+            ? context.l10n.chatSupportAgent
+            : isSystem
+                ? context.l10n.chatSystem
+                : context.l10n.chatFlowAssistant,
       ),
     );
   }
@@ -304,8 +311,7 @@ class _MessageBubbleState extends State<MessageBubble> {
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 10,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: color,
               fontWeight: FontWeight.w500,
             ),
@@ -334,8 +340,7 @@ class _MessageBubbleState extends State<MessageBubble> {
       ),
       child: Text(
         displayName,
-        style: TextStyle(
-          fontSize: 10,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
           color: Colors.grey[700],
         ),
       ),
@@ -356,6 +361,9 @@ class _MessageBubbleState extends State<MessageBubble> {
             color: _localFeedback == MessageFeedback.helpful
                 ? Colors.green
                 : Colors.red,
+            semanticLabel: _localFeedback == MessageFeedback.helpful
+                ? context.l10n.chatHelpful
+                : context.l10n.chatNotHelpful,
           ),
           const SizedBox(width: 4),
           Text(

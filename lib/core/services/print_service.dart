@@ -69,6 +69,7 @@ class _PrintPreviewDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Dialog(
       child: Container(
         width: 800,
@@ -83,8 +84,7 @@ class _PrintPreviewDialog extends StatelessWidget {
               children: [
                 Text(
                   'Print Preview - $title',
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

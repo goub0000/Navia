@@ -180,6 +180,7 @@ class _LogoBrand extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 'assets/images/logo.png',
+                semanticLabel: 'Flow logo',
                 height: 36,
                 width: 36,
                 fit: BoxFit.cover,

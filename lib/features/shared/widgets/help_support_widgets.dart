@@ -577,7 +577,6 @@ class FAQItemWidget extends StatelessWidget {
                             horizontal: 12,
                             vertical: 4,
                           ),
-                          minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                       ),

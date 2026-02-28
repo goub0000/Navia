@@ -278,6 +278,7 @@ class _BiometricSetupScreenState extends ConsumerState<BiometricSetupScreen>
             ? null
             : IconButton(
                 icon: const Icon(Icons.arrow_back),
+                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
                 onPressed: () {
                   if (context.canPop()) {
                     context.pop();
@@ -532,10 +533,11 @@ class _BiometricSetupScreenState extends ConsumerState<BiometricSetupScreen>
             color: AppColors.error.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             Icons.block,
             size: 50,
             color: AppColors.error,
+            semanticLabel: context.l10n.biometricNotSupported,
           ),
         ),
         const SizedBox(height: 24),
@@ -583,10 +585,11 @@ class _BiometricSetupScreenState extends ConsumerState<BiometricSetupScreen>
             color: AppColors.warning.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             Icons.warning_amber_rounded,
             size: 50,
             color: AppColors.warning,
+            semanticLabel: context.l10n.biometricNotEnrolled,
           ),
         ),
         const SizedBox(height: 24),
@@ -643,8 +646,7 @@ class _BiometricSetupScreenState extends ConsumerState<BiometricSetupScreen>
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 14,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
               color: AppColors.textPrimary,
             ),
           ),

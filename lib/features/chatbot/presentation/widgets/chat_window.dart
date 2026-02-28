@@ -233,12 +233,12 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
               children: [
                 Text(
                   context.l10n.chatConnectWithAgent,
-                  style: const TextStyle(fontSize: 14),
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   context.l10n.chatAgentWillJoin,
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
                 ),
               ],
             ),
@@ -282,30 +282,29 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
                 if (isLoggedIn) ...[
                   Text(
                     context.l10n.chatSignedInAs,
-                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey[600]),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     user?.displayName ?? context.l10n.chatDefaultUserName,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 12),
                   Text(
                     context.l10n.chatConversationsSynced,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
                   ),
                 ] else ...[
                   Text(
                     context.l10n.chatSignInDescription,
-                    style: const TextStyle(fontSize: 14),
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const SizedBox(height: 12),
                   Text(
                     context.l10n.chatHistorySaved,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
                   ),
                 ],
               ],
@@ -392,11 +391,10 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
-                      ),
+                      ) ?? const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
                       child: title,
                     ),
                     const SizedBox(height: 16),
@@ -450,9 +448,8 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
               children: [
                 Text(
                   isEscalated ? context.l10n.chatHumanSupport : context.l10n.chatFlowAssistant,
-                  style: const TextStyle(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -470,17 +467,15 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
                       ),
                       Text(
                         context.l10n.chatWaitingForAgent,
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Colors.white70,
-                          fontSize: 12,
                         ),
                       ),
                     ] else
                       Text(
                         context.l10n.chatOnline,
-                        style: const TextStyle(
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Colors.white70,
-                          fontSize: 12,
                         ),
                       ),
                   ],
@@ -495,16 +490,19 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
               color: Colors.white,
             ),
             onPressed: () => _showUserMenu(isLoggedIn, user?.displayName),
+            tooltip: isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
           ),
           // Talk to Human button
           if (!isEscalated)
             IconButton(
               icon: const Icon(Icons.person_add, color: Colors.white),
               onPressed: _showEscalationDialog,
+              tooltip: context.l10n.chatTalkToHuman,
             ),
           IconButton(
             icon: const Icon(Icons.close, color: Colors.white),
             onPressed: _close,
+            tooltip: context.l10n.chatClose,
           ),
         ],
       ),
@@ -524,12 +522,12 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
             Icons.chat_bubble_outline,
             size: 64,
             color: Colors.grey,
+            semanticLabel: 'Chat',
           ),
           const SizedBox(height: 16),
           Text(
             context.l10n.chatStartConversation,
-            style: const TextStyle(
-              fontSize: 16,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: Colors.grey,
             ),
           ),

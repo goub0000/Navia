@@ -25,6 +25,7 @@ class GenericErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -55,8 +56,7 @@ class GenericErrorScreen extends StatelessWidget {
                 // Title
                 Text(
                   title ?? 'Oops! Something went wrong',
-                  style: TextStyle(
-                    fontSize: 28,
+                  style: theme.textTheme.displaySmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
@@ -68,8 +68,7 @@ class GenericErrorScreen extends StatelessWidget {
                 Text(
                   message ??
                       'An unexpected error occurred. Please try again or contact support if the problem persists.',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.textSecondary,
                     height: 1.5,
                   ),

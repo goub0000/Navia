@@ -20,6 +20,7 @@ class PartnersPage extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () => context.go('/'),
         ),
         title: Text(context.l10n.partnersPageTitle),
@@ -252,7 +253,7 @@ class PartnersPage extends ConsumerWidget {
                   runSpacing: 8,
                   children: benefits
                       .map((b) => Chip(
-                            label: Text(b, style: const TextStyle(fontSize: 12)),
+                            label: Text(b, style: theme.textTheme.labelMedium),
                             backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                             side: BorderSide.none,
                             padding: const EdgeInsets.symmetric(horizontal: 4),

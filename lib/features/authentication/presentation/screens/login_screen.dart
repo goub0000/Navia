@@ -88,6 +88,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _buildErrorWidget() {
+    final theme = Theme.of(context);
     if (_errorMessage == null) return const SizedBox.shrink();
 
     final showForgotPasswordHint = _errorType == AuthErrorType.invalidCredentials;
@@ -119,9 +120,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Expanded(
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(
+                  style: theme.textTheme.labelLarge?.copyWith(
                     color: AppColors.error,
-                    fontSize: 14,
                     height: 1.4,
                   ),
                 ),
@@ -132,6 +132,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Icons.close,
                   color: AppColors.error.withValues(alpha: 0.7),
                   size: 18,
+                  semanticLabel: 'Dismiss error',
                 ),
               ),
             ],
@@ -147,7 +148,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   label: Text(context.l10n.loginResetPassword),
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    minimumSize: Size.zero,
+
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -165,7 +166,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   label: Text(context.l10n.loginCreateAccount),
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    minimumSize: Size.zero,
+
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
@@ -220,6 +221,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           padding: const EdgeInsets.all(10),
                           child: Image.asset(
                             'assets/images/logo.png',
+                            semanticLabel: 'Flow logo',
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -275,6 +277,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                         ),
+                        tooltip: _obscurePassword
+                            ? 'Show password'
+                            : 'Hide password',
                         onPressed: () {
                           setState(() {
                             _obscurePassword = !_obscurePassword;

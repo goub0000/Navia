@@ -10,6 +10,7 @@ class NotFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -55,8 +56,7 @@ class NotFoundScreen extends StatelessWidget {
                 // Description
                 Text(
                   'The page you are looking for doesn\'t exist or has been moved.',
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: theme.textTheme.bodyLarge?.copyWith(
                     color: AppColors.textSecondary,
                   ),
                   textAlign: TextAlign.center,
@@ -77,8 +77,7 @@ class NotFoundScreen extends StatelessWidget {
                     ),
                     child: Text(
                       'Path: $path',
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: theme.textTheme.labelMedium?.copyWith(
                         fontFamily: 'monospace',
                         color: AppColors.textSecondary,
                       ),

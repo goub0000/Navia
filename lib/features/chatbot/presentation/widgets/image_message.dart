@@ -22,6 +22,7 @@ class ImageMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: BoxConstraints(
@@ -79,12 +80,12 @@ class ImageMessage extends StatelessWidget {
                         Icons.broken_image,
                         color: AppColors.textSecondary,
                         size: 40,
+                        semanticLabel: context.l10n.chatFailedToLoadImage,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         context.l10n.chatFailedToLoadImage,
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: theme.textTheme.labelMedium?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -109,8 +110,7 @@ class ImageMessage extends StatelessWidget {
               ),
               child: Text(
                 caption!,
-                style: TextStyle(
-                  fontSize: 13,
+                style: theme.textTheme.bodySmall?.copyWith(
                   color: AppColors.textSecondary,
                 ),
                 maxLines: 2,
@@ -154,6 +154,7 @@ class ImageMessage extends StatelessWidget {
               child: IconButton(
                 onPressed: () => Navigator.of(ctx).pop(),
                 icon: const Icon(Icons.close, color: Colors.white),
+                tooltip: context.l10n.chatClose,
                 style: IconButton.styleFrom(
                   backgroundColor: Colors.black54,
                 ),
@@ -179,6 +180,7 @@ class ImageGalleryMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     if (imageUrls.isEmpty) return const SizedBox();
     if (imageUrls.length == 1) {
       return ImageMessage(imageUrl: imageUrls.first, caption: caption);
@@ -203,8 +205,7 @@ class ImageGalleryMessage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 caption!,
-                style: TextStyle(
-                  fontSize: 13,
+                style: theme.textTheme.bodySmall?.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -262,9 +263,9 @@ class ImageGalleryMessage extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     '+$extraCount',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -359,6 +360,7 @@ class _ImageGalleryViewerState extends State<_ImageGalleryViewer> {
             child: IconButton(
               onPressed: () => Navigator.of(context).pop(),
               icon: const Icon(Icons.close, color: Colors.white),
+              tooltip: context.l10n.chatClose,
               style: IconButton.styleFrom(
                 backgroundColor: Colors.black54,
               ),

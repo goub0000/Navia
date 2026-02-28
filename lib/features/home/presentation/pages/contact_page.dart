@@ -175,13 +175,13 @@ class _ContactStaticContentState extends State<_ContactStaticContent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _socialButton(Icons.close, 'https://x.com/flowedtech', colorScheme),
+                _socialButton(Icons.close, 'https://x.com/flowedtech', colorScheme, tooltip: 'X (Twitter)'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.work_outline, 'https://linkedin.com/company/flowedtech', colorScheme),
+                _socialButton(Icons.work_outline, 'https://linkedin.com/company/flowedtech', colorScheme, tooltip: 'LinkedIn'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.facebook, 'https://facebook.com/flowedtech', colorScheme),
+                _socialButton(Icons.facebook, 'https://facebook.com/flowedtech', colorScheme, tooltip: 'Facebook'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.camera_alt_outlined, 'https://instagram.com/flowedtech', colorScheme),
+                _socialButton(Icons.camera_alt_outlined, 'https://instagram.com/flowedtech', colorScheme, tooltip: 'Instagram'),
               ],
             ),
           ],
@@ -190,10 +190,11 @@ class _ContactStaticContentState extends State<_ContactStaticContent> {
     );
   }
 
-  Widget _socialButton(IconData icon, String url, ColorScheme colorScheme) {
+  Widget _socialButton(IconData icon, String url, ColorScheme colorScheme, {String? tooltip}) {
     return IconButton.outlined(
       onPressed: () => launchUrl(Uri.parse(url)),
       icon: Icon(icon, color: colorScheme.onSurfaceVariant),
+      tooltip: tooltip,
     );
   }
 

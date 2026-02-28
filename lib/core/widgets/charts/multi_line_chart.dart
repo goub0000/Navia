@@ -23,14 +23,14 @@ class MultiLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null) ...[
           Text(
             title!,
-            style: TextStyle(
-              fontSize: 16,
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -58,8 +58,7 @@ class MultiLineChart extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     s.name,
-                    style: const TextStyle(
-                      fontSize: 12,
+                    style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -83,7 +82,7 @@ class MultiLineChart extends StatelessWidget {
                         TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                          fontSize: theme.textTheme.labelMedium?.fontSize,
                         ),
                       );
                     }).toList();
@@ -114,8 +113,7 @@ class MultiLineChart extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
                             series.first.data[index].label,
-                            style: TextStyle(
-                              fontSize: 10,
+                            style: theme.textTheme.labelSmall?.copyWith(
                               color: AppColors.textSecondary,
                             ),
                           ),

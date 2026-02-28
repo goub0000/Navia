@@ -41,6 +41,7 @@ class UniversityCard extends EntityCard {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: const BoxConstraints(maxWidth: 320),
@@ -66,7 +67,7 @@ class UniversityCard extends EntityCard {
             child: Row(
               children: [
                 // Logo
-                _buildLogo(),
+                _buildLogo(theme),
                 const SizedBox(width: 12),
                 // Info
                 Expanded(
@@ -75,8 +76,7 @@ class UniversityCard extends EntityCard {
                     children: [
                       Text(
                         name,
-                        style: const TextStyle(
-                          fontSize: 15,
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                         maxLines: 2,
@@ -94,8 +94,7 @@ class UniversityCard extends EntityCard {
                           Expanded(
                             child: Text(
                               location,
-                              style: TextStyle(
-                                fontSize: 12,
+                              style: theme.textTheme.labelMedium?.copyWith(
                                 color: AppColors.textSecondary,
                               ),
                               maxLines: 1,
@@ -120,8 +119,7 @@ class UniversityCard extends EntityCard {
                     ),
                     child: Text(
                       category!,
-                      style: TextStyle(
-                        fontSize: 10,
+                      style: theme.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: _getCategoryColor(),
                       ),
@@ -146,11 +144,11 @@ class UniversityCard extends EntityCard {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (rank != null)
-                    _buildStat(context.l10n.chatRankStat, '#$rank'),
+                    _buildStat(context.l10n.chatRankStat, '#$rank', theme),
                   if (acceptanceRate != null)
-                    _buildStat(context.l10n.chatAcceptStat, '${acceptanceRate!.toStringAsFixed(0)}%'),
+                    _buildStat(context.l10n.chatAcceptStat, '${acceptanceRate!.toStringAsFixed(0)}%', theme),
                   if (matchScore != null)
-                    _buildStat(context.l10n.chatMatchStat, matchScore!),
+                    _buildStat(context.l10n.chatMatchStat, matchScore!, theme),
                 ],
               ),
             ),
@@ -169,6 +167,9 @@ class UniversityCard extends EntityCard {
                       color: isFavorited ? Colors.red : AppColors.textSecondary,
                       size: 20,
                     ),
+                    tooltip: isFavorited
+                        ? context.l10n.studentResourcesFavorites
+                        : context.l10n.studentResourcesFavorites,
                     constraints: const BoxConstraints(
                       minWidth: 36,
                       minHeight: 36,
@@ -193,7 +194,7 @@ class UniversityCard extends EntityCard {
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      minimumSize: const Size(0, 36),
+                      minimumSize: const Size(48, 48),
                     ),
                     child: Text(context.l10n.chatApply),
                   ),
@@ -205,7 +206,7 @@ class UniversityCard extends EntityCard {
     );
   }
 
-  Widget _buildLogo() {
+  Widget _buildLogo(ThemeData theme) {
     if (logoUrl != null) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(8),
@@ -214,15 +215,15 @@ class UniversityCard extends EntityCard {
           width: 48,
           height: 48,
           fit: BoxFit.cover,
-          placeholder: (_, __) => _buildLogoPlaceholder(),
-          errorWidget: (_, __, ___) => _buildLogoPlaceholder(),
+          placeholder: (_, __) => _buildLogoPlaceholder(theme),
+          errorWidget: (_, __, ___) => _buildLogoPlaceholder(theme),
         ),
       );
     }
-    return _buildLogoPlaceholder();
+    return _buildLogoPlaceholder(theme);
   }
 
-  Widget _buildLogoPlaceholder() {
+  Widget _buildLogoPlaceholder(ThemeData theme) {
     return Container(
       width: 48,
       height: 48,
@@ -233,8 +234,7 @@ class UniversityCard extends EntityCard {
       child: Center(
         child: Text(
           name.isNotEmpty ? name[0].toUpperCase() : 'U',
-          style: TextStyle(
-            fontSize: 20,
+          style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.primary,
           ),
@@ -243,20 +243,18 @@ class UniversityCard extends EntityCard {
     );
   }
 
-  Widget _buildStat(String label, String value) {
+  Widget _buildStat(String label, String value, ThemeData theme) {
     return Column(
       children: [
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 14,
+          style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
         Text(
           label,
-          style: TextStyle(
-            fontSize: 10,
+          style: theme.textTheme.labelSmall?.copyWith(
             color: AppColors.textSecondary,
           ),
         ),
@@ -309,6 +307,7 @@ class CourseCard extends EntityCard {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: const BoxConstraints(maxWidth: 320),
@@ -365,8 +364,7 @@ class CourseCard extends EntityCard {
                 // Title
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                   maxLines: 2,
@@ -376,8 +374,7 @@ class CourseCard extends EntityCard {
                 // University
                 Text(
                   university,
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: theme.textTheme.labelMedium?.copyWith(
                     color: AppColors.primary,
                   ),
                 ),
@@ -417,8 +414,7 @@ class CourseCard extends EntityCard {
                       const SizedBox(width: 8),
                       Text(
                         '${(progress! * 100).toInt()}%',
-                        style: TextStyle(
-                          fontSize: 12,
+                        style: theme.textTheme.labelMedium?.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.success,
                         ),
@@ -516,6 +512,7 @@ class ApplicationCard extends EntityCard {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: const BoxConstraints(maxWidth: 320),
@@ -553,15 +550,14 @@ class ApplicationCard extends EntityCard {
                     children: [
                       Text(
                         universityName,
-                        style: const TextStyle(
-                          fontSize: 15,
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      _buildStatusChip(),
+                      _buildStatusChip(theme),
                     ],
                   ),
                 ),
@@ -632,8 +628,7 @@ class ApplicationCard extends EntityCard {
                   const SizedBox(width: 8),
                   Text(
                     context.l10n.chatDeadlineLabel(deadline!),
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: _isUrgent() ? AppColors.error : AppColors.warning,
                     ),
@@ -671,8 +666,7 @@ class ApplicationCard extends EntityCard {
                             Expanded(
                               child: Text(
                                 task,
-                                style: TextStyle(
-                                  fontSize: 12,
+                                style: theme.textTheme.labelMedium?.copyWith(
                                   color: AppColors.textSecondary,
                                 ),
                                 maxLines: 1,
@@ -756,7 +750,7 @@ class ApplicationCard extends EntityCard {
     );
   }
 
-  Widget _buildStatusChip() {
+  Widget _buildStatusChip(ThemeData theme) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -774,8 +768,7 @@ class ApplicationCard extends EntityCard {
           const SizedBox(width: 4),
           Text(
             status.toUpperCase(),
-            style: TextStyle(
-              fontSize: 10,
+            style: theme.textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w600,
               color: _getStatusColor(),
             ),

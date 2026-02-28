@@ -103,6 +103,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           onPressed: () {
             // Use canPop to check if there's something to pop, otherwise go to login
             if (context.canPop()) {
@@ -201,7 +202,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                     )
                   : Text(
                       context.l10n.forgotPasswordSendButton,
-                      style: const TextStyle(fontSize: 16),
+                      style: theme.textTheme.bodyLarge,
                     ),
             ),
           ),
@@ -239,10 +240,11 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   color: AppColors.success.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.mark_email_read,
                   size: 50,
                   color: AppColors.success,
+                  semanticLabel: context.l10n.forgotPasswordCheckEmail,
                 ),
               ),
             );

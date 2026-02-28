@@ -23,6 +23,7 @@ class LinkPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       constraints: const BoxConstraints(maxWidth: 300),
@@ -94,8 +95,7 @@ class LinkPreview extends StatelessWidget {
                   // Title
                   Text(
                     title ?? _extractDomain(url),
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: theme.textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 2,
@@ -107,8 +107,7 @@ class LinkPreview extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       description!,
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: theme.textTheme.labelMedium?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                       maxLines: 2,
@@ -238,6 +237,7 @@ class LinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 4),
       child: OutlinedButton.icon(
@@ -249,13 +249,12 @@ class LinkButton extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(fontSize: 13),
+              style: theme.textTheme.bodySmall,
             ),
             if (showDomain)
               Text(
                 _extractDomain(url),
-                style: TextStyle(
-                  fontSize: 10,
+                style: theme.textTheme.labelSmall?.copyWith(
                   color: AppColors.textSecondary,
                 ),
               ),
@@ -300,6 +299,7 @@ class LinkList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
@@ -321,21 +321,21 @@ class LinkList extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     title!,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: theme.textTheme.labelLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ),
-          ...links.map((link) => _buildLinkItem(link)),
+          ...links.map((link) => _buildLinkItem(context, link)),
         ],
       ),
     );
   }
 
-  Widget _buildLinkItem(LinkListItem link) {
+  Widget _buildLinkItem(BuildContext context, LinkListItem link) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () => _launchUrl(link.url),
       child: Padding(
@@ -354,8 +354,7 @@ class LinkList extends StatelessWidget {
                 children: [
                   Text(
                     link.title,
-                    style: TextStyle(
-                      fontSize: 13,
+                    style: theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w500,
                     ),

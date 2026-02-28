@@ -65,6 +65,7 @@ class _NotificationCenterState extends ConsumerState<NotificationCenter> {
                   ? Icons.filter_alt
                   : Icons.filter_alt_outlined,
             ),
+            tooltip: context.l10n.uniSearchFilters,
             onPressed: () => _showFilterSheet(context),
           ),
         ],

@@ -18,49 +18,68 @@ import '../../features/institution/courses/presentation/institution_course_detai
 import '../../features/institution/courses/presentation/course_content_builder_screen.dart';
 import '../../features/institution/counselors/presentation/counselors_management_screen.dart';
 import '../../features/institution/providers/institution_applicants_provider.dart';
+import '../transitions/shared_axis_page.dart';
 
 /// Institution-specific routes
 List<RouteBase> institutionRoutes = [
   GoRoute(
     path: '/institution/dashboard',
     name: 'institution-dashboard',
-    builder: (context, state) => const InstitutionDashboardScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const InstitutionDashboardScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/applicants',
     name: 'institution-applicants',
-    builder: (context, state) => const ApplicantsListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ApplicantsListScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/applicants/:id',
     name: 'institution-applicant-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final applicantId = state.pathParameters['id']!;
       // Get applicant from provider or passed via state.extra
       final applicant = state.extra as Applicant?;
 
       if (applicant != null) {
-        return ApplicantDetailScreen(applicant: applicant);
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: ApplicantDetailScreen(applicant: applicant),
+        );
       }
 
       // If no applicant passed, create a wrapper widget to fetch it
-      return _ApplicantDetailWrapper(applicantId: applicantId);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: _ApplicantDetailWrapper(applicantId: applicantId),
+      );
     },
   ),
   GoRoute(
     path: '/institution/programs',
     name: 'institution-programs',
-    builder: (context, state) => const ProgramsListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const ProgramsListScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/programs/create',
     name: 'institution-create-program',
-    builder: (context, state) => const CreateProgramScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CreateProgramScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/programs/:id',
     name: 'institution-program-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // final programId = state.pathParameters['id']!;
       // Program should be passed via state.extra
       final program = state.extra as Program?;
@@ -69,99 +88,138 @@ List<RouteBase> institutionRoutes = [
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/institution/programs');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return ProgramDetailScreen(program: program);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: ProgramDetailScreen(program: program),
+      );
     },
   ),
   GoRoute(
     path: '/institution/courses',
     name: 'institution-courses',
-    builder: (context, state) => const InstitutionCoursesScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const InstitutionCoursesScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/courses/create',
     name: 'institution-create-course',
-    builder: (context, state) => const CreateCourseScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CreateCourseScreen(),
+    ),
   ),
   GoRoute(
     path: '/institution/courses/:id',
     name: 'institution-course-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // final courseId = state.pathParameters['id']!;
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/institution/courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return InstitutionCourseDetailScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: InstitutionCourseDetailScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/institution/courses/:id/edit',
     name: 'institution-edit-course',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // final courseId = state.pathParameters['id']!;
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/institution/courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return CreateCourseScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CreateCourseScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/institution/courses/:id/permissions',
     name: 'institution-course-permissions',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // final courseId = state.pathParameters['id']!;
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/institution/courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return CoursePermissionsScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CoursePermissionsScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/institution/courses/:id/enrollments',
     name: 'institution-course-enrollments',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final course = state.extra as Course?;
       if (course == null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.go('/institution/courses');
         });
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+        return SharedAxisPage(
+          key: state.pageKey,
+          child: const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          ),
         );
       }
-      return CourseEnrollmentsScreen(course: course);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CourseEnrollmentsScreen(course: course),
+      );
     },
   ),
   GoRoute(
     path: '/institution/courses/:id/content',
     name: 'institution-course-content',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final courseId = state.pathParameters['id']!;
       final course = state.extra as Course?;
-      return CourseContentBuilderScreen(
-        courseId: courseId,
-        course: course,
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CourseContentBuilderScreen(
+          courseId: courseId,
+          course: course,
+        ),
       );
     },
   ),
@@ -169,7 +227,10 @@ List<RouteBase> institutionRoutes = [
   GoRoute(
     path: '/institution/counselors',
     name: 'institution-counselors',
-    builder: (context, state) => const CounselorsManagementScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CounselorsManagementScreen(),
+    ),
   ),
 ];
 
@@ -228,8 +289,6 @@ class _ApplicantDetailWrapper extends ConsumerWidget {
       final apiService = ref.read(applicationsApiServiceProvider);
       return await apiService.getApplication(applicantId);
     } catch (e) {
-      // Log error in production
-      // print('Error fetching applicant: $e');
       return null;
     }
   }

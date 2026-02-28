@@ -66,6 +66,7 @@ class ChatInputField extends StatelessWidget {
                 onSend(text);
               }
             },
+            tooltip: 'Send message',
             icon: Icon(Icons.send, color: AppColors.primary),
             style: IconButton.styleFrom(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),

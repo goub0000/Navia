@@ -1,10 +1,14 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/l10n_extension.dart';
 import '../../../core/models/university_model.dart';
 import '../../../core/widgets/skeletons/shimmer_effect.dart';
+import '../../../core/theme/app_motion.dart';
+import '../../chatbot/application/providers/scroll_direction_provider.dart';
+import '../../home/presentation/widgets/staggered_fade_in.dart';
 import '../repositories/university_repository.dart';
 import '../providers/university_search_provider.dart';
 
@@ -36,6 +40,12 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
   void _onScroll() {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       ref.read(universitySearchProvider.notifier).loadMore();
+    }
+    // Update scroll direction for FAB collapse/extend
+    final isDown =
+        _scrollController.position.userScrollDirection == ScrollDirection.reverse;
+    if (ref.read(isScrollingDownProvider) != isDown) {
+      ref.read(isScrollingDownProvider.notifier).state = isDown;
     }
   }
 
@@ -103,6 +113,7 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
                             icon: const Icon(Icons.clear),
+                            tooltip: context.l10n.uniSearchClearAll,
                             onPressed: () {
                               _searchController.clear();
                               ref.read(universitySearchProvider.notifier).setSearchQuery('');
@@ -210,14 +221,17 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
                                     child: Center(child: CircularProgressIndicator()),
                                   );
                                 }
-                                return _UniversityCard(
-                                  university: state.universities[index],
-                                  onTap: () {
-                                    context.push(
-                                      '/universities/${state.universities[index].id}',
-                                      extra: state.universities[index],
-                                    );
-                                  },
+                                return FadeInItem(
+                                  delay: Duration(milliseconds: 50 * (index % 20)),
+                                  child: _UniversityCard(
+                                    university: state.universities[index],
+                                    onTap: () {
+                                      context.push(
+                                        '/universities/${state.universities[index].id}',
+                                        extra: state.universities[index],
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             ),
@@ -604,8 +618,8 @@ class _FilterSection extends StatelessWidget {
   }
 }
 
-/// University card widget
-class _UniversityCard extends StatelessWidget {
+/// University card widget with hover lift effect
+class _UniversityCard extends StatefulWidget {
   final University university;
   final VoidCallback onTap;
 
@@ -615,117 +629,139 @@ class _UniversityCard extends StatelessWidget {
   });
 
   @override
+  State<_UniversityCard> createState() => _UniversityCardState();
+}
+
+class _UniversityCardState extends State<_UniversityCard> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Name and Country
-              Row(
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: AppMotion.durationShort,
+        curve: AppMotion.curveStandard,
+        transform: _isHovered
+            ? (Matrix4.identity()..translate(0.0, -2.0))
+            : Matrix4.identity(),
+        child: Card(
+          margin: const EdgeInsets.only(bottom: 12),
+          clipBehavior: Clip.antiAlias,
+          elevation: _isHovered ? 4 : 0,
+          child: InkWell(
+            onTap: widget.onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Logo placeholder
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        university.name.isNotEmpty ? university.name[0].toUpperCase() : 'U',
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          color: theme.colorScheme.onPrimaryContainer,
-                          fontWeight: FontWeight.bold,
+                  // Name and Country
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Logo placeholder
+                      Hero(
+                        tag: 'university-logo-${widget.university.id}',
+                        child: Container(
+                          width: 56,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.university.name.isNotEmpty ? widget.university.name[0].toUpperCase() : 'U',
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                color: theme.colorScheme.onPrimaryContainer,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          university.name,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: theme.colorScheme.onSurfaceVariant,
+                            Text(
+                              widget.university.name,
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Text(
-                                [
-                                  university.city,
-                                  university.state,
-                                  university.country,
-                                ].where((s) => s != null && s.isNotEmpty).join(', '),
-                                style: theme.textTheme.bodyMedium?.copyWith(
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 16,
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                                const SizedBox(width: 4),
+                                Expanded(
+                                  child: Text(
+                                    [
+                                      widget.university.city,
+                                      widget.university.state,
+                                      widget.university.country,
+                                    ].where((s) => s != null && s.isNotEmpty).join(', '),
+                                    style: theme.textTheme.bodyMedium?.copyWith(
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ],
                   ),
-                  Icon(
-                    Icons.chevron_right,
-                    color: theme.colorScheme.onSurfaceVariant,
+                  const SizedBox(height: 12),
+                  // Quick Stats
+                  Wrap(
+                    spacing: 16,
+                    runSpacing: 8,
+                    children: [
+                      if (widget.university.acceptanceRate != null)
+                        _StatChip(
+                          icon: Icons.percent,
+                          label: context.l10n.uniSearchAcceptance((widget.university.acceptanceRate! * 100).toStringAsFixed(0)),
+                        ),
+                      if (widget.university.tuitionOutState != null)
+                        _StatChip(
+                          icon: Icons.payments,
+                          label: '\$${widget.university.tuitionOutState!.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]},')}/yr',
+                        ),
+                      if (widget.university.totalStudents != null)
+                        _StatChip(
+                          icon: Icons.people,
+                          label: context.l10n.uniSearchStudents(_formatNumber(widget.university.totalStudents!)),
+                        ),
+                      if (widget.university.universityType != null)
+                        _StatChip(
+                          icon: Icons.school,
+                          label: widget.university.universityType!,
+                        ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              // Quick Stats
-              Wrap(
-                spacing: 16,
-                runSpacing: 8,
-                children: [
-                  if (university.acceptanceRate != null)
-                    _StatChip(
-                      icon: Icons.percent,
-                      label: context.l10n.uniSearchAcceptance((university.acceptanceRate! * 100).toStringAsFixed(0)),
-                    ),
-                  if (university.tuitionOutState != null)
-                    _StatChip(
-                      icon: Icons.payments,
-                      label: '\$${university.tuitionOutState!.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]},')}/yr',
-                    ),
-                  if (university.totalStudents != null)
-                    _StatChip(
-                      icon: Icons.people,
-                      label: context.l10n.uniSearchStudents(_formatNumber(university.totalStudents!)),
-                    ),
-                  if (university.universityType != null)
-                    _StatChip(
-                      icon: Icons.school,
-                      label: university.universityType!,
-                    ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -796,6 +832,7 @@ class _EmptyView extends StatelessWidget {
               Icons.search_off,
               size: 64,
               color: theme.colorScheme.onSurfaceVariant,
+              semanticLabel: context.l10n.uniSearchNoResults,
             ),
             const SizedBox(height: 16),
             Text(
@@ -846,6 +883,7 @@ class _ErrorView extends StatelessWidget {
               Icons.error_outline,
               size: 64,
               color: theme.colorScheme.error,
+              semanticLabel: context.l10n.uniSearchError,
             ),
             const SizedBox(height: 16),
             Text(

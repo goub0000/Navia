@@ -501,7 +501,7 @@ class SessionCard extends StatelessWidget {
                       style: TextButton.styleFrom(
                         foregroundColor: AppColors.error,
                         padding: EdgeInsets.zero,
-                        minimumSize: const Size(60, 30),
+                        minimumSize: const Size(60, 48),
                       ),
                     ),
                 ],

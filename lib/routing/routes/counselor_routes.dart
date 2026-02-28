@@ -5,40 +5,56 @@ import '../../features/counselor/students/presentation/students_list_screen.dart
 import '../../features/counselor/students/presentation/student_detail_screen.dart';
 import '../../features/counselor/sessions/presentation/sessions_list_screen.dart';
 import '../../features/counselor/sessions/presentation/create_session_screen.dart';
+import '../transitions/shared_axis_page.dart';
 
 /// Counselor-specific routes
 List<RouteBase> counselorRoutes = [
   GoRoute(
     path: '/counselor/dashboard',
     name: 'counselor-dashboard',
-    builder: (context, state) => const CounselorDashboardScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const CounselorDashboardScreen(),
+    ),
   ),
   GoRoute(
     path: '/counselor/students',
     name: 'counselor-students',
-    builder: (context, state) => const StudentsListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const StudentsListScreen(),
+    ),
   ),
   GoRoute(
     path: '/counselor/students/:id',
     name: 'counselor-student-detail',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       // Get student from provider using state.extra
       final student = state.extra as StudentRecord;
-      return StudentDetailScreen(student: student);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: StudentDetailScreen(student: student),
+      );
     },
   ),
   GoRoute(
     path: '/counselor/sessions',
     name: 'counselor-sessions',
-    builder: (context, state) => const SessionsListScreen(),
+    pageBuilder: (context, state) => SharedAxisPage(
+      key: state.pageKey,
+      child: const SessionsListScreen(),
+    ),
   ),
   GoRoute(
     path: '/counselor/sessions/create',
     name: 'counselor-create-session',
-    builder: (context, state) {
+    pageBuilder: (context, state) {
       final extra = state.extra as Map<String, dynamic>?;
       final student = extra?['student'] as StudentRecord?;
-      return CreateSessionScreen(student: student);
+      return SharedAxisPage(
+        key: state.pageKey,
+        child: CreateSessionScreen(student: student),
+      );
     },
   ),
 ];

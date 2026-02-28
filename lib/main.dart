@@ -222,6 +222,7 @@ class FlowApp extends ConsumerWidget {
                 children: [
                   Image.asset(
                     'assets/images/logo.png',
+                    semanticLabel: 'Flow logo',
                     width: 80,
                     height: 80,
                     errorBuilder: (context, error, stackTrace) => const Icon(

@@ -83,19 +83,22 @@ class _UniversityDetailContent extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Center(
-                      child: Text(
-                        university.name.isNotEmpty ? university.name[0].toUpperCase() : 'U',
-                        style: theme.textTheme.displayMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  child: Hero(
+                    tag: 'university-logo-${university.id}',
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.2),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                        child: Text(
+                          university.name.isNotEmpty ? university.name[0].toUpperCase() : 'U',
+                          style: theme.textTheme.displayMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
