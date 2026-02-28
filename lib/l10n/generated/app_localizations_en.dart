@@ -8107,6 +8107,75 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutPageGetInTouch => 'Get in Touch';
 
   @override
+  String get aboutPageOurTeam => 'Our Team';
+
+  @override
+  String get aboutPageTeamFounderName => 'Ogoubi F.';
+
+  @override
+  String get aboutPageTeamFounderRole => 'Founder & CEO';
+
+  @override
+  String get aboutPageTeamCtoName => 'Alex M.';
+
+  @override
+  String get aboutPageTeamCtoRole => 'Chief Technology Officer';
+
+  @override
+  String get aboutPageTeamEduName => 'Amina K.';
+
+  @override
+  String get aboutPageTeamEduRole => 'Head of Education';
+
+  @override
+  String get aboutPageTeamPartnersName => 'David O.';
+
+  @override
+  String get aboutPageTeamPartnersRole => 'Head of Partnerships';
+
+  @override
+  String get aboutPageOurJourney => 'Our Journey';
+
+  @override
+  String get aboutPageMilestone1Year => '2024';
+
+  @override
+  String get aboutPageMilestone1Title => 'Founded';
+
+  @override
+  String get aboutPageMilestone1Desc => 'Flow EdTech was founded in Accra, Ghana with a mission to transform education access across Africa.';
+
+  @override
+  String get aboutPageMilestone2Year => '2024';
+
+  @override
+  String get aboutPageMilestone2Title => 'Platform Launch';
+
+  @override
+  String get aboutPageMilestone2Desc => 'Launched the beta platform with university search and student matching features.';
+
+  @override
+  String get aboutPageMilestone3Year => '2025';
+
+  @override
+  String get aboutPageMilestone3Title => 'Regional Expansion';
+
+  @override
+  String get aboutPageMilestone3Desc => 'Expanded to cover universities across 20+ African countries.';
+
+  @override
+  String get aboutPageMilestone4Year => '2025';
+
+  @override
+  String get aboutPageMilestone4Title => '50,000+ Users';
+
+  @override
+  String get aboutPageMilestone4Desc => 'Reached 50,000 active users and 200+ partner institutions.';
+
+  @override
+  String get aboutPageOurPartners => 'Our Partners';
+
+  @override
   String get privacyPageTitle => 'Privacy Policy';
 
   @override
@@ -8260,6 +8329,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactPageSendButton => 'Send Message';
+
+  @override
+  String get contactPageFollowUs => 'Follow Us';
 
   @override
   String get contactPageNameRequired => 'Please enter your name';

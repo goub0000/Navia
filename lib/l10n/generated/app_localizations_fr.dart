@@ -8248,6 +8248,75 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutPageGetInTouch => 'Nous contacter';
 
   @override
+  String get aboutPageOurTeam => 'Notre équipe';
+
+  @override
+  String get aboutPageTeamFounderName => 'Ogoubi F.';
+
+  @override
+  String get aboutPageTeamFounderRole => 'Fondateur & PDG';
+
+  @override
+  String get aboutPageTeamCtoName => 'Alex M.';
+
+  @override
+  String get aboutPageTeamCtoRole => 'Directeur technique';
+
+  @override
+  String get aboutPageTeamEduName => 'Amina K.';
+
+  @override
+  String get aboutPageTeamEduRole => 'Responsable de l\'éducation';
+
+  @override
+  String get aboutPageTeamPartnersName => 'David O.';
+
+  @override
+  String get aboutPageTeamPartnersRole => 'Responsable des partenariats';
+
+  @override
+  String get aboutPageOurJourney => 'Notre parcours';
+
+  @override
+  String get aboutPageMilestone1Year => '2024';
+
+  @override
+  String get aboutPageMilestone1Title => 'Fondation';
+
+  @override
+  String get aboutPageMilestone1Desc => 'Flow EdTech a été fondé à Accra, au Ghana, avec pour mission de transformer l\'accès à l\'éducation en Afrique.';
+
+  @override
+  String get aboutPageMilestone2Year => '2024';
+
+  @override
+  String get aboutPageMilestone2Title => 'Lancement de la plateforme';
+
+  @override
+  String get aboutPageMilestone2Desc => 'Lancement de la version bêta avec la recherche d\'universités et le jumelage d\'étudiants.';
+
+  @override
+  String get aboutPageMilestone3Year => '2025';
+
+  @override
+  String get aboutPageMilestone3Title => 'Expansion régionale';
+
+  @override
+  String get aboutPageMilestone3Desc => 'Extension de la couverture aux universités de plus de 20 pays africains.';
+
+  @override
+  String get aboutPageMilestone4Year => '2025';
+
+  @override
+  String get aboutPageMilestone4Title => '50 000+ utilisateurs';
+
+  @override
+  String get aboutPageMilestone4Desc => 'Atteinte de 50 000 utilisateurs actifs et plus de 200 institutions partenaires.';
+
+  @override
+  String get aboutPageOurPartners => 'Nos partenaires';
+
+  @override
   String get privacyPageTitle => 'Politique de confidentialité';
 
   @override
@@ -8403,6 +8472,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get contactPageSendButton => 'Envoyer le message';
+
+  @override
+  String get contactPageFollowUs => 'Suivez-nous';
 
   @override
   String get contactPageNameRequired => 'Veuillez entrer votre nom';

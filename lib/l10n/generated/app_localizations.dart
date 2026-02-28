@@ -14870,6 +14870,144 @@ abstract class AppLocalizations {
   /// **'Get in Touch'**
   String get aboutPageGetInTouch;
 
+  /// No description provided for @aboutPageOurTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Team'**
+  String get aboutPageOurTeam;
+
+  /// No description provided for @aboutPageTeamFounderName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ogoubi F.'**
+  String get aboutPageTeamFounderName;
+
+  /// No description provided for @aboutPageTeamFounderRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Founder & CEO'**
+  String get aboutPageTeamFounderRole;
+
+  /// No description provided for @aboutPageTeamCtoName.
+  ///
+  /// In en, this message translates to:
+  /// **'Alex M.'**
+  String get aboutPageTeamCtoName;
+
+  /// No description provided for @aboutPageTeamCtoRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Chief Technology Officer'**
+  String get aboutPageTeamCtoRole;
+
+  /// No description provided for @aboutPageTeamEduName.
+  ///
+  /// In en, this message translates to:
+  /// **'Amina K.'**
+  String get aboutPageTeamEduName;
+
+  /// No description provided for @aboutPageTeamEduRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of Education'**
+  String get aboutPageTeamEduRole;
+
+  /// No description provided for @aboutPageTeamPartnersName.
+  ///
+  /// In en, this message translates to:
+  /// **'David O.'**
+  String get aboutPageTeamPartnersName;
+
+  /// No description provided for @aboutPageTeamPartnersRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Head of Partnerships'**
+  String get aboutPageTeamPartnersRole;
+
+  /// No description provided for @aboutPageOurJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Journey'**
+  String get aboutPageOurJourney;
+
+  /// No description provided for @aboutPageMilestone1Year.
+  ///
+  /// In en, this message translates to:
+  /// **'2024'**
+  String get aboutPageMilestone1Year;
+
+  /// No description provided for @aboutPageMilestone1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Founded'**
+  String get aboutPageMilestone1Title;
+
+  /// No description provided for @aboutPageMilestone1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Flow EdTech was founded in Accra, Ghana with a mission to transform education access across Africa.'**
+  String get aboutPageMilestone1Desc;
+
+  /// No description provided for @aboutPageMilestone2Year.
+  ///
+  /// In en, this message translates to:
+  /// **'2024'**
+  String get aboutPageMilestone2Year;
+
+  /// No description provided for @aboutPageMilestone2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Launch'**
+  String get aboutPageMilestone2Title;
+
+  /// No description provided for @aboutPageMilestone2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Launched the beta platform with university search and student matching features.'**
+  String get aboutPageMilestone2Desc;
+
+  /// No description provided for @aboutPageMilestone3Year.
+  ///
+  /// In en, this message translates to:
+  /// **'2025'**
+  String get aboutPageMilestone3Year;
+
+  /// No description provided for @aboutPageMilestone3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Regional Expansion'**
+  String get aboutPageMilestone3Title;
+
+  /// No description provided for @aboutPageMilestone3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Expanded to cover universities across 20+ African countries.'**
+  String get aboutPageMilestone3Desc;
+
+  /// No description provided for @aboutPageMilestone4Year.
+  ///
+  /// In en, this message translates to:
+  /// **'2025'**
+  String get aboutPageMilestone4Year;
+
+  /// No description provided for @aboutPageMilestone4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'50,000+ Users'**
+  String get aboutPageMilestone4Title;
+
+  /// No description provided for @aboutPageMilestone4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached 50,000 active users and 200+ partner institutions.'**
+  String get aboutPageMilestone4Desc;
+
+  /// No description provided for @aboutPageOurPartners.
+  ///
+  /// In en, this message translates to:
+  /// **'Our Partners'**
+  String get aboutPageOurPartners;
+
   /// No description provided for @privacyPageTitle.
   ///
   /// In en, this message translates to:
@@ -15151,6 +15289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send Message'**
   String get contactPageSendButton;
+
+  /// No description provided for @contactPageFollowUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow Us'**
+  String get contactPageFollowUs;
 
   /// No description provided for @contactPageNameRequired.
   ///

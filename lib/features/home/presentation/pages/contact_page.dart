@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/l10n_extension.dart';
 
 /// Contact page with contact form and information - fetches content from CMS
@@ -152,7 +153,47 @@ class _ContactStaticContentState extends State<_ContactStaticContent> {
           content: context.l10n.contactPageHoursValue,
           subtitle: context.l10n.contactPageHoursTimezone,
         ),
+        const SizedBox(height: 16),
+        _buildSocialLinks(theme, colorScheme),
       ],
+    );
+  }
+
+  Widget _buildSocialLinks(ThemeData theme, ColorScheme colorScheme) {
+    return Card.outlined(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              context.l10n.contactPageFollowUs,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _socialButton(Icons.close, 'https://x.com/flowedtech', colorScheme),
+                const SizedBox(width: 8),
+                _socialButton(Icons.work_outline, 'https://linkedin.com/company/flowedtech', colorScheme),
+                const SizedBox(width: 8),
+                _socialButton(Icons.facebook, 'https://facebook.com/flowedtech', colorScheme),
+                const SizedBox(width: 8),
+                _socialButton(Icons.camera_alt_outlined, 'https://instagram.com/flowedtech', colorScheme),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _socialButton(IconData icon, String url, ColorScheme colorScheme) {
+    return IconButton.outlined(
+      onPressed: () => launchUrl(Uri.parse(url)),
+      icon: Icon(icon, color: colorScheme.onSurfaceVariant),
     );
   }
 
