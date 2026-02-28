@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'dart:ui' as ui;
 import '../../../core/l10n_extension.dart';
 import '../../../core/providers/locale_provider.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/home_constants.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../authentication/providers/auth_provider.dart';
@@ -180,7 +179,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               // Wave Divider - Hero to Value Props
               SliverToBoxAdapter(
                 child: WaveDivider(
-                  color: AppColors.sectionLight,
+                  color: theme.colorScheme.surfaceContainerLowest,
                   height: 36,
                   style: WaveStyle.gentle,
                 ),
@@ -189,7 +188,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               // Value Proposition - Light background
               SliverToBoxAdapter(
                 child: Container(
-                  color: AppColors.sectionLight,
+                  color: theme.colorScheme.surfaceContainerLowest,
                   child: const _ValuePropositionSection(),
                 ),
               ),
@@ -226,7 +225,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               // User Types - Warm background
               SliverToBoxAdapter(
                 child: Container(
-                  color: AppColors.sectionWarm,
+                  color: theme.colorScheme.surfaceContainerLowest,
                   child: const _UserTypesSection(),
                 ),
               ),
@@ -257,10 +256,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
               // Minimal Footer - Dark background
               SliverToBoxAdapter(
-                child: Container(
-                  color: AppColors.sectionDark,
-                  child: _MinimalFooter(),
-                ),
+                child: _MinimalFooter(),
               ),
             ],
           ),
@@ -398,8 +394,8 @@ class _HeroSectionState extends State<_HeroSection>
                     end: Alignment.bottomRight,
                     colors: [
                       theme.colorScheme.primary.withValues(alpha: 0.10),
-                      AppColors.terracotta.withValues(alpha: 0.07),
-                      AppColors.coral.withValues(alpha: 0.05),
+                      theme.colorScheme.tertiary.withValues(alpha: 0.07),
+                      theme.colorScheme.error.withValues(alpha: 0.05),
                     ],
                     stops: [
                       0.0,
@@ -454,9 +450,9 @@ class _HeroSectionState extends State<_HeroSection>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.terracotta.withValues(alpha: 0.15),
-                        AppColors.terracotta.withValues(alpha: 0.05),
-                        AppColors.terracotta.withValues(alpha: 0.0),
+                        theme.colorScheme.tertiary.withValues(alpha: 0.15),
+                        theme.colorScheme.tertiary.withValues(alpha: 0.05),
+                        theme.colorScheme.tertiary.withValues(alpha: 0.0),
                       ],
                       stops: const [0.0, 0.6, 1.0],
                     ),
@@ -479,8 +475,8 @@ class _HeroSectionState extends State<_HeroSection>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.coral.withValues(alpha: 0.14),
-                        AppColors.coral.withValues(alpha: 0.0),
+                        theme.colorScheme.error.withValues(alpha: 0.14),
+                        theme.colorScheme.error.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -779,13 +775,13 @@ class _ValuePropositionSection extends StatelessWidget {
                     icon: Icons.payment_rounded,
                     title: context.l10n.valueMobileMoneyTitle,
                     description: context.l10n.valueMobileMoneyDesc,
-                    color: AppColors.terracotta,
+                    color: theme.colorScheme.tertiary,
                   ),
                   _ValueCard(
                     icon: Icons.translate_rounded,
                     title: context.l10n.valueMultiLangTitle,
                     description: context.l10n.valueMultiLangDesc,
-                    color: AppColors.deepOchre,
+                    color: theme.colorScheme.secondary,
                   ),
                 ],
               ),
@@ -979,8 +975,8 @@ class _QuizTeaserSection extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.sectionLight,
-            AppColors.warmSand.withValues(alpha: 0.3),
+            theme.colorScheme.surfaceContainerLowest,
+            theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
           ],
         ),
       ),
@@ -1020,7 +1016,7 @@ class _QuizTeaserSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColors.accent.withValues(alpha: 0.15),
+            color: theme.colorScheme.tertiaryContainer,
             borderRadius: BorderRadius.circular(100),
           ),
           child: Row(
@@ -1029,13 +1025,13 @@ class _QuizTeaserSection extends StatelessWidget {
               Icon(
                 Icons.explore_rounded,
                 size: 18,
-                color: AppColors.accentDark,
+                color: theme.colorScheme.onTertiaryContainer,
               ),
               const SizedBox(width: 8),
               Text(
                 context.l10n.quizBadge,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: AppColors.accentDark,
+                  color: theme.colorScheme.onTertiaryContainer,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -1178,7 +1174,7 @@ class _KeyFeaturesSection extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
                   theme.colorScheme.primaryContainer,
-                  AppColors.terracotta.withValues(alpha:0.3),
+                  theme.colorScheme.tertiary.withValues(alpha:0.3),
                 ],
               ),
               borderRadius: BorderRadius.circular(32),
@@ -1353,32 +1349,35 @@ class _UserTypesSection extends StatefulWidget {
 class _UserTypesSectionState extends State<_UserTypesSection> {
   int _selectedIndex = 0;
 
-  List<_UserType> _buildUserTypes(BuildContext context) => [
-    _UserType(
-      icon: Icons.person_rounded,
-      name: context.l10n.roleStudents,
-      description: context.l10n.roleStudentsDesc,
-      color: AppColors.studentRole,
-    ),
-    _UserType(
-      icon: Icons.business_rounded,
-      name: context.l10n.roleInstitutions,
-      description: context.l10n.roleInstitutionsDesc,
-      color: AppColors.institutionRole,
-    ),
-    _UserType(
-      icon: Icons.family_restroom_rounded,
-      name: context.l10n.roleParents,
-      description: context.l10n.roleParentsDesc,
-      color: AppColors.parentRole,
-    ),
-    _UserType(
-      icon: Icons.psychology_rounded,
-      name: context.l10n.roleCounselors,
-      description: context.l10n.roleCounselorsDesc,
-      color: AppColors.counselorRole,
-    ),
-  ];
+  List<_UserType> _buildUserTypes(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return [
+      _UserType(
+        icon: Icons.person_rounded,
+        name: context.l10n.roleStudents,
+        description: context.l10n.roleStudentsDesc,
+        color: colorScheme.primary,
+      ),
+      _UserType(
+        icon: Icons.business_rounded,
+        name: context.l10n.roleInstitutions,
+        description: context.l10n.roleInstitutionsDesc,
+        color: colorScheme.secondary,
+      ),
+      _UserType(
+        icon: Icons.family_restroom_rounded,
+        name: context.l10n.roleParents,
+        description: context.l10n.roleParentsDesc,
+        color: colorScheme.tertiary,
+      ),
+      _UserType(
+        icon: Icons.psychology_rounded,
+        name: context.l10n.roleCounselors,
+        description: context.l10n.roleCounselorsDesc,
+        color: colorScheme.error,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1579,7 +1578,7 @@ class _FinalCTASection extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             theme.colorScheme.primaryContainer.withValues(alpha:0.5),
-            AppColors.warmSand.withValues(alpha:0.3),
+            theme.colorScheme.tertiaryContainer.withValues(alpha:0.3),
           ],
         ),
       ),
@@ -1594,7 +1593,7 @@ class _FinalCTASection extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
                   theme.colorScheme.primary,
-                  AppColors.primaryDark,
+                  theme.colorScheme.primary.withValues(alpha: 0.8),
                 ],
               ),
               borderRadius: BorderRadius.circular(32),
@@ -1707,7 +1706,7 @@ class _MinimalFooter extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
       decoration: const BoxDecoration(
-        color: AppColors.sectionDark,
+        color: Color(0xFF1A1A1A),
       ),
       child: Center(
         child: ConstrainedBox(
@@ -1934,7 +1933,7 @@ class _MinimalFooter extends StatelessWidget {
                       Icon(
                         Icons.verified_user,
                         size: 16,
-                        color: AppColors.accent,
+                        color: theme.colorScheme.tertiary,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -1947,7 +1946,7 @@ class _MinimalFooter extends StatelessWidget {
                       Icon(
                         Icons.security,
                         size: 16,
-                        color: AppColors.accent,
+                        color: theme.colorScheme.tertiary,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -1960,7 +1959,7 @@ class _MinimalFooter extends StatelessWidget {
                       Icon(
                         Icons.lock,
                         size: 16,
-                        color: AppColors.accent,
+                        color: theme.colorScheme.tertiary,
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -2082,15 +2081,15 @@ class _FindYourPathSection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.accent.withValues(alpha: 0.95),
-                  AppColors.accentDark,
-                  AppColors.primary,
+                  theme.colorScheme.tertiary.withValues(alpha: 0.95),
+                  theme.colorScheme.tertiary,
+                  theme.colorScheme.primary,
                 ],
               ),
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accent.withValues(alpha: 0.4),
+                  color: theme.colorScheme.tertiary.withValues(alpha: 0.4),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                 ),
@@ -2211,7 +2210,7 @@ class _FindYourPathSection extends StatelessWidget {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      foregroundColor: AppColors.primary,
+                      foregroundColor: theme.colorScheme.primary,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 48,
                         vertical: 20,
