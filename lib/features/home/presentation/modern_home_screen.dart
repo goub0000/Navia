@@ -1691,23 +1691,20 @@ class _FinalCTASection extends StatelessWidget {
   }
 }
 
-/// Comprehensive Footer with Dark Theme
+/// M3 Footer with surfaceContainerLowest background
 class _MinimalFooter extends StatelessWidget {
+  const _MinimalFooter();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final size = MediaQuery.of(context).size;
     final isDesktop = size.width > 900;
 
-    // Use light colors for dark background
-    final textColor = Colors.white.withValues(alpha:0.9);
-    final secondaryTextColor = Colors.white.withValues(alpha:0.6);
-
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 24),
-      decoration: const BoxDecoration(
-        color: Color(0xFF1A1A1A),
-      ),
+      color: colorScheme.surfaceContainerLowest,
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),
@@ -1741,7 +1738,7 @@ class _MinimalFooter extends StatelessWidget {
                                 'Flow',
                                 style: theme.textTheme.headlineSmall?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: textColor,
+                                  color: colorScheme.onSurface,
                                 ),
                               ),
                             ],
@@ -1750,7 +1747,7 @@ class _MinimalFooter extends StatelessWidget {
                           Text(
                             context.l10n.footerTagline,
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: secondaryTextColor,
+                              color: colorScheme.onSurfaceVariant,
                               height: 1.6,
                             ),
                           ),
@@ -1763,13 +1760,12 @@ class _MinimalFooter extends StatelessWidget {
                     Expanded(
                       child: _FooterColumn(
                         title: context.l10n.footerProducts,
-                        isDark: true,
                         links: [
-                          _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login'), icon: Icons.school_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login'), icon: Icons.business_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerParentApp, () => context.go('/login'), icon: Icons.family_restroom_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login'), icon: Icons.support_agent_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerMobileApps, () => context.go('/mobile-apps'), icon: Icons.phone_iphone_outlined, isDark: true),
+                          _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login')),
+                          _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login')),
+                          _FooterLink(context.l10n.footerParentApp, () => context.go('/login')),
+                          _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login')),
+                          _FooterLink(context.l10n.footerMobileApps, () => context.go('/mobile-apps')),
                         ],
                       ),
                     ),
@@ -1779,13 +1775,12 @@ class _MinimalFooter extends StatelessWidget {
                     Expanded(
                       child: _FooterColumn(
                         title: context.l10n.footerCompany,
-                        isDark: true,
                         links: [
-                          _FooterLink(context.l10n.footerAboutUs, () => context.go('/about'), icon: Icons.info_outline, isDark: true),
-                          _FooterLink(context.l10n.footerCareers, () => context.go('/careers'), icon: Icons.work_outline, isDark: true),
-                          _FooterLink(context.l10n.footerPressKit, () => context.go('/press'), icon: Icons.newspaper_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerPartners, () => context.go('/partners'), icon: Icons.handshake_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerContact, () => context.go('/contact'), icon: Icons.mail_outline, isDark: true),
+                          _FooterLink(context.l10n.footerAboutUs, () => context.go('/about')),
+                          _FooterLink(context.l10n.footerCareers, () => context.go('/careers')),
+                          _FooterLink(context.l10n.footerPressKit, () => context.go('/press')),
+                          _FooterLink(context.l10n.footerPartners, () => context.go('/partners')),
+                          _FooterLink(context.l10n.footerContact, () => context.go('/contact')),
                         ],
                       ),
                     ),
@@ -1795,13 +1790,12 @@ class _MinimalFooter extends StatelessWidget {
                     Expanded(
                       child: _FooterColumn(
                         title: context.l10n.footerResources,
-                        isDark: true,
                         links: [
-                          _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help'), icon: Icons.help_outline, isDark: true),
-                          _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs'), icon: Icons.description_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerApiReference, () => context.go('/api-docs'), icon: Icons.code_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerCommunity, () => context.go('/community'), icon: Icons.groups_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerBlog, () => context.go('/blog'), icon: Icons.article_outlined, isDark: true),
+                          _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help')),
+                          _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs')),
+                          _FooterLink(context.l10n.footerApiReference, () => context.go('/api-docs')),
+                          _FooterLink(context.l10n.footerCommunity, () => context.go('/community')),
+                          _FooterLink(context.l10n.footerBlog, () => context.go('/blog')),
                         ],
                       ),
                     ),
@@ -1811,13 +1805,12 @@ class _MinimalFooter extends StatelessWidget {
                     Expanded(
                       child: _FooterColumn(
                         title: context.l10n.footerLegal,
-                        isDark: true,
                         links: [
-                          _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy'), icon: Icons.privacy_tip_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms'), icon: Icons.gavel_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerCookiePolicy, () => context.go('/cookies'), icon: Icons.cookie_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerDataProtection, () => context.go('/data-protection'), icon: Icons.security_outlined, isDark: true),
-                          _FooterLink(context.l10n.footerCompliance, () => context.go('/compliance'), icon: Icons.verified_outlined, isDark: true),
+                          _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy')),
+                          _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms')),
+                          _FooterLink(context.l10n.footerCookiePolicy, () => context.go('/cookies')),
+                          _FooterLink(context.l10n.footerDataProtection, () => context.go('/data-protection')),
+                          _FooterLink(context.l10n.footerCompliance, () => context.go('/compliance')),
                         ],
                       ),
                     ),
@@ -1845,7 +1838,7 @@ class _MinimalFooter extends StatelessWidget {
                           'Flow',
                           style: theme.textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: textColor,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                       ],
@@ -1854,7 +1847,7 @@ class _MinimalFooter extends StatelessWidget {
                     Text(
                       context.l10n.footerTagline,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: secondaryTextColor,
+                        color: colorScheme.onSurfaceVariant,
                         height: 1.6,
                       ),
                     ),
@@ -1867,38 +1860,34 @@ class _MinimalFooter extends StatelessWidget {
                       children: [
                         _FooterColumn(
                           title: context.l10n.footerProducts,
-                          isDark: true,
                           links: [
-                            _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login'), icon: Icons.school_outlined, isDark: true),
-                            _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login'), icon: Icons.business_outlined, isDark: true),
-                            _FooterLink(context.l10n.footerParentApp, () => context.go('/login'), icon: Icons.family_restroom_outlined, isDark: true),
-                            _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login'), icon: Icons.support_agent_outlined, isDark: true),
+                            _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login')),
+                            _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login')),
+                            _FooterLink(context.l10n.footerParentApp, () => context.go('/login')),
+                            _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login')),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerCompany,
-                          isDark: true,
                           links: [
-                            _FooterLink(context.l10n.footerAboutUs, () => context.go('/about'), icon: Icons.info_outline, isDark: true),
-                            _FooterLink(context.l10n.footerCareers, () => context.go('/careers'), icon: Icons.work_outline, isDark: true),
-                            _FooterLink(context.l10n.footerContact, () => context.go('/contact'), icon: Icons.mail_outline, isDark: true),
+                            _FooterLink(context.l10n.footerAboutUs, () => context.go('/about')),
+                            _FooterLink(context.l10n.footerCareers, () => context.go('/careers')),
+                            _FooterLink(context.l10n.footerContact, () => context.go('/contact')),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerResources,
-                          isDark: true,
                           links: [
-                            _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help'), icon: Icons.help_outline, isDark: true),
-                            _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs'), icon: Icons.description_outlined, isDark: true),
-                            _FooterLink(context.l10n.footerCommunity, () => context.go('/community'), icon: Icons.groups_outlined, isDark: true),
+                            _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help')),
+                            _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs')),
+                            _FooterLink(context.l10n.footerCommunity, () => context.go('/community')),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerLegal,
-                          isDark: true,
                           links: [
-                            _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy'), icon: Icons.privacy_tip_outlined, isDark: true),
-                            _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms'), icon: Icons.gavel_outlined, isDark: true),
+                            _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy')),
+                            _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms')),
                           ],
                         ),
                       ],
@@ -1909,12 +1898,12 @@ class _MinimalFooter extends StatelessWidget {
 
               const SizedBox(height: 48),
 
-              // Divider
-              Divider(color: Colors.white.withValues(alpha:0.2)),
+              // M3 Divider
+              Divider(color: colorScheme.outlineVariant),
 
               const SizedBox(height: 24),
 
-              // Bottom Section - Copyright and Trust Badges
+              // Bottom Section - Copyright and Compliance Chips
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -1924,49 +1913,27 @@ class _MinimalFooter extends StatelessWidget {
                   Text(
                     context.l10n.footerCopyright,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: secondaryTextColor,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
                     children: [
-                      Icon(
-                        Icons.verified_user,
-                        size: 16,
-                        color: theme.colorScheme.tertiary,
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        label: Text(context.l10n.footerSoc2),
+                        side: BorderSide(color: colorScheme.outlineVariant),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        context.l10n.footerSoc2,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: secondaryTextColor,
-                        ),
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        label: Text(context.l10n.footerIso27001),
+                        side: BorderSide(color: colorScheme.outlineVariant),
                       ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.security,
-                        size: 16,
-                        color: theme.colorScheme.tertiary,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        context.l10n.footerIso27001,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: secondaryTextColor,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.lock,
-                        size: 16,
-                        color: theme.colorScheme.tertiary,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        context.l10n.footerGdpr,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: secondaryTextColor,
-                        ),
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        label: Text(context.l10n.footerGdpr),
+                        side: BorderSide(color: colorScheme.outlineVariant),
                       ),
                     ],
                   ),
@@ -1984,12 +1951,10 @@ class _MinimalFooter extends StatelessWidget {
 class _FooterColumn extends StatelessWidget {
   final String title;
   final List<_FooterLink> links;
-  final bool isDark;
 
   const _FooterColumn({
     required this.title,
     required this.links,
-    this.isDark = false,
   });
 
   @override
@@ -2003,7 +1968,7 @@ class _FooterColumn extends StatelessWidget {
           title,
           style: theme.textTheme.titleSmall?.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white.withValues(alpha:0.9) : null,
+            color: theme.colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 16),
@@ -2013,48 +1978,30 @@ class _FooterColumn extends StatelessWidget {
   }
 }
 
-/// Footer Link Widget with optional icon
+/// Footer Link as clean M3 TextButton
 class _FooterLink extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final IconData? icon;
-  final bool isDark;
 
-  const _FooterLink(this.text, this.onPressed, {this.icon, this.isDark = false});
+  const _FooterLink(this.text, this.onPressed);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textColor = isDark ? Colors.white.withValues(alpha:0.7) : theme.colorScheme.onSurfaceVariant;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(4),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  size: 16,
-                  color: textColor,
-                ),
-                const SizedBox(width: 8),
-              ],
-              Flexible(
-                child: Text(
-                  text,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: textColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
+      padding: const EdgeInsets.only(bottom: 4),
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          foregroundColor: theme.colorScheme.onSurfaceVariant,
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: Text(
+          text,
+          style: theme.textTheme.bodyMedium,
         ),
       ),
     );
