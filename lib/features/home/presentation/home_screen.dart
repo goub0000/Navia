@@ -7,6 +7,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/appearance_provider.dart';
 import '../../../core/l10n_extension.dart';
+import 'dart:async';
 import 'dart:math' as math;
 import 'widgets/animated_section.dart' show VisibilityDetector;
 import '../data/testimonials_data.dart';
@@ -835,59 +836,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             // Trusted Institutions Carousel
             const _TrustedInstitutionsRow(),
 
-            // Testimonials Section
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.surface,
-                    AppColors.surfaceContainerHighest,
-                    AppColors.surface,
-                  ],
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    context.l10n.homeNavTrustedAcrossAfrica,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      _TestimonialCard(
-                        name: 'Amina Mensah',
-                        role: context.l10n.homeNavTestimonialRole1,
-                        quote: context.l10n.homeNavTestimonialQuote1,
-                        avatarColor: AppColors.studentRole,
-                      ),
-                      _TestimonialCard(
-                        name: 'Dr. Kwame Nkrumah',
-                        role: context.l10n.homeNavTestimonialRole2,
-                        quote: context.l10n.homeNavTestimonialQuote2,
-                        avatarColor: AppColors.institutionRole,
-                      ),
-                      _TestimonialCard(
-                        name: 'Sarah Okonkwo',
-                        role: context.l10n.homeNavTestimonialRole3,
-                        quote: context.l10n.homeNavTestimonialQuote3,
-                        avatarColor: AppColors.parentRole,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            // Testimonials Carousel
+            const _TestimonialsCarousel(),
 
             // Account Types Section
             _AccountTypesSection(),
@@ -1451,54 +1401,221 @@ class _HowItWorksStep extends StatelessWidget {
   }
 }
 
-class _TestimonialCard extends StatelessWidget {
-  final String name;
-  final String role;
-  final String quote;
-  final Color avatarColor;
+class _TestimonialsCarousel extends StatefulWidget {
+  const _TestimonialsCarousel();
 
-  const _TestimonialCard({
-    required this.name,
-    required this.role,
-    required this.quote,
-    required this.avatarColor,
-  });
+  @override
+  State<_TestimonialsCarousel> createState() => _TestimonialsCarouselState();
+}
+
+class _TestimonialsCarouselState extends State<_TestimonialsCarousel> {
+  late final PageController _pageController;
+  Timer? _autoScrollTimer;
+  int _currentPage = 0;
+  bool _userInteracting = false;
+
+  List<TestimonialData> get _testimonials => Testimonials.all;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.85);
+    _startAutoScroll();
+  }
+
+  @override
+  void dispose() {
+    _autoScrollTimer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _startAutoScroll() {
+    _autoScrollTimer?.cancel();
+    _autoScrollTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!_userInteracting && mounted) {
+        final nextPage = (_currentPage + 1) % _testimonials.length;
+        _pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: avatarColor.withValues(alpha: 0.2), width: 1),
-      ),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundColor: avatarColor,
-                child: Text(name.split(' ').map((n) => n[0]).take(2).join(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              context.l10n.homeNavTrustedAcrossAfrica,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-                    Text(role, style: TextStyle(color: avatarColor, fontSize: 9)),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 6),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(5, (i) => Icon(Icons.star, size: 12, color: AppColors.accent))),
-          const SizedBox(height: 6),
-          Text('"$quote"', style: TextStyle(color: AppColors.textSecondary, fontStyle: FontStyle.italic, fontSize: 10), textAlign: TextAlign.center, maxLines: 3, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 16),
+
+          // PageView carousel
+          SizedBox(
+            height: 240,
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification is ScrollStartNotification &&
+                    notification.dragDetails != null) {
+                  _userInteracting = true;
+                  _autoScrollTimer?.cancel();
+                } else if (notification is ScrollEndNotification) {
+                  _userInteracting = false;
+                  _startAutoScroll();
+                }
+                return false;
+              },
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _testimonials.length,
+                onPageChanged: (index) {
+                  setState(() => _currentPage = index);
+                },
+                itemBuilder: (context, index) {
+                  final testimonial = _testimonials[index];
+                  return AnimatedBuilder(
+                    animation: _pageController,
+                    builder: (context, child) {
+                      double value = 1.0;
+                      if (_pageController.position.haveDimensions) {
+                        value = (_pageController.page! - index).abs().clamp(0.0, 1.0);
+                      }
+                      final isActive = value < 0.5;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        child: Card.elevated(
+                          elevation: isActive ? 4 : 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Quote icon
+                                Icon(
+                                  Icons.format_quote,
+                                  size: 28,
+                                  color: colorScheme.primary,
+                                ),
+                                const SizedBox(height: 8),
+
+                                // Quote text
+                                Expanded(
+                                  child: Text(
+                                    '"${testimonial.quote}"',
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      fontStyle: FontStyle.italic,
+                                      color: colorScheme.onSurface,
+                                    ),
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+
+                                // Outcome chip
+                                Chip(
+                                  avatar: Icon(Icons.verified, size: 16, color: colorScheme.onTertiaryContainer),
+                                  label: Text(
+                                    testimonial.outcome,
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      color: colorScheme.onTertiaryContainer,
+                                    ),
+                                  ),
+                                  backgroundColor: colorScheme.tertiaryContainer,
+                                  side: BorderSide.none,
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                const SizedBox(height: 12),
+
+                                // Attribution
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: colorScheme.primaryContainer,
+                                      child: Text(
+                                        testimonial.name
+                                            .split(' ')
+                                            .where((w) => w.isNotEmpty)
+                                            .map((w) => w[0])
+                                            .take(2)
+                                            .join(),
+                                        style: theme.textTheme.labelMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: colorScheme.onPrimaryContainer,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            testimonial.name,
+                                            style: theme.textTheme.titleSmall,
+                                          ),
+                                          Text(
+                                            '${testimonial.role}, ${testimonial.university}',
+                                            style: theme.textTheme.labelMedium?.copyWith(
+                                              color: colorScheme.onSurfaceVariant,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Page indicator
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(_testimonials.length, (index) {
+              final isActive = index == _currentPage;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                width: isActive ? 24 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: isActive
+                      ? colorScheme.primary
+                      : colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              );
+            }),
+          ),
         ],
       ),
     );
