@@ -938,51 +938,100 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             // Footer
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primaryDark, AppColors.primary],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              color: theme.colorScheme.surfaceContainerLowest,
               child: Column(
                 children: [
+                  // Brand
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.school, color: AppColors.accent, size: 20),
-                      const SizedBox(width: 6),
-                      Text(context.l10n.homeNavFlowEdTech, style: theme.textTheme.titleMedium?.copyWith(color: AppColors.textOnPrimary, fontWeight: FontWeight.bold)),
+                      Icon(Icons.school, color: theme.colorScheme.primary, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        context.l10n.homeNavFlowEdTech,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
+
                   // Quick Links
                   Wrap(
-                    spacing: 12,
+                    spacing: 4,
                     runSpacing: 4,
                     alignment: WrapAlignment.center,
                     children: [
-                      _FooterLink(label: context.l10n.homeNavAbout, onTap: () {}),
-                      _FooterLink(label: context.l10n.homeNavContact, onTap: () {}),
-                      _FooterLink(label: context.l10n.homeNavPrivacy, onTap: () {}),
-                      _FooterLink(label: context.l10n.homeNavTerms, onTap: () {}),
+                      TextButton(
+                        onPressed: () => context.go('/about'),
+                        child: Text(context.l10n.homeNavAbout),
+                      ),
+                      TextButton(
+                        onPressed: () => context.go('/contact'),
+                        child: Text(context.l10n.homeNavContact),
+                      ),
+                      TextButton(
+                        onPressed: () => context.go('/privacy'),
+                        child: Text(context.l10n.homeNavPrivacy),
+                      ),
+                      TextButton(
+                        onPressed: () => context.go('/terms'),
+                        child: Text(context.l10n.homeNavTerms),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
+
+                  Divider(color: theme.colorScheme.outlineVariant),
+                  const SizedBox(height: 16),
+
+                  // Compliance badges
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                        label: Text(context.l10n.footerSoc2),
+                        side: BorderSide.none,
+                        visualDensity: VisualDensity.compact,
+                      ),
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                        label: Text(context.l10n.footerIso27001),
+                        side: BorderSide.none,
+                        visualDensity: VisualDensity.compact,
+                      ),
+                      Chip(
+                        avatar: Icon(Icons.verified_outlined, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                        label: Text(context.l10n.footerGdpr),
+                        side: BorderSide.none,
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Copyright + scroll to top
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(context.l10n.homeNavCopyright, style: TextStyle(color: AppColors.textSecondary, fontSize: 10)),
-                      InkWell(
-                        onTap: _scrollToTop,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.arrow_upward, size: 12, color: AppColors.accent),
-                            const SizedBox(width: 4),
-                            Text(context.l10n.homeNavTop, style: TextStyle(color: AppColors.accent, fontSize: 10)),
-                          ],
+                      Text(
+                        context.l10n.homeNavCopyright,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: _scrollToTop,
+                        icon: const Icon(Icons.arrow_upward, size: 14),
+                        label: Text(context.l10n.homeNavTop),
+                        style: TextButton.styleFrom(
+                          visualDensity: VisualDensity.compact,
                         ),
                       ),
                     ],
@@ -1097,30 +1146,6 @@ class _HeroStatCardState extends State<_HeroStatCard>
 }
 
 
-class _FooterLink extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const _FooterLink({
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Text(
-        label,
-        style: TextStyle(
-          color: AppColors.textOnPrimary.withValues(alpha: 0.9),
-          fontSize: 14,
-          decoration: TextDecoration.underline,
-        ),
-      ),
-    );
-  }
-}
 
 
 
