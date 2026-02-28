@@ -9,6 +9,7 @@ import '../../../core/providers/appearance_provider.dart';
 import '../../../core/l10n_extension.dart';
 import 'dart:math' as math;
 import 'widgets/animated_section.dart' show VisibilityDetector;
+import '../data/testimonials_data.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -755,6 +756,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 ],
               ),
             ),
+
+            // Trusted Institutions Carousel
+            const _TrustedInstitutionsRow(),
 
             // Testimonials Section
             Container(
@@ -1687,5 +1691,261 @@ class _MeshGradientPainter extends CustomPainter {
   @override
   bool shouldRepaint(_MeshGradientPainter oldDelegate) {
     return oldDelegate.animationValue != animationValue;
+  }
+}
+
+class _TrustedInstitutionsRow extends StatefulWidget {
+  const _TrustedInstitutionsRow();
+
+  @override
+  State<_TrustedInstitutionsRow> createState() =>
+      _TrustedInstitutionsRowState();
+}
+
+class _TrustedInstitutionsRowState extends State<_TrustedInstitutionsRow>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _shimmerController;
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _shimmerController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+    // Simulate brief data-load delay, then reveal real tiles
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted) {
+        setState(() => _loaded = true);
+        _shimmerController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final partners = PartnerUniversities.all;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.socialProofTitle,
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 100,
+            child: _loaded
+                ? ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    clipBehavior: Clip.none,
+                    itemCount: partners.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final partner = partners[index];
+                      return _InstitutionTile(partner: partner);
+                    },
+                  )
+                : AnimatedBuilder(
+                    animation: _shimmerController,
+                    builder: (context, _) {
+                      return ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        clipBehavior: Clip.none,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 4,
+                        separatorBuilder: (_, __) =>
+                            const SizedBox(width: 12),
+                        itemBuilder: (context, index) {
+                          return _ShimmerTile(
+                            animationValue: _shimmerController.value,
+                          );
+                        },
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InstitutionTile extends StatelessWidget {
+  final UniversityPartner partner;
+
+  const _InstitutionTile({required this.partner});
+
+  String _countryFlag(String country) {
+    const flags = {
+      'Ghana': '🇬🇭',
+      'Kenya': '🇰🇪',
+      'Nigeria': '🇳🇬',
+      'South Africa': '🇿🇦',
+      'Uganda': '🇺🇬',
+    };
+    return flags[country] ?? '🌍';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final initials = partner.name
+        .split(' ')
+        .where((w) => w.isNotEmpty && w[0] == w[0].toUpperCase())
+        .map((w) => w[0])
+        .take(2)
+        .join();
+
+    return Card.outlined(
+      clipBehavior: Clip.antiAlias,
+      child: InkResponse(
+        onTap: () {},
+        splashFactory: InkSparkle.splashFactory,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Avatar with flag overlay
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: colorScheme.tertiaryContainer,
+                      child: Text(
+                        initials,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onTertiaryContainer,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -2,
+                      right: -2,
+                      child: Text(
+                        _countryFlag(partner.country),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    partner.name,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  Text(
+                    partner.country,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ShimmerTile extends StatelessWidget {
+  final double animationValue;
+
+  const _ShimmerTile({required this.animationValue});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final baseColor = colorScheme.surfaceContainerHighest;
+    final highlightColor = colorScheme.surfaceContainerLow;
+
+    return SizedBox(
+      width: 200,
+      child: Card.outlined(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              // Shimmer circle
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    begin: Alignment(-1.0 + 2.0 * animationValue, 0),
+                    end: Alignment(-0.5 + 2.0 * animationValue, 0),
+                    colors: [baseColor, highlightColor, baseColor],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 14,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: LinearGradient(
+                          begin: Alignment(-1.0 + 2.0 * animationValue, 0),
+                          end: Alignment(-0.5 + 2.0 * animationValue, 0),
+                          colors: [baseColor, highlightColor, baseColor],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      height: 10,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        gradient: LinearGradient(
+                          begin: Alignment(-1.0 + 2.0 * animationValue, 0),
+                          end: Alignment(-0.5 + 2.0 * animationValue, 0),
+                          colors: [baseColor, highlightColor, baseColor],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
