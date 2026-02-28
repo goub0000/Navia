@@ -1069,7 +1069,7 @@ class _FooterLink extends StatelessWidget {
 
 
 
-class _PlatformFeature extends StatelessWidget {
+class _PlatformFeature extends StatefulWidget {
   final IconData icon;
   final String title;
   final String description;
@@ -1081,24 +1081,80 @@ class _PlatformFeature extends StatelessWidget {
   });
 
   @override
+  State<_PlatformFeature> createState() => _PlatformFeatureState();
+}
+
+class _PlatformFeatureState extends State<_PlatformFeature> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 160,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.15), width: 1),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 24, color: AppColors.primary),
-          const SizedBox(height: 6),
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textPrimary, fontSize: 12), textAlign: TextAlign.center),
-          const SizedBox(height: 2),
-          Text(description, style: TextStyle(color: AppColors.textSecondary, fontSize: 10), textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis),
-        ],
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutCubic,
+        transform: Matrix4.translationValues(0, _isHovered ? -4 : 0, 0),
+        child: Card.elevated(
+          elevation: _isHovered ? 3 : 1,
+          clipBehavior: Clip.antiAlias,
+          color: _isHovered
+              ? Color.alphaBlend(
+                  colorScheme.primary.withValues(alpha: 0.08),
+                  colorScheme.surface,
+                )
+              : colorScheme.surface,
+          child: InkResponse(
+            onTap: () {},
+            splashFactory: InkSparkle.splashFactory,
+            child: SizedBox(
+              width: 160,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: colorScheme.primaryContainer,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        widget.icon,
+                        size: 24,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.title,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: colorScheme.onSurface,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      widget.description,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
