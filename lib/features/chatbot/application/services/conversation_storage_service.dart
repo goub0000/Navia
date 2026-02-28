@@ -68,31 +68,35 @@ class ConversationStorageService {
     await prefs.setString(_conversationsKey, json.encode(jsonList));
 
     // Save to backend for admin tracking and cross-device sync
-    try {
-      final userMessageCount = conversation.messages.where((m) => m.sender == SenderType.user).length;
-      final botMessageCount = conversation.messages.where((m) => m.sender == SenderType.bot).length;
+    // Only attempt sync when authenticated (backend requires a valid token)
+    final token = authService?.accessToken;
+    if (token != null) {
+      try {
+        final userMessageCount = conversation.messages.where((m) => m.sender == SenderType.user).length;
+        final botMessageCount = conversation.messages.where((m) => m.sender == SenderType.bot).length;
 
-      final body = {
-        'id': conversation.id,
-        'user_id': conversation.userId,
-        'user_name': conversation.userName,
-        'user_email': conversation.userEmail,
-        'status': conversation.status.toString().split('.').last,
-        'message_count': conversation.messageCount,
-        'user_message_count': userMessageCount,
-        'bot_message_count': botMessageCount,
-        'created_at': conversation.startTime.toIso8601String(),
-        'updated_at': conversation.lastMessageTime.toIso8601String(),
-      };
+        final body = {
+          'id': conversation.id,
+          'user_id': conversation.userId,
+          'user_name': conversation.userName,
+          'user_email': conversation.userEmail,
+          'status': conversation.status.toString().split('.').last,
+          'message_count': conversation.messageCount,
+          'user_message_count': userMessageCount,
+          'bot_message_count': botMessageCount,
+          'created_at': conversation.startTime.toIso8601String(),
+          'updated_at': conversation.lastMessageTime.toIso8601String(),
+        };
 
-      await http.post(
-        Uri.parse('$_baseUrl/api/v1/chatbot/conversations/sync'),
-        headers: _getHeaders(),
-        body: jsonEncode(body),
-      ).timeout(const Duration(seconds: 10));
+        await http.post(
+          Uri.parse('$_baseUrl/api/v1/chatbot/conversations/sync'),
+          headers: _getHeaders(),
+          body: jsonEncode(body),
+        ).timeout(const Duration(seconds: 10));
 
-    } catch (e) {
-      // Don't fail the entire operation if backend sync fails
+      } catch (e) {
+        // Don't fail the entire operation if backend sync fails
+      }
     }
   }
 
@@ -139,14 +143,16 @@ class ConversationStorageService {
     final jsonList = conversations.map((c) => c.toJson()).toList();
     await prefs.setString(_conversationsKey, json.encode(jsonList));
 
-    // Also delete from backend
-    try {
-      await http.delete(
-        Uri.parse('$_baseUrl/api/v1/chatbot/conversations/$id'),
-        headers: _getHeaders(),
-      ).timeout(const Duration(seconds: 10));
-    } catch (e) {
-      // Backend delete failed silently
+    // Also delete from backend (only when authenticated)
+    if (authService?.accessToken != null) {
+      try {
+        await http.delete(
+          Uri.parse('$_baseUrl/api/v1/chatbot/conversations/$id'),
+          headers: _getHeaders(),
+        ).timeout(const Duration(seconds: 10));
+      } catch (e) {
+        // Backend delete failed silently
+      }
     }
   }
 
