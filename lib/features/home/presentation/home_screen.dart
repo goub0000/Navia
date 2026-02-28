@@ -10,6 +10,7 @@ import '../../../core/l10n_extension.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'widgets/animated_section.dart' show VisibilityDetector;
+import 'widgets/mini_quiz_preview.dart';
 import '../data/testimonials_data.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -229,6 +230,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: _buildNavigationDrawer(context, theme),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            showDragHandle: true,
+            useSafeArea: true,
+            builder: (context) => DraggableScrollableSheet(
+              initialChildSize: 0.85,
+              minChildSize: 0.5,
+              maxChildSize: 0.95,
+              expand: false,
+              builder: (context, scrollController) => SingleChildScrollView(
+                controller: scrollController,
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                child: const MiniQuizPreview(),
+              ),
+            ),
+          );
+        },
+        icon: const Icon(Icons.explore),
+        label: Text(context.l10n.quizFindYourPath),
+      ),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
