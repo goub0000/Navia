@@ -696,65 +696,78 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             ),
 
             // Key Features Section
-            Container(
-              width: double.infinity,
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.surface,
-                    AppColors.surfaceContainerHighest,
-                  ],
-                ),
-              ),
               child: Column(
                 children: [
                   Text(
                     context.l10n.homeNavPlatformFeatures,
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      _PlatformFeature(
-                        icon: Icons.offline_bolt,
-                        title: context.l10n.homeNavOfflineFirst,
-                        description: context.l10n.homeNavOfflineFirstDesc,
-                      ),
-                      _PlatformFeature(
-                        icon: Icons.payment,
-                        title: context.l10n.homeNavMobileMoney,
-                        description: context.l10n.homeNavMobileMoneyDesc,
-                      ),
-                      _PlatformFeature(
-                        icon: Icons.language,
-                        title: context.l10n.homeNavMultiLang,
-                        description: context.l10n.homeNavMultiLangDesc,
-                      ),
-                      _PlatformFeature(
-                        icon: Icons.security,
-                        title: context.l10n.homeNavSecure,
-                        description: context.l10n.homeNavSecureDesc,
-                      ),
-                      _PlatformFeature(
-                        icon: Icons.phone_android,
-                        title: context.l10n.homeNavUssd,
-                        description: context.l10n.homeNavUssdDesc,
-                      ),
-                      _PlatformFeature(
-                        icon: Icons.cloud_sync,
-                        title: context.l10n.homeNavCloudSync,
-                        description: context.l10n.homeNavCloudSyncDesc,
-                      ),
-                    ],
+                  const SizedBox(height: 48),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final featureList = Card.filled(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _FeatureListTile(
+                              icon: Icons.offline_bolt,
+                              title: context.l10n.homeNavOfflineFirst,
+                              subtitle: context.l10n.homeNavOfflineFirstDesc,
+                            ),
+                            _FeatureListTile(
+                              icon: Icons.payment,
+                              title: context.l10n.homeNavMobileMoney,
+                              subtitle: context.l10n.homeNavMobileMoneyDesc,
+                            ),
+                            _FeatureListTile(
+                              icon: Icons.language,
+                              title: context.l10n.homeNavMultiLang,
+                              subtitle: context.l10n.homeNavMultiLangDesc,
+                            ),
+                            _FeatureListTile(
+                              icon: Icons.security,
+                              title: context.l10n.homeNavSecure,
+                              subtitle: context.l10n.homeNavSecureDesc,
+                            ),
+                            _FeatureListTile(
+                              icon: Icons.phone_android,
+                              title: context.l10n.homeNavUssd,
+                              subtitle: context.l10n.homeNavUssdDesc,
+                            ),
+                            _FeatureListTile(
+                              icon: Icons.cloud_sync,
+                              title: context.l10n.homeNavCloudSync,
+                              subtitle: context.l10n.homeNavCloudSyncDesc,
+                            ),
+                          ],
+                        ),
+                      );
+
+                      final mockup = _DeviceMockup();
+
+                      if (constraints.maxWidth >= 600) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: featureList),
+                            const SizedBox(width: 24),
+                            Expanded(child: mockup),
+                          ],
+                        );
+                      }
+                      return Column(
+                        children: [
+                          featureList,
+                          const SizedBox(height: 24),
+                          mockup,
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -1135,91 +1148,254 @@ class _FooterLink extends StatelessWidget {
 
 
 
-class _PlatformFeature extends StatefulWidget {
+class _FeatureListTile extends StatelessWidget {
   final IconData icon;
   final String title;
-  final String description;
+  final String subtitle;
 
-  const _PlatformFeature({
+  const _FeatureListTile({
     required this.icon,
     required this.title,
-    required this.description,
+    required this.subtitle,
   });
-
-  @override
-  State<_PlatformFeature> createState() => _PlatformFeatureState();
-}
-
-class _PlatformFeatureState extends State<_PlatformFeature> {
-  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOutCubic,
-        transform: Matrix4.translationValues(0, _isHovered ? -4 : 0, 0),
-        child: Card.elevated(
-          elevation: _isHovered ? 3 : 1,
-          clipBehavior: Clip.antiAlias,
-          color: _isHovered
-              ? Color.alphaBlend(
-                  colorScheme.primary.withValues(alpha: 0.08),
-                  colorScheme.surface,
-                )
-              : colorScheme.surface,
-          child: InkResponse(
-            onTap: () {},
-            splashFactory: InkSparkle.splashFactory,
-            child: SizedBox(
-              width: 160,
+    return ListTile(
+      leading: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: colorScheme.secondaryContainer,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, size: 20, color: colorScheme.onSecondaryContainer),
+      ),
+      title: Text(
+        title,
+        style: theme.textTheme.titleMedium,
+      ),
+      subtitle: Text(
+        subtitle,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+}
+
+class _DeviceMockup extends StatelessWidget {
+  const _DeviceMockup();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return AspectRatio(
+      aspectRatio: 0.75,
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 2,
+          ),
+        ),
+        child: Column(
+          children: [
+            // Phone status bar
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainer,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: colorScheme.outline,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(Icons.wifi, size: 14, color: colorScheme.onSurfaceVariant),
+                  const SizedBox(width: 4),
+                  Icon(Icons.battery_full, size: 14, color: colorScheme.onSurfaceVariant),
+                ],
+              ),
+            ),
+
+            // App bar wireframe
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              color: colorScheme.primaryContainer,
+              child: Row(
+                children: [
+                  Icon(Icons.menu, size: 18, color: colorScheme.onPrimaryContainer),
+                  const SizedBox(width: 12),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Container(
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: colorScheme.onPrimaryContainer.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Icon(Icons.account_circle, size: 18, color: colorScheme.onPrimaryContainer),
+                ],
+              ),
+            ),
+
+            // Content area wireframe
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Search bar wireframe
                     Container(
-                      width: 56,
-                      height: 56,
+                      height: 32,
                       decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        shape: BoxShape.circle,
+                        color: colorScheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: colorScheme.outlineVariant),
                       ),
-                      child: Icon(
-                        widget.icon,
-                        size: 24,
-                        color: colorScheme.onPrimaryContainer,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search, size: 14, color: colorScheme.onSurfaceVariant),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Container(
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.title,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: colorScheme.onSurface,
+                    const SizedBox(height: 12),
+
+                    // Card wireframes
+                    for (var i = 0; i < 3; i++) ...[
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: colorScheme.surfaceContainerLow,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      color: i == 0
+                                          ? colorScheme.primaryContainer
+                                          : i == 1
+                                              ? colorScheme.secondaryContainer
+                                              : colorScheme.tertiaryContainer,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      i == 0 ? Icons.school : i == 1 ? Icons.trending_up : Icons.star,
+                                      size: 12,
+                                      color: i == 0
+                                          ? colorScheme.onPrimaryContainer
+                                          : i == 1
+                                              ? colorScheme.onSecondaryContainer
+                                              : colorScheme.onTertiaryContainer,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Container(
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        color: colorScheme.onSurface.withValues(alpha: 0.15),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 6,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Container(
+                                height: 6,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      widget.description,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                      if (i < 2) const SizedBox(height: 8),
+                    ],
                   ],
                 ),
               ),
             ),
-          ),
+
+            // Bottom nav wireframe
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainer,
+                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(22)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.home_filled, size: 18, color: colorScheme.primary),
+                  Icon(Icons.search, size: 18, color: colorScheme.onSurfaceVariant),
+                  Icon(Icons.school_outlined, size: 18, color: colorScheme.onSurfaceVariant),
+                  Icon(Icons.person_outline, size: 18, color: colorScheme.onSurfaceVariant),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
