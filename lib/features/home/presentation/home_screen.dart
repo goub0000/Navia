@@ -16,6 +16,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -32,24 +33,155 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
+  Widget _buildNavigationDrawer(BuildContext context, ThemeData theme) {
+    final drawerRoutes = ['/universities', '/about', '/contact'];
+    return NavigationDrawer(
+      onDestinationSelected: (index) {
+        Navigator.pop(context);
+        context.go(drawerRoutes[index]);
+      },
+      children: [
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          child: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: theme.colorScheme.primary, width: 2),
+                ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Flow',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        NavigationDrawerDestination(
+          icon: const Icon(Icons.school_outlined),
+          selectedIcon: const Icon(Icons.school),
+          label: Text(context.l10n.navUniversities),
+        ),
+        NavigationDrawerDestination(
+          icon: const Icon(Icons.info_outlined),
+          selectedIcon: const Icon(Icons.info),
+          label: Text(context.l10n.homeNavAbout),
+        ),
+        NavigationDrawerDestination(
+          icon: const Icon(Icons.contact_mail_outlined),
+          selectedIcon: const Icon(Icons.contact_mail),
+          label: Text(context.l10n.homeNavContact),
+        ),
+        const Divider(indent: 28, endIndent: 28),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+          child: Text(
+            context.l10n.homeNavAccountTypes,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.school, color: AppColors.studentRole),
+          title: Text(context.l10n.homeNavStudents),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          onTap: () => Navigator.pop(context),
+        ),
+        ListTile(
+          leading: Icon(Icons.business, color: AppColors.institutionRole),
+          title: Text(context.l10n.homeNavInstitutions),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          onTap: () => Navigator.pop(context),
+        ),
+        ListTile(
+          leading: Icon(Icons.family_restroom, color: AppColors.parentRole),
+          title: Text(context.l10n.homeNavParents),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          onTap: () => Navigator.pop(context),
+        ),
+        ListTile(
+          leading: Icon(Icons.psychology, color: AppColors.counselorRole),
+          title: Text(context.l10n.homeNavCounselors),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          onTap: () => Navigator.pop(context),
+        ),
+        ListTile(
+          leading: Icon(Icons.rate_review, color: AppColors.recommenderRole),
+          title: Text(context.l10n.homeNavRecommenders),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          onTap: () => Navigator.pop(context),
+        ),
+        const Divider(indent: 28, endIndent: 28),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.go('/login');
+                  },
+                  child: Text(context.l10n.homeNavSignIn),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FilledButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.go('/register');
+                  },
+                  child: Text(context.l10n.homeNavGetStarted),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: _buildNavigationDrawer(context, theme),
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
           // AppBar / Navigation Header
           SliverAppBar(
             expandedHeight: 80,
-            floating: false,
+            floating: true,
+            snap: true,
             pinned: true,
-            backgroundColor: AppColors.surface,
-            elevation: 2,
+            backgroundColor: theme.colorScheme.surfaceContainerLow,
+            surfaceTintColor: theme.colorScheme.surfaceTint,
+            scrolledUnderElevation: 2,
+            elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                color: AppColors.surface,
+                color: theme.colorScheme.surfaceContainerLow,
               ),
               titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               title: LayoutBuilder(
@@ -89,160 +221,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const SizedBox(width: 8),
                       const _ThemeToggle(),
                       const SizedBox(width: 8),
-                      if (constraints.maxWidth > 1600) ...[
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.star, size: 18),
-                          label: Text(context.l10n.homeNavFeatures),
+                      if (constraints.maxWidth > 900) ...[
+                        TextButton(
+                          onPressed: () => context.go('/universities'),
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.textPrimary,
+                            foregroundColor: theme.colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
+                          child: Text(context.l10n.navUniversities),
                         ),
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.info, size: 18),
-                          label: Text(context.l10n.homeNavAbout),
+                        TextButton(
+                          onPressed: () => context.go('/about'),
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.textPrimary,
+                            foregroundColor: theme.colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
+                          child: Text(context.l10n.homeNavAbout),
                         ),
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.contact_mail, size: 18),
-                          label: Text(context.l10n.homeNavContact),
+                        TextButton(
+                          onPressed: () => context.go('/contact'),
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.textPrimary,
+                            foregroundColor: theme.colorScheme.onSurface,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
+                          child: Text(context.l10n.homeNavContact),
                         ),
                         const SizedBox(width: 16),
-                        OutlinedButton(
+                        TextButton(
                           onPressed: () => context.go('/login'),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                            side: const BorderSide(color: AppColors.primary),
+                          style: TextButton.styleFrom(
+                            foregroundColor: theme.colorScheme.onSurface,
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
-                          child: Text(context.l10n.homeNavLogin),
+                          child: Text(context.l10n.homeNavSignIn),
                         ),
                         const SizedBox(width: 8),
-                        ElevatedButton(
+                        FilledButton(
                           onPressed: () => context.go('/register'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.textOnPrimary,
+                          style: FilledButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
-                          child: Text(context.l10n.homeNavSignUp),
+                          child: Text(context.l10n.homeNavGetStarted),
                         ),
                       ] else ...[
-                    // Mobile menu icon
-                    IconButton(
-                      icon: Icon(Icons.menu, color: AppColors.primary),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => DraggableScrollableSheet(
-                            initialChildSize: 0.7,
-                            minChildSize: 0.5,
-                            maxChildSize: 0.95,
-                            expand: false,
-                            builder: (context, scrollController) => SafeArea(
-                              child: SingleChildScrollView(
-                                controller: scrollController,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(height: 8),
-                                    // Drag Handle
-                                    Container(
-                                      width: 40,
-                                      height: 4,
-                                      margin: const EdgeInsets.only(bottom: 16),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.textSecondary.withValues(alpha: 0.3),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.star, color: AppColors.primary),
-                                      title: Text(context.l10n.homeNavFeatures),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.info, color: AppColors.primary),
-                                      title: Text(context.l10n.homeNavAbout),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.contact_mail, color: AppColors.primary),
-                                      title: Text(context.l10n.homeNavContact),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    const Divider(),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                      child: Text(
-                                        context.l10n.homeNavAccountTypes,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.textSecondary,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.school, color: AppColors.studentRole),
-                                      title: Text(context.l10n.homeNavStudents),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.business, color: AppColors.institutionRole),
-                                      title: Text(context.l10n.homeNavInstitutions),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.family_restroom, color: AppColors.parentRole),
-                                      title: Text(context.l10n.homeNavParents),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.psychology, color: AppColors.counselorRole),
-                                      title: Text(context.l10n.homeNavCounselors),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.rate_review, color: AppColors.recommenderRole),
-                                      title: Text(context.l10n.homeNavRecommenders),
-                                      onTap: () => Navigator.pop(context),
-                                    ),
-                                    const Divider(),
-                                    ListTile(
-                                      leading: Icon(Icons.login, color: AppColors.primary),
-                                      title: Text(context.l10n.homeNavLogin),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        context.go('/login');
-                                      },
-                                    ),
-                                    ListTile(
-                                      leading: Icon(Icons.person_add, color: AppColors.primary),
-                                      title: Text(context.l10n.homeNavSignUp),
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        context.go('/register');
-                                      },
-                                    ),
-                                    const SizedBox(height: 16),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                        // Mobile menu icon
+                        IconButton(
+                          icon: Icon(Icons.menu, color: theme.colorScheme.onSurface),
+                          onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+                        ),
+                      ],
                 ],
               );
                 },
@@ -308,7 +335,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+
+                  // Hero Search — M3 SearchAnchor
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 600),
+                    child: SearchAnchor(
+                      builder: (context, controller) {
+                        return SearchBar(
+                          controller: controller,
+                          hintText: context.l10n.searchHint,
+                          leading: const Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Icon(Icons.search),
+                          ),
+                          elevation: const WidgetStatePropertyAll(0),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28),
+                              side: BorderSide(color: theme.colorScheme.outlineVariant),
+                            ),
+                          ),
+                          onTap: () => controller.openView(),
+                          onChanged: (_) => controller.openView(),
+                          onSubmitted: (_) => context.go('/universities'),
+                        );
+                      },
+                      suggestionsBuilder: (context, controller) {
+                        final suggestions = [
+                          (context.l10n.searchSuggestionGhana, context.l10n.searchSuggestionGhanaLocation),
+                          (context.l10n.searchSuggestionCapeTown, context.l10n.searchSuggestionCapeTownLocation),
+                          (context.l10n.searchSuggestionAshesi, context.l10n.searchSuggestionAshesiLocation),
+                        ];
+                        return [
+                          ...suggestions.map((s) => ListTile(
+                            leading: const Icon(Icons.school_outlined),
+                            title: Text(s.$1),
+                            subtitle: Text(s.$2),
+                            onTap: () {
+                              controller.closeView(s.$1);
+                              context.go('/universities');
+                            },
+                          )),
+                          ListTile(
+                            leading: const Icon(Icons.arrow_forward),
+                            title: Text(context.l10n.searchUniversitiesCount),
+                            onTap: () {
+                              controller.closeView('');
+                              context.go('/universities');
+                            },
+                          ),
+                        ];
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
 
                   // Primary CTA Buttons
                   Wrap(
@@ -316,28 +397,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     runSpacing: 8,
                     alignment: WrapAlignment.center,
                     children: [
-                      ElevatedButton.icon(
+                      FilledButton.icon(
                         onPressed: () => context.go('/register'),
                         icon: const Icon(Icons.person_add, size: 18),
                         label: Text(context.l10n.homeNavGetStarted),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.textOnPrimary,
+                        style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                       ),
-                      OutlinedButton.icon(
+                      TextButton(
                         onPressed: () => context.go('/login'),
-                        icon: const Icon(Icons.login, size: 16),
-                        label: Text(context.l10n.homeNavSignIn),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.secondary,
-                          side: BorderSide(color: AppColors.secondary, width: 1.5),
+                        child: Text(context.l10n.homeNavSignIn),
+                        style: TextButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                       ),
                     ],
@@ -1299,54 +1373,20 @@ class _LanguageToggle extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
-    final isEnglish = locale.languageCode == 'en';
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: () => ref.read(localeProvider.notifier).setLocale(const Locale('en')),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: isEnglish ? AppColors.primary : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'EN',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: isEnglish ? AppColors.textOnPrimary : AppColors.textSecondary,
-                ),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => ref.read(localeProvider.notifier).setLocale(const Locale('fr')),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: !isEnglish ? AppColors.primary : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'FR',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: !isEnglish ? AppColors.textOnPrimary : AppColors.textSecondary,
-                ),
-              ),
-            ),
-          ),
-        ],
+    return SegmentedButton<String>(
+      segments: const [
+        ButtonSegment(value: 'en', label: Text('EN')),
+        ButtonSegment(value: 'fr', label: Text('FR')),
+      ],
+      selected: {locale.languageCode},
+      onSelectionChanged: (selected) {
+        ref.read(localeProvider.notifier).setLocale(Locale(selected.first));
+      },
+      showSelectedIcon: true,
+      style: const ButtonStyle(
+        visualDensity: VisualDensity.compact,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     );
   }
