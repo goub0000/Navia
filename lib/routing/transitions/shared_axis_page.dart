@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_motion.dart';
 
 /// A [CustomTransitionPage] that uses [SharedAxisTransition] (horizontal axis)
