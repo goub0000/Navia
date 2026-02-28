@@ -538,98 +538,160 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
                 ),
               ),
 
+            // Search Universities Banner
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(28),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    context.l10n.uniSearchTitle,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onPrimaryContainer,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    context.l10n.homeSearchUniversitiesDesc,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onPrimaryContainer,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Stat chips
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      FilterChip(
+                        label: Text('100+ ${context.l10n.heroStatCountries}'),
+                        avatar: const Icon(Icons.public, size: 18),
+                        selected: true,
+                        showCheckmark: false,
+                        onSelected: (_) {},
+                      ),
+                      FilterChip(
+                        label: Text('18K+ ${context.l10n.heroStatUniversities}'),
+                        avatar: const Icon(Icons.account_balance, size: 18),
+                        selected: true,
+                        showCheckmark: false,
+                        onSelected: (_) {},
+                      ),
+                      FilterChip(
+                        label: Text('10+ ${context.l10n.homeFilters}'),
+                        avatar: const Icon(Icons.filter_list, size: 18),
+                        selected: true,
+                        showCheckmark: false,
+                        onSelected: (_) {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // CTA
+                  FilledButton.tonalIcon(
+                    onPressed: () => context.go('/universities'),
+                    icon: const Icon(Icons.search, size: 18),
+                    label: Text(context.l10n.homeBrowseUniversities),
+                  ),
+                ],
+              ),
+            ),
+
             // Find Your Path Feature Highlight
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.accent.withValues(alpha: 0.95),
-                    AppColors.accentDark,
-                    AppColors.primary,
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(16),
+                color: theme.colorScheme.tertiaryContainer,
+                borderRadius: BorderRadius.circular(28),
               ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                child: Column(
-                  children: [
-                    // Badge + Icon row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.school, size: 28, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(12),
+              child: Column(
+                children: [
+                  // Badge + Icon row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.school, size: 28, color: theme.colorScheme.onTertiaryContainer),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.onTertiaryContainer.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          context.l10n.homeNavNew,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onTertiaryContainer,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Text(context.l10n.homeNavNew, style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      context.l10n.homeNavFindYourPath,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
                       ),
-                      textAlign: TextAlign.center,
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    context.l10n.homeNavFindYourPath,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onTertiaryContainer,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      context.l10n.homeNavFindYourPathDesc,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                      ),
-                      textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    context.l10n.homeNavFindYourPathDesc,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onTertiaryContainer,
                     ),
-                    const SizedBox(height: 10),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
 
-                    // Benefits
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 6,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        _FindYourPathBenefit(
-                          icon: Icons.lightbulb_outline,
-                          text: context.l10n.homeNavPersonalizedRec,
-                        ),
-                        _FindYourPathBenefit(
-                          icon: Icons.school_outlined,
-                          text: context.l10n.homeNavTopUniversities,
-                        ),
-                        _FindYourPathBenefit(
-                          icon: Icons.analytics_outlined,
-                          text: context.l10n.homeNavSmartMatching,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-
-                    // CTA Button
-                    ElevatedButton.icon(
-                      onPressed: () => context.go('/find-your-path'),
-                      icon: const Icon(Icons.arrow_forward, size: 16),
-                      label: Text(context.l10n.homeNavStartNow),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  // Feature pills as AssistChips
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      ActionChip(
+                        avatar: Icon(Icons.lightbulb_outline, size: 18, color: theme.colorScheme.onTertiaryContainer),
+                        label: Text(context.l10n.homeNavPersonalizedRec),
+                        onPressed: () {},
                       ),
-                    ),
-                  ],
-                ),
+                      ActionChip(
+                        avatar: Icon(Icons.school_outlined, size: 18, color: theme.colorScheme.onTertiaryContainer),
+                        label: Text(context.l10n.homeNavTopUniversities),
+                        onPressed: () {},
+                      ),
+                      ActionChip(
+                        avatar: Icon(Icons.analytics_outlined, size: 18, color: theme.colorScheme.onTertiaryContainer),
+                        label: Text(context.l10n.homeNavSmartMatching),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // CTA Button
+                  FilledButton.tonalIcon(
+                    onPressed: () => context.go('/find-your-path'),
+                    icon: const Icon(Icons.arrow_forward, size: 18),
+                    label: Text(context.l10n.homeNavStartNow),
+                  ),
+                ],
               ),
             ),
 
@@ -1587,34 +1649,6 @@ class _ThemeToggle extends ConsumerWidget {
   }
 }
 
-class _FindYourPathBenefit extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _FindYourPathBenefit({
-    required this.icon,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: Colors.white, size: 12),
-          const SizedBox(width: 4),
-          Text(text, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 10)),
-        ],
-      ),
-    );
-  }
-}
 
 class _CircleSpec {
   final Offset center;
