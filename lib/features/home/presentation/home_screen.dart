@@ -7,6 +7,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/appearance_provider.dart';
 import '../../../core/l10n_extension.dart';
+import 'dart:math' as math;
+import 'widgets/animated_section.dart' show VisibilityDetector;
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -15,14 +17,73 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
+  // Hero entrance animation
+  late final AnimationController _heroController;
+  late final AnimationController _meshController;
+  late final List<CurvedAnimation> _intervals;
+  late final List<Animation<double>> _fadeAnimations;
+  late final List<Animation<Offset>> _slideAnimations;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _heroController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+    _meshController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+
+    _intervals = [
+      CurvedAnimation(parent: _heroController, curve: const Interval(0.0, 0.3, curve: Curves.easeOutCubic)),
+      CurvedAnimation(parent: _heroController, curve: const Interval(0.2, 0.5, curve: Curves.easeOutCubic)),
+      CurvedAnimation(parent: _heroController, curve: const Interval(0.3, 0.6, curve: Curves.easeOutCubic)),
+      CurvedAnimation(parent: _heroController, curve: const Interval(0.4, 0.7, curve: Curves.easeOutCubic)),
+      CurvedAnimation(parent: _heroController, curve: const Interval(0.5, 0.8, curve: Curves.easeOutCubic)),
+    ];
+
+    _fadeAnimations = _intervals
+        .map((interval) => Tween<double>(begin: 0.0, end: 1.0).animate(interval))
+        .toList();
+    _slideAnimations = _intervals
+        .map((interval) => Tween<Offset>(begin: const Offset(0, 30), end: Offset.zero).animate(interval))
+        .toList();
+
+    _heroController.forward();
+    _meshController.repeat();
+  }
+
   @override
   void dispose() {
+    _heroController.dispose();
+    _meshController.dispose();
+    for (final interval in _intervals) {
+      interval.dispose();
+    }
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Widget _heroAnimated(int index, Widget child) {
+    return AnimatedBuilder(
+      animation: _heroController,
+      builder: (context, _) {
+        return Transform.translate(
+          offset: _slideAnimations[index].value,
+          child: Opacity(
+            opacity: _fadeAnimations[index].value,
+            child: child,
+          ),
+        );
+      },
+    );
   }
 
   void _scrollToTop() {
@@ -280,176 +341,201 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           // Main Content
           SliverList(
             delegate: SliverChildListDelegate([
-              // Welcome Section with Stats - Enhanced Hero Section
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-              child: Column(
-                children: [
-                  // Badge/Tag above title
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.accent, AppColors.accentLight],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.rocket_launch, color: AppColors.textPrimary, size: 14),
-                        const SizedBox(width: 6),
-                        Text(
-                          context.l10n.homeNavBadge,
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
+              // Hero Section — Mesh Gradient + Staggered Entrance
+              ClipRect(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      // Layer 1 — Mesh gradient background
+                      Positioned.fill(
+                        child: AnimatedBuilder(
+                          animation: _meshController,
+                          builder: (context, _) {
+                            return CustomPaint(
+                              painter: _MeshGradientPainter(
+                                animationValue: _meshController.value,
+                                primary: theme.colorScheme.primary,
+                                secondary: theme.colorScheme.secondary,
+                                tertiary: theme.colorScheme.tertiary,
+                              ),
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    context.l10n.homeNavWelcome,
-                    style: theme.textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                      height: 1.2,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 4),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 800),
-                    child: Text(
-                      context.l10n.homeNavSubtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                        height: 1.4,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
 
-                  // Hero Search — M3 SearchAnchor
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 600),
-                    child: SearchAnchor(
-                      builder: (context, controller) {
-                        return SearchBar(
-                          controller: controller,
-                          hintText: context.l10n.searchHint,
-                          leading: const Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Icon(Icons.search),
-                          ),
-                          elevation: const WidgetStatePropertyAll(0),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                              side: BorderSide(color: theme.colorScheme.outlineVariant),
+                      // Layer 2 — Hero content
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        child: Column(
+                          children: [
+                            // Badge (not animated — always visible brand element)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [AppColors.accent, AppColors.accentLight],
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.rocket_launch, color: AppColors.textPrimary, size: 14),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    context.l10n.homeNavBadge,
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          onTap: () => controller.openView(),
-                          onChanged: (_) => controller.openView(),
-                          onSubmitted: (_) => context.go('/universities'),
-                        );
-                      },
-                      suggestionsBuilder: (context, controller) {
-                        final suggestions = [
-                          (context.l10n.searchSuggestionGhana, context.l10n.searchSuggestionGhanaLocation),
-                          (context.l10n.searchSuggestionCapeTown, context.l10n.searchSuggestionCapeTownLocation),
-                          (context.l10n.searchSuggestionAshesi, context.l10n.searchSuggestionAshesiLocation),
-                        ];
-                        return [
-                          ...suggestions.map((s) => ListTile(
-                            leading: const Icon(Icons.school_outlined),
-                            title: Text(s.$1),
-                            subtitle: Text(s.$2),
-                            onTap: () {
-                              controller.closeView(s.$1);
-                              context.go('/universities');
-                            },
-                          )),
-                          ListTile(
-                            leading: const Icon(Icons.arrow_forward),
-                            title: Text(context.l10n.searchUniversitiesCount),
-                            onTap: () {
-                              controller.closeView('');
-                              context.go('/universities');
-                            },
-                          ),
-                        ];
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
+                            const SizedBox(height: 6),
 
-                  // Primary CTA Buttons
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      FilledButton.icon(
-                        onPressed: () => context.go('/register'),
-                        icon: const Icon(Icons.person_add, size: 18),
-                        label: Text(context.l10n.homeNavGetStarted),
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => context.go('/login'),
-                        child: Text(context.l10n.homeNavSignIn),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                            // [0] Heading
+                            _heroAnimated(0, Text(
+                              context.l10n.homeNavWelcome,
+                              style: theme.textTheme.displayLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: theme.colorScheme.primary,
+                                height: 1.2,
+                              ),
+                              textAlign: TextAlign.center,
+                            )),
+                            const SizedBox(height: 4),
+
+                            // [1] Subtext
+                            _heroAnimated(1, ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 800),
+                              child: Text(
+                                context.l10n.homeNavSubtitle,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                  height: 1.4,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                            const SizedBox(height: 16),
+
+                            // [2] Search
+                            _heroAnimated(2, ConstrainedBox(
+                              constraints: const BoxConstraints(maxWidth: 600),
+                              child: SearchAnchor(
+                                builder: (context, controller) {
+                                  return SearchBar(
+                                    controller: controller,
+                                    hintText: context.l10n.searchHint,
+                                    leading: const Padding(
+                                      padding: EdgeInsets.only(left: 8),
+                                      child: Icon(Icons.search),
+                                    ),
+                                    elevation: const WidgetStatePropertyAll(0),
+                                    shape: WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28),
+                                        side: BorderSide(color: theme.colorScheme.outlineVariant),
+                                      ),
+                                    ),
+                                    onTap: () => controller.openView(),
+                                    onChanged: (_) => controller.openView(),
+                                    onSubmitted: (_) => context.go('/universities'),
+                                  );
+                                },
+                                suggestionsBuilder: (context, controller) {
+                                  final suggestions = [
+                                    (context.l10n.searchSuggestionGhana, context.l10n.searchSuggestionGhanaLocation),
+                                    (context.l10n.searchSuggestionCapeTown, context.l10n.searchSuggestionCapeTownLocation),
+                                    (context.l10n.searchSuggestionAshesi, context.l10n.searchSuggestionAshesiLocation),
+                                  ];
+                                  return [
+                                    ...suggestions.map((s) => ListTile(
+                                      leading: const Icon(Icons.school_outlined),
+                                      title: Text(s.$1),
+                                      subtitle: Text(s.$2),
+                                      onTap: () {
+                                        controller.closeView(s.$1);
+                                        context.go('/universities');
+                                      },
+                                    )),
+                                    ListTile(
+                                      leading: const Icon(Icons.arrow_forward),
+                                      title: Text(context.l10n.searchUniversitiesCount),
+                                      onTap: () {
+                                        controller.closeView('');
+                                        context.go('/universities');
+                                      },
+                                    ),
+                                  ];
+                                },
+                              ),
+                            )),
+                            const SizedBox(height: 16),
+
+                            // [3] CTA Buttons
+                            _heroAnimated(3, Wrap(
+                              spacing: 12,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                FilledButton.icon(
+                                  onPressed: () => context.go('/register'),
+                                  icon: const Icon(Icons.rocket_launch, size: 18),
+                                  label: Text(context.l10n.heroStartFreeTrial),
+                                  style: FilledButton.styleFrom(
+                                    minimumSize: const Size(0, 40),
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                  ),
+                                ),
+                                OutlinedButton.icon(
+                                  onPressed: () => context.go('/universities'),
+                                  icon: const Icon(Icons.play_circle_outline, size: 18),
+                                  label: Text(context.l10n.heroTakeATour),
+                                  style: OutlinedButton.styleFrom(
+                                    minimumSize: const Size(0, 40),
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                  ),
+                                ),
+                              ],
+                            )),
+                            const SizedBox(height: 12),
+
+                            // [4] Stats
+                            _heroAnimated(4, Wrap(
+                              spacing: 12,
+                              runSpacing: 8,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                _HeroStatCard(
+                                  icon: Icons.verified_user,
+                                  targetValue: 50,
+                                  suffix: 'K+',
+                                  label: context.l10n.homeNavActiveUsers,
+                                ),
+                                _HeroStatCard(
+                                  icon: Icons.business,
+                                  targetValue: 200,
+                                  suffix: '+',
+                                  label: context.l10n.homeNavInstitutions,
+                                ),
+                                _HeroStatCard(
+                                  icon: Icons.public,
+                                  targetValue: 20,
+                                  suffix: '+',
+                                  label: context.l10n.homeNavCountries,
+                                ),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-
-                  // Platform Stats - Animated
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      _AnimatedStatItem(
-                        icon: Icons.verified_user,
-                        targetValue: 50,
-                        suffix: 'K+',
-                        label: context.l10n.homeNavActiveUsers,
-                        color: AppColors.primary,
-                      ),
-                      _AnimatedStatItem(
-                        icon: Icons.business,
-                        targetValue: 200,
-                        suffix: '+',
-                        label: context.l10n.homeNavInstitutions,
-                        color: AppColors.secondary,
-                      ),
-                      _AnimatedStatItem(
-                        icon: Icons.public,
-                        targetValue: 20,
-                        suffix: '+',
-                        label: context.l10n.homeNavCountries,
-                        color: AppColors.accent,
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
 
             // Find Your Path Feature Highlight
             Container(
@@ -856,26 +942,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-class _AnimatedStatItem extends StatefulWidget {
+class _HeroStatCard extends StatefulWidget {
   final IconData icon;
   final int targetValue;
   final String suffix;
   final String label;
-  final Color color;
 
-  const _AnimatedStatItem({
+  const _HeroStatCard({
     required this.icon,
     required this.targetValue,
     required this.suffix,
     required this.label,
-    required this.color,
   });
 
   @override
-  State<_AnimatedStatItem> createState() => _AnimatedStatItemState();
+  State<_HeroStatCard> createState() => _HeroStatCardState();
 }
 
-class _AnimatedStatItemState extends State<_AnimatedStatItem>
+class _HeroStatCardState extends State<_HeroStatCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -895,14 +979,6 @@ class _AnimatedStatItemState extends State<_AnimatedStatItem>
       parent: _controller,
       curve: Curves.easeOutCubic,
     ));
-
-    // Start animation after a short delay
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted && !_hasAnimated) {
-        _hasAnimated = true;
-        _controller.forward();
-      }
-    });
   }
 
   @override
@@ -911,39 +987,54 @@ class _AnimatedStatItemState extends State<_AnimatedStatItem>
     super.dispose();
   }
 
+  void _onVisibilityChanged(bool isVisible) {
+    if (isVisible && !_hasAnimated) {
+      _hasAnimated = true;
+      final reduceMotion = MediaQuery.of(context).disableAnimations;
+      if (reduceMotion) {
+        _controller.value = 1.0;
+      } else {
+        _controller.forward();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: widget.color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: widget.color.withValues(alpha: 0.3), width: 1),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(widget.icon, size: 28, color: widget.color),
-          const SizedBox(height: 8),
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              return Text(
-                '${_animation.value.toInt()}${widget.suffix}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: widget.color,
-                  fontSize: 22,
+    final theme = Theme.of(context);
+    return VisibilityDetector(
+      onVisibilityChanged: _onVisibilityChanged,
+      child: Card.filled(
+        color: theme.colorScheme.surfaceContainerHighest,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(widget.icon, size: 28, color: theme.colorScheme.primary),
+              const SizedBox(height: 8),
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return Text(
+                    '${_animation.value.toInt()}${widget.suffix}',
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 2),
+              Text(
+                widget.label,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
-              );
-            },
+              ),
+            ],
           ),
-          const SizedBox(height: 2),
-          Text(
-            widget.label,
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -1462,5 +1553,83 @@ class _FindYourPathBenefit extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _CircleSpec {
+  final Offset center;
+  final double radius;
+  final Color color;
+
+  const _CircleSpec({required this.center, required this.radius, required this.color});
+}
+
+class _MeshGradientPainter extends CustomPainter {
+  final double animationValue;
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+
+  _MeshGradientPainter({
+    required this.animationValue,
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double t = animationValue * 2 * math.pi;
+
+    final circles = [
+      _CircleSpec(
+        center: Offset(
+          size.width * (0.2 + 0.1 * math.sin(t)),
+          size.height * (0.3 + 0.1 * math.cos(t * 0.7)),
+        ),
+        radius: size.width * 0.35,
+        color: primary.withValues(alpha: 0.1),
+      ),
+      _CircleSpec(
+        center: Offset(
+          size.width * (0.8 + 0.1 * math.cos(t * 1.3)),
+          size.height * (0.2 + 0.1 * math.sin(t * 0.9)),
+        ),
+        radius: size.width * 0.3,
+        color: secondary.withValues(alpha: 0.1),
+      ),
+      _CircleSpec(
+        center: Offset(
+          size.width * (0.5 + 0.15 * math.sin(t * 0.6)),
+          size.height * (0.7 + 0.1 * math.cos(t * 1.1)),
+        ),
+        radius: size.width * 0.4,
+        color: tertiary.withValues(alpha: 0.1),
+      ),
+      _CircleSpec(
+        center: Offset(
+          size.width * (0.7 + 0.1 * math.cos(t * 0.8)),
+          size.height * (0.6 + 0.1 * math.sin(t * 1.4)),
+        ),
+        radius: size.width * 0.25,
+        color: primary.withValues(alpha: 0.08),
+      ),
+    ];
+
+    for (final circle in circles) {
+      final paint = Paint()
+        ..shader = RadialGradient(
+          colors: [circle.color, circle.color.withValues(alpha: 0)],
+          stops: const [0.0, 1.0],
+        ).createShader(
+          Rect.fromCircle(center: circle.center, radius: circle.radius),
+        );
+      canvas.drawCircle(circle.center, circle.radius, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_MeshGradientPainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue;
   }
 }
