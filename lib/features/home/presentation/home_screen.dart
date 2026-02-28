@@ -869,62 +869,65 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
             // Final CTA Section
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.primary.withValues(alpha: 0.08),
-                    AppColors.secondary.withValues(alpha: 0.05),
-                    AppColors.accent.withValues(alpha: 0.08),
-                  ],
-                ),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              color: theme.colorScheme.inverseSurface,
               child: Column(
                 children: [
                   Text(
                     context.l10n.homeNavReadyToStart,
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: theme.colorScheme.onInverseSurface,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
                     context.l10n.homeNavJoinThousands,
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onInverseSurface,
+                    ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+
+                  // CTA Button
+                  FilledButton.icon(
+                    onPressed: () => context.go('/register'),
+                    icon: const Icon(Icons.person_add, size: 18),
+                    label: Text(context.l10n.homeNavSignUp),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: theme.colorScheme.inversePrimary,
+                      foregroundColor: theme.colorScheme.onSurface,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Trust badges
                   Wrap(
-                    spacing: 12,
+                    spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.center,
                     children: [
-                      ElevatedButton.icon(
-                        onPressed: () => context.go('/register'),
-                        icon: const Icon(Icons.person_add, size: 16),
-                        label: Text(context.l10n.homeNavSignUp),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.textOnPrimary,
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      Chip(
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 16,
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
+                        label: Text(context.l10n.ctaNoCreditCard),
+                        backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                        side: BorderSide.none,
                       ),
-                      OutlinedButton.icon(
-                        onPressed: () => context.go('/login'),
-                        icon: const Icon(Icons.login, size: 16),
-                        label: Text(context.l10n.homeNavLogin),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.secondary,
-                          side: BorderSide(color: AppColors.secondary, width: 1.5),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      Chip(
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 16,
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
+                        label: Text(context.l10n.cta14DayTrial),
+                        backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                        side: BorderSide.none,
                       ),
                     ],
                   ),
