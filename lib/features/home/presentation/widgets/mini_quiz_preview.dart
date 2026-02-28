@@ -55,7 +55,7 @@ class _MiniQuizPreviewState extends State<MiniQuizPreview> {
         _selectedAnswer = null;
       });
     } else {
-      context.go('/find-your-path');
+      context.go('/find-your-path/questionnaire');
     }
   }
 
