@@ -1505,6 +1505,37 @@ class _TestimonialCard extends StatelessWidget {
   }
 }
 
+class _RoleData {
+  final String key;
+  final IconData icon;
+  final String label;
+  final String title;
+  final String subtitle;
+  final String description;
+  final Color Function(ColorScheme cs) containerColor;
+  final Color Function(ColorScheme cs) onContainerColor;
+  final List<_RoleFeature> features;
+
+  const _RoleData({
+    required this.key,
+    required this.icon,
+    required this.label,
+    required this.title,
+    required this.subtitle,
+    required this.description,
+    required this.containerColor,
+    required this.onContainerColor,
+    required this.features,
+  });
+}
+
+class _RoleFeature {
+  final IconData icon;
+  final String title;
+
+  const _RoleFeature({required this.icon, required this.title});
+}
+
 class _AccountTypesSection extends StatefulWidget {
   const _AccountTypesSection();
 
@@ -1512,139 +1543,161 @@ class _AccountTypesSection extends StatefulWidget {
   State<_AccountTypesSection> createState() => _AccountTypesSectionState();
 }
 
-class _AccountTypesSectionState extends State<_AccountTypesSection>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 5, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+class _AccountTypesSectionState extends State<_AccountTypesSection> {
+  String _selectedRole = 'students';
+  int _previousIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final l10n = context.l10n;
 
-    return Container(
-      width: double.infinity,
+    final roles = <_RoleData>[
+      _RoleData(
+        key: 'students',
+        icon: Icons.school,
+        label: l10n.homeNavStudents,
+        title: l10n.homeNavForStudents,
+        subtitle: l10n.homeNavForStudentsSubtitle,
+        description: l10n.homeNavForStudentsDesc,
+        containerColor: (cs) => cs.primaryContainer,
+        onContainerColor: (cs) => cs.onPrimaryContainer,
+        features: [
+          _RoleFeature(icon: Icons.book, title: l10n.homeNavCourseAccess),
+          _RoleFeature(icon: Icons.assignment, title: l10n.homeNavAppManagement),
+          _RoleFeature(icon: Icons.bar_chart, title: l10n.homeNavProgressTracking),
+          _RoleFeature(icon: Icons.description, title: l10n.homeNavDocManagement),
+        ],
+      ),
+      _RoleData(
+        key: 'institutions',
+        icon: Icons.business,
+        label: l10n.homeNavInstitutions,
+        title: l10n.homeNavForInstitutions,
+        subtitle: l10n.homeNavForInstitutionsSubtitle,
+        description: l10n.homeNavForInstitutionsDesc,
+        containerColor: (cs) => cs.secondaryContainer,
+        onContainerColor: (cs) => cs.onSecondaryContainer,
+        features: [
+          _RoleFeature(icon: Icons.people, title: l10n.homeNavApplicantMgmt),
+          _RoleFeature(icon: Icons.school, title: l10n.homeNavProgramMgmt),
+          _RoleFeature(icon: Icons.analytics, title: l10n.homeNavAnalyticsDash),
+          _RoleFeature(icon: Icons.message, title: l10n.homeNavCommHub),
+        ],
+      ),
+      _RoleData(
+        key: 'parents',
+        icon: Icons.family_restroom,
+        label: l10n.homeNavParents,
+        title: l10n.homeNavForParents,
+        subtitle: l10n.homeNavForParentsSubtitle,
+        description: l10n.homeNavForParentsDesc,
+        containerColor: (cs) => cs.tertiaryContainer,
+        onContainerColor: (cs) => cs.onTertiaryContainer,
+        features: [
+          _RoleFeature(icon: Icons.bar_chart, title: l10n.homeNavProgressMonitoring),
+          _RoleFeature(icon: Icons.notifications, title: l10n.homeNavRealtimeUpdates),
+          _RoleFeature(icon: Icons.chat, title: l10n.homeNavTeacherComm),
+          _RoleFeature(icon: Icons.payment, title: l10n.homeNavFeeMgmt),
+        ],
+      ),
+      _RoleData(
+        key: 'counselors',
+        icon: Icons.psychology,
+        label: l10n.homeNavCounselors,
+        title: l10n.homeNavForCounselors,
+        subtitle: l10n.homeNavForCounselorsSubtitle,
+        description: l10n.homeNavForCounselorsDesc,
+        containerColor: (cs) => cs.errorContainer,
+        onContainerColor: (cs) => cs.onErrorContainer,
+        features: [
+          _RoleFeature(icon: Icons.calendar_month, title: l10n.homeNavSessionMgmt),
+          _RoleFeature(icon: Icons.people, title: l10n.homeNavStudentPortfolio),
+          _RoleFeature(icon: Icons.task, title: l10n.homeNavActionPlans),
+          _RoleFeature(icon: Icons.school, title: l10n.homeNavCollegeGuidance),
+        ],
+      ),
+      _RoleData(
+        key: 'recommenders',
+        icon: Icons.rate_review,
+        label: l10n.homeNavRecommenders,
+        title: l10n.homeNavForRecommenders,
+        subtitle: l10n.homeNavForRecommendersSubtitle,
+        description: l10n.homeNavForRecommendersDesc,
+        containerColor: (cs) => cs.surfaceContainerHighest,
+        onContainerColor: (cs) => cs.onSurface,
+        features: [
+          _RoleFeature(icon: Icons.edit_document, title: l10n.homeNavLetterMgmt),
+          _RoleFeature(icon: Icons.send, title: l10n.homeNavEasySubmission),
+          _RoleFeature(icon: Icons.assignment_turned_in, title: l10n.homeNavRequestTracking),
+          _RoleFeature(icon: Icons.history, title: l10n.homeNavLetterTemplates),
+        ],
+      ),
+    ];
+
+    final currentIndex = roles.indexWhere((r) => r.key == _selectedRole);
+    final currentRole = roles[currentIndex];
+    final slideForward = currentIndex >= _previousIndex;
+
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Column(
         children: [
-          Text(context.l10n.homeNavWhoCanUse, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary)),
-          const SizedBox(height: 10),
-
-          // Tab Navigation
-          Container(
-            decoration: BoxDecoration(color: AppColors.surfaceContainerHighest, borderRadius: BorderRadius.circular(8)),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              labelColor: AppColors.textOnPrimary,
-              unselectedLabelColor: AppColors.textSecondary,
-              indicator: BoxDecoration(gradient: LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]), borderRadius: BorderRadius.circular(6)),
-              dividerColor: Colors.transparent,
-              padding: const EdgeInsets.all(4),
-              labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-              tabs: [
-                Tab(icon: Icon(Icons.school, size: 16), text: context.l10n.homeNavStudents),
-                Tab(icon: Icon(Icons.business, size: 16), text: context.l10n.homeNavInstitutions),
-                Tab(icon: Icon(Icons.family_restroom, size: 16), text: context.l10n.homeNavParents),
-                Tab(icon: Icon(Icons.psychology, size: 16), text: context.l10n.homeNavCounselors),
-                Tab(icon: Icon(Icons.rate_review, size: 16), text: context.l10n.homeNavRecommenders),
-              ],
+          Text(
+            l10n.homeNavWhoCanUse,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
 
-          // Tab Content
-          SizedBox(
-            height: 350,
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _AccountTypeDetails(
-                  icon: Icons.school,
-                  title: context.l10n.homeNavForStudents,
-                  subtitle: context.l10n.homeNavForStudentsSubtitle,
-                  color: AppColors.studentRole,
-                  description: context.l10n.homeNavForStudentsDesc,
-                  features: [
-                    _FeatureItem(icon: Icons.book, title: context.l10n.homeNavCourseAccess, description: context.l10n.homeNavCourseAccessDesc),
-                    _FeatureItem(icon: Icons.assignment, title: context.l10n.homeNavAppManagement, description: context.l10n.homeNavAppManagementDesc),
-                    _FeatureItem(icon: Icons.bar_chart, title: context.l10n.homeNavProgressTracking, description: context.l10n.homeNavProgressTrackingDesc),
-                    _FeatureItem(icon: Icons.description, title: context.l10n.homeNavDocManagement, description: context.l10n.homeNavDocManagementDesc),
-                    _FeatureItem(icon: Icons.payment, title: context.l10n.homeNavEasyPayments, description: context.l10n.homeNavEasyPaymentsDesc),
-                    _FeatureItem(icon: Icons.offline_bolt, title: context.l10n.homeNavOfflineAccess, description: context.l10n.homeNavOfflineAccessDesc),
-                  ],
+          // Segmented Button
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SegmentedButton<String>(
+              segments: roles.map((role) => ButtonSegment<String>(
+                value: role.key,
+                label: Text(role.label),
+                icon: Icon(role.icon),
+              )).toList(),
+              selected: {_selectedRole},
+              onSelectionChanged: (selected) {
+                final newIndex = roles.indexWhere((r) => r.key == selected.first);
+                setState(() {
+                  _previousIndex = currentIndex;
+                  _selectedRole = selected.first;
+                });
+              },
+              showSelectedIcon: false,
+              multiSelectionEnabled: false,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Animated role card
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) {
+              final offsetTween = Tween<Offset>(
+                begin: Offset(slideForward ? 0.15 : -0.15, 0),
+                end: Offset.zero,
+              );
+              return FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: offsetTween.animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                  )),
+                  child: child,
                 ),
-                _AccountTypeDetails(
-                  icon: Icons.business,
-                  title: context.l10n.homeNavForInstitutions,
-                  subtitle: context.l10n.homeNavForInstitutionsSubtitle,
-                  color: AppColors.institutionRole,
-                  description: context.l10n.homeNavForInstitutionsDesc,
-                  features: [
-                    _FeatureItem(icon: Icons.people, title: context.l10n.homeNavApplicantMgmt, description: context.l10n.homeNavApplicantMgmtDesc),
-                    _FeatureItem(icon: Icons.school, title: context.l10n.homeNavProgramMgmt, description: context.l10n.homeNavProgramMgmtDesc),
-                    _FeatureItem(icon: Icons.analytics, title: context.l10n.homeNavAnalyticsDash, description: context.l10n.homeNavAnalyticsDashDesc),
-                    _FeatureItem(icon: Icons.message, title: context.l10n.homeNavCommHub, description: context.l10n.homeNavCommHubDesc),
-                    _FeatureItem(icon: Icons.verified, title: context.l10n.homeNavDocVerification, description: context.l10n.homeNavDocVerificationDesc),
-                    _FeatureItem(icon: Icons.account_balance, title: context.l10n.homeNavFinancialMgmt, description: context.l10n.homeNavFinancialMgmtDesc),
-                  ],
-                ),
-                _AccountTypeDetails(
-                  icon: Icons.family_restroom,
-                  title: context.l10n.homeNavForParents,
-                  subtitle: context.l10n.homeNavForParentsSubtitle,
-                  color: AppColors.parentRole,
-                  description: context.l10n.homeNavForParentsDesc,
-                  features: [
-                    _FeatureItem(icon: Icons.bar_chart, title: context.l10n.homeNavProgressMonitoring, description: context.l10n.homeNavProgressMonitoringDesc),
-                    _FeatureItem(icon: Icons.notifications, title: context.l10n.homeNavRealtimeUpdates, description: context.l10n.homeNavRealtimeUpdatesDesc),
-                    _FeatureItem(icon: Icons.chat, title: context.l10n.homeNavTeacherComm, description: context.l10n.homeNavTeacherCommDesc),
-                    _FeatureItem(icon: Icons.payment, title: context.l10n.homeNavFeeMgmt, description: context.l10n.homeNavFeeMgmtDesc),
-                    _FeatureItem(icon: Icons.calendar_today, title: context.l10n.homeNavScheduleAccess, description: context.l10n.homeNavScheduleAccessDesc),
-                    _FeatureItem(icon: Icons.report, title: context.l10n.homeNavReportCards, description: context.l10n.homeNavReportCardsDesc),
-                  ],
-                ),
-                _AccountTypeDetails(
-                  icon: Icons.psychology,
-                  title: context.l10n.homeNavForCounselors,
-                  subtitle: context.l10n.homeNavForCounselorsSubtitle,
-                  color: AppColors.counselorRole,
-                  description: context.l10n.homeNavForCounselorsDesc,
-                  features: [
-                    _FeatureItem(icon: Icons.calendar_month, title: context.l10n.homeNavSessionMgmt, description: context.l10n.homeNavSessionMgmtDesc),
-                    _FeatureItem(icon: Icons.people, title: context.l10n.homeNavStudentPortfolio, description: context.l10n.homeNavStudentPortfolioDesc),
-                    _FeatureItem(icon: Icons.task, title: context.l10n.homeNavActionPlans, description: context.l10n.homeNavActionPlansDesc),
-                    _FeatureItem(icon: Icons.school, title: context.l10n.homeNavCollegeGuidance, description: context.l10n.homeNavCollegeGuidanceDesc),
-                    _FeatureItem(icon: Icons.assessment, title: context.l10n.homeNavCareerAssessment, description: context.l10n.homeNavCareerAssessmentDesc),
-                    _FeatureItem(icon: Icons.handshake, title: context.l10n.homeNavParentCollab, description: context.l10n.homeNavParentCollabDesc),
-                  ],
-                ),
-                _AccountTypeDetails(
-                  icon: Icons.rate_review,
-                  title: context.l10n.homeNavForRecommenders,
-                  subtitle: context.l10n.homeNavForRecommendersSubtitle,
-                  color: AppColors.recommenderRole,
-                  description: context.l10n.homeNavForRecommendersDesc,
-                  features: [
-                    _FeatureItem(icon: Icons.edit_document, title: context.l10n.homeNavLetterMgmt, description: context.l10n.homeNavLetterMgmtDesc),
-                    _FeatureItem(icon: Icons.send, title: context.l10n.homeNavEasySubmission, description: context.l10n.homeNavEasySubmissionDesc),
-                    _FeatureItem(icon: Icons.assignment_turned_in, title: context.l10n.homeNavRequestTracking, description: context.l10n.homeNavRequestTrackingDesc),
-                    _FeatureItem(icon: Icons.history, title: context.l10n.homeNavLetterTemplates, description: context.l10n.homeNavLetterTemplatesDesc),
-                    _FeatureItem(icon: Icons.verified_user, title: context.l10n.homeNavDigitalSignature, description: context.l10n.homeNavDigitalSignatureDesc),
-                    _FeatureItem(icon: Icons.timeline, title: context.l10n.homeNavStudentHistory, description: context.l10n.homeNavStudentHistoryDesc),
-                  ],
-                ),
-              ],
+              );
+            },
+            child: _RoleCard(
+              key: ValueKey(currentRole.key),
+              role: currentRole,
             ),
           ),
         ],
@@ -1653,106 +1706,99 @@ class _AccountTypesSectionState extends State<_AccountTypesSection>
   }
 }
 
-class _AccountTypeDetails extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color color;
-  final String description;
-  final List<_FeatureItem> features;
+class _RoleCard extends StatelessWidget {
+  final _RoleData role;
 
-  const _AccountTypeDetails({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.color,
-    required this.description,
-    required this.features,
-  });
+  const _RoleCard({super.key, required this.role});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // Header
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final containerColor = role.containerColor(colorScheme);
+    final onContainerColor = role.onContainerColor(colorScheme);
+
+    return Card.outlined(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            // Avatar + title
+            Row(
               children: [
-                Icon(icon, size: 28, color: color),
-                const SizedBox(width: 10),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: containerColor,
+                  child: Icon(role.icon, size: 32, color: onContainerColor),
+                ),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 16)),
-                      Text(subtitle, style: TextStyle(color: AppColors.textSecondary, fontSize: 11, fontStyle: FontStyle.italic)),
+                      Text(
+                        role.title,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        role.subtitle,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
-          // Features Grid
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            alignment: WrapAlignment.center,
-            children: features.take(4).map((feature) {
-              return Container(
-                width: 150,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: color.withValues(alpha: 0.2)),
-                ),
-                child: Row(
-                  children: [
-                    Icon(feature.icon, color: color, size: 16),
-                    const SizedBox(width: 6),
-                    Expanded(child: Text(feature.title, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 12),
-
-          // CTA Button
-          ElevatedButton(
-            onPressed: () => context.go('/register'),
-            child: Text(context.l10n.homeNavGetStartedAs(title.replaceAll(context.l10n.homeNavForPrefix, ''))),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: color,
-              foregroundColor: AppColors.textOnPrimary,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            // Description
+            Text(
+              role.description,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 12),
+
+            // Features
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: role.features.map((feature) {
+                return Chip(
+                  avatar: Icon(feature.icon, size: 16, color: onContainerColor),
+                  label: Text(
+                    feature.title,
+                    style: theme.textTheme.labelMedium,
+                  ),
+                  backgroundColor: containerColor,
+                  side: BorderSide.none,
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 16),
+
+            // CTA
+            FilledButton.icon(
+              onPressed: () => context.go('/register'),
+              icon: const Icon(Icons.arrow_forward),
+              label: Text(context.l10n.homeNavGetStartedAs(
+                role.title.replaceAll(context.l10n.homeNavForPrefix, ''),
+              )),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
-
-class _FeatureItem {
-  final IconData icon;
-  final String title;
-  final String description;
-
-  const _FeatureItem({
-    required this.icon,
-    required this.title,
-    required this.description,
-  });
 }
 
 
