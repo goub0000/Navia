@@ -22,6 +22,7 @@ import 'routes/admin_routes.dart';
 import 'routes/shared_routes.dart';
 import 'routes/find_your_path_routes.dart';
 import 'routes/university_routes.dart';
+import 'routes/persona_routes.dart';
 
 /// Main router provider that combines all route modules
 final routerProvider = Provider<GoRouter>((ref) {
@@ -83,6 +84,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ...sharedRoutes,
       ...findYourPathRoutes,
       ...universityRoutes,
+      ...personaRoutes,
     ],
     errorBuilder: (context, state) => NotFoundScreen(
       path: state.matchedLocation,

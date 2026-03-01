@@ -39,15 +39,42 @@
   <meta name="twitter:description" content="Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for students everywhere. Free to start — no credit card required.">
   <meta name="twitter:image" content="https://web-production-bcafe.up.railway.app/icons/Icon-512.png">
 
-  <!-- JSON-LD Structured Data -->
+  <!-- JSON-LD Structured Data: Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
+    "@type": "Organization",
     "name": "Flow",
     "url": "https://web-production-bcafe.up.railway.app",
+    "logo": "https://web-production-bcafe.up.railway.app/icons/Icon-512.png",
     "description": "Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for students everywhere.",
-    "logo": "https://web-production-bcafe.up.railway.app/icons/Icon-512.png"
+    "foundingDate": "2024",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://web-production-bcafe.up.railway.app/contact"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://web-production-bcafe.up.railway.app/universities?q={search_term}",
+      "query-input": "required name=search_term"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD Structured Data: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Flow",
+    "url": "https://web-production-bcafe.up.railway.app",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://web-production-bcafe.up.railway.app/universities?q={search_term}",
+      "query-input": "required name=search_term"
+    }
   }
   </script>
 

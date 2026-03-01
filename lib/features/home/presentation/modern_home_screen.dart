@@ -8,6 +8,7 @@ import 'dart:ui' as ui;
 import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../core/providers/appearance_provider.dart';
 import '../../../core/constants/home_constants.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../core/services/accessibility_service.dart';
@@ -120,6 +121,30 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                       if (isWide) ...[
                         const SizedBox(width: 32),
                         _NavTextButton(label: context.l10n.navUniversities, path: '/universities', theme: theme),
+                        PopupMenuButton<String>(
+                          tooltip: context.l10n.navSolutions,
+                          onSelected: (path) => context.go(path),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  context.l10n.navSolutions,
+                                  style: TextStyle(color: theme.colorScheme.onSurface),
+                                ),
+                                const SizedBox(width: 4),
+                                Icon(Icons.arrow_drop_down, size: 20, color: theme.colorScheme.onSurface),
+                              ],
+                            ),
+                          ),
+                          itemBuilder: (ctx) => [
+                            PopupMenuItem(value: '/for-students', child: Text(ctx.l10n.forStudents)),
+                            PopupMenuItem(value: '/for-institutions', child: Text(ctx.l10n.forInstitutions)),
+                            PopupMenuItem(value: '/for-parents', child: Text(ctx.l10n.forParents)),
+                            PopupMenuItem(value: '/for-counselors', child: Text(ctx.l10n.forCounselors)),
+                          ],
+                        ),
                         _NavTextButton(label: context.l10n.navAbout, path: '/about', theme: theme),
                         _NavTextButton(label: context.l10n.navContact, path: '/contact', theme: theme),
                       ],
@@ -128,6 +153,8 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 ),
                 actions: [
                   const _LanguageToggle(),
+                  const SizedBox(width: 4),
+                  _DarkModeToggle(),
                   const SizedBox(width: 8),
                   if (authState.isAuthenticated) ...[
                     FilledButton.icon(
@@ -175,6 +202,21 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                         PopupMenuItem(value: '/universities', child: Text(ctx.l10n.navUniversities)),
                         PopupMenuItem(value: '/about', child: Text(ctx.l10n.navAbout)),
                         PopupMenuItem(value: '/contact', child: Text(ctx.l10n.navContact)),
+                        const PopupMenuDivider(),
+                        PopupMenuItem(
+                          enabled: false,
+                          child: Text(
+                            ctx.l10n.navSolutions,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(ctx).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem(value: '/for-students', child: Text('  ${ctx.l10n.forStudents}')),
+                        PopupMenuItem(value: '/for-institutions', child: Text('  ${ctx.l10n.forInstitutions}')),
+                        PopupMenuItem(value: '/for-parents', child: Text('  ${ctx.l10n.forParents}')),
+                        PopupMenuItem(value: '/for-counselors', child: Text('  ${ctx.l10n.forCounselors}')),
                       ],
                     ),
                   ],
@@ -219,7 +261,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   container: true,
                   child: Container(
                     color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _ValuePropositionSection(),
+                    child: const _FadeInOnScroll(
+                      children: [_ValuePropositionSection()],
+                    ),
                   ),
                 ),
               ),
@@ -229,7 +273,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 child: Semantics(
                   label: 'Trusted institutions',
                   container: true,
-                  child: const _SocialProofSection(),
+                  child: const _FadeInOnScroll(
+                    children: [_SocialProofSection()],
+                  ),
                 ),
               ),
 
@@ -267,7 +313,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   container: true,
                   child: Container(
                     color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _KeyFeaturesSection(),
+                    child: const _FadeInOnScroll(
+                      children: [_KeyFeaturesSection()],
+                    ),
                   ),
                 ),
               ),
@@ -277,7 +325,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 child: Semantics(
                   label: 'Built for everyone',
                   container: true,
-                  child: const _UserTypesSection(),
+                  child: const _FadeInOnScroll(
+                    children: [_UserTypesSection()],
+                  ),
                 ),
               ),
 
@@ -288,7 +338,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   container: true,
                   child: Container(
                     color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _TestimonialsSection(),
+                    child: const _FadeInOnScroll(
+                      children: [_TestimonialsSection()],
+                    ),
                   ),
                 ),
               ),
@@ -307,7 +359,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 child: Semantics(
                   label: 'Call to action',
                   container: true,
-                  child: const _FinalCTASection(),
+                  child: const _FadeInOnScroll(
+                    children: [_FinalCTASection()],
+                  ),
                 ),
               ),
 
@@ -346,6 +400,37 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
           // Skip to main content link (appears on Tab focus)
           SkipToContentLink(mainContentKey: _mainContentKey),
+
+          // Scroll progress indicator (purely decorative)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Semantics(
+              excludeSemantics: true,
+              child: AnimatedBuilder(
+                animation: _scrollController,
+                builder: (context, _) {
+                  double progress = 0;
+                  if (_scrollController.hasClients &&
+                      _scrollController.position.maxScrollExtent > 0) {
+                    progress = (_scrollOffset /
+                            _scrollController.position.maxScrollExtent)
+                        .clamp(0.0, 1.0);
+                  }
+                  return Container(
+                    height: 3,
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      backgroundColor: Colors.transparent,
+                      color: theme.colorScheme.primary,
+                      minHeight: 3,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
 
         ],
       ),
@@ -1632,24 +1717,28 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
         name: context.l10n.roleStudents,
         description: context.l10n.roleStudentsDesc,
         color: colorScheme.primary,
+        route: '/for-students',
       ),
       _UserType(
         icon: Icons.business_rounded,
         name: context.l10n.roleInstitutions,
         description: context.l10n.roleInstitutionsDesc,
         color: colorScheme.secondary,
+        route: '/for-institutions',
       ),
       _UserType(
         icon: Icons.family_restroom_rounded,
         name: context.l10n.roleParents,
         description: context.l10n.roleParentsDesc,
         color: colorScheme.tertiary,
+        route: '/for-parents',
       ),
       _UserType(
         icon: Icons.psychology_rounded,
         name: context.l10n.roleCounselors,
         description: context.l10n.roleCounselorsDesc,
         color: colorScheme.error,
+        route: '/for-counselors',
       ),
     ];
   }
@@ -1826,7 +1915,7 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
                         ),
                         const SizedBox(height: 32),
                         FilledButton.icon(
-                          onPressed: () => context.go('/register'),
+                          onPressed: () => context.go(selected.route),
                           icon: const Icon(Icons.arrow_forward),
                           label: Text(context.l10n.getStartedAs(selected.name)),
                           style: FilledButton.styleFrom(
@@ -1974,13 +2063,134 @@ class _UserType {
   final String name;
   final String description;
   final Color color;
+  final String route;
 
   const _UserType({
     required this.icon,
     required this.name,
     required this.description,
     required this.color,
+    required this.route,
   });
+}
+
+/// Fade-in-on-scroll widget that triggers a staggered fade + slide-up
+/// animation when the widget scrolls into view (~80% of viewport).
+/// Respects reduced-motion preference — renders children immediately when
+/// [MediaQuery.disableAnimations] is true.
+class _FadeInOnScroll extends StatefulWidget {
+  final List<Widget> children;
+
+  const _FadeInOnScroll({required this.children});
+
+  @override
+  State<_FadeInOnScroll> createState() => _FadeInOnScrollState();
+}
+
+class _FadeInOnScrollState extends State<_FadeInOnScroll>
+    with TickerProviderStateMixin {
+  final GlobalKey _key = GlobalKey();
+  late List<AnimationController> _controllers;
+  late List<Animation<double>> _fadeAnimations;
+  late List<Animation<Offset>> _slideAnimations;
+  bool _hasTriggered = false;
+  ScrollPosition? _scrollPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = List.generate(widget.children.length, (index) {
+      return AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 400),
+      );
+    });
+
+    _fadeAnimations = _controllers.map((c) {
+      return Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: c, curve: Curves.easeOut),
+      );
+    }).toList();
+
+    _slideAnimations = _controllers.map((c) {
+      return Tween<Offset>(
+        begin: const Offset(0, 20),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(parent: c, curve: Curves.easeOut));
+    }).toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkVisibility());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scrollPosition?.removeListener(_checkVisibility);
+    _scrollPosition = Scrollable.maybeOf(context)?.position;
+    _scrollPosition?.addListener(_checkVisibility);
+  }
+
+  void _checkVisibility() {
+    if (!mounted || _hasTriggered) return;
+    final renderObject = _key.currentContext?.findRenderObject();
+    if (renderObject == null || !renderObject.attached) return;
+
+    final box = renderObject as RenderBox;
+    final position = box.localToGlobal(Offset.zero);
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    if (position.dy < screenHeight * 0.85 && position.dy > -box.size.height) {
+      _trigger();
+    }
+  }
+
+  Future<void> _trigger() async {
+    if (_hasTriggered) return;
+    _hasTriggered = true;
+    for (int i = 0; i < _controllers.length; i++) {
+      if (!mounted) return;
+      _controllers[i].forward();
+      if (i < _controllers.length - 1) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollPosition?.removeListener(_checkVisibility);
+    for (final c in _controllers) {
+      c.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.of(context).disableAnimations;
+
+    if (reduceMotion) {
+      return Column(key: _key, children: widget.children);
+    }
+
+    return Column(
+      key: _key,
+      children: List.generate(widget.children.length, (i) {
+        return AnimatedBuilder(
+          animation: _controllers[i],
+          builder: (context, _) {
+            return Transform.translate(
+              offset: _slideAnimations[i].value,
+              child: Opacity(
+                opacity: _fadeAnimations[i].value,
+                child: widget.children[i],
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
 }
 
 /// Navigation text button used in the homepage app bar.
@@ -2897,6 +3107,26 @@ class _UniversityStatChip extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _DarkModeToggle extends ConsumerWidget {
+  const _DarkModeToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+
+    return IconButton(
+      icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+      tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
+      onPressed: () {
+        ref.read(appearanceProvider.notifier).setThemeMode(
+              isDark ? ThemeMode.light : ThemeMode.dark,
+            );
+      },
     );
   }
 }

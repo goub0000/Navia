@@ -40907,6 +40907,88 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take your education journey with you.\nDownload the Flow app on your favorite platform.'**
   String get mobileAppsPageHeroSubtitle;
+
+  String get navSolutions;
+  String get forStudents;
+  String get forInstitutions;
+  String get forParents;
+  String get forCounselors;
+
+  String get personaStudentHeroTitle;
+  String get personaStudentHeroSubtitle;
+  String get personaStudentPain1Title;
+  String get personaStudentPain1Desc;
+  String get personaStudentPain2Title;
+  String get personaStudentPain2Desc;
+  String get personaStudentPain3Title;
+  String get personaStudentPain3Desc;
+  String get personaStudentFeature1Title;
+  String get personaStudentFeature1Desc;
+  String get personaStudentFeature2Title;
+  String get personaStudentFeature2Desc;
+  String get personaStudentFeature3Title;
+  String get personaStudentFeature3Desc;
+  String get personaStudentTestimonial;
+  String get personaStudentTestimonialAuthor;
+  String get personaStudentCta;
+
+  String get personaInstitutionHeroTitle;
+  String get personaInstitutionHeroSubtitle;
+  String get personaInstitutionPain1Title;
+  String get personaInstitutionPain1Desc;
+  String get personaInstitutionPain2Title;
+  String get personaInstitutionPain2Desc;
+  String get personaInstitutionPain3Title;
+  String get personaInstitutionPain3Desc;
+  String get personaInstitutionFeature1Title;
+  String get personaInstitutionFeature1Desc;
+  String get personaInstitutionFeature2Title;
+  String get personaInstitutionFeature2Desc;
+  String get personaInstitutionFeature3Title;
+  String get personaInstitutionFeature3Desc;
+  String get personaInstitutionTestimonial;
+  String get personaInstitutionTestimonialAuthor;
+  String get personaInstitutionCta;
+
+  String get personaParentHeroTitle;
+  String get personaParentHeroSubtitle;
+  String get personaParentPain1Title;
+  String get personaParentPain1Desc;
+  String get personaParentPain2Title;
+  String get personaParentPain2Desc;
+  String get personaParentPain3Title;
+  String get personaParentPain3Desc;
+  String get personaParentFeature1Title;
+  String get personaParentFeature1Desc;
+  String get personaParentFeature2Title;
+  String get personaParentFeature2Desc;
+  String get personaParentFeature3Title;
+  String get personaParentFeature3Desc;
+  String get personaParentTestimonial;
+  String get personaParentTestimonialAuthor;
+  String get personaParentCta;
+
+  String get personaCounselorHeroTitle;
+  String get personaCounselorHeroSubtitle;
+  String get personaCounselorPain1Title;
+  String get personaCounselorPain1Desc;
+  String get personaCounselorPain2Title;
+  String get personaCounselorPain2Desc;
+  String get personaCounselorPain3Title;
+  String get personaCounselorPain3Desc;
+  String get personaCounselorFeature1Title;
+  String get personaCounselorFeature1Desc;
+  String get personaCounselorFeature2Title;
+  String get personaCounselorFeature2Desc;
+  String get personaCounselorFeature3Title;
+  String get personaCounselorFeature3Desc;
+  String get personaCounselorTestimonial;
+  String get personaCounselorTestimonialAuthor;
+  String get personaCounselorCta;
+
+  String get personaPainPointsTitle;
+  String get personaFeaturesTitle;
+  String get personaTestimonialTitle;
 }
 
 class _AppLocalizationsDelegate

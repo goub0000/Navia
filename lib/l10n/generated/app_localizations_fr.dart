@@ -22920,4 +22920,162 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get mobileAppsPageHeroSubtitle =>
       'Emportez votre parcours éducatif avec vous.\nTéléchargez l\'application Flow sur votre plateforme préférée.';
+
+  @override
+  String get navSolutions => 'Solutions';
+  @override
+  String get forStudents => 'Pour les Étudiants';
+  @override
+  String get forInstitutions => 'Pour les Institutions';
+  @override
+  String get forParents => 'Pour les Parents';
+  @override
+  String get forCounselors => 'Pour les Conseillers';
+
+  @override
+  String get personaStudentHeroTitle => 'Votre avenir commence ici';
+  @override
+  String get personaStudentHeroSubtitle => 'Découvrez plus de 18 000 universités dans le monde, obtenez des recommandations par IA et suivez chaque candidature — le tout en un seul endroit.';
+  @override
+  String get personaStudentPain1Title => 'Submergé par les choix';
+  @override
+  String get personaStudentPain1Desc => 'Des milliers de programmes dans des centaines d\'universités — par où commencer ?';
+  @override
+  String get personaStudentPain2Title => 'Candidatures dispersées';
+  @override
+  String get personaStudentPain2Desc => 'Délais, documents et mises à jour répartis sur des dizaines de portails.';
+  @override
+  String get personaStudentPain3Title => 'Aucun accompagnement personnalisé';
+  @override
+  String get personaStudentPain3Desc => 'Les classements génériques ne tiennent pas compte de votre profil, objectifs et budget uniques.';
+  @override
+  String get personaStudentFeature1Title => 'Correspondance par IA';
+  @override
+  String get personaStudentFeature1Desc => 'Notre moteur de recommandation analyse votre profil pour suggérer des universités et programmes qui vous correspondent.';
+  @override
+  String get personaStudentFeature2Title => 'Suivi unifié des candidatures';
+  @override
+  String get personaStudentFeature2Desc => 'Gérez toutes vos candidatures, délais et documents depuis un seul tableau de bord.';
+  @override
+  String get personaStudentFeature3Title => 'Recherche intelligente d\'universités';
+  @override
+  String get personaStudentFeature3Desc => 'Filtrez par pays, frais de scolarité, classement, programmes et plus encore.';
+  @override
+  String get personaStudentTestimonial => 'Flow m\'a aidé à découvrir des programmes que je ne connaissais pas. J\'ai postulé à 8 universités et j\'ai été accepté dans 5 !';
+  @override
+  String get personaStudentTestimonialAuthor => 'Amara, Étudiante du Nigeria';
+  @override
+  String get personaStudentCta => 'Commencez votre parcours gratuitement';
+
+  @override
+  String get personaInstitutionHeroTitle => 'Attirez des étudiants talentueux du monde entier';
+  @override
+  String get personaInstitutionHeroSubtitle => 'Présentez vos programmes à des candidats motivés dans le monde entier. Gérez les candidatures efficacement et trouvez les bons candidats.';
+  @override
+  String get personaInstitutionPain1Title => 'Portée mondiale limitée';
+  @override
+  String get personaInstitutionPain1Desc => 'Les étudiants talentueux ne peuvent pas vous trouver s\'ils ne savent pas que vous existez.';
+  @override
+  String get personaInstitutionPain2Title => 'Admissions inefficaces';
+  @override
+  String get personaInstitutionPain2Desc => 'L\'examen manuel des candidatures et les communications dispersées ralentissent tout.';
+  @override
+  String get personaInstitutionPain3Title => 'Difficile de se démarquer';
+  @override
+  String get personaInstitutionPain3Desc => 'Rivaliser pour l\'attention parmi des milliers d\'institutions est un défi.';
+  @override
+  String get personaInstitutionFeature1Title => 'Visibilité mondiale';
+  @override
+  String get personaInstitutionFeature1Desc => 'Votre institution est recherchable par des étudiants dans plus de 100 pays. Présentez vos programmes et réussites.';
+  @override
+  String get personaInstitutionFeature2Title => 'Gestion des candidatures';
+  @override
+  String get personaInstitutionFeature2Desc => 'Examinez les candidatures, communiquez avec les candidats et suivez les admissions depuis un tableau de bord.';
+  @override
+  String get personaInstitutionFeature3Title => 'Données et analyses';
+  @override
+  String get personaInstitutionFeature3Desc => 'Comprenez d\'où viennent vos candidats et comment améliorer le recrutement.';
+  @override
+  String get personaInstitutionTestimonial => 'Depuis notre inscription sur Flow, nous avons constaté une augmentation de 40 % des candidatures internationales.';
+  @override
+  String get personaInstitutionTestimonialAuthor => 'Dr. Kofi, Directeur des admissions';
+  @override
+  String get personaInstitutionCta => 'Inscrire votre institution';
+
+  @override
+  String get personaParentHeroTitle => 'Soutenez l\'avenir de votre enfant';
+  @override
+  String get personaParentHeroSubtitle => 'Restez informé et impliqué tout au long du processus de candidature. Suivez les progrès, comparez les options et prenez des décisions ensemble.';
+  @override
+  String get personaParentPain1Title => 'Se sentir exclu';
+  @override
+  String get personaParentPain1Desc => 'Le processus de candidature peut être opaque — vous voulez aider mais ne savez pas où en sont les choses.';
+  @override
+  String get personaParentPain2Title => 'Difficile de comparer les options';
+  @override
+  String get personaParentPain2Desc => 'Frais de scolarité, classements, localisation, programmes — la comparaison est écrasante.';
+  @override
+  String get personaParentPain3Title => 'S\'inquiéter du bon choix';
+  @override
+  String get personaParentPain3Desc => 'Vous voulez le meilleur pour votre enfant, mais comment savoir quelle université est la bonne ?';
+  @override
+  String get personaParentFeature1Title => 'Suivi des candidatures';
+  @override
+  String get personaParentFeature1Desc => 'Consultez les mises à jour en temps réel de chaque candidature soumise par votre enfant.';
+  @override
+  String get personaParentFeature2Title => 'Comparaison d\'universités';
+  @override
+  String get personaParentFeature2Desc => 'Comparez les universités côte à côte selon les frais, programmes, classements et résultats.';
+  @override
+  String get personaParentFeature3Title => 'Tableau de bord partagé';
+  @override
+  String get personaParentFeature3Desc => 'Restez connecté avec le conseiller de votre enfant et soyez notifié des délais et décisions importants.';
+  @override
+  String get personaParentTestimonial => 'Je comprends enfin les options de ma fille. Flow nous a permis de comparer les universités et de décider ensemble.';
+  @override
+  String get personaParentTestimonialAuthor => 'Mme Diallo, Parent du Sénégal';
+  @override
+  String get personaParentCta => 'Rejoindre en tant que parent';
+
+  @override
+  String get personaCounselorHeroTitle => 'Favorisez la réussite de vos étudiants';
+  @override
+  String get personaCounselorHeroSubtitle => 'Gérez les parcours de plusieurs étudiants, fournissez des recommandations basées sur les données et suivez les résultats depuis une seule plateforme.';
+  @override
+  String get personaCounselorPain1Title => 'Trop d\'étudiants, trop peu de temps';
+  @override
+  String get personaCounselorPain1Desc => 'Gérer les candidatures de dizaines d\'étudiants avec des tableurs et des e-mails est insoutenable.';
+  @override
+  String get personaCounselorPain2Title => 'Informations obsolètes sur les universités';
+  @override
+  String get personaCounselorPain2Desc => 'Suivre les changements de programmes, délais et conditions d\'admission de centaines d\'universités.';
+  @override
+  String get personaCounselorPain3Title => 'Pas de vue centralisée';
+  @override
+  String get personaCounselorPain3Desc => 'Suivre quel étudiant a postulé où et à quelle étape il en est — tout est dispersé.';
+  @override
+  String get personaCounselorFeature1Title => 'Gestion des étudiants';
+  @override
+  String get personaCounselorFeature1Desc => 'Consultez tous vos étudiants, leurs candidatures et leurs progrès depuis un tableau de bord organisé.';
+  @override
+  String get personaCounselorFeature2Title => 'Recommandations par IA';
+  @override
+  String get personaCounselorFeature2Desc => 'Obtenez des suggestions d\'universités basées sur les données pour chaque étudiant selon son profil unique.';
+  @override
+  String get personaCounselorFeature3Title => 'Outils de collaboration';
+  @override
+  String get personaCounselorFeature3Desc => 'Partagez des recommandations avec les parents, coordonnez avec les institutions et envoyez des rappels.';
+  @override
+  String get personaCounselorTestimonial => 'Flow a transformé ma façon de travailler. Je peux maintenant accompagner 3 fois plus d\'étudiants avec de meilleurs résultats.';
+  @override
+  String get personaCounselorTestimonialAuthor => 'M. Mensah, Conseiller scolaire';
+  @override
+  String get personaCounselorCta => 'Commencer à conseiller avec Flow';
+
+  @override
+  String get personaPainPointsTitle => 'Nous comprenons vos défis';
+  @override
+  String get personaFeaturesTitle => 'Conçu pour vous';
+  @override
+  String get personaTestimonialTitle => 'Ce que disent les autres';
 }

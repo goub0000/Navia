@@ -22514,4 +22514,162 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mobileAppsPageHeroSubtitle =>
       'Take your education journey with you.\nDownload the Flow app on your favorite platform.';
+
+  @override
+  String get navSolutions => 'Solutions';
+  @override
+  String get forStudents => 'For Students';
+  @override
+  String get forInstitutions => 'For Institutions';
+  @override
+  String get forParents => 'For Parents';
+  @override
+  String get forCounselors => 'For Counselors';
+
+  @override
+  String get personaStudentHeroTitle => 'Your Future Starts Here';
+  @override
+  String get personaStudentHeroSubtitle => 'Discover 18,000+ universities worldwide, get AI-powered recommendations, and track every application — all in one place.';
+  @override
+  String get personaStudentPain1Title => 'Overwhelmed by choices';
+  @override
+  String get personaStudentPain1Desc => 'Thousands of programs across hundreds of universities — where do you even begin?';
+  @override
+  String get personaStudentPain2Title => 'Scattered applications';
+  @override
+  String get personaStudentPain2Desc => 'Deadlines, documents, and status updates spread across dozens of portals.';
+  @override
+  String get personaStudentPain3Title => 'No personalized guidance';
+  @override
+  String get personaStudentPain3Desc => 'Generic rankings don\'t account for your unique profile, goals, and budget.';
+  @override
+  String get personaStudentFeature1Title => 'AI-Powered Matching';
+  @override
+  String get personaStudentFeature1Desc => 'Our recommendation engine analyzes your profile to suggest universities and programs that truly fit.';
+  @override
+  String get personaStudentFeature2Title => 'Unified Application Tracker';
+  @override
+  String get personaStudentFeature2Desc => 'Manage all your applications, deadlines, and documents from a single dashboard.';
+  @override
+  String get personaStudentFeature3Title => 'Smart University Search';
+  @override
+  String get personaStudentFeature3Desc => 'Filter by country, tuition, ranking, programs, and more to find your perfect match.';
+  @override
+  String get personaStudentTestimonial => 'Flow helped me discover programs I never knew existed. I applied to 8 universities and got accepted into 5!';
+  @override
+  String get personaStudentTestimonialAuthor => 'Amara, Student from Nigeria';
+  @override
+  String get personaStudentCta => 'Start Your Journey Free';
+
+  @override
+  String get personaInstitutionHeroTitle => 'Attract Talented Students Globally';
+  @override
+  String get personaInstitutionHeroSubtitle => 'Showcase your programs to motivated applicants worldwide. Manage applications efficiently and connect with the right candidates.';
+  @override
+  String get personaInstitutionPain1Title => 'Limited global reach';
+  @override
+  String get personaInstitutionPain1Desc => 'Talented students can\'t find you if they don\'t know you exist.';
+  @override
+  String get personaInstitutionPain2Title => 'Inefficient admissions';
+  @override
+  String get personaInstitutionPain2Desc => 'Manual application review and scattered communications slow everything down.';
+  @override
+  String get personaInstitutionPain3Title => 'Difficult to stand out';
+  @override
+  String get personaInstitutionPain3Desc => 'Competing for attention among thousands of institutions is challenging.';
+  @override
+  String get personaInstitutionFeature1Title => 'Global Visibility';
+  @override
+  String get personaInstitutionFeature1Desc => 'Your institution is searchable by students in 100+ countries. Showcase programs, campus life, and success stories.';
+  @override
+  String get personaInstitutionFeature2Title => 'Application Management';
+  @override
+  String get personaInstitutionFeature2Desc => 'Review applications, communicate with candidates, and track admissions — all from one dashboard.';
+  @override
+  String get personaInstitutionFeature3Title => 'Data & Analytics';
+  @override
+  String get personaInstitutionFeature3Desc => 'Understand where your applicants come from, what they\'re looking for, and how to improve recruitment.';
+  @override
+  String get personaInstitutionTestimonial => 'Since joining Flow, we\'ve seen a 40% increase in international applications. The dashboard makes managing them effortless.';
+  @override
+  String get personaInstitutionTestimonialAuthor => 'Dr. Kofi, Admissions Director';
+  @override
+  String get personaInstitutionCta => 'List Your Institution';
+
+  @override
+  String get personaParentHeroTitle => 'Support Your Child\'s Future';
+  @override
+  String get personaParentHeroSubtitle => 'Stay informed and involved throughout the university application process. Track progress, compare options, and make confident decisions together.';
+  @override
+  String get personaParentPain1Title => 'Feeling left out';
+  @override
+  String get personaParentPain1Desc => 'The application process can be opaque — you want to help but don\'t know where things stand.';
+  @override
+  String get personaParentPain2Title => 'Hard to compare options';
+  @override
+  String get personaParentPain2Desc => 'Tuition, rankings, location, programs — comparing universities across these dimensions is overwhelming.';
+  @override
+  String get personaParentPain3Title => 'Worrying about the right fit';
+  @override
+  String get personaParentPain3Desc => 'You want the best for your child, but how do you know which university is truly the right match?';
+  @override
+  String get personaParentFeature1Title => 'Application Tracking';
+  @override
+  String get personaParentFeature1Desc => 'See real-time status updates on every application your child has submitted.';
+  @override
+  String get personaParentFeature2Title => 'University Comparison';
+  @override
+  String get personaParentFeature2Desc => 'Compare universities side-by-side on tuition, programs, rankings, and student outcomes.';
+  @override
+  String get personaParentFeature3Title => 'Shared Dashboard';
+  @override
+  String get personaParentFeature3Desc => 'Stay connected with your child\'s counselor and get notified about important deadlines and decisions.';
+  @override
+  String get personaParentTestimonial => 'I finally feel like I understand my daughter\'s options. Flow made it easy for us to compare universities and make decisions together.';
+  @override
+  String get personaParentTestimonialAuthor => 'Mrs. Diallo, Parent from Senegal';
+  @override
+  String get personaParentCta => 'Join as a Parent';
+
+  @override
+  String get personaCounselorHeroTitle => 'Empower Your Students\' Success';
+  @override
+  String get personaCounselorHeroSubtitle => 'Manage multiple students\' journeys, provide data-driven recommendations, and track outcomes — all from a single platform.';
+  @override
+  String get personaCounselorPain1Title => 'Too many students, too little time';
+  @override
+  String get personaCounselorPain1Desc => 'Managing applications for dozens of students with spreadsheets and emails is unsustainable.';
+  @override
+  String get personaCounselorPain2Title => 'Outdated university information';
+  @override
+  String get personaCounselorPain2Desc => 'Keeping up with program changes, deadlines, and admission requirements across hundreds of universities.';
+  @override
+  String get personaCounselorPain3Title => 'No centralized view';
+  @override
+  String get personaCounselorPain3Desc => 'Tracking which student applied where, what stage they\'re at, and what needs attention is scattered.';
+  @override
+  String get personaCounselorFeature1Title => 'Student Management';
+  @override
+  String get personaCounselorFeature1Desc => 'View all your students, their applications, and progress from one organized dashboard.';
+  @override
+  String get personaCounselorFeature2Title => 'AI Recommendations';
+  @override
+  String get personaCounselorFeature2Desc => 'Get data-driven university suggestions for each student based on their unique profile and goals.';
+  @override
+  String get personaCounselorFeature3Title => 'Collaboration Tools';
+  @override
+  String get personaCounselorFeature3Desc => 'Share recommendations with parents, coordinate with institutions, and send reminders to students.';
+  @override
+  String get personaCounselorTestimonial => 'Flow transformed how I work. I can now support 3x more students with better results. The AI recommendations are surprisingly accurate.';
+  @override
+  String get personaCounselorTestimonialAuthor => 'Mr. Mensah, School Counselor';
+  @override
+  String get personaCounselorCta => 'Start Counseling with Flow';
+
+  @override
+  String get personaPainPointsTitle => 'We Understand Your Challenges';
+  @override
+  String get personaFeaturesTitle => 'Built for You';
+  @override
+  String get personaTestimonialTitle => 'What Others Say';
 }
