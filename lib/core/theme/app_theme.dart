@@ -120,6 +120,7 @@ class AppTheme {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: colorScheme,
+      splashFactory: InkSparkle.splashFactory,
       scaffoldBackgroundColor: colorScheme.surface,
       focusColor: focusOutlineColor,
       textTheme: textTheme,

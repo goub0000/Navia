@@ -166,35 +166,85 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   widget.testimonials.length,
-                  (index) => Semantics(
-                    button: true,
-                    label: 'Go to testimonial ${index + 1}',
-                    child: InkWell(
-                      onTap: () {
-                        _pageController.animateToPage(
-                          index,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      borderRadius: BorderRadius.circular(4),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: index == _currentPage ? 24 : 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: index == _currentPage
-                              ? theme.colorScheme.primary
-                              : theme.colorScheme.primary.withValues(alpha: 0.3),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ),
+                  (index) => _CarouselDot(
+                    index: index,
+                    isActive: index == _currentPage,
+                    totalCount: widget.testimonials.length,
+                    onTap: () {
+                      _pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Carousel navigation dot with hover state.
+class _CarouselDot extends StatefulWidget {
+  final int index;
+  final bool isActive;
+  final int totalCount;
+  final VoidCallback onTap;
+
+  const _CarouselDot({
+    required this.index,
+    required this.isActive,
+    required this.totalCount,
+    required this.onTap,
+  });
+
+  @override
+  State<_CarouselDot> createState() => _CarouselDotState();
+}
+
+class _CarouselDotState extends State<_CarouselDot> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final double width;
+    final double opacity;
+
+    if (widget.isActive) {
+      width = 24;
+      opacity = 1.0;
+    } else if (_isHovered) {
+      width = 12;
+      opacity = 0.5;
+    } else {
+      width = 8;
+      opacity = 0.3;
+    }
+
+    return Semantics(
+      button: true,
+      label: 'Go to testimonial ${widget.index + 1}',
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: InkWell(
+          onTap: widget.onTap,
+          borderRadius: BorderRadius.circular(4),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            width: width,
+            height: 8,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: opacity),
+              borderRadius: BorderRadius.circular(4),
+            ),
           ),
         ),
       ),
@@ -221,25 +271,31 @@ class _TestimonialCard extends StatelessWidget {
         horizontal: 8,
         vertical: isActive ? 0 : 16,
       ),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: isActive
-              ? theme.colorScheme.primary.withValues(alpha: 0.3)
-              : theme.colorScheme.outlineVariant,
-          width: isActive ? 2 : 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isActive ? 0.1 : 0.05),
-            blurRadius: isActive ? 20 : 10,
-            offset: Offset(0, isActive ? 10 : 5),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(28),
+        child: Stack(
+          children: [
+            // Card body
+            Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: isActive
+                      ? theme.colorScheme.primary.withValues(alpha: 0.3)
+                      : theme.colorScheme.outlineVariant,
+                  width: isActive ? 2 : 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: isActive ? 0.12 : 0.05),
+                    blurRadius: isActive ? 24 : 10,
+                    offset: Offset(0, isActive ? 10 : 5),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(28),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -279,16 +335,16 @@ class _TestimonialCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.check_circle,
-                    size: 14,
+                    size: 16,
                     color: AppColors.success,
                   ),
                   const SizedBox(width: 6),
                   Flexible(
                     child: Text(
                       testimonial.outcome,
-                      style: theme.textTheme.labelSmall?.copyWith(
+                      style: theme.textTheme.labelMedium?.copyWith(
                         color: AppColors.success,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -347,6 +403,20 @@ class _TestimonialCard extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+            ),
+            // Left accent bar
+            Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                width: 3,
+                color: theme.colorScheme.primary,
+              ),
             ),
           ],
         ),

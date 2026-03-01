@@ -260,33 +260,36 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 ),
               ),
 
-              // Key Features - White background
+              // Key Features - Tinted background
               SliverToBoxAdapter(
                 child: Semantics(
                   label: 'Key features',
                   container: true,
-                  child: const _KeyFeaturesSection(),
-                ),
-              ),
-
-              // User Types - Warm background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Built for everyone',
-                  container: true,
                   child: Container(
                     color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _UserTypesSection(),
+                    child: const _KeyFeaturesSection(),
                   ),
                 ),
               ),
 
-              // Testimonials Section
+              // User Types - White background
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Built for everyone',
+                  container: true,
+                  child: const _UserTypesSection(),
+                ),
+              ),
+
+              // Testimonials Section - Tinted background
               SliverToBoxAdapter(
                 child: Semantics(
                   label: 'Testimonials',
                   container: true,
-                  child: const _TestimonialsSection(),
+                  child: Container(
+                    color: theme.colorScheme.surfaceContainerLowest,
+                    child: const _TestimonialsSection(),
+                  ),
                 ),
               ),
 
@@ -1007,8 +1010,17 @@ class _TestimonialsSection extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 48),
-              TestimonialCarousel(
-                testimonials: Testimonials.all,
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  if (constraints.maxWidth > 900) {
+                    return TestimonialGrid(
+                      testimonials: Testimonials.all,
+                    );
+                  }
+                  return TestimonialCarousel(
+                    testimonials: Testimonials.all,
+                  );
+                },
               ),
             ],
           ),
@@ -1227,76 +1239,11 @@ class _KeyFeaturesSection extends StatelessWidget {
         ),
         const SizedBox(width: 80),
 
-        // Right side - Visual
+        // Right side - Device Frame Mockup
         Expanded(
-          child: Container(
-            height: 500,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  theme.colorScheme.primaryContainer,
-                  theme.colorScheme.tertiary.withValues(alpha:0.3),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  color: theme.colorScheme.primary.withValues(alpha:0.1),
-                  blurRadius: 40,
-                  offset: const Offset(0, 20),
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                // Decorative circles
-                Positioned(
-                  top: 40,
-                  right: 40,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha:0.2),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 60,
-                  left: 30,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha:0.15),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.devices_rounded,
-                        size: 100,
-                        color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.6),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        context.l10n.featuresWorksOnAllDevices,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.onPrimaryContainer.withValues(alpha:0.7),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: _DeviceFrameMockup(),
           ),
         ),
       ],
@@ -1399,6 +1346,270 @@ class _FeatureItem extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Device frame mockup showing 3 overlapping device frames (laptop, tablet, phone)
+/// with mini dashboard UIs inside.
+class _DeviceFrameMockup extends StatelessWidget {
+  const _DeviceFrameMockup();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: 480,
+      height: 400,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // Laptop (back, largest)
+          Positioned(
+            left: 0,
+            top: 20,
+            child: _DeviceFrame(
+              width: 340,
+              height: 220,
+              bezelRadius: 12,
+              bezelWidth: 8,
+              bezelColor: colorScheme.surfaceContainerHighest,
+              shadowColor: colorScheme.shadow.withValues(alpha: 0.15),
+              child: _MiniDashboard(variant: 0),
+            ),
+          ),
+          // Tablet (middle)
+          Positioned(
+            left: 200,
+            top: 60,
+            child: _DeviceFrame(
+              width: 200,
+              height: 270,
+              bezelRadius: 16,
+              bezelWidth: 6,
+              bezelColor: colorScheme.surfaceContainerHighest,
+              shadowColor: colorScheme.shadow.withValues(alpha: 0.18),
+              child: _MiniDashboard(variant: 1),
+            ),
+          ),
+          // Phone (front, smallest)
+          Positioned(
+            right: 20,
+            bottom: 0,
+            child: _DeviceFrame(
+              width: 120,
+              height: 220,
+              bezelRadius: 20,
+              bezelWidth: 4,
+              bezelColor: colorScheme.surfaceContainerHighest,
+              shadowColor: colorScheme.shadow.withValues(alpha: 0.2),
+              child: _MiniDashboard(variant: 2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A single device frame container with bezel, rounded corners, and shadow.
+class _DeviceFrame extends StatelessWidget {
+  final double width;
+  final double height;
+  final double bezelRadius;
+  final double bezelWidth;
+  final Color bezelColor;
+  final Color shadowColor;
+  final Widget child;
+
+  const _DeviceFrame({
+    required this.width,
+    required this.height,
+    required this.bezelRadius,
+    required this.bezelWidth,
+    required this.bezelColor,
+    required this.shadowColor,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: bezelColor,
+        borderRadius: BorderRadius.circular(bezelRadius),
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor,
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(bezelWidth),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(bezelRadius - bezelWidth),
+        child: child,
+      ),
+    );
+  }
+}
+
+/// Mini dashboard UI with colored rectangles representing the Flow dashboard.
+class _MiniDashboard extends StatelessWidget {
+  final int variant;
+
+  const _MiniDashboard({required this.variant});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      color: colorScheme.surface,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Top nav bar
+          Container(
+            height: variant == 2 ? 16 : 24,
+            color: colorScheme.primary,
+            padding: EdgeInsets.symmetric(horizontal: variant == 2 ? 6 : 10, vertical: 4),
+            child: Row(
+              children: [
+                Container(
+                  width: variant == 2 ? 8 : 14,
+                  height: variant == 2 ? 8 : 14,
+                  decoration: BoxDecoration(
+                    color: colorScheme.onPrimary.withValues(alpha: 0.9),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  width: variant == 2 ? 16 : 30,
+                  height: variant == 2 ? 6 : 8,
+                  decoration: BoxDecoration(
+                    color: colorScheme.onPrimary.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Stat cards row
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: variant == 2 ? 6 : 10),
+            child: Row(
+              children: List.generate(variant == 2 ? 2 : 3, (i) {
+                final colors = [
+                  colorScheme.primaryContainer,
+                  colorScheme.secondaryContainer,
+                  colorScheme.tertiaryContainer,
+                ];
+                return Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(right: i < (variant == 2 ? 1 : 2) ? 4 : 0),
+                    height: variant == 2 ? 24 : 36,
+                    decoration: BoxDecoration(
+                      color: colors[i % colors.length],
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4),
+                        child: Container(
+                          width: variant == 2 ? 10 : 18,
+                          height: variant == 2 ? 6 : 10,
+                          decoration: BoxDecoration(
+                            color: colorScheme.onSurface.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Chart area
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: variant == 2 ? 6 : 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(variant == 2 ? 6 : 10),
+                  child: CustomPaint(
+                    painter: _MiniChartPainter(
+                      lineColor: colorScheme.primary,
+                      fillColor: colorScheme.primary.withValues(alpha: 0.1),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: variant == 2 ? 6 : 10),
+        ],
+      ),
+    );
+  }
+}
+
+/// Paints a simple mini line chart.
+class _MiniChartPainter extends CustomPainter {
+  final Color lineColor;
+  final Color fillColor;
+
+  _MiniChartPainter({required this.lineColor, required this.fillColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.width <= 0 || size.height <= 0) return;
+
+    final points = [0.6, 0.4, 0.7, 0.3, 0.5, 0.2, 0.4];
+    final path = Path();
+    final fillPath = Path();
+
+    for (int i = 0; i < points.length; i++) {
+      final x = (i / (points.length - 1)) * size.width;
+      final y = points[i] * size.height;
+      if (i == 0) {
+        path.moveTo(x, y);
+        fillPath.moveTo(x, size.height);
+        fillPath.lineTo(x, y);
+      } else {
+        path.lineTo(x, y);
+        fillPath.lineTo(x, y);
+      }
+    }
+
+    fillPath.lineTo(size.width, size.height);
+    fillPath.close();
+
+    canvas.drawPath(fillPath, Paint()..color = fillColor);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = lineColor
+        ..strokeWidth = 2
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _MiniChartPainter oldDelegate) =>
+      lineColor != oldDelegate.lineColor || fillColor != oldDelegate.fillColor;
 }
 
 /// User Types Section - Segmented
@@ -1640,8 +1851,8 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
 }
 
 /// Accessible tab widget for the "Built for Everyone" section.
-/// Implements ARIA tab pattern with keyboard navigation.
-class _AccessibleTab extends StatelessWidget {
+/// Implements ARIA tab pattern with keyboard navigation and hover states.
+class _AccessibleTab extends StatefulWidget {
   final String label;
   final IconData icon;
   final Color color;
@@ -1663,56 +1874,96 @@ class _AccessibleTab extends StatelessWidget {
   });
 
   @override
+  State<_AccessibleTab> createState() => _AccessibleTabState();
+}
+
+class _AccessibleTabState extends State<_AccessibleTab> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    return Focus(
-      focusNode: focusNode,
-      onKeyEvent: (_, event) => onKeyEvent(event),
-      child: Builder(
-        builder: (context) {
-          final isFocused = Focus.of(context).hasFocus;
-          return Material(
-            color: isSelected
-                ? color.withValues(alpha: 0.15)
-                : Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: isFocused
-                  ? BorderSide(color: theme.focusColor, width: 2)
-                  : isSelected
-                      ? BorderSide(color: color.withValues(alpha: 0.5))
-                      : BorderSide(color: theme.colorScheme.outlineVariant),
-            ),
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(12),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (showIcon) ...[
-                      Icon(
-                        icon,
-                        size: 20,
-                        color: isSelected ? color : theme.colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(
-                      label,
-                      style: theme.textTheme.labelLarge?.copyWith(
-                        color: isSelected ? color : theme.colorScheme.onSurfaceVariant,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                      ),
-                    ),
-                  ],
+    // Resolve visual state
+    final Color bgColor;
+    final Color textColor;
+    final Color iconColor;
+    final BorderSide borderSide;
+    final FontWeight fontWeight;
+
+    if (widget.isSelected) {
+      bgColor = colorScheme.primary;
+      textColor = colorScheme.onPrimary;
+      iconColor = colorScheme.onPrimary;
+      borderSide = BorderSide(color: colorScheme.primary);
+      fontWeight = FontWeight.bold;
+    } else if (_isHovered) {
+      bgColor = colorScheme.primary.withValues(alpha: 0.08);
+      textColor = colorScheme.primary;
+      iconColor = colorScheme.primary;
+      borderSide = BorderSide(color: colorScheme.primary.withValues(alpha: 0.3));
+      fontWeight = FontWeight.w500;
+    } else {
+      bgColor = Colors.transparent;
+      textColor = colorScheme.onSurfaceVariant;
+      iconColor = colorScheme.onSurfaceVariant;
+      borderSide = BorderSide(color: colorScheme.outlineVariant);
+      fontWeight = FontWeight.w500;
+    }
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Focus(
+        focusNode: widget.focusNode,
+        onKeyEvent: (_, event) => widget.onKeyEvent(event),
+        child: Builder(
+          builder: (context) {
+            final isFocused = Focus.of(context).hasFocus;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isFocused ? theme.focusColor : borderSide.color,
+                  width: isFocused ? 2 : 1,
                 ),
               ),
-            ),
-          );
-        },
+              child: InkWell(
+                onTap: widget.onTap,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.showIcon) ...[
+                        Icon(
+                          widget.icon,
+                          size: 20,
+                          color: iconColor,
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+                      AnimatedDefaultTextStyle(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOut,
+                        style: theme.textTheme.labelLarge!.copyWith(
+                          color: textColor,
+                          fontWeight: fontWeight,
+                        ),
+                        child: Text(widget.label),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -1964,8 +2215,6 @@ class _MinimalFooter extends StatelessWidget {
                         links: [
                           _FooterLink(context.l10n.footerStudentPortal, '/login'),
                           _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
-                          _FooterLink(context.l10n.footerParentApp, '/login'),
-                          _FooterLink(context.l10n.footerCounselorTools, '/login'),
                           _FooterLink(context.l10n.footerMobileApps, '/mobile-apps'),
                         ],
                       ),
@@ -1979,8 +2228,6 @@ class _MinimalFooter extends StatelessWidget {
                         links: [
                           _FooterLink(context.l10n.footerAboutUs, '/about'),
                           _FooterLink(context.l10n.footerCareers, '/careers'),
-                          _FooterLink(context.l10n.footerPressKit, '/press'),
-                          _FooterLink(context.l10n.footerPartners, '/partners'),
                           _FooterLink(context.l10n.footerContact, '/contact'),
                         ],
                       ),
@@ -1993,25 +2240,8 @@ class _MinimalFooter extends StatelessWidget {
                         title: context.l10n.footerResources,
                         links: [
                           _FooterLink(context.l10n.footerHelpCenter, '/help'),
-                          _FooterLink(context.l10n.footerDocumentation, '/docs'),
-                          _FooterLink(context.l10n.footerApiReference, '/api-docs'),
-                          _FooterLink(context.l10n.footerCommunity, '/community'),
                           _FooterLink(context.l10n.footerBlog, '/blog'),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-
-                    // Legal Column
-                    Expanded(
-                      child: _FooterColumn(
-                        title: context.l10n.footerLegal,
-                        links: [
-                          _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
-                          _FooterLink(context.l10n.footerTermsOfService, '/terms'),
-                          _FooterLink(context.l10n.footerCookiePolicy, '/cookies'),
-                          _FooterLink(context.l10n.footerDataProtection, '/data-protection'),
-                          _FooterLink(context.l10n.footerCompliance, '/compliance'),
+                          _FooterLink(context.l10n.footerCommunity, '/community'),
                         ],
                       ),
                     ),
@@ -2065,8 +2295,7 @@ class _MinimalFooter extends StatelessWidget {
                           links: [
                             _FooterLink(context.l10n.footerStudentPortal, '/login'),
                             _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
-                            _FooterLink(context.l10n.footerParentApp, '/login'),
-                            _FooterLink(context.l10n.footerCounselorTools, '/login'),
+                            _FooterLink(context.l10n.footerMobileApps, '/mobile-apps'),
                           ],
                         ),
                         _FooterColumn(
@@ -2081,15 +2310,8 @@ class _MinimalFooter extends StatelessWidget {
                           title: context.l10n.footerResources,
                           links: [
                             _FooterLink(context.l10n.footerHelpCenter, '/help'),
-                            _FooterLink(context.l10n.footerDocumentation, '/docs'),
                             _FooterLink(context.l10n.footerCommunity, '/community'),
-                          ],
-                        ),
-                        _FooterColumn(
-                          title: context.l10n.footerLegal,
-                          links: [
-                            _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
-                            _FooterLink(context.l10n.footerTermsOfService, '/terms'),
+                            _FooterLink(context.l10n.footerBlog, '/blog'),
                           ],
                         ),
                       ],
@@ -2105,18 +2327,50 @@ class _MinimalFooter extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // Bottom Section - Copyright and Compliance Chips
+              // Bottom Section - Copyright, Legal Links, and Compliance Chips
               Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: 24,
                 runSpacing: 16,
                 children: [
-                  Text(
-                    context.l10n.footerCopyright,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.l10n.footerCopyright,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '·',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                          _FooterLink(context.l10n.footerTermsOfService, '/terms'),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '·',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                          _FooterLink(context.l10n.footerCookiePolicy, '/cookies'),
+                        ],
+                      ),
+                    ],
                   ),
                   Wrap(
                     spacing: 8,
@@ -2152,7 +2406,7 @@ class _MinimalFooter extends StatelessWidget {
 /// Footer Column Widget
 class _FooterColumn extends StatelessWidget {
   final String title;
-  final List<_FooterLink> links;
+  final List<Widget> links;
 
   const _FooterColumn({
     required this.title,
@@ -2182,30 +2436,50 @@ class _FooterColumn extends StatelessWidget {
 
 /// Footer Link — renders as <a> on web for right-click "Open in new tab",
 /// while preserving SPA navigation via go_router on normal click.
-class _FooterLink extends StatelessWidget {
+/// Includes hover state with animated text color and underline.
+class _FooterLink extends StatefulWidget {
   final String text;
   final String routePath;
 
   const _FooterLink(this.text, this.routePath);
 
   @override
+  State<_FooterLink> createState() => _FooterLinkState();
+}
+
+class _FooterLinkState extends State<_FooterLink> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Semantics(
-        link: true,
-        child: Link(
-          uri: Uri.parse(routePath),
-          builder: (context, followLink) => InkWell(
-            onTap: () => context.go(routePath),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Text(
-                text,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: Semantics(
+          link: true,
+          child: Link(
+            uri: Uri.parse(widget.routePath),
+            builder: (context, followLink) => InkWell(
+              onTap: () => context.go(widget.routePath),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 150),
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    color: _isHovered
+                        ? colorScheme.primary
+                        : colorScheme.onSurfaceVariant,
+                    decoration: _isHovered
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                    decorationColor: _isHovered ? colorScheme.primary : null,
+                  ),
+                  child: Text(widget.text),
                 ),
               ),
             ),
