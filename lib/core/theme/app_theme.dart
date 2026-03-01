@@ -92,6 +92,19 @@ class AppTheme {
       tertiary: isDark ? AppColors.accentLight : AppColors.accent,
     );
 
+    // Focus outline color for keyboard-focus-visible indicators
+    final focusOutlineColor = isDark ? Colors.white : colorScheme.primary;
+
+    // Reusable focus side resolver for button themes
+    final focusSide = WidgetStateProperty.resolveWith<BorderSide?>(
+      (states) {
+        if (states.contains(WidgetState.focused)) {
+          return BorderSide(color: focusOutlineColor, width: 2);
+        }
+        return null;
+      },
+    );
+
     final textTheme = _buildFullTextTheme(
       multiplier: fontSizeMultiplier,
       fontFamily: fontFamily,
@@ -108,6 +121,7 @@ class AppTheme {
       brightness: brightness,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colorScheme.surface,
+      focusColor: focusOutlineColor,
       textTheme: textTheme,
 
       // ── AppBar ──
@@ -151,7 +165,7 @@ class AppTheme {
             fontSize: 14 * fontSizeMultiplier,
             fontWeight: FontWeight.w600,
           ),
-        ),
+        ).copyWith(side: focusSide),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -165,7 +179,7 @@ class AppTheme {
             fontSize: 14 * fontSizeMultiplier,
             fontWeight: FontWeight.w600,
           ),
-        ),
+        ).copyWith(side: focusSide),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
@@ -175,7 +189,7 @@ class AppTheme {
             fontSize: 14 * fontSizeMultiplier,
             fontWeight: FontWeight.w600,
           ),
-        ),
+        ).copyWith(side: focusSide),
       ),
 
       // ── Inputs ──
@@ -241,6 +255,13 @@ class AppTheme {
       iconButtonTheme: IconButtonThemeData(
         style: IconButton.styleFrom(
           minimumSize: const Size(48, 48),
+        ).copyWith(side: focusSide),
+      ),
+
+      // ── Segmented Buttons ──
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          side: focusSide,
         ),
       ),
 
@@ -256,6 +277,14 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
+        ),
+        side: WidgetStateBorderSide.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.focused)) {
+              return BorderSide(color: focusOutlineColor, width: 2);
+            }
+            return BorderSide.none;
+          },
         ),
       ),
     );

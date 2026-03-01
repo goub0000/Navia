@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/link.dart';
 import 'dart:ui' as ui;
 import '../../../core/l10n_extension.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/constants/home_constants.dart';
 import '../../../core/constants/user_roles.dart';
@@ -191,6 +193,15 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 ),
               ),
 
+              // Interactive Quiz Teaser Section
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Quiz teaser',
+                  container: true,
+                  child: const _QuizTeaserSection(),
+                ),
+              ),
+
               // Wave Divider - Hero to Value Props
               SliverToBoxAdapter(
                 child: WaveDivider(
@@ -275,15 +286,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   label: 'Testimonials',
                   container: true,
                   child: const _TestimonialsSection(),
-                ),
-              ),
-
-              // Interactive Quiz Teaser Section
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Quiz teaser',
-                  container: true,
-                  child: const _QuizTeaserSection(),
                 ),
               ),
 
@@ -630,16 +632,19 @@ class _HeroSectionState extends State<_HeroSection>
                     // 1: Main Headline - Benefit-focused
                     _buildAnimatedChild(
                       1,
-                      Text(
-                        context.l10n.heroHeadline,
-                        style: theme.textTheme.displayLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          fontSize: isMobile ? 40 : 56,
-                          height: 1.1,
-                          letterSpacing: -1.5,
-                          color: theme.colorScheme.onSurface,
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          context.l10n.heroHeadline,
+                          style: theme.textTheme.displayLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            fontSize: isMobile ? 40 : 56,
+                            height: 1.1,
+                            letterSpacing: -1.5,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -1405,6 +1410,7 @@ class _UserTypesSection extends StatefulWidget {
 
 class _UserTypesSectionState extends State<_UserTypesSection> {
   int _selectedIndex = 0;
+  late final List<FocusNode> _tabFocusNodes;
 
   List<_UserType> _buildUserTypes(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -1434,6 +1440,50 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
         color: colorScheme.error,
       ),
     ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tabFocusNodes = List.generate(4, (_) => FocusNode());
+  }
+
+  @override
+  void dispose() {
+    for (final node in _tabFocusNodes) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  void _selectTab(int index, List<_UserType> userTypes) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    SemanticsService.announce(
+      'Showing content for ${userTypes[index].name}',
+      TextDirection.ltr,
+    );
+  }
+
+  KeyEventResult _handleTabKeyEvent(KeyEvent event, int index, List<_UserType> userTypes) {
+    if (event is! KeyDownEvent) return KeyEventResult.ignored;
+
+    final count = userTypes.length;
+    if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      final next = (index + 1) % count;
+      _tabFocusNodes[next].requestFocus();
+      return KeyEventResult.handled;
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+      final prev = (index - 1 + count) % count;
+      _tabFocusNodes[prev].requestFocus();
+      return KeyEventResult.handled;
+    } else if (event.logicalKey == LogicalKeyboardKey.enter ||
+               event.logicalKey == LogicalKeyboardKey.space) {
+      _selectTab(index, userTypes);
+      return KeyEventResult.handled;
+    }
+    return KeyEventResult.ignored;
   }
 
   @override
@@ -1470,7 +1520,7 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
               ),
               const SizedBox(height: 48),
 
-              // Segmented Button — hide icons on narrow screens to prevent label truncation
+              // Accessible tab row — ARIA tab pattern
               LayoutBuilder(
                 builder: (context, constraints) {
                   final showIcons = constraints.maxWidth >= 500;
@@ -1478,21 +1528,29 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                      child: SegmentedButton<int>(
-                        segments: userTypes.asMap().entries.map((entry) {
-                          return ButtonSegment<int>(
-                            value: entry.key,
-                            icon: showIcons ? Icon(entry.value.icon) : null,
-                            label: Text(entry.value.name),
-                          );
-                        }).toList(),
-                        selected: {_selectedIndex},
-                        onSelectionChanged: (Set<int> newSelection) {
-                          setState(() {
-                            _selectedIndex = newSelection.first;
-                          });
-                        },
-                        showSelectedIcon: false,
+                      child: Semantics(
+                        explicitChildNodes: true,
+                        label: 'User types',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: userTypes.asMap().entries.map((entry) {
+                            return Semantics(
+                              selected: entry.key == _selectedIndex,
+                              inMutuallyExclusiveGroup: true,
+                              focusable: true,
+                              child: _AccessibleTab(
+                                label: entry.value.name,
+                                icon: entry.value.icon,
+                                color: entry.value.color,
+                                isSelected: entry.key == _selectedIndex,
+                                showIcon: showIcons,
+                                focusNode: _tabFocusNodes[entry.key],
+                                onTap: () => _selectTab(entry.key, userTypes),
+                                onKeyEvent: (e) => _handleTabKeyEvent(e, entry.key, userTypes),
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                   );
@@ -1500,76 +1558,160 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
               ),
               const SizedBox(height: 48),
 
-              // Selected User Type Card
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: Container(
-                  key: ValueKey(_selectedIndex),
-                  padding: const EdgeInsets.all(48),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
-                    borderRadius: BorderRadius.circular(32),
-                    border: Border.all(
-                      color: selected.color.withValues(alpha: 0.3),
-                      width: 2,
+              // Selected User Type Card — live region for screen readers
+              Semantics(
+                label: 'Content for ${selected.name}',
+                container: true,
+                liveRegion: true,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: Container(
+                    key: ValueKey(_selectedIndex),
+                    padding: const EdgeInsets.all(48),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(
+                        color: selected.color.withValues(alpha: 0.3),
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              selected.color.withValues(alpha: 0.2),
-                              selected.color.withValues(alpha: 0.1),
-                            ],
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                selected.color.withValues(alpha: 0.2),
+                                selected.color.withValues(alpha: 0.1),
+                              ],
+                            ),
+                            shape: BoxShape.circle,
                           ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          selected.icon,
-                          size: 56,
-                          color: selected.color,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        selected.name,
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: selected.color,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        selected.description,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                          height: 1.6,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 32),
-                      FilledButton.icon(
-                        onPressed: () => context.go('/register'),
-                        icon: const Icon(Icons.arrow_forward),
-                        label: Text(context.l10n.getStartedAs(selected.name)),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: selected.color,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                            vertical: 16,
+                          child: Icon(
+                            selected.icon,
+                            size: 56,
+                            color: selected.color,
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 24),
+                        Text(
+                          selected.name,
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: selected.color,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          selected.description,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                            height: 1.6,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 32),
+                        FilledButton.icon(
+                          onPressed: () => context.go('/register'),
+                          icon: const Icon(Icons.arrow_forward),
+                          label: Text(context.l10n.getStartedAs(selected.name)),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: selected.color,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32,
+                              vertical: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Accessible tab widget for the "Built for Everyone" section.
+/// Implements ARIA tab pattern with keyboard navigation.
+class _AccessibleTab extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final Color color;
+  final bool isSelected;
+  final bool showIcon;
+  final FocusNode focusNode;
+  final VoidCallback onTap;
+  final KeyEventResult Function(KeyEvent) onKeyEvent;
+
+  const _AccessibleTab({
+    required this.label,
+    required this.icon,
+    required this.color,
+    required this.isSelected,
+    required this.showIcon,
+    required this.focusNode,
+    required this.onTap,
+    required this.onKeyEvent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Focus(
+      focusNode: focusNode,
+      onKeyEvent: (_, event) => onKeyEvent(event),
+      child: Builder(
+        builder: (context) {
+          final isFocused = Focus.of(context).hasFocus;
+          return Material(
+            color: isSelected
+                ? color.withValues(alpha: 0.15)
+                : Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: isFocused
+                  ? BorderSide(color: theme.focusColor, width: 2)
+                  : isSelected
+                      ? BorderSide(color: color.withValues(alpha: 0.5))
+                      : BorderSide(color: theme.colorScheme.outlineVariant),
+            ),
+            child: InkWell(
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (showIcon) ...[
+                      Icon(
+                        icon,
+                        size: 20,
+                        color: isSelected ? color : theme.colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(
+                      label,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: isSelected ? color : theme.colorScheme.onSurfaceVariant,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -1678,7 +1820,7 @@ class _FinalCTASection extends StatelessWidget {
                 Text(
                   context.l10n.ctaSubtitle,
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.white.withValues(alpha:0.9),
+                    color: Colors.white,
                     fontSize: isMobile ? 14 : 16,
                   ),
                   textAlign: TextAlign.center,
@@ -1715,26 +1857,26 @@ class _FinalCTASection extends StatelessWidget {
                     Icon(
                       Icons.check_circle_outline,
                       size: 16,
-                      color: Colors.white.withValues(alpha:0.8),
+                      color: Colors.white,
                     ),
                     const SizedBox(width: 6),
                     Text(
                       context.l10n.ctaNoCreditCard,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha:0.8),
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(width: 16),
                     Icon(
                       Icons.check_circle_outline,
                       size: 16,
-                      color: Colors.white.withValues(alpha:0.8),
+                      color: Colors.white,
                     ),
                     const SizedBox(width: 6),
                     Text(
                       context.l10n.cta14DayTrial,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha:0.8),
+                        color: Colors.white,
                       ),
                     ),
                   ],
@@ -2093,15 +2235,15 @@ class _FindYourPathSection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  theme.colorScheme.tertiary.withValues(alpha: 0.95),
-                  theme.colorScheme.tertiary,
+                  AppColors.accentDark,
+                  AppColors.accentDark,
                   theme.colorScheme.primary,
                 ],
               ),
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.tertiary.withValues(alpha: 0.4),
+                  color: AppColors.accentDark.withValues(alpha: 0.4),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                 ),
@@ -2238,7 +2380,7 @@ class _FindYourPathSection extends StatelessWidget {
                   Text(
                     context.l10n.homeNoAccountRequired,
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.85),
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -2317,7 +2459,7 @@ class _UniversitySearchSection extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
                   theme.colorScheme.secondary,
-                  theme.colorScheme.tertiary,
+                  AppColors.accentDark,
                 ],
               ),
               borderRadius: BorderRadius.circular(28),
@@ -2475,7 +2617,7 @@ class _UniversityStatChip extends StatelessWidget {
           Text(
             label,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: Colors.white.withValues(alpha:0.85),
+              color: Colors.white,
             ),
           ),
         ],

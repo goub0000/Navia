@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../data/testimonials_data.dart';
 
 /// A horizontal scrolling carousel for testimonials.
 ///
 /// Features:
-/// - Auto-scroll with hover pause
-/// - Navigation dots
+/// - Auto-scroll with hover/focus/pause-button pause
+/// - Accessible prev/next/pause controls
+/// - Navigation dots with semantics
+/// - Per-slide screen reader announcements
 /// - Card width: 320px minimum
 /// - Smooth scroll animations
 class TestimonialCarousel extends StatefulWidget {
@@ -31,6 +34,8 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
   int _currentPage = 0;
   Timer? _autoScrollTimer;
   bool _isHovered = false;
+  bool _isPaused = false;
+  bool _isFocused = false;
 
   @override
   void initState() {
@@ -46,7 +51,7 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
 
   void _startAutoScroll() {
     _autoScrollTimer = Timer.periodic(widget.autoScrollDuration, (_) {
-      if (!_isHovered && mounted) {
+      if (!_isHovered && !_isPaused && !_isFocused && mounted) {
         final nextPage = (_currentPage + 1) % widget.testimonials.length;
         _pageController.animateToPage(
           nextPage,
@@ -55,6 +60,35 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
         );
       }
     });
+  }
+
+  void _goToPrevious() {
+    final prevPage = (_currentPage - 1 + widget.testimonials.length) %
+        widget.testimonials.length;
+    _pageController.animateToPage(
+      prevPage,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _goToNext() {
+    final nextPage = (_currentPage + 1) % widget.testimonials.length;
+    _pageController.animateToPage(
+      nextPage,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _togglePause() {
+    setState(() {
+      _isPaused = !_isPaused;
+    });
+    SemanticsService.announce(
+      _isPaused ? 'Carousel paused' : 'Carousel playing',
+      TextDirection.ltr,
+    );
   }
 
   @override
@@ -68,57 +102,101 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 320,
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() => _currentPage = index);
-              },
-              itemCount: widget.testimonials.length,
-              itemBuilder: (context, index) {
-                return _TestimonialCard(
-                  testimonial: widget.testimonials[index],
-                  isActive: index == _currentPage,
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 24),
-          // Navigation Dots
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              widget.testimonials.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  _pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: index == _currentPage ? 24 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: index == _currentPage
-                        ? theme.colorScheme.primary
-                        : theme.colorScheme.primary.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(4),
+    return Semantics(
+      label: 'User testimonials',
+      container: true,
+      child: FocusScope(
+        onFocusChange: (focused) => setState(() => _isFocused = focused),
+        child: MouseRegion(
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 320,
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() => _currentPage = index);
+                    SemanticsService.announce(
+                      'Testimonial ${index + 1} of ${widget.testimonials.length}, ${widget.testimonials[index].name}',
+                      TextDirection.ltr,
+                    );
+                  },
+                  itemCount: widget.testimonials.length,
+                  itemBuilder: (context, index) {
+                    return Semantics(
+                      label: 'Testimonial ${index + 1} of ${widget.testimonials.length}',
+                      container: true,
+                      child: _TestimonialCard(
+                        testimonial: widget.testimonials[index],
+                        isActive: index == _currentPage,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Carousel Controls
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: _goToPrevious,
+                    icon: const Icon(Icons.chevron_left),
+                    tooltip: 'Previous testimonial',
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: _togglePause,
+                    icon: Icon(_isPaused ? Icons.play_arrow : Icons.pause),
+                    tooltip: _isPaused ? 'Play carousel' : 'Pause carousel',
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: _goToNext,
+                    icon: const Icon(Icons.chevron_right),
+                    tooltip: 'Next testimonial',
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              // Navigation Dots
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  widget.testimonials.length,
+                  (index) => Semantics(
+                    button: true,
+                    label: 'Go to testimonial ${index + 1}',
+                    child: InkWell(
+                      onTap: () {
+                        _pageController.animateToPage(
+                          index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(4),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: index == _currentPage ? 24 : 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: index == _currentPage
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.primary.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
