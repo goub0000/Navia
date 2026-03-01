@@ -3,17 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../core/l10n_extension.dart';
+import '../../../core/services/accessibility_service.dart';
 import '../../authentication/providers/auth_provider.dart';
 
 /// Persistent navigation shell for public pages (about, universities, etc.).
 /// Provides a consistent top navbar with logo, navigation links, and auth buttons.
-class PublicShell extends ConsumerWidget {
+class PublicShell extends ConsumerStatefulWidget {
   final Widget child;
 
   const PublicShell({required this.child, super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PublicShell> createState() => _PublicShellState();
+}
+
+class _PublicShellState extends ConsumerState<PublicShell> {
+  final GlobalKey _mainContentKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final authState = ref.watch(authProvider);
     final location = GoRouterState.of(context).matchedLocation;
@@ -21,14 +29,30 @@ class PublicShell extends ConsumerWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: _PublicNavBar(
-          theme: theme,
-          currentPath: location,
-          isAuthenticated: authState.isAuthenticated,
-          dashboardRoute: authState.user?.activeRole.dashboardRoute,
+        child: Semantics(
+          label: 'Navigation',
+          container: true,
+          child: _PublicNavBar(
+            theme: theme,
+            currentPath: location,
+            isAuthenticated: authState.isAuthenticated,
+            dashboardRoute: authState.user?.activeRole.dashboardRoute,
+          ),
         ),
       ),
-      body: child,
+      body: Stack(
+        children: [
+          Semantics(
+            label: 'Main content',
+            container: true,
+            child: KeyedSubtree(
+              key: _mainContentKey,
+              child: widget.child,
+            ),
+          ),
+          SkipToContentLink(mainContentKey: _mainContentKey),
+        ],
+      ),
     );
   }
 }

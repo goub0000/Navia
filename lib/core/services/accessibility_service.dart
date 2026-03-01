@@ -173,18 +173,15 @@ class AccessibilityService {
     );
   }
 
-  /// Skip to main content widget
+  /// Skip to main content widget (legacy helper — prefer using SkipToContentLink directly)
   static Widget skipToMainContent({
     required GlobalKey mainContentKey,
     required Widget child,
   }) {
-    return Column(
+    return Stack(
       children: [
-        _SkipLink(
-          targetKey: mainContentKey,
-          label: 'Skip to main content',
-        ),
-        Expanded(child: child),
+        child,
+        SkipToContentLink(mainContentKey: mainContentKey),
       ],
     );
   }
@@ -200,38 +197,88 @@ enum HeadingLevel {
   h6,
 }
 
-/// Skip link widget for keyboard navigation
-class _SkipLink extends StatelessWidget {
-  final GlobalKey targetKey;
-  final String label;
+/// Skip-to-main-content link that appears on keyboard focus (first Tab stop).
+/// Place inside a Stack that also contains the main content keyed with [mainContentKey].
+class SkipToContentLink extends StatefulWidget {
+  final GlobalKey mainContentKey;
 
-  const _SkipLink({
-    required this.targetKey,
-    required this.label,
-  });
+  const SkipToContentLink({required this.mainContentKey, super.key});
+
+  @override
+  State<SkipToContentLink> createState() => _SkipToContentLinkState();
+}
+
+class _SkipToContentLinkState extends State<SkipToContentLink> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    setState(() => _isFocused = _focusNode.hasFocus);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _skipToContent() {
+    final ctx = widget.mainContentKey.currentContext;
+    if (ctx != null) {
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 300),
+      );
+      // Move focus into the content area
+      FocusScope.of(ctx).requestFocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      link: true,
-      label: label,
-      child: InkWell(
-        onTap: () {
-          final renderObject =
-              targetKey.currentContext?.findRenderObject();
-          if (renderObject != null) {
-            Scrollable.ensureVisible(
-              targetKey.currentContext!,
-              duration: const Duration(milliseconds: 300),
-            );
-          }
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          color: Colors.blue,
-          child: Text(
-            label,
-            style: const TextStyle(color: Colors.white),
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Positioned(
+      top: _isFocused ? 8 : -100,
+      left: 8,
+      child: FocusTraversalOrder(
+        order: const NumericFocusOrder(0),
+        child: AnimatedOpacity(
+          opacity: _isFocused ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 200),
+          child: Semantics(
+            link: true,
+            label: 'Skip to main content',
+            child: Material(
+              color: colorScheme.primary,
+              borderRadius: BorderRadius.circular(20),
+              elevation: 6,
+              child: InkWell(
+                focusNode: _focusNode,
+                onTap: _skipToContent,
+                borderRadius: BorderRadius.circular(20),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Text(
+                    'Skip to main content',
+                    style: TextStyle(
+                      color: colorScheme.onPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

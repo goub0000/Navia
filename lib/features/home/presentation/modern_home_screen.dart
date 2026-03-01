@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/link.dart';
 import 'dart:ui' as ui;
 import '../../../core/l10n_extension.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/constants/home_constants.dart';
 import '../../../core/constants/user_roles.dart';
+import '../../../core/services/accessibility_service.dart';
 import '../../authentication/providers/auth_provider.dart';
 import 'dart:math' as math;
 import 'widgets/demo_video_dialog.dart';
@@ -30,6 +32,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _mainContentKey = GlobalKey();
   double _scrollOffset = 0;
 
   @override
@@ -88,33 +91,37 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                     ),
                   ),
                 ),
-                title: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/logo.png',
-                        semanticLabel: 'Flow logo',
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.cover,
+                title: Semantics(
+                  label: 'Navigation',
+                  container: true,
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          semanticLabel: 'Flow logo',
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      'Flow',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: -0.5,
+                      const SizedBox(width: 12),
+                      Text(
+                        'Flow',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.5,
+                        ),
                       ),
-                    ),
-                    if (isWide) ...[
-                      const SizedBox(width: 32),
-                      _NavTextButton(label: context.l10n.navUniversities, path: '/universities', theme: theme),
-                      _NavTextButton(label: context.l10n.navAbout, path: '/about', theme: theme),
-                      _NavTextButton(label: context.l10n.navContact, path: '/contact', theme: theme),
+                      if (isWide) ...[
+                        const SizedBox(width: 32),
+                        _NavTextButton(label: context.l10n.navUniversities, path: '/universities', theme: theme),
+                        _NavTextButton(label: context.l10n.navAbout, path: '/about', theme: theme),
+                        _NavTextButton(label: context.l10n.navContact, path: '/contact', theme: theme),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
                 actions: [
                   const _LanguageToggle(),
@@ -174,7 +181,14 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
               // Hero Section
               SliverToBoxAdapter(
-                child: _HeroSection(animationController: _animationController),
+                child: Semantics(
+                  label: 'Hero',
+                  container: true,
+                  child: KeyedSubtree(
+                    key: _mainContentKey,
+                    child: _HeroSection(animationController: _animationController),
+                  ),
+                ),
               ),
 
               // Wave Divider - Hero to Value Props
@@ -188,15 +202,23 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
               // Value Proposition - Light background
               SliverToBoxAdapter(
-                child: Container(
-                  color: theme.colorScheme.surfaceContainerLowest,
-                  child: const _ValuePropositionSection(),
+                child: Semantics(
+                  label: 'Why choose Flow',
+                  container: true,
+                  child: Container(
+                    color: theme.colorScheme.surfaceContainerLowest,
+                    child: const _ValuePropositionSection(),
+                  ),
                 ),
               ),
 
               // Social Proof with University Logos - White background
-              const SliverToBoxAdapter(
-                child: _SocialProofSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Trusted institutions',
+                  container: true,
+                  child: const _SocialProofSection(),
+                ),
               ),
 
               // Wave Divider - Social Proof to University Search
@@ -209,36 +231,60 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               ),
 
               // University Search Section
-              const SliverToBoxAdapter(
-                child: _UniversitySearchSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'University search',
+                  container: true,
+                  child: const _UniversitySearchSection(),
+                ),
               ),
 
               // Find Your Path Feature Highlight
-              const SliverToBoxAdapter(
-                child: _FindYourPathSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Find your path',
+                  container: true,
+                  child: const _FindYourPathSection(),
+                ),
               ),
 
               // Key Features - White background
-              const SliverToBoxAdapter(
-                child: _KeyFeaturesSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Key features',
+                  container: true,
+                  child: const _KeyFeaturesSection(),
+                ),
               ),
 
               // User Types - Warm background
               SliverToBoxAdapter(
-                child: Container(
-                  color: theme.colorScheme.surfaceContainerLowest,
-                  child: const _UserTypesSection(),
+                child: Semantics(
+                  label: 'Built for everyone',
+                  container: true,
+                  child: Container(
+                    color: theme.colorScheme.surfaceContainerLowest,
+                    child: const _UserTypesSection(),
+                  ),
                 ),
               ),
 
               // Testimonials Section
-              const SliverToBoxAdapter(
-                child: _TestimonialsSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Testimonials',
+                  container: true,
+                  child: const _TestimonialsSection(),
+                ),
               ),
 
               // Interactive Quiz Teaser Section
-              const SliverToBoxAdapter(
-                child: _QuizTeaserSection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Quiz teaser',
+                  container: true,
+                  child: const _QuizTeaserSection(),
+                ),
               ),
 
               // Wave Divider before Final CTA
@@ -251,13 +297,21 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               ),
 
               // Final CTA
-              const SliverToBoxAdapter(
-                child: _FinalCTASection(),
+              SliverToBoxAdapter(
+                child: Semantics(
+                  label: 'Call to action',
+                  container: true,
+                  child: const _FinalCTASection(),
+                ),
               ),
 
               // Minimal Footer - Dark background
               SliverToBoxAdapter(
-                child: _MinimalFooter(),
+                child: Semantics(
+                  label: 'Footer',
+                  container: true,
+                  child: _MinimalFooter(),
+                ),
               ),
             ],
           ),
@@ -283,6 +337,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
               ),
             ),
           ),
+
+          // Skip to main content link (appears on Tab focus)
+          SkipToContentLink(mainContentKey: _mainContentKey),
 
         ],
       ),
@@ -1762,11 +1819,11 @@ class _MinimalFooter extends StatelessWidget {
                       child: _FooterColumn(
                         title: context.l10n.footerProducts,
                         links: [
-                          _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login')),
-                          _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login')),
-                          _FooterLink(context.l10n.footerParentApp, () => context.go('/login')),
-                          _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login')),
-                          _FooterLink(context.l10n.footerMobileApps, () => context.go('/mobile-apps')),
+                          _FooterLink(context.l10n.footerStudentPortal, '/login'),
+                          _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
+                          _FooterLink(context.l10n.footerParentApp, '/login'),
+                          _FooterLink(context.l10n.footerCounselorTools, '/login'),
+                          _FooterLink(context.l10n.footerMobileApps, '/mobile-apps'),
                         ],
                       ),
                     ),
@@ -1777,11 +1834,11 @@ class _MinimalFooter extends StatelessWidget {
                       child: _FooterColumn(
                         title: context.l10n.footerCompany,
                         links: [
-                          _FooterLink(context.l10n.footerAboutUs, () => context.go('/about')),
-                          _FooterLink(context.l10n.footerCareers, () => context.go('/careers')),
-                          _FooterLink(context.l10n.footerPressKit, () => context.go('/press')),
-                          _FooterLink(context.l10n.footerPartners, () => context.go('/partners')),
-                          _FooterLink(context.l10n.footerContact, () => context.go('/contact')),
+                          _FooterLink(context.l10n.footerAboutUs, '/about'),
+                          _FooterLink(context.l10n.footerCareers, '/careers'),
+                          _FooterLink(context.l10n.footerPressKit, '/press'),
+                          _FooterLink(context.l10n.footerPartners, '/partners'),
+                          _FooterLink(context.l10n.footerContact, '/contact'),
                         ],
                       ),
                     ),
@@ -1792,11 +1849,11 @@ class _MinimalFooter extends StatelessWidget {
                       child: _FooterColumn(
                         title: context.l10n.footerResources,
                         links: [
-                          _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help')),
-                          _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs')),
-                          _FooterLink(context.l10n.footerApiReference, () => context.go('/api-docs')),
-                          _FooterLink(context.l10n.footerCommunity, () => context.go('/community')),
-                          _FooterLink(context.l10n.footerBlog, () => context.go('/blog')),
+                          _FooterLink(context.l10n.footerHelpCenter, '/help'),
+                          _FooterLink(context.l10n.footerDocumentation, '/docs'),
+                          _FooterLink(context.l10n.footerApiReference, '/api-docs'),
+                          _FooterLink(context.l10n.footerCommunity, '/community'),
+                          _FooterLink(context.l10n.footerBlog, '/blog'),
                         ],
                       ),
                     ),
@@ -1807,11 +1864,11 @@ class _MinimalFooter extends StatelessWidget {
                       child: _FooterColumn(
                         title: context.l10n.footerLegal,
                         links: [
-                          _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy')),
-                          _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms')),
-                          _FooterLink(context.l10n.footerCookiePolicy, () => context.go('/cookies')),
-                          _FooterLink(context.l10n.footerDataProtection, () => context.go('/data-protection')),
-                          _FooterLink(context.l10n.footerCompliance, () => context.go('/compliance')),
+                          _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
+                          _FooterLink(context.l10n.footerTermsOfService, '/terms'),
+                          _FooterLink(context.l10n.footerCookiePolicy, '/cookies'),
+                          _FooterLink(context.l10n.footerDataProtection, '/data-protection'),
+                          _FooterLink(context.l10n.footerCompliance, '/compliance'),
                         ],
                       ),
                     ),
@@ -1863,33 +1920,33 @@ class _MinimalFooter extends StatelessWidget {
                         _FooterColumn(
                           title: context.l10n.footerProducts,
                           links: [
-                            _FooterLink(context.l10n.footerStudentPortal, () => context.go('/login')),
-                            _FooterLink(context.l10n.footerInstitutionDashboard, () => context.go('/login')),
-                            _FooterLink(context.l10n.footerParentApp, () => context.go('/login')),
-                            _FooterLink(context.l10n.footerCounselorTools, () => context.go('/login')),
+                            _FooterLink(context.l10n.footerStudentPortal, '/login'),
+                            _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
+                            _FooterLink(context.l10n.footerParentApp, '/login'),
+                            _FooterLink(context.l10n.footerCounselorTools, '/login'),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerCompany,
                           links: [
-                            _FooterLink(context.l10n.footerAboutUs, () => context.go('/about')),
-                            _FooterLink(context.l10n.footerCareers, () => context.go('/careers')),
-                            _FooterLink(context.l10n.footerContact, () => context.go('/contact')),
+                            _FooterLink(context.l10n.footerAboutUs, '/about'),
+                            _FooterLink(context.l10n.footerCareers, '/careers'),
+                            _FooterLink(context.l10n.footerContact, '/contact'),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerResources,
                           links: [
-                            _FooterLink(context.l10n.footerHelpCenter, () => context.go('/help')),
-                            _FooterLink(context.l10n.footerDocumentation, () => context.go('/docs')),
-                            _FooterLink(context.l10n.footerCommunity, () => context.go('/community')),
+                            _FooterLink(context.l10n.footerHelpCenter, '/help'),
+                            _FooterLink(context.l10n.footerDocumentation, '/docs'),
+                            _FooterLink(context.l10n.footerCommunity, '/community'),
                           ],
                         ),
                         _FooterColumn(
                           title: context.l10n.footerLegal,
                           links: [
-                            _FooterLink(context.l10n.footerPrivacyPolicy, () => context.go('/privacy')),
-                            _FooterLink(context.l10n.footerTermsOfService, () => context.go('/terms')),
+                            _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
+                            _FooterLink(context.l10n.footerTermsOfService, '/terms'),
                           ],
                         ),
                       ],
@@ -1980,12 +2037,13 @@ class _FooterColumn extends StatelessWidget {
   }
 }
 
-/// Footer Link as clean M3 TextButton
+/// Footer Link — renders as <a> on web for right-click "Open in new tab",
+/// while preserving SPA navigation via go_router on normal click.
 class _FooterLink extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final String routePath;
 
-  const _FooterLink(this.text, this.onPressed);
+  const _FooterLink(this.text, this.routePath);
 
   @override
   Widget build(BuildContext context) {
@@ -1993,16 +2051,22 @@ class _FooterLink extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          foregroundColor: theme.colorScheme.onSurfaceVariant,
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-        child: Text(
-          text,
-          style: theme.textTheme.bodyMedium,
+      child: Semantics(
+        link: true,
+        child: Link(
+          uri: Uri.parse(routePath),
+          builder: (context, followLink) => InkWell(
+            onTap: () => context.go(routePath),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                text,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
