@@ -65,315 +65,375 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final authState = ref.watch(authProvider);
-    final isWide = MediaQuery.of(context).size.width > 600;
+    final isWide = MediaQuery.of(context).size.width > 900;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       body: Stack(
         children: [
           // Main Content
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              // Transparent App Bar
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                flexibleSpace: ClipRRect(
-                  child: BackdropFilter(
-                    filter: _scrollOffset > 10
-                        ? ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10)
-                        : ui.ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.surface.withValues(
-                          alpha: _scrollOffset > 10 ? 0.8 : 0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                title: Semantics(
-                  label: 'Navigation',
-                  container: true,
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          semanticLabel: 'Flow logo',
-                          height: 40,
-                          width: 40,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Flow',
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -0.5,
-                        ),
-                      ),
-                      if (isWide) ...[
-                        const SizedBox(width: 32),
-                        _NavTextButton(label: context.l10n.navUniversities, path: '/universities', theme: theme),
-                        PopupMenuButton<String>(
-                          tooltip: context.l10n.navSolutions,
-                          onSelected: (path) => context.go(path),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  context.l10n.navSolutions,
-                                  style: TextStyle(color: theme.colorScheme.onSurface),
-                                ),
-                                const SizedBox(width: 4),
-                                Icon(Icons.arrow_drop_down, size: 20, color: theme.colorScheme.onSurface),
-                              ],
-                            ),
+          Semantics(
+            scopesRoute: true,
+            label: 'Main content',
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                // Transparent App Bar
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  flexibleSpace: ClipRRect(
+                    child: BackdropFilter(
+                      filter: _scrollOffset > 10
+                          ? ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10)
+                          : ui.ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: _scrollOffset > 10 ? 0.8 : 0,
                           ),
-                          itemBuilder: (ctx) => [
-                            PopupMenuItem(value: '/for-students', child: Text(ctx.l10n.forStudents)),
-                            PopupMenuItem(value: '/for-institutions', child: Text(ctx.l10n.forInstitutions)),
-                            PopupMenuItem(value: '/for-parents', child: Text(ctx.l10n.forParents)),
-                            PopupMenuItem(value: '/for-counselors', child: Text(ctx.l10n.forCounselors)),
-                          ],
                         ),
-                        _NavTextButton(label: context.l10n.navAbout, path: '/about', theme: theme),
-                        _NavTextButton(label: context.l10n.navContact, path: '/contact', theme: theme),
-                      ],
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-                actions: [
-                  const _LanguageToggle(),
-                  const SizedBox(width: 4),
-                  _DarkModeToggle(),
-                  const SizedBox(width: 8),
-                  if (authState.isAuthenticated) ...[
-                    FilledButton.icon(
-                      onPressed: () => context.go(
-                        authState.user?.activeRole.dashboardRoute ?? '/login',
-                      ),
-                      icon: const Icon(Icons.dashboard, size: 18),
-                      label: Text(context.l10n.navDashboard),
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                  title: Semantics(
+                    label: 'Main navigation',
+                    container: true,
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            semanticLabel: 'Flow logo',
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    ),
-                  ] else ...[
-                    TextButton(
-                      onPressed: () => context.go('/login'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.onSurface,
-                      ),
-                      child: Text(context.l10n.navSignIn),
-                    ),
-                    const SizedBox(width: 8),
-                    FilledButton.icon(
-                      onPressed: () => context.go('/register'),
-                      icon: const Icon(Icons.arrow_forward, size: 18),
-                      label: Text(context.l10n.navGetStarted),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: theme.colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
+                        const SizedBox(width: 12),
+                        Text(
+                          'Flow',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.5,
+                          ),
                         ),
-                      ),
+                        if (isWide) ...[
+                          const SizedBox(width: 32),
+                          _NavTextButton(
+                            label: context.l10n.navUniversities,
+                            path: '/universities',
+                            theme: theme,
+                          ),
+                          PopupMenuButton<String>(
+                            tooltip: context.l10n.navSolutions,
+                            onSelected: (path) => context.go(path),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    context.l10n.navSolutions,
+                                    style: TextStyle(
+                                      color: theme.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 20,
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            itemBuilder: (ctx) => [
+                              PopupMenuItem(
+                                value: '/for-students',
+                                child: Text(ctx.l10n.forStudents),
+                              ),
+                              PopupMenuItem(
+                                value: '/for-institutions',
+                                child: Text(ctx.l10n.forInstitutions),
+                              ),
+                              PopupMenuItem(
+                                value: '/for-parents',
+                                child: Text(ctx.l10n.forParents),
+                              ),
+                              PopupMenuItem(
+                                value: '/for-counselors',
+                                child: Text(ctx.l10n.forCounselors),
+                              ),
+                            ],
+                          ),
+                          _NavTextButton(
+                            label: context.l10n.navAbout,
+                            path: '/about',
+                            theme: theme,
+                          ),
+                          _NavTextButton(
+                            label: context.l10n.navContact,
+                            path: '/contact',
+                            theme: theme,
+                          ),
+                        ],
+                      ],
                     ),
-                  ],
-                  if (!isWide) ...[
+                  ),
+                  actions: [
+                    const _LanguageToggle(),
                     const SizedBox(width: 4),
-                    PopupMenuButton<String>(
-                      icon: const Icon(Icons.menu),
-                      onSelected: (path) => context.go(path),
-                      itemBuilder: (ctx) => [
-                        PopupMenuItem(value: '/universities', child: Text(ctx.l10n.navUniversities)),
-                        PopupMenuItem(value: '/about', child: Text(ctx.l10n.navAbout)),
-                        PopupMenuItem(value: '/contact', child: Text(ctx.l10n.navContact)),
-                        const PopupMenuDivider(),
-                        PopupMenuItem(
-                          enabled: false,
-                          child: Text(
-                            ctx.l10n.navSolutions,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(ctx).colorScheme.primary,
-                            ),
+                    _DarkModeToggle(),
+                    const SizedBox(width: 8),
+                    if (authState.isAuthenticated) ...[
+                      FilledButton.icon(
+                        onPressed: () => context.go(
+                          authState.user?.activeRole.dashboardRoute ?? '/login',
+                        ),
+                        icon: const Icon(Icons.dashboard, size: 18),
+                        label: Text(context.l10n.navDashboard),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
                           ),
                         ),
-                        PopupMenuItem(value: '/for-students', child: Text('  ${ctx.l10n.forStudents}')),
-                        PopupMenuItem(value: '/for-institutions', child: Text('  ${ctx.l10n.forInstitutions}')),
-                        PopupMenuItem(value: '/for-parents', child: Text('  ${ctx.l10n.forParents}')),
-                        PopupMenuItem(value: '/for-counselors', child: Text('  ${ctx.l10n.forCounselors}')),
-                      ],
-                    ),
+                      ),
+                    ] else ...[
+                      TextButton(
+                        onPressed: () => context.go('/login'),
+                        style: TextButton.styleFrom(
+                          foregroundColor: theme.colorScheme.onSurface,
+                        ),
+                        child: Text(context.l10n.navSignIn),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton.icon(
+                        onPressed: () => context.go('/register'),
+                        icon: const Icon(Icons.arrow_forward, size: 18),
+                        label: Text(context.l10n.navGetStarted),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: theme.colorScheme.primary,
+                          foregroundColor: theme.colorScheme.onPrimary,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (!isWide) ...[
+                      const SizedBox(width: 4),
+                      PopupMenuButton<String>(
+                        icon: const Icon(Icons.menu),
+                        onSelected: (path) => context.go(path),
+                        itemBuilder: (ctx) => [
+                          PopupMenuItem(
+                            value: '/universities',
+                            child: Text(ctx.l10n.navUniversities),
+                          ),
+                          PopupMenuItem(
+                            value: '/about',
+                            child: Text(ctx.l10n.navAbout),
+                          ),
+                          PopupMenuItem(
+                            value: '/contact',
+                            child: Text(ctx.l10n.navContact),
+                          ),
+                          const PopupMenuDivider(),
+                          PopupMenuItem(
+                            enabled: false,
+                            child: Text(
+                              ctx.l10n.navSolutions,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(ctx).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: '/for-students',
+                            child: Text('  ${ctx.l10n.forStudents}'),
+                          ),
+                          PopupMenuItem(
+                            value: '/for-institutions',
+                            child: Text('  ${ctx.l10n.forInstitutions}'),
+                          ),
+                          PopupMenuItem(
+                            value: '/for-parents',
+                            child: Text('  ${ctx.l10n.forParents}'),
+                          ),
+                          PopupMenuItem(
+                            value: '/for-counselors',
+                            child: Text('  ${ctx.l10n.forCounselors}'),
+                          ),
+                        ],
+                      ),
+                    ],
+                    const SizedBox(width: 16),
                   ],
-                  const SizedBox(width: 16),
-                ],
-              ),
-
-              // Hero Section
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Hero',
-                  container: true,
-                  child: KeyedSubtree(
-                    key: _mainContentKey,
-                    child: _HeroSection(animationController: _animationController),
-                  ),
                 ),
-              ),
 
-              // Interactive Quiz Teaser Section
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Quiz teaser',
-                  container: true,
-                  child: const _QuizTeaserSection(),
-                ),
-              ),
-
-              // Wave Divider - Hero to Value Props
-              SliverToBoxAdapter(
-                child: WaveDivider(
-                  color: theme.colorScheme.surfaceContainerLowest,
-                  height: 36,
-                  style: WaveStyle.gentle,
-                ),
-              ),
-
-              // Value Proposition - Light background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Why choose Flow',
-                  container: true,
-                  child: Container(
-                    color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _FadeInOnScroll(
-                      children: [_ValuePropositionSection()],
+                // Hero Section
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Hero',
+                    container: true,
+                    child: KeyedSubtree(
+                      key: _mainContentKey,
+                      child: _HeroSection(
+                        animationController: _animationController,
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // Social Proof with University Logos - White background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Trusted institutions',
-                  container: true,
-                  child: const _FadeInOnScroll(
-                    children: [_SocialProofSection()],
+                // Interactive Quiz Teaser Section
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Quiz teaser',
+                    container: true,
+                    child: const _QuizTeaserSection(),
                   ),
                 ),
-              ),
 
-              // Wave Divider - Social Proof to University Search
-              SliverToBoxAdapter(
-                child: WaveDivider(
-                  color: theme.colorScheme.secondary.withValues(alpha:0.1),
-                  height: 30,
-                  style: WaveStyle.minimal,
-                ),
-              ),
-
-              // University Search Section
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'University search',
-                  container: true,
-                  child: const _UniversitySearchSection(),
-                ),
-              ),
-
-              // Find Your Path Feature Highlight
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Find your path',
-                  container: true,
-                  child: const _FindYourPathSection(),
-                ),
-              ),
-
-              // Key Features - Tinted background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Key features',
-                  container: true,
-                  child: Container(
+                // Wave Divider - Hero to Value Props
+                SliverToBoxAdapter(
+                  child: WaveDivider(
                     color: theme.colorScheme.surfaceContainerLowest,
-                    child: const _FadeInOnScroll(
-                      children: [_KeyFeaturesSection()],
+                    height: 36,
+                    style: WaveStyle.gentle,
+                  ),
+                ),
+
+                // Value Proposition - Light background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Why choose Flow',
+                    container: true,
+                    child: Container(
+                      color: theme.colorScheme.surfaceContainerLowest,
+                      child: const _FadeInOnScroll(
+                        children: [_ValuePropositionSection()],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // User Types - White background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Built for everyone',
-                  container: true,
-                  child: const _FadeInOnScroll(
-                    children: [_UserTypesSection()],
-                  ),
-                ),
-              ),
-
-              // Testimonials Section - Tinted background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Testimonials',
-                  container: true,
-                  child: Container(
-                    color: theme.colorScheme.surfaceContainerLowest,
+                // Social Proof with University Logos - White background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Trusted institutions',
+                    container: true,
                     child: const _FadeInOnScroll(
-                      children: [_TestimonialsSection()],
+                      children: [_SocialProofSection()],
                     ),
                   ),
                 ),
-              ),
 
-              // Wave Divider before Final CTA
-              SliverToBoxAdapter(
-                child: WaveDivider(
-                  color: theme.colorScheme.primaryContainer,
-                  height: 36,
-                  style: WaveStyle.curved,
-                ),
-              ),
-
-              // Final CTA
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Call to action',
-                  container: true,
-                  child: const _FadeInOnScroll(
-                    children: [_FinalCTASection()],
+                // Wave Divider - Social Proof to University Search
+                SliverToBoxAdapter(
+                  child: WaveDivider(
+                    color: theme.colorScheme.secondary.withValues(alpha: 0.1),
+                    height: 30,
+                    style: WaveStyle.minimal,
                   ),
                 ),
-              ),
 
-              // Minimal Footer - Dark background
-              SliverToBoxAdapter(
-                child: Semantics(
-                  label: 'Footer',
-                  container: true,
-                  child: _MinimalFooter(),
+                // University Search Section
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'University search',
+                    container: true,
+                    child: const _UniversitySearchSection(),
+                  ),
                 ),
-              ),
-            ],
+
+                // Find Your Path Feature Highlight
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Find your path',
+                    container: true,
+                    child: const _FindYourPathSection(),
+                  ),
+                ),
+
+                // Key Features - Tinted background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Key features',
+                    container: true,
+                    child: Container(
+                      color: theme.colorScheme.surfaceContainerLowest,
+                      child: const _FadeInOnScroll(
+                        children: [_KeyFeaturesSection()],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // User Types - White background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Built for everyone',
+                    container: true,
+                    child: const _FadeInOnScroll(
+                      children: [_UserTypesSection()],
+                    ),
+                  ),
+                ),
+
+                // Testimonials Section - Tinted background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Testimonials',
+                    container: true,
+                    child: Container(
+                      color: theme.colorScheme.surfaceContainerLowest,
+                      child: const _FadeInOnScroll(
+                        children: [_TestimonialsSection()],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Wave Divider before Final CTA
+                SliverToBoxAdapter(
+                  child: WaveDivider(
+                    color: theme.colorScheme.primaryContainer,
+                    height: 36,
+                    style: WaveStyle.curved,
+                  ),
+                ),
+
+                // Final CTA
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Call to action',
+                    container: true,
+                    child: const _FadeInOnScroll(
+                      children: [_FinalCTASection()],
+                    ),
+                  ),
+                ),
+
+                // Minimal Footer - Dark background
+                SliverToBoxAdapter(
+                  child: Semantics(
+                    label: 'Footer',
+                    container: true,
+                    child: _MinimalFooter(),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           // Floating Action Button - Extended
@@ -414,24 +474,24 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   double progress = 0;
                   if (_scrollController.hasClients &&
                       _scrollController.position.maxScrollExtent > 0) {
-                    progress = (_scrollOffset /
-                            _scrollController.position.maxScrollExtent)
-                        .clamp(0.0, 1.0);
+                    progress =
+                        (_scrollOffset /
+                                _scrollController.position.maxScrollExtent)
+                            .clamp(0.0, 1.0);
                   }
                   return Container(
-                    height: 3,
+                    height: 4,
                     child: LinearProgressIndicator(
                       value: progress,
                       backgroundColor: Colors.transparent,
                       color: theme.colorScheme.primary,
-                      minHeight: 3,
+                      minHeight: 4,
                     ),
                   );
                 },
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -511,10 +571,7 @@ class _HeroSectionState extends State<_HeroSection>
       builder: (context, _) {
         return Transform.translate(
           offset: _slideAnimations[index].value,
-          child: Opacity(
-            opacity: _fadeAnimations[index].value,
-            child: child,
-          ),
+          child: Opacity(opacity: _fadeAnimations[index].value, child: child),
         );
       },
     );
@@ -548,7 +605,11 @@ class _HeroSectionState extends State<_HeroSection>
                     ],
                     stops: [
                       0.0,
-                      0.5 + (0.15 * math.sin(widget.animationController.value * 2 * math.pi)),
+                      0.5 +
+                          (0.15 *
+                              math.sin(
+                                widget.animationController.value * 2 * math.pi,
+                              )),
                       1.0,
                     ],
                   ),
@@ -685,11 +746,15 @@ class _HeroSectionState extends State<_HeroSection>
                             color: theme.colorScheme.primaryContainer,
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(
-                              color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                              color: theme.colorScheme.primary.withValues(
+                                alpha: 0.2,
+                              ),
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: theme.colorScheme.primary.withValues(alpha: 0.2),
+                                color: theme.colorScheme.primary.withValues(
+                                  alpha: 0.2,
+                                ),
                                 blurRadius: 20,
                                 offset: const Offset(0, 4),
                               ),
@@ -755,10 +820,7 @@ class _HeroSectionState extends State<_HeroSection>
                     const SizedBox(height: 32),
 
                     // 2.5: Interactive Search Bar
-                    _buildAnimatedChild(
-                      2,
-                      const SearchBarButton(),
-                    ),
+                    _buildAnimatedChild(2, const SearchBarButton()),
                     const SizedBox(height: 32),
 
                     // 3: CTA Buttons - Larger with min height
@@ -787,7 +849,8 @@ class _HeroSectionState extends State<_HeroSection>
                                   fontWeight: FontWeight.w600,
                                 ),
                                 elevation: 2,
-                                shadowColor: theme.colorScheme.primary.withValues(alpha: 0.3),
+                                shadowColor: theme.colorScheme.primary
+                                    .withValues(alpha: 0.3),
                               ),
                             ),
                           ),
@@ -828,7 +891,9 @@ class _HeroSectionState extends State<_HeroSection>
                           vertical: 28,
                         ),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(alpha: 0.9),
+                          color: theme.colorScheme.surface.withValues(
+                            alpha: 0.9,
+                          ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: theme.colorScheme.outlineVariant,
@@ -922,6 +987,7 @@ class _ValuePropositionSection extends StatelessWidget {
                     title: context.l10n.valueOfflineTitle,
                     description: context.l10n.valueOfflineDesc,
                     color: theme.colorScheme.primary,
+                    isHighlighted: true,
                   ),
                   _ValueCard(
                     icon: Icons.payment_rounded,
@@ -950,12 +1016,14 @@ class _ValueCard extends StatefulWidget {
   final String title;
   final String description;
   final Color color;
+  final bool isHighlighted;
 
   const _ValueCard({
     required this.icon,
     required this.title,
     required this.description,
     required this.color,
+    this.isHighlighted = false,
   });
 
   @override
@@ -977,24 +1045,45 @@ class _ValueCardState extends State<_ValueCard> {
         curve: HomeConstants.hoverCurve,
         width: HomeConstants.cardMinWidth,
         padding: EdgeInsets.all(HomeConstants.cardPadding),
-        transform: Matrix4.identity()..scaleByDouble(_isHovered ? 1.02 : 1.0, _isHovered ? 1.02 : 1.0, 1.0, 1.0),
+        transform: Matrix4.identity()
+          ..scaleByDouble(
+            _isHovered ? 1.02 : 1.0,
+            _isHovered ? 1.02 : 1.0,
+            1.0,
+            1.0,
+          ),
         transformAlignment: Alignment.center,
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(28),
           border: Border.all(
             color: _isHovered
-                ? widget.color.withValues(alpha:0.4)
+                ? widget.color.withValues(alpha: 0.4)
+                : widget.isHighlighted
+                ? widget.color.withValues(alpha: 0.3)
                 : theme.colorScheme.outlineVariant,
-            width: _isHovered ? 2 : 1,
+            width: (_isHovered || widget.isHighlighted) ? 2 : 1,
           ),
           boxShadow: [
             BoxShadow(
               color: _isHovered
-                  ? widget.color.withValues(alpha:0.15)
-                  : Colors.black.withValues(alpha:0.05),
-              blurRadius: _isHovered ? 24 : 10,
-              offset: Offset(0, _isHovered ? 12 : 4),
+                  ? widget.color.withValues(alpha: 0.15)
+                  : widget.isHighlighted
+                  ? widget.color.withValues(alpha: 0.10)
+                  : Colors.black.withValues(alpha: 0.05),
+              blurRadius: _isHovered
+                  ? 24
+                  : widget.isHighlighted
+                  ? 16
+                  : 10,
+              offset: Offset(
+                0,
+                _isHovered
+                    ? 12
+                    : widget.isHighlighted
+                    ? 8
+                    : 4,
+              ),
             ),
           ],
         ),
@@ -1007,11 +1096,7 @@ class _ValueCardState extends State<_ValueCard> {
                 color: widget.color.withValues(alpha: _isHovered ? 0.15 : 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                widget.icon,
-                size: 48,
-                color: widget.color,
-              ),
+              child: Icon(widget.icon, size: 48, color: widget.color),
             ),
             const SizedBox(height: 28),
             Text(
@@ -1051,9 +1136,7 @@ class _SocialProofSection extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: HomeConstants.maxContentWidth),
-          child: UniversityLogosSection(
-            title: context.l10n.socialProofTitle,
-          ),
+          child: UniversityLogosSection(title: context.l10n.socialProofTitle),
         ),
       ),
     );
@@ -1098,13 +1181,9 @@ class _TestimonialsSection extends StatelessWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   if (constraints.maxWidth > 900) {
-                    return TestimonialGrid(
-                      testimonials: Testimonials.all,
-                    );
+                    return TestimonialGrid(testimonials: Testimonials.all);
                   }
-                  return TestimonialCarousel(
-                    testimonials: Testimonials.all,
-                  );
+                  return TestimonialCarousel(testimonials: Testimonials.all);
                 },
               ),
             ],
@@ -1154,13 +1233,9 @@ class _QuizTeaserSection extends StatelessWidget {
               : Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: _buildContent(context, theme),
-                    ),
+                    Expanded(child: _buildContent(context, theme)),
                     const SizedBox(width: 64),
-                    const Expanded(
-                      child: MiniQuizPreview(),
-                    ),
+                    const Expanded(child: MiniQuizPreview()),
                   ],
                 ),
         ),
@@ -1326,10 +1401,7 @@ class _KeyFeaturesSection extends StatelessWidget {
 
         // Right side - Device Frame Mockup
         Expanded(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: _DeviceFrameMockup(),
-          ),
+          child: FittedBox(fit: BoxFit.scaleDown, child: _DeviceFrameMockup()),
         ),
       ],
     );
@@ -1560,7 +1632,10 @@ class _MiniDashboard extends StatelessWidget {
           Container(
             height: variant == 2 ? 16 : 24,
             color: colorScheme.primary,
-            padding: EdgeInsets.symmetric(horizontal: variant == 2 ? 6 : 10, vertical: 4),
+            padding: EdgeInsets.symmetric(
+              horizontal: variant == 2 ? 6 : 10,
+              vertical: 4,
+            ),
             child: Row(
               children: [
                 Container(
@@ -1596,7 +1671,9 @@ class _MiniDashboard extends StatelessWidget {
                 ];
                 return Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(right: i < (variant == 2 ? 1 : 2) ? 4 : 0),
+                    margin: EdgeInsets.only(
+                      right: i < (variant == 2 ? 1 : 2) ? 4 : 0,
+                    ),
                     height: variant == 2 ? 24 : 36,
                     decoration: BoxDecoration(
                       color: colors[i % colors.length],
@@ -1767,7 +1844,11 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
     );
   }
 
-  KeyEventResult _handleTabKeyEvent(KeyEvent event, int index, List<_UserType> userTypes) {
+  KeyEventResult _handleTabKeyEvent(
+    KeyEvent event,
+    int index,
+    List<_UserType> userTypes,
+  ) {
     if (event is! KeyDownEvent) return KeyEventResult.ignored;
 
     final count = userTypes.length;
@@ -1780,7 +1861,7 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
       _tabFocusNodes[prev].requestFocus();
       return KeyEventResult.handled;
     } else if (event.logicalKey == LogicalKeyboardKey.enter ||
-               event.logicalKey == LogicalKeyboardKey.space) {
+        event.logicalKey == LogicalKeyboardKey.space) {
       _selectTab(index, userTypes);
       return KeyEventResult.handled;
     }
@@ -1828,7 +1909,9 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                      constraints: BoxConstraints(
+                        minWidth: constraints.maxWidth,
+                      ),
                       child: Semantics(
                         explicitChildNodes: true,
                         label: 'User types',
@@ -1847,7 +1930,8 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
                                 showIcon: showIcons,
                                 focusNode: _tabFocusNodes[entry.key],
                                 onTap: () => _selectTab(entry.key, userTypes),
-                                onKeyEvent: (e) => _handleTabKeyEvent(e, entry.key, userTypes),
+                                onKeyEvent: (e) =>
+                                    _handleTabKeyEvent(e, entry.key, userTypes),
                               ),
                             );
                           }).toList(),
@@ -1991,7 +2075,9 @@ class _AccessibleTabState extends State<_AccessibleTab> {
       bgColor = colorScheme.primary.withValues(alpha: 0.08);
       textColor = colorScheme.primary;
       iconColor = colorScheme.primary;
-      borderSide = BorderSide(color: colorScheme.primary.withValues(alpha: 0.3));
+      borderSide = BorderSide(
+        color: colorScheme.primary.withValues(alpha: 0.3),
+      );
       fontWeight = FontWeight.w500;
     } else {
       bgColor = Colors.transparent;
@@ -2025,16 +2111,15 @@ class _AccessibleTabState extends State<_AccessibleTab> {
                 onTap: widget.onTap,
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (widget.showIcon) ...[
-                        Icon(
-                          widget.icon,
-                          size: 20,
-                          color: iconColor,
-                        ),
+                        Icon(widget.icon, size: 20, color: iconColor),
                         const SizedBox(width: 8),
                       ],
                       AnimatedDefaultTextStyle(
@@ -2107,9 +2192,10 @@ class _FadeInOnScrollState extends State<_FadeInOnScroll>
     });
 
     _fadeAnimations = _controllers.map((c) {
-      return Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(parent: c, curve: Curves.easeOut),
-      );
+      return Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(parent: c, curve: Curves.easeOut));
     }).toList();
 
     _slideAnimations = _controllers.map((c) {
@@ -2238,8 +2324,8 @@ class _FinalCTASection extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            theme.colorScheme.primaryContainer.withValues(alpha:0.5),
-            theme.colorScheme.tertiaryContainer.withValues(alpha:0.3),
+            theme.colorScheme.primaryContainer.withValues(alpha: 0.5),
+            theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
           ],
         ),
       ),
@@ -2260,7 +2346,7 @@ class _FinalCTASection extends StatelessWidget {
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.primary.withValues(alpha:0.3),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.3),
                   blurRadius: 40,
                   offset: const Offset(0, 20),
                 ),
@@ -2313,35 +2399,47 @@ class _FinalCTASection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.check_circle_outline,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      context.l10n.ctaNoCreditCard,
-                      style: theme.textTheme.bodySmall?.copyWith(
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        size: 16,
                         color: Colors.white,
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    Icon(
-                      Icons.check_circle_outline,
-                      size: 16,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      context.l10n.cta14DayTrial,
-                      style: theme.textTheme.bodySmall?.copyWith(
+                      const SizedBox(width: 6),
+                      Text(
+                        context.l10n.ctaNoCreditCard,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Icon(
+                        Icons.check_circle_outline,
+                        size: 16,
                         color: Colors.white,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 6),
+                      Text(
+                        context.l10n.cta14DayTrial,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -2423,9 +2521,18 @@ class _MinimalFooter extends StatelessWidget {
                       child: _FooterColumn(
                         title: context.l10n.footerProducts,
                         links: [
-                          _FooterLink(context.l10n.footerStudentPortal, '/login'),
-                          _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
-                          _FooterLink(context.l10n.footerMobileApps, '/mobile-apps'),
+                          _FooterLink(
+                            context.l10n.footerStudentPortal,
+                            '/login',
+                          ),
+                          _FooterLink(
+                            context.l10n.footerInstitutionDashboard,
+                            '/login',
+                          ),
+                          _FooterLink(
+                            context.l10n.footerMobileApps,
+                            '/mobile-apps',
+                          ),
                         ],
                       ),
                     ),
@@ -2451,7 +2558,10 @@ class _MinimalFooter extends StatelessWidget {
                         links: [
                           _FooterLink(context.l10n.footerHelpCenter, '/help'),
                           _FooterLink(context.l10n.footerBlog, '/blog'),
-                          _FooterLink(context.l10n.footerCommunity, '/community'),
+                          _FooterLink(
+                            context.l10n.footerCommunity,
+                            '/community',
+                          ),
                         ],
                       ),
                     ),
@@ -2503,9 +2613,18 @@ class _MinimalFooter extends StatelessWidget {
                         _FooterColumn(
                           title: context.l10n.footerProducts,
                           links: [
-                            _FooterLink(context.l10n.footerStudentPortal, '/login'),
-                            _FooterLink(context.l10n.footerInstitutionDashboard, '/login'),
-                            _FooterLink(context.l10n.footerMobileApps, '/mobile-apps'),
+                            _FooterLink(
+                              context.l10n.footerStudentPortal,
+                              '/login',
+                            ),
+                            _FooterLink(
+                              context.l10n.footerInstitutionDashboard,
+                              '/login',
+                            ),
+                            _FooterLink(
+                              context.l10n.footerMobileApps,
+                              '/mobile-apps',
+                            ),
                           ],
                         ),
                         _FooterColumn(
@@ -2520,7 +2639,10 @@ class _MinimalFooter extends StatelessWidget {
                           title: context.l10n.footerResources,
                           links: [
                             _FooterLink(context.l10n.footerHelpCenter, '/help'),
-                            _FooterLink(context.l10n.footerCommunity, '/community'),
+                            _FooterLink(
+                              context.l10n.footerCommunity,
+                              '/community',
+                            ),
                             _FooterLink(context.l10n.footerBlog, '/blog'),
                           ],
                         ),
@@ -2557,7 +2679,10 @@ class _MinimalFooter extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _FooterLink(context.l10n.footerPrivacyPolicy, '/privacy'),
+                          _FooterLink(
+                            context.l10n.footerPrivacyPolicy,
+                            '/privacy',
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
@@ -2567,7 +2692,10 @@ class _MinimalFooter extends StatelessWidget {
                               ),
                             ),
                           ),
-                          _FooterLink(context.l10n.footerTermsOfService, '/terms'),
+                          _FooterLink(
+                            context.l10n.footerTermsOfService,
+                            '/terms',
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
@@ -2577,7 +2705,10 @@ class _MinimalFooter extends StatelessWidget {
                               ),
                             ),
                           ),
-                          _FooterLink(context.l10n.footerCookiePolicy, '/cookies'),
+                          _FooterLink(
+                            context.l10n.footerCookiePolicy,
+                            '/cookies',
+                          ),
                         ],
                       ),
                     ],
@@ -2587,17 +2718,29 @@ class _MinimalFooter extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       Chip(
-                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        avatar: Icon(
+                          Icons.verified_outlined,
+                          size: 16,
+                          color: colorScheme.primary,
+                        ),
                         label: Text(context.l10n.footerSoc2),
                         side: BorderSide(color: colorScheme.outlineVariant),
                       ),
                       Chip(
-                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        avatar: Icon(
+                          Icons.verified_outlined,
+                          size: 16,
+                          color: colorScheme.primary,
+                        ),
                         label: Text(context.l10n.footerIso27001),
                         side: BorderSide(color: colorScheme.outlineVariant),
                       ),
                       Chip(
-                        avatar: Icon(Icons.verified_outlined, size: 16, color: colorScheme.primary),
+                        avatar: Icon(
+                          Icons.verified_outlined,
+                          size: 16,
+                          color: colorScheme.primary,
+                        ),
                         label: Text(context.l10n.footerGdpr),
                         side: BorderSide(color: colorScheme.outlineVariant),
                       ),
@@ -2618,10 +2761,7 @@ class _FooterColumn extends StatelessWidget {
   final String title;
   final List<Widget> links;
 
-  const _FooterColumn({
-    required this.title,
-    required this.links,
-  });
+  const _FooterColumn({required this.title, required this.links});
 
   @override
   Widget build(BuildContext context) {
@@ -2670,27 +2810,25 @@ class _FooterLinkState extends State<_FooterLink> {
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
-        child: Semantics(
-          link: true,
-          child: Link(
-            uri: Uri.parse(widget.routePath),
-            builder: (context, followLink) => InkWell(
-              onTap: () => context.go(widget.routePath),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 150),
-                  style: theme.textTheme.bodyMedium!.copyWith(
-                    color: _isHovered
-                        ? colorScheme.primary
-                        : colorScheme.onSurfaceVariant,
-                    decoration: _isHovered
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
-                    decorationColor: _isHovered ? colorScheme.primary : null,
-                  ),
-                  child: Text(widget.text),
+        child: Link(
+          uri: Uri.parse(widget.routePath),
+          builder: (context, followLink) => InkWell(
+            onTap: () => context.go(widget.routePath),
+            focusColor: colorScheme.primary.withValues(alpha: 0.12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 150),
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: _isHovered
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                  decoration: _isHovered
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                  decorationColor: _isHovered ? colorScheme.primary : null,
                 ),
+                child: Text(widget.text),
               ),
             ),
           ),
@@ -2754,11 +2892,7 @@ class _FindYourPathSection extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.auto_awesome,
-                          size: 16,
-                          color: Colors.white,
-                        ),
+                        Icon(Icons.auto_awesome, size: 16, color: Colors.white),
                         const SizedBox(width: 8),
                         Text(
                           context.l10n.homeNewFeature,
@@ -2883,10 +3017,7 @@ class _FindYourPathBenefit extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const _FindYourPathBenefit({
-    required this.icon,
-    required this.text,
-  });
+  const _FindYourPathBenefit({required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -2897,18 +3028,12 @@ class _FindYourPathBenefit extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 20,
-            color: Colors.white,
-          ),
+          Icon(icon, size: 20, color: Colors.white),
           const SizedBox(width: 10),
           Text(
             text,
@@ -2942,15 +3067,12 @@ class _UniversitySearchSection extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
-                  theme.colorScheme.secondary,
-                  AppColors.accentDark,
-                ],
+                colors: [theme.colorScheme.secondary, AppColors.accentDark],
               ),
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.secondary.withValues(alpha:0.3),
+                  color: theme.colorScheme.secondary.withValues(alpha: 0.3),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                 ),
@@ -2964,7 +3086,7 @@ class _UniversitySearchSection extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha:0.15),
+                      color: Colors.white.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -2991,7 +3113,7 @@ class _UniversitySearchSection extends StatelessWidget {
                   Text(
                     context.l10n.homeSearchUniversitiesDesc,
                     style: theme.textTheme.titleMedium?.copyWith(
-                      color: Colors.white.withValues(alpha:0.95),
+                      color: Colors.white.withValues(alpha: 0.95),
                       height: 1.6,
                     ),
                     textAlign: TextAlign.center,
@@ -3041,7 +3163,7 @@ class _UniversitySearchSection extends StatelessWidget {
                         vertical: 18,
                       ),
                       elevation: 4,
-                      shadowColor: Colors.black.withValues(alpha:0.2),
+                      shadowColor: Colors.black.withValues(alpha: 0.2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -3076,20 +3198,14 @@ class _UniversityStatChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha:0.15),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(100),
-        border: Border.all(
-          color: Colors.white.withValues(alpha:0.25),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 18,
-            color: Colors.white,
-          ),
+          Icon(icon, size: 18, color: Colors.white),
           const SizedBox(width: 8),
           Text(
             value,
@@ -3101,9 +3217,7 @@ class _UniversityStatChip extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: Colors.white,
-            ),
+            style: theme.textTheme.bodySmall?.copyWith(color: Colors.white),
           ),
         ],
       ),
@@ -3123,9 +3237,9 @@ class _DarkModeToggle extends ConsumerWidget {
       icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
       tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
       onPressed: () {
-        ref.read(appearanceProvider.notifier).setThemeMode(
-              isDark ? ThemeMode.light : ThemeMode.dark,
-            );
+        ref
+            .read(appearanceProvider.notifier)
+            .setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
       },
     );
   }
@@ -3140,56 +3254,87 @@ class _LanguageToggle extends ConsumerWidget {
     final isEnglish = locale.languageCode == 'en';
     final theme = Theme.of(context);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: theme.colorScheme.outline.withValues(alpha: 0.3),
+    return Material(
+      color: theme.colorScheme.surfaceContainerHighest,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: theme.colorScheme.outline.withValues(alpha: 0.3),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: () => ref.read(localeProvider.notifier).setLocale(const Locale('en')),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: isEnglish ? theme.colorScheme.primary : Colors.transparent,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Semantics(
+              button: true,
+              label: 'English',
+              selected: isEnglish,
+              child: InkWell(
+                onTap: () => ref
+                    .read(localeProvider.notifier)
+                    .setLocale(const Locale('en')),
                 borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'EN',
-                style: theme.textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: isEnglish
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.onSurfaceVariant,
+                focusColor: theme.colorScheme.primary.withValues(alpha: 0.12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isEnglish
+                        ? theme.colorScheme.primary
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'EN',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: isEnglish
+                          ? theme.colorScheme.onPrimary
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () => ref.read(localeProvider.notifier).setLocale(const Locale('fr')),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: !isEnglish ? theme.colorScheme.primary : Colors.transparent,
+            Semantics(
+              button: true,
+              label: 'French',
+              selected: !isEnglish,
+              child: InkWell(
+                onTap: () => ref
+                    .read(localeProvider.notifier)
+                    .setLocale(const Locale('fr')),
                 borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                'FR',
-                style: theme.textTheme.labelMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: !isEnglish
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.onSurfaceVariant,
+                focusColor: theme.colorScheme.primary.withValues(alpha: 0.12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: !isEnglish
+                        ? theme.colorScheme.primary
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'FR',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: !isEnglish
+                          ? theme.colorScheme.onPrimary
+                          : theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

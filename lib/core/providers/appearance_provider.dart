@@ -64,7 +64,8 @@ class AppearancePreferences {
 ///
 /// Storage keys are prefixed with the user ID so that each account keeps its
 /// own theme, font size, accent color, etc.  When [_userId] is null (logged
-/// out) the notifier falls back to the defaults without touching storage.
+/// out) the notifier uses bare (unprefixed) keys so anonymous preferences
+/// still persist across page reloads.
 class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
   AppearanceNotifier(this._userId) : super(const AppearancePreferences()) {
     _loadPreferences();
@@ -78,9 +79,6 @@ class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
       _userId != null ? 'appearance_${_userId}_$key' : key;
 
   Future<void> _loadPreferences() async {
-    // No user → keep defaults; don't read stale global keys.
-    if (_userId == null) return;
-
     final prefs = await SharedPreferences.getInstance();
     final themeModeIndex = prefs.getInt(_key('themeMode')) ?? 0;
     final fontSize = prefs.getDouble(_key('fontSize')) ?? 16.0;
@@ -99,35 +97,30 @@ class AppearanceNotifier extends StateNotifier<AppearancePreferences> {
 
   Future<void> setThemeMode(ThemeMode mode) async {
     state = state.copyWith(themeMode: mode);
-    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_key('themeMode'), mode.index);
   }
 
   Future<void> setFontSize(double size) async {
     state = state.copyWith(fontSize: size);
-    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(_key('fontSize'), size);
   }
 
   Future<void> setFontFamily(String family) async {
     state = state.copyWith(fontFamily: family);
-    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_key('fontFamily'), family);
   }
 
   Future<void> setCompactMode(bool compact) async {
     state = state.copyWith(compactMode: compact);
-    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_key('compactMode'), compact);
   }
 
   Future<void> setAccentColor(Color color) async {
     state = state.copyWith(accentColor: color);
-    if (_userId == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_key('accentColor'), color.value);
   }
@@ -149,10 +142,10 @@ const availableFonts = [
 /// each account gets its own stored theme settings.
 final appearanceProvider =
     StateNotifierProvider<AppearanceNotifier, AppearancePreferences>((ref) {
-  final authState = ref.watch(authProvider);
-  final userId = authState.user?.id;
-  return AppearanceNotifier(userId);
-});
+      final authState = ref.watch(authProvider);
+      final userId = authState.user?.id;
+      return AppearanceNotifier(userId);
+    });
 
 /// Provider for current theme mode
 final themeModeProvider = Provider<ThemeMode>((ref) {

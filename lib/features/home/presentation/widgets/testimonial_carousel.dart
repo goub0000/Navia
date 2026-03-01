@@ -40,10 +40,7 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      viewportFraction: 0.85,
-      initialPage: 0,
-    );
+    _pageController = PageController(viewportFraction: 0.85, initialPage: 0);
     if (widget.enableAutoScroll) {
       _startAutoScroll();
     }
@@ -63,7 +60,8 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
   }
 
   void _goToPrevious() {
-    final prevPage = (_currentPage - 1 + widget.testimonials.length) %
+    final prevPage =
+        (_currentPage - 1 + widget.testimonials.length) %
         widget.testimonials.length;
     _pageController.animateToPage(
       prevPage,
@@ -105,6 +103,7 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
     return Semantics(
       label: 'User testimonials',
       container: true,
+      liveRegion: true,
       child: FocusScope(
         onFocusChange: (focused) => setState(() => _isFocused = focused),
         child: MouseRegion(
@@ -126,7 +125,8 @@ class _TestimonialCarouselState extends State<TestimonialCarousel> {
                   itemCount: widget.testimonials.length,
                   itemBuilder: (context, index) {
                     return Semantics(
-                      label: 'Testimonial ${index + 1} of ${widget.testimonials.length}',
+                      label:
+                          'Testimonial ${index + 1} of ${widget.testimonials.length}',
                       container: true,
                       child: _TestimonialCard(
                         testimonial: widget.testimonials[index],
@@ -256,10 +256,7 @@ class _TestimonialCard extends StatelessWidget {
   final TestimonialData testimonial;
   final bool isActive;
 
-  const _TestimonialCard({
-    required this.testimonial,
-    required this.isActive,
-  });
+  const _TestimonialCard({required this.testimonial, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -267,10 +264,7 @@ class _TestimonialCard extends StatelessWidget {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      margin: EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: isActive ? 0 : 16,
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 8, vertical: isActive ? 0 : 16),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
         child: Stack(
@@ -288,7 +282,9 @@ class _TestimonialCard extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: isActive ? 0.12 : 0.05),
+                    color: Colors.black.withValues(
+                      alpha: isActive ? 0.12 : 0.05,
+                    ),
                     blurRadius: isActive ? 24 : 10,
                     offset: Offset(0, isActive ? 10 : 5),
                   ),
@@ -296,127 +292,125 @@ class _TestimonialCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Quote Icon
-            Icon(
-              Icons.format_quote,
-              color: theme.colorScheme.primary.withValues(alpha: 0.3),
-              size: 32,
-            ),
-            const SizedBox(height: 12),
-            // Quote Text
-            Expanded(
-              child: Text(
-                testimonial.quote,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontStyle: FontStyle.italic,
-                  height: 1.6,
-                  color: theme.colorScheme.onSurface,
-                ),
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Outcome Badge
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 6,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.success.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.check_circle,
-                    size: 16,
-                    color: AppColors.success,
-                  ),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      testimonial.outcome,
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: AppColors.success,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Quote Icon
+                    Icon(
+                      Icons.format_quote,
+                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                      size: 32,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Author Info
-            Row(
-              children: [
-                // Avatar
-                CircleAvatar(
-                  radius: 22,
-                  backgroundColor: theme.colorScheme.primaryContainer,
-                  child: Text(
-                    testimonial.name.split(' ').map((n) => n[0]).join(),
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.onPrimaryContainer,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                // Name and Role
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        testimonial.name,
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
+                    const SizedBox(height: 12),
+                    // Quote Text
+                    Expanded(
+                      child: Text(
+                        testimonial.quote,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontStyle: FontStyle.italic,
+                          height: 1.6,
+                          color: theme.colorScheme.onSurface,
                         ),
-                      ),
-                      Text(
-                        '${testimonial.role} - ${testimonial.university}',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                        maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Outcome Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.success.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.check_circle,
+                            size: 16,
+                            color: AppColors.success,
+                          ),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              testimonial.outcome,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: AppColors.success,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Author Info
+                    Row(
+                      children: [
+                        // Avatar
+                        CircleAvatar(
+                          radius: 22,
+                          backgroundColor: theme.colorScheme.primaryContainer,
+                          child: Text(
+                            testimonial.name.split(' ').map((n) => n[0]).join(),
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        // Name and Role
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                testimonial.name,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${testimonial.role} - ${testimonial.university}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Country Flag placeholder
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.surfaceContainerHighest,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            _getCountryFlag(testimonial.country),
+                            style: theme.textTheme.bodyLarge,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                // Country Flag placeholder
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHighest,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    _getCountryFlag(testimonial.country),
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+              ),
             ),
             // Left accent bar
             Positioned(
               left: 0,
               top: 0,
               bottom: 0,
-              child: Container(
-                width: 3,
-                color: theme.colorScheme.primary,
-              ),
+              child: Container(width: 3, color: theme.colorScheme.primary),
             ),
           ],
         ),
@@ -466,10 +460,7 @@ class TestimonialGrid extends StatelessWidget {
       children: testimonials.map((testimonial) {
         return SizedBox(
           width: 340,
-          child: _TestimonialCard(
-            testimonial: testimonial,
-            isActive: true,
-          ),
+          child: _TestimonialCard(testimonial: testimonial, isActive: true),
         );
       }).toList(),
     );
