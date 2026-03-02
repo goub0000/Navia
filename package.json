@@ -1,7 +1,7 @@
 {
-  "name": "flow-edtech-web",
+  "name": "navia-web",
   "version": "1.0.0",
-  "description": "Flow EdTech Platform - Web Frontend",
+  "description": "Navia — Navigate Your Future",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

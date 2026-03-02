@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import '../constants/user_roles.dart';
 
-/// User model representing a user in the Flow EdTech platform
+/// User model representing a user in the Navia platform
 class UserModel {
   final String id;
   final String email;

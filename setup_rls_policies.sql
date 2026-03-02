@@ -1,6 +1,6 @@
 -- ============================================================================
 -- Row Level Security (RLS) Policies Setup Script
--- Flow EdTech Platform - Applications Table
+-- Navia Platform - Applications Table
 -- ============================================================================
 --
 -- This script sets up comprehensive RLS policies for the applications table

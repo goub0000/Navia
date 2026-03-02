@@ -64,7 +64,7 @@ class UniversityWebsiteScraper(BaseScraper):
         self.max_pages_per_site = max_pages_per_site
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'FlowApp University Data Bot/2.0 (Educational Research; https://flowapp.com)'
+            'User-Agent': 'Navia University Data Bot/2.0 (Educational Research; https://navia.app)'
         })
 
         # Initialize caching (Phase 2 enhancement)

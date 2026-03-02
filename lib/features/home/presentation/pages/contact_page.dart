@@ -175,13 +175,13 @@ class _ContactStaticContentState extends State<_ContactStaticContent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _socialButton(Icons.close, 'https://x.com/flowedtech', colorScheme, tooltip: 'X (Twitter)'),
+                _socialButton(Icons.close, 'https://x.com/naviaapp', colorScheme, tooltip: 'X (Twitter)'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.work_outline, 'https://linkedin.com/company/flowedtech', colorScheme, tooltip: 'LinkedIn'),
+                _socialButton(Icons.work_outline, 'https://linkedin.com/company/naviaapp', colorScheme, tooltip: 'LinkedIn'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.facebook, 'https://facebook.com/flowedtech', colorScheme, tooltip: 'Facebook'),
+                _socialButton(Icons.facebook, 'https://facebook.com/naviaapp', colorScheme, tooltip: 'Facebook'),
                 const SizedBox(width: 8),
-                _socialButton(Icons.camera_alt_outlined, 'https://instagram.com/flowedtech', colorScheme, tooltip: 'Instagram'),
+                _socialButton(Icons.camera_alt_outlined, 'https://instagram.com/naviaapp', colorScheme, tooltip: 'Instagram'),
               ],
             ),
           ],

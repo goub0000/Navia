@@ -1,5 +1,5 @@
 -- ========================================
--- FLOW EDTECH PLATFORM - SUPABASE STORAGE SETUP
+-- NAVIA PLATFORM - SUPABASE STORAGE SETUP
 -- ========================================
 -- Execute this script in Supabase SQL Editor
 -- Last Updated: November 6, 2025

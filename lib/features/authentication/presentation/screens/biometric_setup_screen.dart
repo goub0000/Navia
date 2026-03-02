@@ -39,7 +39,7 @@ import '../../../../core/theme/app_colors.dart';
 ///   Future<bool> authenticate() async {
 ///     try {
 ///       return await _auth.authenticate(
-///         localizedReason: 'Please authenticate to access Flow',
+///         localizedReason: 'Please authenticate to access Navia',
 ///         options: const AuthenticationOptions(
 ///           stickyAuth: true,
 ///           biometricOnly: false, // Allow fallback to PIN/password

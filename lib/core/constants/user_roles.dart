@@ -1,4 +1,4 @@
-/// User roles in the Flow EdTech platform
+/// User roles in the Navia platform
 enum UserRole {
   student,
   institution,

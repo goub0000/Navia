@@ -33,7 +33,7 @@ Write-Host ""
 # Task 1: Daily Wikipedia Updates
 Write-Host "[1/3] Creating daily Wikipedia update task..."
 
-$TaskName1 = "FlowApp-UniversityDB-DailyWikipedia"
+$TaskName1 = "Navia-UniversityDB-DailyWikipedia"
 $Action1 = New-ScheduledTaskAction -Execute $PythonExe -Argument """$ScriptDir\import_wikipedia_universities.py"""
 $Trigger1 = New-ScheduledTaskTrigger -Daily -At "02:00AM"  # Run at 2 AM daily
 $Principal1 = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
@@ -50,7 +50,7 @@ Write-Host "  ✓ Created: $TaskName1 (Daily at 2:00 AM)"
 # Task 2: Weekly Comprehensive Update
 Write-Host "[2/3] Creating weekly comprehensive update task..."
 
-$TaskName2 = "FlowApp-UniversityDB-WeeklyFull"
+$TaskName2 = "Navia-UniversityDB-WeeklyFull"
 $Action2 = New-ScheduledTaskAction -Execute $PythonExe -Argument """$PythonScript"""
 $Trigger2 = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At "03:00AM"  # Run Sundays at 3 AM
 $Principal2 = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
@@ -67,7 +67,7 @@ Write-Host "  ✓ Created: $TaskName2 (Weekly on Sundays at 3:00 AM)"
 # Task 3: Monthly College Scorecard Update
 Write-Host "[3/3] Creating monthly College Scorecard update task..."
 
-$TaskName3 = "FlowApp-UniversityDB-MonthlyScorecard"
+$TaskName3 = "Navia-UniversityDB-MonthlyScorecard"
 $Action3 = New-ScheduledTaskAction -Execute $PythonExe -Argument """$ScriptDir\import_college_scorecard_to_supabase.py"""
 $Trigger3 = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday -At "04:00AM" -WeeksInterval 4  # First Monday of month at 4 AM
 $Principal3 = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount

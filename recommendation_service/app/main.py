@@ -45,7 +45,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Find Your Path API",
     description="""
-    # University Recommendation Service for Flow EdTech Platform
+    # University Recommendation Service for Navia Platform
 
     A comprehensive cloud-based EdTech API providing personalized university recommendations
     and complete student lifecycle management.
@@ -120,7 +120,7 @@ app = FastAPI(
     ## 📞 Support
 
     For API support or to report issues, please contact:
-    - Email: support@flowedtech.com
+    - Email: support@navia.app
     - Documentation: Visit `/docs` for interactive API testing
 
     ## 🔗 Related Resources
@@ -140,15 +140,15 @@ app = FastAPI(
     redoc_url="/redoc",
     openapi_url="/openapi.json",
     contact={
-        "name": "Flow EdTech Support Team",
-        "email": "support@flowedtech.com",
-        "url": "https://flowedtech.com/support"
+        "name": "Navia Support Team",
+        "email": "support@navia.app",
+        "url": "https://navia.app/support"
     },
     license_info={
         "name": "Proprietary",
-        "url": "https://flowedtech.com/terms"
+        "url": "https://navia.app/terms"
     },
-    terms_of_service="https://flowedtech.com/terms",
+    terms_of_service="https://navia.app/terms",
     openapi_tags=[
         {
             "name": "Authentication",

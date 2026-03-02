@@ -57,7 +57,7 @@ class DocsPage extends ConsumerWidget {
                   theme,
                   icon: Icons.rocket_launch,
                   title: 'Getting Started',
-                  description: 'Learn the basics of Flow',
+                  description: 'Learn the basics of Navia',
                   articles: [
                     _DocArticle('Creating Your Account', '5 min read', Icons.person_add),
                     _DocArticle('Setting Up Your Profile', '3 min read', Icons.edit),

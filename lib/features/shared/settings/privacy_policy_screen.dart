@@ -60,7 +60,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.',
+                    'This Privacy Policy describes how Navia collects, uses, and protects your personal information.',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -159,7 +159,7 @@ However, no method of transmission over the internet is 100% secure, and we cann
 • Opt-Out: Unsubscribe from marketing communications
 • Restriction: Limit how we process your data
 
-To exercise these rights, contact us at privacy@flowedtech.com.''',
+To exercise these rights, contact us at privacy@navia.app.''',
           ),
           const SizedBox(height: 16),
 
@@ -229,11 +229,11 @@ Your continued use of our services after changes constitutes acceptance of the u
             title: '10. Contact Us',
             content: '''If you have questions or concerns about this Privacy Policy or our data practices, please contact us:
 
-Email: privacy@flowedtech.com
+Email: privacy@navia.app
 Phone: +1 (555) 123-4567
-Address: Flow EdTech, 123 Education Lane, Tech City, TC 12345
+Address: Navia, 123 Education Lane, Tech City, TC 12345
 
-Data Protection Officer: dpo@flowedtech.com''',
+Data Protection Officer: dpo@navia.app''',
           ),
           const SizedBox(height: 32),
         ],

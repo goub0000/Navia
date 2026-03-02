@@ -65,11 +65,11 @@ CREATE POLICY "Admins can manage pages" ON page_contents
 INSERT INTO page_contents (page_slug, title, subtitle, content, meta_description, status)
 VALUES
 -- About Page
-('about', 'About Flow EdTech', 'Empowering students to find their perfect educational path',
+('about', 'About Navia', 'Empowering students to find their perfect educational path',
 '{
     "mission": "Our mission is to democratize access to higher education by providing intelligent, personalized guidance to students worldwide.",
     "vision": "We envision a world where every student has the tools and knowledge to make informed decisions about their educational journey.",
-    "story": "Flow EdTech was founded in 2023 by a team of education enthusiasts and technologists who experienced firsthand the challenges of navigating the complex world of higher education. Our platform leverages cutting-edge AI and machine learning to match students with universities and programs that align with their unique goals, interests, and circumstances.",
+    "story": "Navia was founded in 2023 by a team of education enthusiasts and technologists who experienced firsthand the challenges of navigating the complex world of higher education. Our platform leverages cutting-edge AI and machine learning to match students with universities and programs that align with their unique goals, interests, and circumstances.",
     "values": [
         {"title": "Student-First", "description": "Every decision we make prioritizes student success and wellbeing."},
         {"title": "Innovation", "description": "We continuously push boundaries to improve how students discover opportunities."},
@@ -80,13 +80,13 @@ VALUES
         {"name": "Leadership Team", "description": "Our executive team brings decades of combined experience in education technology and student success."}
     ]
 }'::jsonb,
-'Learn about Flow EdTech''s mission to help students find their perfect educational path through AI-powered guidance.',
+'Learn about Navia''s mission to help students find their perfect educational path through AI-powered guidance.',
 'published'),
 
 -- Contact Page
 ('contact', 'Contact Us', 'We''d love to hear from you',
 '{
-    "email": "support@flowedtech.com",
+    "email": "support@navia.app",
     "phone": "+1 (555) 123-4567",
     "address": {
         "street": "123 Education Lane",
@@ -96,15 +96,15 @@ VALUES
         "country": "United States"
     },
     "social_links": {
-        "twitter": "https://twitter.com/flowedtech",
-        "linkedin": "https://linkedin.com/company/flowedtech",
-        "facebook": "https://facebook.com/flowedtech",
-        "instagram": "https://instagram.com/flowedtech"
+        "twitter": "https://twitter.com/naviaapp",
+        "linkedin": "https://linkedin.com/company/naviaapp",
+        "facebook": "https://facebook.com/naviaapp",
+        "instagram": "https://instagram.com/naviaapp"
     },
     "support_hours": "Monday - Friday, 9:00 AM - 6:00 PM PST",
     "response_time": "We typically respond within 24 hours"
 }'::jsonb,
-'Get in touch with Flow EdTech. Contact us for support, partnerships, or general inquiries.',
+'Get in touch with Navia. Contact us for support, partnerships, or general inquiries.',
 'published'),
 
 -- Privacy Policy
@@ -134,11 +134,11 @@ VALUES
         },
         {
             "title": "Contact Us",
-            "content": "If you have questions about this Privacy Policy, please contact us at privacy@flowedtech.com."
+            "content": "If you have questions about this Privacy Policy, please contact us at privacy@navia.app."
         }
     ]
 }'::jsonb,
-'Flow EdTech Privacy Policy - Learn how we collect, use, and protect your personal information.',
+'Navia Privacy Policy - Learn how we collect, use, and protect your personal information.',
 'published'),
 
 -- Terms of Service
@@ -148,7 +148,7 @@ VALUES
     "sections": [
         {
             "title": "Acceptance of Terms",
-            "content": "By accessing or using Flow EdTech services, you agree to be bound by these Terms of Service and all applicable laws and regulations."
+            "content": "By accessing or using Navia services, you agree to be bound by these Terms of Service and all applicable laws and regulations."
         },
         {
             "title": "Use of Services",
@@ -160,11 +160,11 @@ VALUES
         },
         {
             "title": "Intellectual Property",
-            "content": "The service and its original content, features, and functionality are owned by Flow EdTech and are protected by international copyright, trademark, and other intellectual property laws."
+            "content": "The service and its original content, features, and functionality are owned by Navia and are protected by international copyright, trademark, and other intellectual property laws."
         },
         {
             "title": "Limitation of Liability",
-            "content": "Flow EdTech shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service."
+            "content": "Navia shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service."
         },
         {
             "title": "Changes to Terms",
@@ -172,7 +172,7 @@ VALUES
         }
     ]
 }'::jsonb,
-'Flow EdTech Terms of Service - Understand the terms and conditions of using our platform.',
+'Navia Terms of Service - Understand the terms and conditions of using our platform.',
 'published'),
 
 -- Cookies Policy
@@ -198,7 +198,7 @@ VALUES
         }
     ]
 }'::jsonb,
-'Flow EdTech Cookie Policy - Learn about the cookies we use and how to manage them.',
+'Navia Cookie Policy - Learn about the cookies we use and how to manage them.',
 'published'),
 
 -- Data Protection
@@ -208,7 +208,7 @@ VALUES
     "sections": [
         {
             "title": "Our Commitment",
-            "content": "Flow EdTech is committed to protecting your personal data and respecting your privacy. We comply with applicable data protection laws including GDPR and CCPA."
+            "content": "Navia is committed to protecting your personal data and respecting your privacy. We comply with applicable data protection laws including GDPR and CCPA."
         },
         {
             "title": "Data Collection",
@@ -228,7 +228,7 @@ VALUES
         }
     ]
 }'::jsonb,
-'Flow EdTech Data Protection - Understand how we protect and manage your personal data.',
+'Navia Data Protection - Understand how we protect and manage your personal data.',
 'published'),
 
 -- Compliance
@@ -238,7 +238,7 @@ VALUES
     "sections": [
         {
             "title": "Regulatory Framework",
-            "content": "Flow EdTech operates in compliance with international education regulations, data protection laws, and consumer protection standards."
+            "content": "Navia operates in compliance with international education regulations, data protection laws, and consumer protection standards."
         },
         {
             "title": "GDPR Compliance",
@@ -258,13 +258,13 @@ VALUES
         }
     ]
 }'::jsonb,
-'Flow EdTech Compliance - Learn about our commitment to regulatory compliance and standards.',
+'Navia Compliance - Learn about our commitment to regulatory compliance and standards.',
 'published'),
 
 -- Careers
-('careers', 'Careers at Flow EdTech', 'Join our mission to transform education',
+('careers', 'Careers at Navia', 'Join our mission to transform education',
 '{
-    "intro": "At Flow EdTech, we are building the future of education technology. Join our team of passionate innovators and help students worldwide achieve their educational dreams.",
+    "intro": "At Navia, we are building the future of education technology. Join our team of passionate innovators and help students worldwide achieve their educational dreams.",
     "benefits": [
         {"title": "Competitive Compensation", "description": "Salary packages that recognize your skills and contributions"},
         {"title": "Remote-First Culture", "description": "Work from anywhere with flexible hours"},
@@ -279,34 +279,34 @@ VALUES
         {"title": "Data Scientist", "department": "AI/ML", "location": "Remote", "type": "Full-time"},
         {"title": "Education Content Specialist", "department": "Content", "location": "Remote", "type": "Full-time"}
     ],
-    "application_email": "careers@flowedtech.com"
+    "application_email": "careers@navia.app"
 }'::jsonb,
-'Join Flow EdTech - Explore career opportunities and help transform education technology.',
+'Join Navia - Explore career opportunities and help transform education technology.',
 'published'),
 
 -- Press
 ('press', 'Press & Media', 'News and media resources',
 '{
-    "intro": "Welcome to the Flow EdTech press center. Here you will find our latest news, press releases, and media resources.",
-    "kit_url": "/downloads/flow-edtech-press-kit.zip",
+    "intro": "Welcome to the Navia press center. Here you will find our latest news, press releases, and media resources.",
+    "kit_url": "/downloads/navia-press-kit.zip",
     "contacts": [
-        {"name": "Media Relations", "email": "press@flowedtech.com", "phone": "+1 (555) 123-4568"}
+        {"name": "Media Relations", "email": "press@navia.app", "phone": "+1 (555) 123-4568"}
     ],
     "releases": [
         {
-            "title": "Flow EdTech Raises Series A Funding",
+            "title": "Navia Raises Series A Funding",
             "date": "2024-01-10",
-            "excerpt": "Flow EdTech announces $10M Series A funding to expand AI-powered education matching platform."
+            "excerpt": "Navia announces $10M Series A funding to expand AI-powered education matching platform."
         },
         {
             "title": "Platform Reaches 100,000 Student Users",
             "date": "2023-11-15",
-            "excerpt": "Flow EdTech celebrates milestone of helping over 100,000 students find their educational path."
+            "excerpt": "Navia celebrates milestone of helping over 100,000 students find their educational path."
         },
         {
             "title": "Partnership with Leading Universities Announced",
             "date": "2023-09-20",
-            "excerpt": "Flow EdTech partners with 50+ universities to provide direct application pathways for students."
+            "excerpt": "Navia partners with 50+ universities to provide direct application pathways for students."
         }
     ],
     "media_assets": {
@@ -315,13 +315,13 @@ VALUES
         "founder_photos": "/downloads/team-photos.zip"
     }
 }'::jsonb,
-'Flow EdTech Press Center - Latest news, press releases, and media resources.',
+'Navia Press Center - Latest news, press releases, and media resources.',
 'published'),
 
 -- Partners
-('partners', 'Partner With Us', 'Grow together with Flow EdTech',
+('partners', 'Partner With Us', 'Grow together with Navia',
 '{
-    "intro": "Partner with Flow EdTech to reach motivated students and expand your educational offerings. We work with institutions, organizations, and technology providers worldwide.",
+    "intro": "Partner with Navia to reach motivated students and expand your educational offerings. We work with institutions, organizations, and technology providers worldwide.",
     "partner_types": [
         {
             "type": "Educational Institutions",
@@ -342,15 +342,15 @@ VALUES
     "current_partners": [
         {"name": "Partner universities and institutions worldwide", "count": "500+"}
     ],
-    "contact_email": "partners@flowedtech.com"
+    "contact_email": "partners@navia.app"
 }'::jsonb,
-'Partner with Flow EdTech - Explore partnership opportunities for institutions and organizations.',
+'Partner with Navia - Explore partnership opportunities for institutions and organizations.',
 'published'),
 
 -- Help Center
 ('help', 'Help Center', 'Find answers to your questions',
 '{
-    "intro": "Welcome to the Flow EdTech Help Center. Find answers to common questions or contact our support team for assistance.",
+    "intro": "Welcome to the Navia Help Center. Find answers to common questions or contact our support team for assistance.",
     "faqs": [
         {
             "category": "Account",
@@ -379,24 +379,24 @@ VALUES
         },
         {
             "category": "Billing",
-            "question": "Is Flow EdTech free to use?",
+            "question": "Is Navia free to use?",
             "answer": "Basic features are free for all students. Premium features and services may require a subscription or one-time payment."
         }
     ],
-    "support_email": "support@flowedtech.com",
+    "support_email": "support@navia.app",
     "support_hours": "Monday - Friday, 9:00 AM - 6:00 PM PST"
 }'::jsonb,
-'Flow EdTech Help Center - Find answers to common questions and get support.',
+'Navia Help Center - Find answers to common questions and get support.',
 'published'),
 
 -- Documentation
 ('docs', 'Documentation', 'Platform documentation and guides',
 '{
-    "intro": "Welcome to the Flow EdTech documentation. Here you will find comprehensive guides on using our platform.",
+    "intro": "Welcome to the Navia documentation. Here you will find comprehensive guides on using our platform.",
     "sections": [
         {
             "title": "Getting Started",
-            "content": "New to Flow EdTech? Start here to learn how to create your account, complete your profile, and begin exploring educational opportunities.",
+            "content": "New to Navia? Start here to learn how to create your account, complete your profile, and begin exploring educational opportunities.",
             "code_examples": []
         },
         {
@@ -411,7 +411,7 @@ VALUES
         },
         {
             "title": "Applications",
-            "content": "Apply directly through Flow EdTech to participating institutions. Track your application status and receive updates in real-time.",
+            "content": "Apply directly through Navia to participating institutions. Track your application status and receive updates in real-time.",
             "code_examples": []
         },
         {
@@ -421,14 +421,14 @@ VALUES
         }
     ]
 }'::jsonb,
-'Flow EdTech Documentation - Guides and tutorials for using our platform.',
+'Navia Documentation - Guides and tutorials for using our platform.',
 'published'),
 
 -- API Documentation
 ('api-docs', 'API Documentation', 'Developer documentation and API reference',
 '{
-    "intro": "Welcome to the Flow EdTech API documentation. Our API allows partners to integrate with our platform and access educational data.",
-    "base_url": "https://api.flowedtech.com/v1",
+    "intro": "Welcome to the Navia API documentation. Our API allows partners to integrate with our platform and access educational data.",
+    "base_url": "https://api.navia.app/v1",
     "authentication": "All API requests require authentication via API key or OAuth 2.0 token.",
     "sections": [
         {
@@ -437,7 +437,7 @@ VALUES
             "code_examples": [
                 {
                     "language": "curl",
-                    "code": "curl -H \"Authorization: Bearer YOUR_API_KEY\" https://api.flowedtech.com/v1/programs"
+                    "code": "curl -H \"Authorization: Bearer YOUR_API_KEY\" https://api.navia.app/v1/programs"
                 }
             ]
         },
@@ -447,7 +447,7 @@ VALUES
             "code_examples": [
                 {
                     "language": "curl",
-                    "code": "curl https://api.flowedtech.com/v1/programs?country=USA&level=masters"
+                    "code": "curl https://api.navia.app/v1/programs?country=USA&level=masters"
                 }
             ]
         },
@@ -457,7 +457,7 @@ VALUES
             "code_examples": [
                 {
                     "language": "curl",
-                    "code": "curl https://api.flowedtech.com/v1/institutions/{id}"
+                    "code": "curl https://api.navia.app/v1/institutions/{id}"
                 }
             ]
         },
@@ -467,15 +467,15 @@ VALUES
             "code_examples": []
         }
     ],
-    "support_email": "api-support@flowedtech.com"
+    "support_email": "api-support@navia.app"
 }'::jsonb,
-'Flow EdTech API Documentation - Developer guides and API reference.',
+'Navia API Documentation - Developer guides and API reference.',
 'published'),
 
 -- Community
 ('community', 'Community', 'Join our global community',
 '{
-    "intro": "Connect with fellow students, alumni, and education enthusiasts in the Flow EdTech community.",
+    "intro": "Connect with fellow students, alumni, and education enthusiasts in the Navia community.",
     "forums": [
         {"name": "General Discussion", "description": "Chat about anything education-related", "url": "/community/general"},
         {"name": "Application Tips", "description": "Share and learn application strategies", "url": "/community/applications"},
@@ -488,19 +488,19 @@ VALUES
         {"name": "Peer Mentorship", "description": "Get guidance from students who have been through the process"}
     ],
     "social_links": {
-        "discord": "https://discord.gg/flowedtech",
-        "reddit": "https://reddit.com/r/flowedtech",
-        "twitter": "https://twitter.com/flowedtech"
+        "discord": "https://discord.gg/naviaapp",
+        "reddit": "https://reddit.com/r/naviaapp",
+        "twitter": "https://twitter.com/naviaapp"
     },
     "newsletter_signup": true
 }'::jsonb,
-'Flow EdTech Community - Connect with students and education enthusiasts worldwide.',
+'Navia Community - Connect with students and education enthusiasts worldwide.',
 'published'),
 
 -- Blog
-('blog', 'Blog', 'Insights and updates from Flow EdTech',
+('blog', 'Blog', 'Insights and updates from Navia',
 '{
-    "intro": "Stay updated with the latest insights on education, application tips, and Flow EdTech news.",
+    "intro": "Stay updated with the latest insights on education, application tips, and Navia news.",
     "categories": ["Education News", "Application Tips", "Student Stories", "Product Updates", "Industry Insights"],
     "featured_posts": [
         {
@@ -520,8 +520,8 @@ VALUES
             "slug": "ai-education-matching"
         },
         {
-            "title": "Student Success Story: From Flow to Harvard",
-            "excerpt": "Read how one student used Flow EdTech to navigate their path to an Ivy League acceptance.",
+            "title": "Student Success Story: From Navia to Harvard",
+            "excerpt": "Read how one student used Navia to navigate their path to an Ivy League acceptance.",
             "author": "Emily Rodriguez",
             "date": "2024-01-02",
             "category": "Student Stories",
@@ -530,13 +530,13 @@ VALUES
     ],
     "subscribe_cta": "Subscribe to our newsletter for weekly education insights."
 }'::jsonb,
-'Flow EdTech Blog - Education insights, application tips, and student success stories.',
+'Navia Blog - Education insights, application tips, and student success stories.',
 'published'),
 
 -- Mobile Apps
-('mobile-apps', 'Mobile Apps', 'Flow EdTech on the go',
+('mobile-apps', 'Mobile Apps', 'Navia on the go',
 '{
-    "intro": "Take Flow EdTech with you wherever you go. Our mobile apps give you full access to your educational journey from your smartphone or tablet.",
+    "intro": "Take Navia with you wherever you go. Our mobile apps give you full access to your educational journey from your smartphone or tablet.",
     "features": [
         {"title": "Push Notifications", "description": "Get instant updates on application status changes and deadlines"},
         {"title": "Offline Access", "description": "Save programs and information for viewing without internet"},
@@ -549,15 +549,15 @@ VALUES
         "android": "Android 8.0 or later"
     },
     "download_links": {
-        "app_store": "https://apps.apple.com/app/flowedtech",
-        "play_store": "https://play.google.com/store/apps/details?id=com.flowedtech"
+        "app_store": "https://apps.apple.com/app/naviaapp",
+        "play_store": "https://play.google.com/store/apps/details?id=com.navia.app"
     },
     "qr_codes": {
         "ios": "/images/qr-ios.png",
         "android": "/images/qr-android.png"
     }
 }'::jsonb,
-'Download Flow EdTech mobile apps for iOS and Android.',
+'Download Navia mobile apps for iOS and Android.',
 'published')
 
 ON CONFLICT (page_slug) DO UPDATE SET

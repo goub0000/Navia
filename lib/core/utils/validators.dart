@@ -1,4 +1,4 @@
-/// Form validation utilities for the Flow EdTech Platform
+/// Form validation utilities for the Navia Platform
 ///
 /// Provides reusable validators for common input fields:
 /// - Email validation

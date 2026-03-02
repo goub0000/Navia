@@ -75,11 +75,11 @@ class TermsOfServiceScreen extends StatelessWidget {
             context,
             icon: Icons.handshake,
             title: '1. Acceptance of Terms',
-            content: '''By creating an account and using Flow EdTech, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.
+            content: '''By creating an account and using Navia, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.
 
 If you do not agree to these terms, you may not access or use our services.
 
-These terms constitute a legally binding agreement between you and Flow EdTech.''',
+These terms constitute a legally binding agreement between you and Navia.''',
           ),
           const SizedBox(height: 16),
 
@@ -131,14 +131,14 @@ Violation of these terms may result in suspension or termination of your account
             context,
             icon: Icons.copyright,
             title: '4. Intellectual Property Rights',
-            content: '''All content on Flow EdTech, including:
+            content: '''All content on Navia, including:
 
 • Course materials and lectures
 • Text, graphics, logos, and images
 • Software and technology
 • Trademarks and branding
 
-Is owned by Flow EdTech or its licensors and is protected by copyright, trademark, and other intellectual property laws.
+Is owned by Navia or its licensors and is protected by copyright, trademark, and other intellectual property laws.
 
 User-Generated Content:
 • You retain ownership of content you create
@@ -171,7 +171,7 @@ Refund Policy:
 • 7-day money-back guarantee for new subscriptions
 • Refunds are processed within 5-10 business days
 • Course-specific refund policies may apply
-• Contact support@flowedtech.com for refund requests''',
+• Contact support@navia.app for refund requests''',
           ),
           const SizedBox(height: 16),
 
@@ -295,7 +295,7 @@ You may terminate your account at any time through account settings.''',
 
 Informal Resolution:
 • Contact us first to resolve disputes informally
-• Email: legal@flowedtech.com
+• Email: legal@navia.app
 • 30-day period to reach resolution
 
 Arbitration Agreement:
@@ -359,14 +359,14 @@ If you do not agree to modified terms:
             content: '''For questions about these Terms of Service:
 
 General Inquiries:
-Email: support@flowedtech.com
+Email: support@navia.app
 Phone: +1 (555) 123-4567
 
 Legal Department:
-Email: legal@flowedtech.com
+Email: legal@navia.app
 
 Mailing Address:
-Flow EdTech
+Navia
 123 Education Lane
 Tech City, TC 12345
 United States
@@ -385,7 +385,7 @@ Business Hours: Monday-Friday, 9am-5pm EST''',
                   Icon(Icons.check_circle, color: AppColors.success, size: 48),
                   const SizedBox(height: 12),
                   Text(
-                    'By using Flow EdTech, you acknowledge that you have read and understood these Terms of Service.',
+                    'By using Navia, you acknowledge that you have read and understood these Terms of Service.',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

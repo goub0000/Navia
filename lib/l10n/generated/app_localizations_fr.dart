@@ -8363,7 +8363,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyPageSection6Content =>
-      'Si vous avez des questions sur cette politique de confidentialité, veuillez nous contacter à :\n\nE-mail : privacy@flowedtech.com\nAdresse : Accra, Ghana';
+      'Si vous avez des questions sur cette politique de confidentialité, veuillez nous contacter à :\n\nE-mail : privacy@navia.app\nAdresse : Accra, Ghana';
 
   @override
   String get privacyPageContactTeam => 'Contacter l\'équipe confidentialité';
@@ -8412,7 +8412,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsPageSection5Content =>
-      'Pour toute question concernant ces conditions, contactez-nous à : legal@flowedtech.com';
+      'Pour toute question concernant ces conditions, contactez-nous à : legal@navia.app';
 
   @override
   String get termsPageAgreement =>
@@ -8432,7 +8432,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contactPageEmail => 'E-mail';
 
   @override
-  String get contactPageEmailValue => 'support@flowedtech.com';
+  String get contactPageEmailValue => 'support@navia.app';
 
   @override
   String get contactPageEmailReply => 'Nous répondons sous 24 heures';
@@ -8579,7 +8579,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get careersPageNoFitDesc =>
-      'Nous sommes toujours à la recherche de personnes talentueuses. Envoyez votre CV à careers@flowedtech.com';
+      'Nous sommes toujours à la recherche de personnes talentueuses. Envoyez votre CV à careers@navia.app';
 
   @override
   String get careersPageContactUs => 'Nous contacter';
@@ -8872,7 +8872,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cookiesPageQuestionsContact =>
-      'Contactez-nous à privacy@flowedtech.com';
+      'Contactez-nous à privacy@navia.app';
 
   @override
   String get dataProtPageTitle => 'Protection des données';
@@ -19983,7 +19983,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyPolicySection5Content =>
-      'Vous disposez des droits suivants concernant vos informations personnelles :\n\n• Acces : Demander une copie de vos donnees personnelles\n• Correction : Mettre a jour ou corriger les informations inexactes\n• Suppression : Demander la suppression de vos donnees personnelles\n• Portabilite : Recevoir vos donnees dans un format portable\n• Desinscription : Se desabonner des communications marketing\n• Restriction : Limiter la facon dont nous traitons vos donnees\n\nPour exercer ces droits, contactez-nous a privacy@flowedtech.com.';
+      'Vous disposez des droits suivants concernant vos informations personnelles :\n\n• Acces : Demander une copie de vos donnees personnelles\n• Correction : Mettre a jour ou corriger les informations inexactes\n• Suppression : Demander la suppression de vos donnees personnelles\n• Portabilite : Recevoir vos donnees dans un format portable\n• Desinscription : Se desabonner des communications marketing\n• Restriction : Limiter la facon dont nous traitons vos donnees\n\nPour exercer ces droits, contactez-nous a privacy@navia.app.';
 
   @override
   String get privacyPolicySection6Title =>
@@ -20021,7 +20021,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get privacyPolicySection10Content =>
-      'Si vous avez des questions ou des preoccupations concernant cette politique de confidentialite ou nos pratiques en matiere de donnees, veuillez nous contacter :\n\nE-mail : privacy@flowedtech.com\nTelephone : +1 (555) 123-4567\nAdresse : Navia, 123 Education Lane, Tech City, TC 12345\n\nDelegue a la protection des donnees : dpo@flowedtech.com';
+      'Si vous avez des questions ou des preoccupations concernant cette politique de confidentialite ou nos pratiques en matiere de donnees, veuillez nous contacter :\n\nE-mail : privacy@navia.app\nTelephone : +1 (555) 123-4567\nAdresse : Navia, 123 Education Lane, Tech City, TC 12345\n\nDelegue a la protection des donnees : dpo@navia.app';
 
   @override
   String get termsOfServiceTitle => 'Conditions d\'utilisation';
@@ -20082,7 +20082,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsOfServiceSection5Content =>
-      'Plans d\'abonnement :\n• Les prix sont susceptibles de changer avec preavis\n• Les abonnements se renouvellent automatiquement sauf annulation\n• Vous pouvez annuler a tout moment via les parametres de votre compte\n• L\'annulation prend effet a la fin de la periode de facturation\n\nConditions de paiement :\n• Tous les frais sont en USD sauf indication contraire\n• Le paiement est du au moment de l\'achat\n• Nous acceptons les principales cartes de credit et autres methodes de paiement\n• Les paiements echoues peuvent entrainer la suspension du service\n\nPolitique de remboursement :\n• Garantie de remboursement de 7 jours pour les nouveaux abonnements\n• Les remboursements sont traites dans les 5 a 10 jours ouvrables\n• Des politiques de remboursement specifiques aux cours peuvent s\'appliquer\n• Contactez support@flowedtech.com pour les demandes de remboursement';
+      'Plans d\'abonnement :\n• Les prix sont susceptibles de changer avec preavis\n• Les abonnements se renouvellent automatiquement sauf annulation\n• Vous pouvez annuler a tout moment via les parametres de votre compte\n• L\'annulation prend effet a la fin de la periode de facturation\n\nConditions de paiement :\n• Tous les frais sont en USD sauf indication contraire\n• Le paiement est du au moment de l\'achat\n• Nous acceptons les principales cartes de credit et autres methodes de paiement\n• Les paiements echoues peuvent entrainer la suspension du service\n\nPolitique de remboursement :\n• Garantie de remboursement de 7 jours pour les nouveaux abonnements\n• Les remboursements sont traites dans les 5 a 10 jours ouvrables\n• Des politiques de remboursement specifiques aux cours peuvent s\'appliquer\n• Contactez support@navia.app pour les demandes de remboursement';
 
   @override
   String get termsOfServiceSection6Title =>
@@ -20128,7 +20128,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsOfServiceSection11Content =>
-      'Pour tout litige decoulant de ces conditions :\n\nResolution informelle :\n• Contactez-nous d\'abord pour resoudre les litiges de maniere informelle\n• E-mail : legal@flowedtech.com\n• Periode de 30 jours pour parvenir a une resolution\n\nAccord d\'arbitrage :\n• Litiges resolus par arbitrage contraignant\n• Sur une base individuelle uniquement (pas d\'actions collectives)\n• Regi par les regles de l\'American Arbitration Association\n• Situe a Tech City, TC\n\nExceptions :\n• Litiges devant les tribunaux de petites creances\n• Litiges de propriete intellectuelle\n• Mesures injonctives d\'urgence';
+      'Pour tout litige decoulant de ces conditions :\n\nResolution informelle :\n• Contactez-nous d\'abord pour resoudre les litiges de maniere informelle\n• E-mail : legal@navia.app\n• Periode de 30 jours pour parvenir a une resolution\n\nAccord d\'arbitrage :\n• Litiges resolus par arbitrage contraignant\n• Sur une base individuelle uniquement (pas d\'actions collectives)\n• Regi par les regles de l\'American Arbitration Association\n• Situe a Tech City, TC\n\nExceptions :\n• Litiges devant les tribunaux de petites creances\n• Litiges de propriete intellectuelle\n• Mesures injonctives d\'urgence';
 
   @override
   String get termsOfServiceSection12Title => '12. Droit applicable';
@@ -20150,7 +20150,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsOfServiceSection14Content =>
-      'Pour des questions concernant ces conditions d\'utilisation :\n\nDemandes generales :\nE-mail : support@flowedtech.com\nTelephone : +1 (555) 123-4567\n\nDepartement juridique :\nE-mail : legal@flowedtech.com\n\nAdresse postale :\nNavia\n123 Education Lane\nTech City, TC 12345\nEtats-Unis\n\nHeures d\'ouverture : Lundi-Vendredi, 9h-17h EST';
+      'Pour des questions concernant ces conditions d\'utilisation :\n\nDemandes generales :\nE-mail : support@navia.app\nTelephone : +1 (555) 123-4567\n\nDepartement juridique :\nE-mail : legal@navia.app\n\nAdresse postale :\nNavia\n123 Education Lane\nTech City, TC 12345\nEtats-Unis\n\nHeures d\'ouverture : Lundi-Vendredi, 9h-17h EST';
 
   @override
   String get termsOfServiceAcknowledgment =>
@@ -21319,7 +21319,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contactSupportEmail => 'E-mail';
 
   @override
-  String get contactSupportEmailAddress => 'support@flowedtech.com';
+  String get contactSupportEmailAddress => 'support@navia.app';
 
   @override
   String get contactSupportLiveChat => 'Chat en direct';
@@ -22619,7 +22619,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get apiDocsPageQuickStartCode =>
-      'curl -X GET \"https://api.flowedtech.com/v1/universities\" \\\n  -H \"Authorization: Bearer VOTRE_CLE_API\" \\\n  -H \"Content-Type: application/json\"';
+      'curl -X GET \"https://api.navia.app/v1/universities\" \\\n  -H \"Authorization: Bearer VOTRE_CLE_API\" \\\n  -H \"Content-Type: application/json\"';
 
   @override
   String get apiDocsPageEndpointsTitle => 'Points de Terminaison API';
@@ -22799,7 +22799,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Contactez notre équipe de conformité pour toute question';
 
   @override
-  String get compliancePageContactEmail => 'conformite@flowedtech.com';
+  String get compliancePageContactEmail => 'conformite@navia.app';
 
   @override
   String get dataProtectionPageTitle => 'Protection des Données';
@@ -22891,7 +22891,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Pour faire une demande de données ou exercer l\'un de vos droits, contactez notre Délégué à la Protection des Données:';
 
   @override
-  String get dataProtectionPageExerciseEmail => 'dpd@flowedtech.com';
+  String get dataProtectionPageExerciseEmail => 'dpd@navia.app';
 
   @override
   String get dataProtectionPageExerciseContactButton => 'Nous Contacter';

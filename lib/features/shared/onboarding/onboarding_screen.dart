@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPageData> _pages = const [
     OnboardingPageData(
-      title: 'Welcome to Flow',
+      title: 'Welcome to Navia',
       description:
           'Your all-in-one platform for discovering courses, managing applications, and achieving your educational goals.',
       imagePath: 'assets/onboarding/welcome.png',
@@ -107,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Welcome to Flow!'),
+        content: Text('Welcome to Navia!'),
         backgroundColor: AppColors.success,
       ),
     );

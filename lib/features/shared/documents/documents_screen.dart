@@ -598,7 +598,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen>
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Implement actual link generation with backend
-                final link = 'https://flowedtech.com/documents/${document.id}';
+                final link = 'https://navia.app/documents/${document.id}';
                 // Copy to clipboard would require clipboard package
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

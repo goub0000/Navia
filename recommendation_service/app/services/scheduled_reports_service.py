@@ -278,7 +278,7 @@ class ScheduledReportsService:
                         <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
 
                         <p style="font-size: 12px; color: #9ca3af;">
-                            This is an automated report from Flow EdTech Platform.<br>
+                            This is an automated report from Navia.<br>
                             To manage your scheduled reports, please visit the admin dashboard.
                         </p>
                     </div>

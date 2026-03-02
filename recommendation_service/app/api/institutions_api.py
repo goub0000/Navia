@@ -52,7 +52,7 @@ async def get_institutions(
     """
     Get list of registered institutions (users with 'institution' role)
 
-    This endpoint returns only institutions that are registered users in the Flow platform,
+    This endpoint returns only institutions that are registered users in the Navia platform,
     NOT the universities from the recommendation database.
 
     **Use this for:**

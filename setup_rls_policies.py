@@ -26,7 +26,7 @@ sql_file_path = "setup_rls_policies.sql"
 
 print("=" * 80)
 print(" " * 20 + "RLS POLICY SETUP SCRIPT")
-print(" " * 15 + "Flow EdTech Platform - Supabase")
+print(" " * 15 + "Navia - Supabase")
 print("=" * 80)
 print()
 

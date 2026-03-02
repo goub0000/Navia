@@ -176,7 +176,7 @@ class PressPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'press@flowedtech.com',
+                        'press@navia.app',
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

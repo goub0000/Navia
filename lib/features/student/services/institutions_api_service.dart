@@ -4,10 +4,10 @@ import '../../../core/api/api_config.dart';
 import '../../../core/models/institution_model.dart';
 
 /// Service for communicating with Institutions API
-/// Fetches registered institutions (user accounts) from the main Flow platform
+/// Fetches registered institutions (user accounts) from the main Navia platform
 /// This is DIFFERENT from UniversitiesApiService which fetches from recommendation DB
 class InstitutionsApiService {
-  // API base URL - Main Flow platform (NOT recommendation service)
+  // API base URL - Main Navia platform (NOT recommendation service)
   static String get baseUrl => ApiConfig.apiBaseUrl;
 
   final http.Client _client;

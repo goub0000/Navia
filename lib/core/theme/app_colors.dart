@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/user_roles.dart';
 
-/// App color palette based on Flow EdTech specifications
+/// App color palette based on Navia specifications
 /// Primary color: #373896 (Blue - Primary actions: buttons, headers, nav links)
 /// Maroon: #B01116 (Secondary actions, highlights, error banners)
 /// Yellow: #FAA61A (Accent highlights: alerts, badges, CTAs)

@@ -363,9 +363,9 @@ class ChatbotService {
   /// Get initial greeting message
   ChatMessage getInitialGreeting() {
     return ChatMessage.bot(
-      content: 'Hi! 👋 I\'m the Flow Assistant. How can I help you today?',
+      content: 'Hi! 👋 I\'m the Navia Assistant. How can I help you today?',
       quickActions: [
-        const QuickAction(id: '1', label: 'What is Flow?', action: 'about_flow'),
+        const QuickAction(id: '1', label: 'What is Navia?', action: 'about_flow'),
         const QuickAction(id: '2', label: 'Get Started', action: 'register'),
         const QuickAction(id: '3', label: 'Pricing', action: 'pricing'),
         const QuickAction(id: '4', label: 'Features', action: 'features'),
@@ -402,14 +402,14 @@ class ChatbotService {
   ChatMessage _getGreeting() {
     final greetings = [
       'Hello! 👋 How can I assist you today?',
-      'Hi there! Welcome to Flow. What can I help you with?',
+      'Hi there! Welcome to Navia. What can I help you with?',
       'Hey! Great to see you. What would you like to know?',
     ];
 
     return ChatMessage.bot(
       content: greetings[_random.nextInt(greetings.length)],
       quickActions: [
-        const QuickAction(id: '1', label: 'About Flow', action: 'about_flow'),
+        const QuickAction(id: '1', label: 'About Navia', action: 'about_flow'),
         const QuickAction(id: '2', label: 'Features', action: 'features'),
         const QuickAction(id: '3', label: 'Get Started', action: 'register'),
       ],
@@ -419,7 +419,7 @@ class ChatbotService {
   ChatMessage _getHelpMessage() {
     return ChatMessage.bot(
       content: 'I can help you with:\n\n'
-          '• Understanding Flow\'s features\n'
+          '• Understanding Navia\'s features\n'
           '• Registration guidance\n'
           '• Pricing information\n'
           '• User types and roles\n'

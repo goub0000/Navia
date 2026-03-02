@@ -1,5 +1,5 @@
 # =============================================================================
-# Multi-stage Dockerfile for Flow EdTech Flutter Web
+# Multi-stage Dockerfile for Navia Flutter Web
 # Stage 1: Build Flutter web app from source
 # Stage 2: Serve with Node.js Express
 # =============================================================================

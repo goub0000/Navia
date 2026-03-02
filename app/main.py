@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Find Your Path API",
     description="""
-    **University Recommendation Service for Flow EdTech Platform**
+    **University Recommendation Service for Navia Platform**
 
     A comprehensive EdTech API providing:
     - JWT Authentication with Role-Based Access Control

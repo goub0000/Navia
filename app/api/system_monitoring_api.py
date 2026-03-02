@@ -275,7 +275,7 @@ async def get_api_info():
     return {
         "name": "Find Your Path API",
         "version": "1.0.0",
-        "description": "University Recommendation Service for Flow EdTech Platform",
+        "description": "University Recommendation Service for Navia Platform",
         "features": [
             "JWT Authentication with RBAC",
             "University & Program Management",

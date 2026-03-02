@@ -91,7 +91,7 @@ final activityFeedProvider = FutureProvider<List<ActivityItem>>((ref) async {
       activities.addAll([
         ActivityItem(
           id: 'welcome',
-          title: 'Welcome to Flow!',
+          title: 'Welcome to Navia!',
           description: 'Start your educational journey by browsing available programs',
           timestamp: DateTime.now().subtract(const Duration(days: 1)),
           type: ActivityType.general,

@@ -1,5 +1,5 @@
 /// Institution Model
-/// Represents a registered institution (user account) in the Flow platform
+/// Represents a registered institution (user account) in the Navia platform
 /// This is DIFFERENT from University model which is used for recommendations
 library;
 

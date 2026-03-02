@@ -155,7 +155,7 @@ class _FAQScreenState extends State<FAQScreen>
         id: '12',
         question: 'Is there a mobile app available?',
         answer:
-            'Yes! Download the Flow app from Google Play Store (Android) or App Store (iOS). The mobile app offers all features including offline downloads and progress syncing.',
+            'Yes! Download the Navia app from Google Play Store (Android) or App Store (iOS). The mobile app offers all features including offline downloads and progress syncing.',
         categoryId: '6',
         helpfulCount: 389,
       ),

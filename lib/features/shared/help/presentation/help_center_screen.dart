@@ -55,7 +55,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
       HelpCategory(
         id: '1',
         title: 'Getting Started',
-        description: 'Learn the basics of using Flow',
+        description: 'Learn the basics of using Navia',
         icon: Icons.rocket_launch,
         color: AppColors.primary,
         articleCount: 12,
@@ -95,7 +95,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
       HelpCategory(
         id: '6',
         title: 'Mobile App',
-        description: 'Using Flow on mobile devices',
+        description: 'Using Navia on mobile devices',
         icon: Icons.phone_android,
         color: Colors.purple,
         articleCount: 9,
@@ -107,7 +107,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
         id: '1',
         title: 'How to enroll in a course',
         content:
-            'Learn how to browse and enroll in courses on Flow. Step-by-step guide with screenshots.',
+            'Learn how to browse and enroll in courses on Navia. Step-by-step guide with screenshots.',
         categoryId: '3',
         publishedDate: DateTime.now().subtract(const Duration(days: 5)),
         views: 2453,

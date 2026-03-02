@@ -303,7 +303,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 // Value Proposition - Light background
                 SliverToBoxAdapter(
                   child: Semantics(
-                    label: 'Why choose Flow',
+                    label: 'Why choose Navia',
                     container: true,
                     child: Container(
                       color: theme.colorScheme.surfaceContainerLowest,
@@ -1600,7 +1600,7 @@ class _DeviceFrame extends StatelessWidget {
   }
 }
 
-/// Mini dashboard UI with colored rectangles representing the Flow dashboard.
+/// Mini dashboard UI with colored rectangles representing the Navia dashboard.
 class _MiniDashboard extends StatelessWidget {
   final int variant;
 

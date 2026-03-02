@@ -1,8 +1,8 @@
 // Flutter Service Worker for Offline Caching
 // Version: 1.0.0
 
-const CACHE_NAME = 'flow-app-cache-v1';
-const DATA_CACHE_NAME = 'flow-app-data-cache-v1';
+const CACHE_NAME = 'navia-app-cache-v1';
+const DATA_CACHE_NAME = 'navia-app-data-cache-v1';
 
 // Assets to cache on install
 const FILES_TO_CACHE = [
@@ -143,7 +143,7 @@ self.addEventListener('push', (event) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('Flow App', options)
+    self.registration.showNotification('Navia', options)
   );
 });
 

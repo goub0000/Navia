@@ -41,7 +41,7 @@ class ProgramEnricher:
         # HTTP session for reusing connections
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'FlowApp-ProgramEnricher/1.0 (Educational Project; Python/requests)'
+            'User-Agent': 'Navia-ProgramEnricher/1.0 (Educational Project; Python/requests)'
         })
 
     def enrich_program(self, program: Dict[str, Any], institution_website: Optional[str] = None) -> Dict[str, Any]:

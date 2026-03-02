@@ -104,7 +104,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
         ),
         const QuickAction(
           id: 'what_is_flow',
-          label: 'What is Flow?',
+          label: 'What is Navia?',
           action: 'what_is_flow',
         ),
         const QuickAction(
@@ -148,7 +148,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
         ),
         const QuickAction(
           id: 'what_is_flow',
-          label: 'What is Flow?',
+          label: 'What is Navia?',
           action: 'what_is_flow',
         ),
       ],
@@ -387,7 +387,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
             ),
             const QuickAction(
               id: 'what_is_flow',
-              label: 'What is Flow?',
+              label: 'What is Navia?',
               action: 'what_is_flow',
             ),
           ],

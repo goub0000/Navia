@@ -77,7 +77,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
       ),
     ];
 
-/// A dialog that displays a guided feature tour for the Flow platform.
+/// A dialog that displays a guided feature tour for the Navia platform.
 class DemoVideoDialog extends StatefulWidget {
   const DemoVideoDialog({super.key});
 

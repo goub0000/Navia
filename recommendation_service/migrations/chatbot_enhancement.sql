@@ -295,10 +295,10 @@ CREATE TRIGGER trigger_update_faq_stats
 -- ================================================================================
 /*
 INSERT INTO public.chatbot_faqs (question, answer, keywords, category, priority, quick_actions) VALUES
-('What is Flow?', 'Flow is an AI-powered EdTech platform that helps students find and apply to universities, manage their educational journey, and connect with counselors and institutions.', '["flow", "what is", "about", "platform"]', 'general', 100, '[{"id": "features", "label": "See Features", "action": "features"}]'),
+('What is Navia?', 'Navia is an AI-powered EdTech platform that helps students find and apply to universities, manage their educational journey, and connect with counselors and institutions.', '["navia", "what is", "about", "platform"]', 'general', 100, '[{"id": "features", "label": "See Features", "action": "features"}]'),
 ('How do I create an account?', 'To create an account, click the "Sign Up" button on the homepage. You can register as a Student, Parent, Institution, or Counselor. Fill in your details and verify your email to get started.', '["account", "sign up", "register", "create"]', 'registration', 90, '[{"id": "register", "label": "Sign Up Now", "action": "navigate_register"}]'),
-('Is Flow free to use?', 'Flow offers a free tier with basic features for students. Premium features and institutional subscriptions are available for advanced functionality.', '["free", "cost", "price", "pricing"]', 'pricing', 80, '[{"id": "pricing", "label": "View Pricing", "action": "pricing"}]'),
-('How can I contact support?', 'You can reach our support team by emailing support@flowedtech.com or using the chat feature. Our team typically responds within 24 hours.', '["support", "help", "contact", "email"]', 'support', 70, '[{"id": "email", "label": "Email Support", "action": "email_support"}]')
+('Is Navia free to use?', 'Navia offers a free tier with basic features for students. Premium features and institutional subscriptions are available for advanced functionality.', '["free", "cost", "price", "pricing"]', 'pricing', 80, '[{"id": "pricing", "label": "View Pricing", "action": "pricing"}]'),
+('How can I contact support?', 'You can reach our support team by emailing support@navia.app or using the chat feature. Our team typically responds within 24 hours.', '["support", "help", "contact", "email"]', 'support', 70, '[{"id": "email", "label": "Email Support", "action": "email_support"}]')
 ON CONFLICT DO NOTHING;
 */
 

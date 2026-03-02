@@ -1,5 +1,5 @@
 """
-End-to-end integration tests for Flow EdTech Platform
+End-to-end integration tests for Navia Platform
 Tests the complete flow from Flutter → FastAPI → Database
 """
 

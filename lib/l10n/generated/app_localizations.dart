@@ -15089,7 +15089,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPageSection6Content.
   ///
   /// In en, this message translates to:
-  /// **'If you have questions about this privacy policy, please contact us at:\n\nEmail: privacy@flowedtech.com\nAddress: Accra, Ghana'**
+  /// **'If you have questions about this privacy policy, please contact us at:\n\nEmail: privacy@navia.app\nAddress: Accra, Ghana'**
   String get privacyPageSection6Content;
 
   /// No description provided for @privacyPageContactTeam.
@@ -15173,7 +15173,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsPageSection5Content.
   ///
   /// In en, this message translates to:
-  /// **'For questions about these terms, contact us at: legal@flowedtech.com'**
+  /// **'For questions about these terms, contact us at: legal@navia.app'**
   String get termsPageSection5Content;
 
   /// No description provided for @termsPageAgreement.
@@ -15209,7 +15209,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactPageEmailValue.
   ///
   /// In en, this message translates to:
-  /// **'support@flowedtech.com'**
+  /// **'support@navia.app'**
   String get contactPageEmailValue;
 
   /// No description provided for @contactPageEmailReply.
@@ -15485,7 +15485,7 @@ abstract class AppLocalizations {
   /// No description provided for @careersPageNoFitDesc.
   ///
   /// In en, this message translates to:
-  /// **'We\'re always looking for talented individuals. Send your resume to careers@flowedtech.com'**
+  /// **'We\'re always looking for talented individuals. Send your resume to careers@navia.app'**
   String get careersPageNoFitDesc;
 
   /// No description provided for @careersPageContactUs.
@@ -16013,7 +16013,7 @@ abstract class AppLocalizations {
   /// No description provided for @cookiesPageQuestionsContact.
   ///
   /// In en, this message translates to:
-  /// **'Contact us at privacy@flowedtech.com'**
+  /// **'Contact us at privacy@navia.app'**
   String get cookiesPageQuestionsContact;
 
   /// No description provided for @dataProtPageTitle.
@@ -35709,7 +35709,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection5Content.
   ///
   /// In en, this message translates to:
-  /// **'You have the following rights regarding your personal information:\n\n• Access: Request a copy of your personal data\n• Correction: Update or correct inaccurate information\n• Deletion: Request deletion of your personal data\n• Portability: Receive your data in a portable format\n• Opt-Out: Unsubscribe from marketing communications\n• Restriction: Limit how we process your data\n\nTo exercise these rights, contact us at privacy@flowedtech.com.'**
+  /// **'You have the following rights regarding your personal information:\n\n• Access: Request a copy of your personal data\n• Correction: Update or correct inaccurate information\n• Deletion: Request deletion of your personal data\n• Portability: Receive your data in a portable format\n• Opt-Out: Unsubscribe from marketing communications\n• Restriction: Limit how we process your data\n\nTo exercise these rights, contact us at privacy@navia.app.'**
   String get privacyPolicySection5Content;
 
   /// No description provided for @privacyPolicySection6Title.
@@ -35769,7 +35769,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection10Content.
   ///
   /// In en, this message translates to:
-  /// **'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com'**
+  /// **'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@navia.app\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@navia.app'**
   String get privacyPolicySection10Content;
 
   /// No description provided for @termsOfServiceTitle.
@@ -35865,7 +35865,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection5Content.
   ///
   /// In en, this message translates to:
-  /// **'Subscription Plans:\n• Pricing is subject to change with notice\n• Subscriptions automatically renew unless cancelled\n• You can cancel at any time through your account settings\n• Cancellation takes effect at the end of the billing period\n\nPayment Terms:\n• All fees are in USD unless otherwise stated\n• Payment is due at the time of purchase\n• We accept major credit cards and other payment methods\n• Failed payments may result in service suspension\n\nRefund Policy:\n• 7-day money-back guarantee for new subscriptions\n• Refunds are processed within 5-10 business days\n• Course-specific refund policies may apply\n• Contact support@flowedtech.com for refund requests'**
+  /// **'Subscription Plans:\n• Pricing is subject to change with notice\n• Subscriptions automatically renew unless cancelled\n• You can cancel at any time through your account settings\n• Cancellation takes effect at the end of the billing period\n\nPayment Terms:\n• All fees are in USD unless otherwise stated\n• Payment is due at the time of purchase\n• We accept major credit cards and other payment methods\n• Failed payments may result in service suspension\n\nRefund Policy:\n• 7-day money-back guarantee for new subscriptions\n• Refunds are processed within 5-10 business days\n• Course-specific refund policies may apply\n• Contact support@navia.app for refund requests'**
   String get termsOfServiceSection5Content;
 
   /// No description provided for @termsOfServiceSection6Title.
@@ -35937,7 +35937,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection11Content.
   ///
   /// In en, this message translates to:
-  /// **'For any disputes arising from these terms:\n\nInformal Resolution:\n• Contact us first to resolve disputes informally\n• Email: legal@flowedtech.com\n• 30-day period to reach resolution\n\nArbitration Agreement:\n• Disputes resolved through binding arbitration\n• Individual basis only (no class actions)\n• Governed by American Arbitration Association rules\n• Located in Tech City, TC\n\nExceptions:\n• Small claims court disputes\n• Intellectual property disputes\n• Emergency injunctive relief'**
+  /// **'For any disputes arising from these terms:\n\nInformal Resolution:\n• Contact us first to resolve disputes informally\n• Email: legal@navia.app\n• 30-day period to reach resolution\n\nArbitration Agreement:\n• Disputes resolved through binding arbitration\n• Individual basis only (no class actions)\n• Governed by American Arbitration Association rules\n• Located in Tech City, TC\n\nExceptions:\n• Small claims court disputes\n• Intellectual property disputes\n• Emergency injunctive relief'**
   String get termsOfServiceSection11Content;
 
   /// No description provided for @termsOfServiceSection12Title.
@@ -35973,7 +35973,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection14Content.
   ///
   /// In en, this message translates to:
-  /// **'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST'**
+  /// **'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@navia.app\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@navia.app\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST'**
   String get termsOfServiceSection14Content;
 
   /// No description provided for @termsOfServiceAcknowledgment.
@@ -38055,7 +38055,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactSupportEmailAddress.
   ///
   /// In en, this message translates to:
-  /// **'support@flowedtech.com'**
+  /// **'support@navia.app'**
   String get contactSupportEmailAddress;
 
   /// No description provided for @contactSupportLiveChat.
@@ -40371,7 +40371,7 @@ abstract class AppLocalizations {
   /// No description provided for @apiDocsPageQuickStartCode.
   ///
   /// In en, this message translates to:
-  /// **'curl -X GET \"https://api.flowedtech.com/v1/universities\" \\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\n  -H \"Content-Type: application/json\"'**
+  /// **'curl -X GET \"https://api.navia.app/v1/universities\" \\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\n  -H \"Content-Type: application/json\"'**
   String get apiDocsPageQuickStartCode;
 
   /// No description provided for @apiDocsPageEndpointsTitle.
@@ -40701,7 +40701,7 @@ abstract class AppLocalizations {
   /// No description provided for @compliancePageContactEmail.
   ///
   /// In en, this message translates to:
-  /// **'compliance@flowedtech.com'**
+  /// **'compliance@navia.app'**
   String get compliancePageContactEmail;
 
   /// No description provided for @dataProtectionPageTitle.
@@ -40851,7 +40851,7 @@ abstract class AppLocalizations {
   /// No description provided for @dataProtectionPageExerciseEmail.
   ///
   /// In en, this message translates to:
-  /// **'dpo@flowedtech.com'**
+  /// **'dpo@navia.app'**
   String get dataProtectionPageExerciseEmail;
 
   /// No description provided for @dataProtectionPageExerciseContactButton.

@@ -146,7 +146,7 @@ class WikipediaUniversityScraper(BaseScraper):
         for url in url_formats:
             try:
                 response = requests.get(url, timeout=self.timeout, headers={
-                    'User-Agent': 'FlowApp University Database Bot/1.0 (Educational Research; contact@flowapp.com)'
+                    'User-Agent': 'Navia University Database Bot/1.0 (Educational Research; contact@navia.app)'
                 })
 
                 if response.status_code == 200:

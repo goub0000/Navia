@@ -8,6 +8,6 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify that login screen is shown
-    expect(find.text('Flow'), findsOneWidget);
+    expect(find.text('Navia'), findsOneWidget);
   });
 }

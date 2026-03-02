@@ -86,7 +86,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
           // Theme Section
           SettingsSectionHeader(
             title: 'THEME',
-            subtitle: 'Choose how Flow looks to you',
+            subtitle: 'Choose how Navia looks to you',
           ),
           SettingsCard(
             children: [

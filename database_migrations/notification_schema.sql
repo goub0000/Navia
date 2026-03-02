@@ -276,7 +276,7 @@ INSERT INTO notifications (user_id, type, title, message, metadata, action_url)
 SELECT
     auth.uid(),
     'system_announcement',
-    'Welcome to Flow!',
+    'Welcome to Navia!',
     'Thank you for joining our platform. Explore features and start your college journey.',
     '{"icon": "celebration", "color": "blue"}'::jsonb,
     '/dashboard'

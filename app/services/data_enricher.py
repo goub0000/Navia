@@ -44,7 +44,7 @@ class DataEnricher:
         # HTTP session for reusing connections
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'FlowApp-UniversityEnricher/1.0 (Educational Project; Python/requests)'
+            'User-Agent': 'Navia-UniversityEnricher/1.0 (Educational Project; Python/requests)'
         })
 
     def enrich_university(self, university: Dict[str, Any]) -> Dict[str, Any]:

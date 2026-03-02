@@ -44,7 +44,7 @@ class _MilestonesTimelineScreenState extends State<MilestonesTimelineScreen> {
     _milestones = [
       Milestone(
         id: '1',
-        title: 'Welcome to Flow!',
+        title: 'Welcome to Navia!',
         description: 'Started your learning journey',
         icon: Icons.celebration,
         date: now.subtract(const Duration(days: 45)),

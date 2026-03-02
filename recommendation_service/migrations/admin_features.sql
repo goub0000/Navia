@@ -213,7 +213,7 @@ ON CONFLICT DO NOTHING;
 -- Sample communication campaigns
 INSERT INTO public.communication_campaigns (name, type, status, target_audience, content, created_at)
 VALUES
-    ('Welcome New Users', 'email', 'sent', '{"roles": ["student"]}', '{"subject": "Welcome to Flow!", "body": "We are excited to have you..."}', NOW() - INTERVAL '2 weeks'),
+    ('Welcome New Users', 'email', 'sent', '{"roles": ["student"]}', '{"subject": "Welcome to Navia!", "body": "We are excited to have you..."}', NOW() - INTERVAL '2 weeks'),
     ('Course Promotion', 'notification', 'scheduled', '{"roles": ["student", "parent"]}', '{"title": "50% off AI courses", "message": "Limited time offer!"}', NOW() + INTERVAL '1 day'),
     ('System Maintenance', 'announcement', 'draft', '{"roles": ["all"]}', '{"title": "Scheduled maintenance", "message": "System will be down for 2 hours..."}', NOW())
 ON CONFLICT DO NOTHING;

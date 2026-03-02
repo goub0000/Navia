@@ -56,7 +56,7 @@ class _ContactSupportScreenState extends State<ContactSupportScreen> {
                 ListTile(
                   leading: Icon(Icons.email, color: AppColors.primary),
                   title: const Text('Email'),
-                  subtitle: const Text('support@flowedtech.com'),
+                  subtitle: const Text('support@navia.app'),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
                     // TODO: Open email client

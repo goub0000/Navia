@@ -8221,7 +8221,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPageSection6Content =>
-      'If you have questions about this privacy policy, please contact us at:\n\nEmail: privacy@flowedtech.com\nAddress: Accra, Ghana';
+      'If you have questions about this privacy policy, please contact us at:\n\nEmail: privacy@navia.app\nAddress: Accra, Ghana';
 
   @override
   String get privacyPageContactTeam => 'Contact Privacy Team';
@@ -8270,7 +8270,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsPageSection5Content =>
-      'For questions about these terms, contact us at: legal@flowedtech.com';
+      'For questions about these terms, contact us at: legal@navia.app';
 
   @override
   String get termsPageAgreement => 'By using Navia, you agree to these terms';
@@ -8289,7 +8289,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactPageEmail => 'Email';
 
   @override
-  String get contactPageEmailValue => 'support@flowedtech.com';
+  String get contactPageEmailValue => 'support@navia.app';
 
   @override
   String get contactPageEmailReply => 'We reply within 24 hours';
@@ -8436,7 +8436,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get careersPageNoFitDesc =>
-      'We\'re always looking for talented individuals. Send your resume to careers@flowedtech.com';
+      'We\'re always looking for talented individuals. Send your resume to careers@navia.app';
 
   @override
   String get careersPageContactUs => 'Contact Us';
@@ -8725,7 +8725,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cookiesPageQuestionsContact =>
-      'Contact us at privacy@flowedtech.com';
+      'Contact us at privacy@navia.app';
 
   @override
   String get dataProtPageTitle => 'Data Protection';
@@ -19671,7 +19671,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicySection5Content =>
-      'You have the following rights regarding your personal information:\n\n• Access: Request a copy of your personal data\n• Correction: Update or correct inaccurate information\n• Deletion: Request deletion of your personal data\n• Portability: Receive your data in a portable format\n• Opt-Out: Unsubscribe from marketing communications\n• Restriction: Limit how we process your data\n\nTo exercise these rights, contact us at privacy@flowedtech.com.';
+      'You have the following rights regarding your personal information:\n\n• Access: Request a copy of your personal data\n• Correction: Update or correct inaccurate information\n• Deletion: Request deletion of your personal data\n• Portability: Receive your data in a portable format\n• Opt-Out: Unsubscribe from marketing communications\n• Restriction: Limit how we process your data\n\nTo exercise these rights, contact us at privacy@navia.app.';
 
   @override
   String get privacyPolicySection6Title =>
@@ -19707,7 +19707,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicySection10Content =>
-      'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com';
+      'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@navia.app\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@navia.app';
 
   @override
   String get termsOfServiceTitle => 'Terms of Service';
@@ -19764,7 +19764,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection5Content =>
-      'Subscription Plans:\n• Pricing is subject to change with notice\n• Subscriptions automatically renew unless cancelled\n• You can cancel at any time through your account settings\n• Cancellation takes effect at the end of the billing period\n\nPayment Terms:\n• All fees are in USD unless otherwise stated\n• Payment is due at the time of purchase\n• We accept major credit cards and other payment methods\n• Failed payments may result in service suspension\n\nRefund Policy:\n• 7-day money-back guarantee for new subscriptions\n• Refunds are processed within 5-10 business days\n• Course-specific refund policies may apply\n• Contact support@flowedtech.com for refund requests';
+      'Subscription Plans:\n• Pricing is subject to change with notice\n• Subscriptions automatically renew unless cancelled\n• You can cancel at any time through your account settings\n• Cancellation takes effect at the end of the billing period\n\nPayment Terms:\n• All fees are in USD unless otherwise stated\n• Payment is due at the time of purchase\n• We accept major credit cards and other payment methods\n• Failed payments may result in service suspension\n\nRefund Policy:\n• 7-day money-back guarantee for new subscriptions\n• Refunds are processed within 5-10 business days\n• Course-specific refund policies may apply\n• Contact support@navia.app for refund requests';
 
   @override
   String get termsOfServiceSection6Title =>
@@ -19809,7 +19809,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection11Content =>
-      'For any disputes arising from these terms:\n\nInformal Resolution:\n• Contact us first to resolve disputes informally\n• Email: legal@flowedtech.com\n• 30-day period to reach resolution\n\nArbitration Agreement:\n• Disputes resolved through binding arbitration\n• Individual basis only (no class actions)\n• Governed by American Arbitration Association rules\n• Located in Tech City, TC\n\nExceptions:\n• Small claims court disputes\n• Intellectual property disputes\n• Emergency injunctive relief';
+      'For any disputes arising from these terms:\n\nInformal Resolution:\n• Contact us first to resolve disputes informally\n• Email: legal@navia.app\n• 30-day period to reach resolution\n\nArbitration Agreement:\n• Disputes resolved through binding arbitration\n• Individual basis only (no class actions)\n• Governed by American Arbitration Association rules\n• Located in Tech City, TC\n\nExceptions:\n• Small claims court disputes\n• Intellectual property disputes\n• Emergency injunctive relief';
 
   @override
   String get termsOfServiceSection12Title => '12. Governing Law';
@@ -19830,7 +19830,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection14Content =>
-      'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST';
+      'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@navia.app\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@navia.app\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST';
 
   @override
   String get termsOfServiceAcknowledgment =>
@@ -20957,7 +20957,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactSupportEmail => 'Email';
 
   @override
-  String get contactSupportEmailAddress => 'support@flowedtech.com';
+  String get contactSupportEmailAddress => 'support@navia.app';
 
   @override
   String get contactSupportLiveChat => 'Live Chat';
@@ -22220,7 +22220,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get apiDocsPageQuickStartCode =>
-      'curl -X GET \"https://api.flowedtech.com/v1/universities\" \\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\n  -H \"Content-Type: application/json\"';
+      'curl -X GET \"https://api.navia.app/v1/universities\" \\n  -H \"Authorization: Bearer YOUR_API_KEY\" \\n  -H \"Content-Type: application/json\"';
 
   @override
   String get apiDocsPageEndpointsTitle => 'API Endpoints';
@@ -22395,7 +22395,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Contact our compliance team for inquiries';
 
   @override
-  String get compliancePageContactEmail => 'compliance@flowedtech.com';
+  String get compliancePageContactEmail => 'compliance@navia.app';
 
   @override
   String get dataProtectionPageTitle => 'Data Protection';
@@ -22485,7 +22485,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'To make a data request or exercise any of your rights, contact our Data Protection Officer:';
 
   @override
-  String get dataProtectionPageExerciseEmail => 'dpo@flowedtech.com';
+  String get dataProtectionPageExerciseEmail => 'dpo@navia.app';
 
   @override
   String get dataProtectionPageExerciseContactButton => 'Contact Us';
