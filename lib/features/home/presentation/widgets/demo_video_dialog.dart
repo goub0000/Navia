@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n_extension.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// Data class for a single feature tour slide.
 class _TourSlide {
@@ -29,7 +30,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
           context.l10n.tourSlide1H2,
           context.l10n.tourSlide1H3,
         ],
-        color: Color(0xFF6366F1),
+        color: AppColors.primary,
       ),
       _TourSlide(
         icon: Icons.route_rounded,
@@ -40,7 +41,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
           context.l10n.tourSlide2H2,
           context.l10n.tourSlide2H3,
         ],
-        color: Color(0xFF0EA5E9),
+        color: AppColors.primaryDark,
       ),
       _TourSlide(
         icon: Icons.dashboard_rounded,
@@ -51,7 +52,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
           context.l10n.tourSlide3H2,
           context.l10n.tourSlide3H3,
         ],
-        color: Color(0xFF10B981),
+        color: AppColors.secondary,
       ),
       _TourSlide(
         icon: Icons.chat_rounded,
@@ -62,7 +63,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
           context.l10n.tourSlide4H2,
           context.l10n.tourSlide4H3,
         ],
-        color: Color(0xFFF59E0B),
+        color: AppColors.accent,
       ),
       _TourSlide(
         icon: Icons.people_rounded,
@@ -73,7 +74,7 @@ List<_TourSlide> _buildSlides(BuildContext context) => [
           context.l10n.tourSlide5H2,
           context.l10n.tourSlide5H3,
         ],
-        color: Color(0xFFEC4899),
+        color: AppColors.primaryLight,
       ),
     ];
 

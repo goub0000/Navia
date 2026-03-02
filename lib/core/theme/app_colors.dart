@@ -1,84 +1,84 @@
 import 'package:flutter/material.dart';
 import '../constants/user_roles.dart';
 
-/// App color palette based on Navia specifications
-/// Primary color: #373896 (Blue - Primary actions: buttons, headers, nav links)
-/// Maroon: #B01116 (Secondary actions, highlights, error banners)
-/// Yellow: #FAA61A (Accent highlights: alerts, badges, CTAs)
+/// App color palette based on Navia brand specifications
+/// Teal: #2EC4B6 (Primary brand, buttons, links, success)
+/// Navy: #1B2340 (Secondary, headers, dark sections)
+/// Gold: #C9A84C (Accent highlights, badges, CTAs)
 class AppColors {
   AppColors._();
 
-  // Primary Colors (Blue #373896)
-  static const Color primary = Color(0xFF373896);
-  static const Color primaryDark = Color(0xFF2A2B72);
-  static const Color primaryLight = Color(0xFF5456AE);
+  // Primary Colors (Teal #2EC4B6)
+  static const Color primary = Color(0xFF2EC4B6);
+  static const Color primaryDark = Color(0xFF1A9E92);
+  static const Color primaryLight = Color(0xFF5DD4C8);
 
-  // Secondary Colors (Maroon #B01116)
-  static const Color secondary = Color(0xFFB01116);
-  static const Color secondaryDark = Color(0xFF8B0D11);
-  static const Color secondaryLight = Color(0xFFC53A3E);
+  // Secondary Colors (Navy #1B2340)
+  static const Color secondary = Color(0xFF1B2340);
+  static const Color secondaryDark = Color(0xFF0D1117);
+  static const Color secondaryLight = Color(0xFF2A3558);
 
-  // Accent Colors (Yellow #FAA61A)
-  static const Color accent = Color(0xFFFAA61A);
-  static const Color accentDark = Color(0xFF8B5E10); // Darkened for text on white - 4.5:1 contrast (was #C88515 - 2.9:1)
-  static const Color accentLight = Color(0xFFFBB845);
+  // Accent Colors (Gold #C9A84C)
+  static const Color accent = Color(0xFFC9A84C);
+  static const Color accentDark = Color(0xFFA8883E);
+  static const Color accentLight = Color(0xFFD4B86A);
   // Use accentDark for text on light backgrounds to meet WCAG AA
-  static const Color accentOnLight = Color(0xFF8B5E10); // 4.5:1 contrast on white
+  static const Color accentOnLight = Color(0xFFA8883E);
 
-  // Warmth Palette
-  static const Color terracotta = Color(0xFFC4704F);
-  static const Color coral = Color(0xFFE07A5F);
-  static const Color warmSand = Color(0xFFF4E8DC);
-  static const Color deepOchre = Color(0xFFB8860B);
+  // Warmth Palette (mapped to brand)
+  static const Color terracotta = Color(0xFFC9A84C);
+  static const Color coral = Color(0xFFD4B86A);
+  static const Color warmSand = Color(0xFFF0EAE0);
+  static const Color deepOchre = Color(0xFFA8883E);
 
   // Section Backgrounds for Visual Rhythm
-  static const Color sectionLight = Color(0xFFF8FAFB);
-  static const Color sectionWarm = Color(0xFFFFF9F5);
-  static const Color sectionDark = Color(0xFF1A1A1A);
+  static const Color sectionLight = Color(0xFFF8F6F2);
+  static const Color sectionWarm = Color(0xFFF0EAE0);
+  static const Color sectionDark = Color(0xFF0D1117);
 
   // Hero Gradient Colors
-  static const List<Color> heroGradient = [primary, Color(0xFF4A4BC8), terracotta];
+  static const List<Color> heroGradient = [primary, Color(0xFF1A9E92), accent];
 
-  // Background Colors (Pure white for premium minimalistic design)
-  static const Color background = Color(0xFFFFFFFF);
+  // Background Colors
+  static const Color background = Color(0xFFF8F6F2);
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceVariant = Color(0xFFF8FAFB);
-  static const Color surfaceContainerHighest = Color(0xFFF8FAFB);
+  static const Color surfaceVariant = Color(0xFFF8F6F2);
+  static const Color surfaceContainerHighest = Color(0xFFF8F6F2);
 
   // Text Colors
   // WCAG AA compliant: minimum 4.5:1 contrast ratio for normal text
-  static const Color textPrimary = Color(0xFF000000); // 21:1 on white
-  static const Color textSecondary = Color(0xFF595959); // 7:1 on white (was #666666 - 5.74:1)
-  static const Color textDisabled = Color(0xFF757575); // 4.6:1 on white (was #999999 - 2.85:1, FAILED AA)
+  static const Color textPrimary = Color(0xFF0D1117); // Midnight
+  static const Color textSecondary = Color(0xFF1B2340); // Navy
+  static const Color textDisabled = Color(0xFF9A9488); // Warm Gray
   static const Color textOnPrimary = Color(0xFFFFFFFF);
 
   // Status Colors
-  static const Color success = Color(0xFF4CAF50);
-  static const Color error = Color(0xFFB01116); // Using Maroon for errors
-  static const Color warning = Color(0xFFFAA61A); // Using Yellow for warnings
-  static const Color info = Color(0xFF373896); // Using Primary Blue for info
+  static const Color success = Color(0xFF2EC4B6); // Teal
+  static const Color error = Color(0xFFD32F2F); // Material Red (decoupled)
+  static const Color warning = Color(0xFFC9A84C); // Gold
+  static const Color info = Color(0xFF2EC4B6); // Teal
 
   // Role-specific Colors
-  static const Color studentRole = Color(0xFF373896); // Primary Blue
-  static const Color institutionRole = Color(0xFFB01116); // Maroon
-  static const Color parentRole = Color(0xFF4CAF50); // Green (for differentiation)
-  static const Color counselorRole = Color(0xFFFAA61A); // Yellow/Accent
-  static const Color recommenderRole = Color(0xFF5456AE); // Light Blue variant
+  static const Color studentRole = Color(0xFF2EC4B6); // Teal
+  static const Color institutionRole = Color(0xFF1B2340); // Navy
+  static const Color parentRole = Color(0xFF1A9E92); // Deep Teal
+  static const Color counselorRole = Color(0xFFC9A84C); // Gold
+  static const Color recommenderRole = Color(0xFF5DD4C8); // Light Teal
 
   // Admin role colors
-  static const Color superAdminRole = Color(0xFFB01116); // Maroon - highest authority
-  static const Color regionalAdminRole = Color(0xFF373896); // Primary Blue
-  static const Color contentAdminRole = Color(0xFF373896); // Primary Blue
-  static const Color supportAdminRole = Color(0xFF373896); // Primary Blue
-  static const Color financeAdminRole = Color(0xFF373896); // Primary Blue
-  static const Color analyticsAdminRole = Color(0xFF373896); // Primary Blue
+  static const Color superAdminRole = Color(0xFF1B2340); // Navy - highest authority
+  static const Color regionalAdminRole = Color(0xFF2EC4B6); // Teal
+  static const Color contentAdminRole = Color(0xFF2EC4B6); // Teal
+  static const Color supportAdminRole = Color(0xFF2EC4B6); // Teal
+  static const Color financeAdminRole = Color(0xFF2EC4B6); // Teal
+  static const Color analyticsAdminRole = Color(0xFF2EC4B6); // Teal
 
   // Admin badge accent colors
-  static const Color superAdminAccent = Color(0xFFFFD700); // Gold for Super Admin badge
+  static const Color superAdminAccent = Color(0xFFC9A84C); // Gold for Super Admin badge
 
   // Border & Divider Colors
-  static const Color border = Color(0xFFE0E0E0);
-  static const Color divider = Color(0xFFEEEEEE);
+  static const Color border = Color(0xFFE8E6E3); // Light Gray
+  static const Color divider = Color(0xFFF0EAE0); // Sand
 
   // Overlay Colors
   static const Color overlay = Color(0x80000000); // 50% black
@@ -165,8 +165,8 @@ class AppColors {
   // ── Dark-mode semantic constants ──────────────────────────────────
 
   // Dark Surfaces
-  static const Color darkBackground = Color(0xFF121212);
-  static const Color darkSurface = Color(0xFF1E1E1E);
+  static const Color darkBackground = Color(0xFF0D1117);
+  static const Color darkSurface = Color(0xFF1B2340);
   static const Color darkSurfaceContainer = Color(0xFF252525);
   static const Color darkSurfaceContainerHigh = Color(0xFF2C2C2C);
   static const Color darkSurfaceContainerHighest = Color(0xFF353535);
@@ -181,7 +181,7 @@ class AppColors {
   static const Color darkDivider = Color(0xFF333333);
 
   // Dark Section Backgrounds
-  static const Color darkSectionLight = Color(0xFF1A1A2E);
+  static const Color darkSectionLight = Color(0xFF1B2340);
   static const Color darkSectionWarm = Color(0xFF2A1F1A);
-  static const Color darkSectionDark = Color(0xFF0D0D0D);
+  static const Color darkSectionDark = Color(0xFF0D1117);
 }

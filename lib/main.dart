@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:logging/logging.dart';
 import 'l10n/generated/app_localizations.dart';
+import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'core/widgets/navia_logo.dart';
 import 'core/providers/appearance_provider.dart';
@@ -232,7 +233,7 @@ class FlowApp extends ConsumerWidget {
                   const SizedBox(height: 24),
                   const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFF6366F1),
+                      AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 16),

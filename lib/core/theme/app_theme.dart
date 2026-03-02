@@ -5,13 +5,13 @@ import 'app_colors.dart';
 /// App theme configuration with light and dark themes.
 ///
 /// Uses [ColorScheme.fromSeed] (M3 dynamic color) so every tonal slot is
-/// derived automatically.  Brand overrides (secondary = maroon,
-/// error = maroon, tertiary = yellow) are applied after seed generation.
+/// derived automatically.  Brand overrides (secondary = Navy,
+/// error = Material Red, tertiary = Gold) are applied after seed generation.
 class AppTheme {
   AppTheme._();
 
-  /// Default seed colour — Indigo 700 (7.8:1 contrast, solid WCAG AA pass).
-  static const Color defaultSeed = Color(0xFF4338CA);
+  /// Default seed colour — Teal (NAVIA brand primary).
+  static const Color defaultSeed = Color(0xFF2EC4B6);
 
   // ────────────────────────────────────────────────────────────────────
   // Public static theme instances (used by the static `lightTheme` /
@@ -86,9 +86,9 @@ class AppTheme {
       seedColor: seedColor,
       brightness: brightness,
     ).copyWith(
-      // Brand overrides — keep maroon secondary, maroon error, yellow tertiary
+      // Brand overrides — Navy secondary, Material Red error, Gold tertiary
       secondary: isDark ? AppColors.secondaryLight : AppColors.secondary,
-      error: isDark ? AppColors.secondaryLight : AppColors.error,
+      error: isDark ? const Color(0xFFEF5350) : const Color(0xFFD32F2F),
       tertiary: isDark ? AppColors.accentLight : AppColors.accent,
     );
 

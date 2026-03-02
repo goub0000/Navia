@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../../../core/l10n_extension.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../data/testimonials_data.dart';
 
 /// Accent colors assigned to each partner for visual variety.
 const _partnerColors = <Color>[
-  Color(0xFF1565C0), // blue
-  Color(0xFF2E7D32), // green
-  Color(0xFFC62828), // red
-  Color(0xFF6A1B9A), // purple
-  Color(0xFFEF6C00), // orange
-  Color(0xFF00838F), // teal
-  Color(0xFF4527A0), // deep purple
-  Color(0xFFAD1457), // pink
+  AppColors.primary,       // Teal
+  AppColors.primaryDark,   // Deep Teal
+  AppColors.secondary,     // Navy
+  AppColors.accent,        // Gold
+  AppColors.primary,       // Teal
+  AppColors.primaryDark,   // Deep Teal
+  AppColors.secondary,     // Navy
+  AppColors.accent,        // Gold
 ];
 
 /// A "Trusted By" logos section with horizontal scrolling.

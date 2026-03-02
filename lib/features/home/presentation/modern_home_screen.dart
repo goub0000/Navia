@@ -588,7 +588,7 @@ class _HeroSectionState extends State<_HeroSection>
                     colors: [
                       theme.colorScheme.primary.withValues(alpha: 0.10),
                       theme.colorScheme.tertiary.withValues(alpha: 0.07),
-                      theme.colorScheme.error.withValues(alpha: 0.05),
+                      AppColors.accent.withValues(alpha: 0.05),
                     ],
                     stops: [
                       0.0,
@@ -672,8 +672,8 @@ class _HeroSectionState extends State<_HeroSection>
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        theme.colorScheme.error.withValues(alpha: 0.14),
-                        theme.colorScheme.error.withValues(alpha: 0.0),
+                        AppColors.accent.withValues(alpha: 0.14),
+                        AppColors.accent.withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -1202,7 +1202,7 @@ class _QuizTeaserSection extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             theme.colorScheme.surfaceContainerLowest,
-            theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
+            AppColors.accentLight.withValues(alpha: 0.18),
           ],
         ),
       ),
@@ -1238,7 +1238,7 @@ class _QuizTeaserSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: theme.colorScheme.tertiaryContainer,
+            color: AppColors.accentLight.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(100),
           ),
           child: Row(
@@ -1247,13 +1247,13 @@ class _QuizTeaserSection extends StatelessWidget {
               Icon(
                 Icons.explore_rounded,
                 size: 18,
-                color: theme.colorScheme.onTertiaryContainer,
+                color: AppColors.accentDark,
               ),
               const SizedBox(width: 8),
               Text(
                 context.l10n.quizBadge,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.onTertiaryContainer,
+                  color: AppColors.accentDark,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -1801,7 +1801,7 @@ class _UserTypesSectionState extends State<_UserTypesSection> {
         icon: Icons.psychology_rounded,
         name: context.l10n.roleCounselors,
         description: context.l10n.roleCounselorsDesc,
-        color: colorScheme.error,
+        color: AppColors.accent,
         route: '/for-counselors',
       ),
     ];
@@ -2053,10 +2053,10 @@ class _AccessibleTabState extends State<_AccessibleTab> {
     final FontWeight fontWeight;
 
     if (widget.isSelected) {
-      bgColor = colorScheme.primary;
-      textColor = colorScheme.onPrimary;
-      iconColor = colorScheme.onPrimary;
-      borderSide = BorderSide(color: colorScheme.primary);
+      bgColor = AppColors.secondary;
+      textColor = Colors.white;
+      iconColor = Colors.white;
+      borderSide = BorderSide(color: AppColors.secondary);
       fontWeight = FontWeight.bold;
     } else if (_isHovered) {
       bgColor = colorScheme.primary.withValues(alpha: 0.08);
@@ -2326,14 +2326,14 @@ class _FinalCTASection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  theme.colorScheme.primary,
-                  theme.colorScheme.primary.withValues(alpha: 0.8),
+                  AppColors.secondary,
+                  AppColors.secondaryDark,
                 ],
               ),
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                  color: AppColors.secondaryDark.withValues(alpha: 0.3),
                   blurRadius: 40,
                   offset: const Offset(0, 20),
                 ),
@@ -2809,15 +2809,15 @@ class _FindYourPathSection extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  AppColors.accentDark,
-                  AppColors.accentDark,
-                  theme.colorScheme.primary,
+                  AppColors.secondary,
+                  AppColors.secondaryDark,
+                  AppColors.primaryDark,
                 ],
               ),
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.accentDark.withValues(alpha: 0.4),
+                  color: AppColors.secondaryDark.withValues(alpha: 0.4),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                 ),
@@ -3018,12 +3018,12 @@ class _UniversitySearchSection extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [theme.colorScheme.secondary, AppColors.accentDark],
+                colors: [AppColors.secondary, AppColors.primaryDark],
               ),
               borderRadius: BorderRadius.circular(28),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.secondary.withValues(alpha: 0.3),
+                  color: AppColors.secondary.withValues(alpha: 0.3),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                 ),
