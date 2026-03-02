@@ -18,6 +18,7 @@ import '../../features/institution/courses/presentation/institution_course_detai
 import '../../features/institution/courses/presentation/course_content_builder_screen.dart';
 import '../../features/institution/counselors/presentation/counselors_management_screen.dart';
 import '../../features/institution/providers/institution_applicants_provider.dart';
+import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Institution-specific routes
@@ -91,7 +92,7 @@ List<RouteBase> institutionRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -130,7 +131,7 @@ List<RouteBase> institutionRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -153,7 +154,7 @@ List<RouteBase> institutionRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -176,7 +177,7 @@ List<RouteBase> institutionRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -198,7 +199,7 @@ List<RouteBase> institutionRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -259,7 +260,7 @@ class _ApplicantDetailWrapper extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           );
         }
 
@@ -275,7 +276,7 @@ class _ApplicantDetailWrapper extends ConsumerWidget {
             );
           });
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           );
         }
 

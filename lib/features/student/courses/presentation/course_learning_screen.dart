@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../../../core/models/course_model.dart';
 import '../../../../core/models/course_content_models.dart';
 import '../../../../core/l10n_extension.dart';
@@ -122,7 +123,7 @@ class _CourseLearningScreenState extends ConsumerState<CourseLearningScreen> {
     ProgressState progressState,
   ) {
     if (modulesState.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const NaviaLoadingIndicator();
     }
 
     if (modulesState.error != null) {

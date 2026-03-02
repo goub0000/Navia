@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../../authentication/providers/auth_provider.dart';
 import '../../application/providers/find_your_path_provider.dart';
 import '../../domain/models/recommendation.dart';
@@ -60,7 +61,7 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
         ],
       ),
       body: recsState.isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const NaviaLoadingIndicator()
           : recsState.error != null
               ? _buildErrorState(recsState.error!)
               : recsState.recommendations == null

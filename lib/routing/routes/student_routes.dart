@@ -19,6 +19,7 @@ import '../../features/shared/counseling/models/counseling_models.dart';
 import '../../features/student/schedule/presentation/schedule_screen.dart';
 import '../../features/student/resources/presentation/resources_screen.dart';
 import '../../features/student/help/presentation/help_screen.dart';
+import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Student-specific routes
@@ -61,7 +62,7 @@ List<RouteBase> studentRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -100,7 +101,7 @@ List<RouteBase> studentRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -130,7 +131,7 @@ List<RouteBase> studentRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
@@ -182,7 +183,7 @@ List<RouteBase> studentRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }

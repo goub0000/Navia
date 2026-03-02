@@ -7,9 +7,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:logging/logging.dart';
 import 'l10n/generated/app_localizations.dart';
-import 'core/theme/app_colors.dart';
 import 'core/theme/app_theme.dart';
-import 'core/widgets/navia_logo.dart';
+import 'core/widgets/navia_loading_indicator.dart';
 import 'core/providers/appearance_provider.dart';
 import 'core/providers/cookie_providers.dart';
 import 'core/providers/locale_provider.dart';
@@ -224,26 +223,8 @@ class FlowApp extends ConsumerWidget {
         // Show loading screen while auth state is being determined
         // This prevents flash of wrong content during page refresh
         if (authState.isLoading) {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const NaviaLogoIcon(size: 80),
-                  const SizedBox(height: 24),
-                  const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Loading...',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                  ),
-                ],
-              ),
-            ),
+          return const Scaffold(
+            body: NaviaLoadingIndicator.hero(message: 'Loading...'),
           );
         }
 

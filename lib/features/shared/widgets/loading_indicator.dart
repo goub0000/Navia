@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/l10n_extension.dart';
+import '../../../core/widgets/navia_loading_indicator.dart';
 
 /// Loading indicator widget
 class LoadingIndicator extends StatelessWidget {
@@ -15,24 +15,10 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const CircularProgressIndicator(),
-          if (showMessage) ...[
-            const SizedBox(height: 16),
-            Text(
-              message ?? context.l10n.loadingIndicatorDefault,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ],
-        ],
-      ),
+    return NaviaLoadingIndicator(
+      message: showMessage
+          ? (message ?? context.l10n.loadingIndicatorDefault)
+          : null,
     );
   }
 }

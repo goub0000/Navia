@@ -31,6 +31,7 @@ import '../../features/shared/widgets/task_widgets.dart'; // TaskModel
 import '../../features/shared/widgets/exam_widgets.dart'; // ExamModel
 import '../../features/shared/widgets/resource_widgets.dart'; // ResourceModel
 import '../../core/models/document_model.dart' as doc_model; // Document
+import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Shared routes available to all authenticated users
@@ -147,7 +148,7 @@ List<RouteBase> sharedRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }

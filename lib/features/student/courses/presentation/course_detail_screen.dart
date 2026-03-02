@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../../../core/models/course_model.dart';
 import '../../../../core/models/enrollment_permission_model.dart';
 import '../../../../core/services/enrollment_permissions_api_service.dart';
@@ -172,7 +173,7 @@ class _CourseDetailScreenState extends ConsumerState<CourseDetailScreen> {
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
         ),
         child: _isCheckingPermission
-            ? const Center(child: CircularProgressIndicator())
+            ? const NaviaLoadingIndicator.compact()
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

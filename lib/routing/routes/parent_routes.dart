@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/models/child_model.dart';
 import '../../features/parent/dashboard/presentation/parent_dashboard_screen.dart';
 import '../../features/parent/children/presentation/child_detail_screen.dart';
+import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Parent-specific routes
@@ -39,7 +40,7 @@ List<RouteBase> parentRoutes = [
         return SharedAxisPage(
           key: state.pageKey,
           child: const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: NaviaLoadingIndicator(),
           ),
         );
       }
