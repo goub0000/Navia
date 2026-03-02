@@ -32,7 +32,7 @@ class Testimonials {
       role: 'Student',
       university: 'University of Ghana',
       quote:
-          'Flow helped me discover universities I never knew existed. The personalized recommendations matched my academic profile perfectly.',
+          'Navia helped me discover universities I never knew existed. The personalized recommendations matched my academic profile perfectly.',
       outcome: 'Got accepted to 3 universities with scholarships',
       country: 'Ghana',
     ),
@@ -41,7 +41,7 @@ class Testimonials {
       role: 'Dean of Admissions',
       university: 'Kenyatta University',
       quote:
-          'We\'ve streamlined our entire admissions process with Flow. The platform has reduced our processing time by 60% while improving applicant quality.',
+          'We\'ve streamlined our entire admissions process with Navia. The platform has reduced our processing time by 60% while improving applicant quality.',
       outcome: 'Processed 5,000+ applications seamlessly',
       country: 'Kenya',
     ),
@@ -59,7 +59,7 @@ class Testimonials {
       role: 'High School Counselor',
       university: 'Accra Academy',
       quote:
-          'Flow\'s counselor tools have transformed how I guide students. I can now provide data-driven recommendations that actually lead to admissions.',
+          'Navia\'s counselor tools have transformed how I guide students. I can now provide data-driven recommendations that actually lead to admissions.',
       outcome: '85% student admission success rate',
       country: 'Ghana',
     ),
@@ -77,7 +77,7 @@ class Testimonials {
       role: 'Director of Enrollment',
       university: 'Ashesi University',
       quote:
-          'Flow has become essential to our recruitment strategy. We\'re reaching qualified students from around the world like never before.',
+          'Navia has become essential to our recruitment strategy. We\'re reaching qualified students from around the world like never before.',
       outcome: '40% increase in diverse applicants',
       country: 'Ghana',
     ),
@@ -95,7 +95,7 @@ class Testimonials {
       role: 'Career Counselor',
       university: 'Lagos Business School',
       quote:
-          'I recommend Flow to all my clients. The platform provides comprehensive university data that helps make informed decisions.',
+          'I recommend Navia to all my clients. The platform provides comprehensive university data that helps make informed decisions.',
       outcome: 'Helped 200+ professionals find MBA programs',
       country: 'Nigeria',
     ),

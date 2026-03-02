@@ -126,8 +126,8 @@ class PressPage extends ConsumerWidget {
                 _buildNewsCard(
                   theme,
                   date: 'January 2026',
-                  title: 'Flow Expands to New Markets',
-                  description: 'Flow EdTech announces expansion into new markets with regional partnerships across multiple continents.',
+                  title: 'Navia Expands to New Markets',
+                  description: 'Navia EdTech announces expansion into new markets with regional partnerships across multiple continents.',
                 ),
                 _buildNewsCard(
                   theme,
@@ -139,7 +139,7 @@ class PressPage extends ConsumerWidget {
                   theme,
                   date: 'November 2025',
                   title: 'Partnership with Global Education Initiative',
-                  description: 'Flow joins international effort to improve education access worldwide.',
+                  description: 'Navia joins international effort to improve education access worldwide.',
                 ),
 
                 const SizedBox(height: 32),

@@ -196,7 +196,7 @@ class FlowApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
-      title: 'Flow - Global EdTech Platform',
+      title: 'Navia — Navigate Your Future',
       debugShowCheckedModeBanner: false,
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

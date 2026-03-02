@@ -34,9 +34,9 @@ class _HelpCenterStaticContentState extends State<_HelpCenterStaticContent> {
     },
     {
       'category': 'Getting Started',
-      'question': 'What roles are available on Flow?',
+      'question': 'What roles are available on Navia?',
       'answer':
-          'Flow supports multiple user roles: Students (for those seeking education guidance), Parents (to monitor and support their children), Counselors (education professionals), and Institutions (universities and colleges).',
+          'Navia supports multiple user roles: Students (for those seeking education guidance), Parents (to monitor and support their children), Counselors (education professionals), and Institutions (universities and colleges).',
     },
     {
       'category': 'University Search',

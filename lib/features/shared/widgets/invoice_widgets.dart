@@ -122,7 +122,7 @@ class InvoiceHeader extends StatelessWidget {
     super.key,
     required this.invoice,
     this.logoUrl,
-    this.companyName = 'Flow EdTech Platform',
+    this.companyName = 'Navia',
     this.companyAddress = 'Nairobi, Kenya',
   });
 

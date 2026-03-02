@@ -46,7 +46,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Flow EdTech Terms of Service',
+                    'Navia Terms of Service',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,

@@ -129,7 +129,7 @@ class AdminSystemNotifier extends StateNotifier<AdminSystemState> {
       'app_name': SystemSetting(
           key: 'app_name',
           category: 'general',
-          value: 'Flow EdTech',
+          value: 'Navia',
           type: 'string',
           description: 'Application name',
         ),

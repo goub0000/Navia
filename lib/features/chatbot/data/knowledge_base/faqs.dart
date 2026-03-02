@@ -56,12 +56,12 @@ final List<FAQ> _faqs = [
   // GENERAL
   FAQ(
     id: 'general_1',
-    question: 'What is Flow?',
-    answer: 'Flow is an all-in-one EdTech platform that connects students, '
+    question: 'What is Navia?',
+    answer: 'Navia is an all-in-one EdTech platform that connects students, '
         'institutions, parents, counselors, and recommenders for seamless '
         'education management. We help students find opportunities, manage '
         'applications, track progress, and achieve their academic goals.',
-    keywords: ['what is flow', 'about flow', 'what is this', 'tell me about'],
+    keywords: ['what is navia', 'about navia', 'what is this', 'tell me about'],
     category: 'general',
     followUpActions: [
       QuickAction(id: '1', label: 'Features', action: 'features'),
@@ -71,8 +71,8 @@ final List<FAQ> _faqs = [
 
   FAQ(
     id: 'general_2',
-    question: 'Who can use Flow?',
-    answer: 'Flow serves 5 main user types:\n\n'
+    question: 'Who can use Navia?',
+    answer: 'Navia serves 5 main user types:\n\n'
         '• Students - Find schools, manage applications\n'
         '• Institutions - Manage applicants and programs\n'
         '• Parents - Monitor children\'s progress\n'
@@ -91,8 +91,8 @@ final List<FAQ> _faqs = [
   // FEATURES
   FAQ(
     id: 'features_1',
-    question: 'What features does Flow have?',
-    answer: 'Flow offers comprehensive features:\n\n'
+    question: 'What features does Navia have?',
+    answer: 'Navia offers comprehensive features:\n\n'
         '✓ Application Management\n'
         '✓ Progress Tracking & Analytics\n'
         '✓ Document Management\n'
@@ -112,7 +112,7 @@ final List<FAQ> _faqs = [
   FAQ(
     id: 'features_2',
     question: 'Can I track my application status?',
-    answer: 'Yes! Flow provides real-time application tracking. You can '
+    answer: 'Yes! Navia provides real-time application tracking. You can '
         'monitor the status of all your applications in one dashboard, '
         'receive notifications about updates, and see exactly where each '
         'application stands in the review process.',
@@ -142,7 +142,7 @@ final List<FAQ> _faqs = [
   FAQ(
     id: 'register_2',
     question: 'Is registration free?',
-    answer: 'Yes! Creating an account on Flow is completely free. You can '
+    answer: 'Yes! Creating an account on Navia is completely free. You can '
         'explore the platform, browse opportunities, and access basic features '
         'at no cost. Premium features are available with our paid plans.',
     keywords: ['free', 'registration cost', 'sign up cost', 'account cost'],
@@ -152,8 +152,8 @@ final List<FAQ> _faqs = [
   // PRICING
   FAQ(
     id: 'pricing_1',
-    question: 'How much does Flow cost?',
-    answer: 'Flow offers flexible pricing plans:\n\n'
+    question: 'How much does Navia cost?',
+    answer: 'Navia offers flexible pricing plans:\n\n'
         '• Free Plan - Basic features\n'
         '• Student Plan - \$9.99/month\n'
         '• Institution Plan - Custom pricing\n'
@@ -180,7 +180,7 @@ final List<FAQ> _faqs = [
   // STUDENTS
   FAQ(
     id: 'student_1',
-    question: 'How can students use Flow?',
+    question: 'How can students use Navia?',
     answer: 'As a student, you can:\n\n'
         '• Search and discover schools\n'
         '• Submit and track applications\n'
@@ -199,7 +199,7 @@ final List<FAQ> _faqs = [
   // INSTITUTIONS
   FAQ(
     id: 'institution_1',
-    question: 'How do institutions use Flow?',
+    question: 'How do institutions use Navia?',
     answer: 'Institutions can:\n\n'
         '• Manage applicant pipeline\n'
         '• Create and publish programs\n'
@@ -214,7 +214,7 @@ final List<FAQ> _faqs = [
   // PARENTS
   FAQ(
     id: 'parent_1',
-    question: 'What can parents do on Flow?',
+    question: 'What can parents do on Navia?',
     answer: 'Parents can:\n\n'
         '• Monitor children\'s progress\n'
         '• Receive updates and alerts\n'
@@ -232,7 +232,7 @@ final List<FAQ> _faqs = [
     question: 'How do I get help?',
     answer: 'We\'re here to help! You can:\n\n'
         '• Use this chat for instant answers\n'
-        '• Email: support@flow.com\n'
+        '• Email: support@navia.app\n'
         '• Visit our Help Center\n'
         '• Check our FAQ section\n'
         '• Schedule a call with our team',
@@ -259,8 +259,8 @@ final List<FAQ> _faqs = [
   // TECHNICAL
   FAQ(
     id: 'technical_1',
-    question: 'What devices does Flow work on?',
-    answer: 'Flow works on all modern devices:\n\n'
+    question: 'What devices does Navia work on?',
+    answer: 'Navia works on all modern devices:\n\n'
         '• Desktop (Windows, Mac, Linux)\n'
         '• Mobile (iOS, Android)\n'
         '• Tablet (iPad, Android tablets)\n'
@@ -287,7 +287,7 @@ final List<FAQ> _faqs = [
   // COUNSELORS
   FAQ(
     id: 'counselor_1',
-    question: 'How do counselors use Flow?',
+    question: 'How do counselors use Navia?',
     answer: 'Counselors can:\n\n'
         '• Manage student profiles\n'
         '• Schedule counseling sessions\n'

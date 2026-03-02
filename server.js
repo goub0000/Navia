@@ -43,52 +43,52 @@ function env(name) {
 // ---------- SEO: Route-specific meta tags ----------
 const SEO_ROUTES = {
   '/': {
-    title: 'Flow | Discover, Compare & Apply to Universities Worldwide',
+    title: 'Navia | Discover, Compare & Apply to Universities Worldwide',
     description: 'Discover, compare, and apply to 18,000+ universities worldwide. AI-powered recommendations for students everywhere. Free to start — no credit card required.',
   },
   '/universities': {
-    title: 'Browse 18,000+ Universities | Flow',
+    title: 'Browse 18,000+ Universities | Navia',
     description: 'Search and filter universities worldwide. Compare tuition, acceptance rates, rankings, and programs to find your perfect fit.',
   },
   '/find-your-path': {
-    title: 'Find Your Path | AI-Powered University Matching | Flow',
+    title: 'Find Your Path | AI-Powered University Matching | Navia',
     description: 'Not sure where to apply? Our AI analyzes your academic profile, interests, and goals to recommend universities and programs tailored to you.',
   },
   '/about': {
-    title: 'About Flow | The Global EdTech Platform',
-    description: 'Flow helps students discover, compare, and apply to universities worldwide with AI-powered recommendations and application tracking.',
+    title: 'About Navia | Navigate Your Future',
+    description: 'Navia helps students discover, compare, and apply to universities worldwide with AI-powered recommendations and application tracking.',
   },
   '/contact': {
-    title: 'Contact Us | Flow',
-    description: 'Get in touch with the Flow team. We\'re here to help with your university application journey.',
+    title: 'Contact Us | Navia',
+    description: 'Get in touch with the Navia team. We\'re here to help with your university application journey.',
   },
   '/privacy': {
-    title: 'Privacy Policy | Flow',
-    description: 'Learn how Flow protects your personal data and privacy. Read our complete privacy policy.',
+    title: 'Privacy Policy | Navia',
+    description: 'Learn how Navia protects your personal data and privacy. Read our complete privacy policy.',
   },
   '/terms': {
-    title: 'Terms of Service | Flow',
-    description: 'Read the terms and conditions for using the Flow EdTech platform.',
+    title: 'Terms of Service | Navia',
+    description: 'Read the terms and conditions for using the Navia platform.',
   },
   '/help': {
-    title: 'Help Center | Flow',
-    description: 'Find answers to common questions about using Flow for your university applications.',
+    title: 'Help Center | Navia',
+    description: 'Find answers to common questions about using Navia for your university applications.',
   },
   '/scholarships': {
-    title: 'Scholarships for Students | Flow',
+    title: 'Scholarships for Students | Navia',
     description: 'Discover scholarships available for students at universities worldwide.',
   },
   '/programs': {
-    title: 'University Programs | Flow',
+    title: 'University Programs | Navia',
     description: 'Browse and compare university programs across disciplines and countries.',
   },
   '/cookies': {
-    title: 'Cookie Policy | Flow',
-    description: 'Learn about how Flow uses cookies and similar technologies.',
+    title: 'Cookie Policy | Navia',
+    description: 'Learn about how Navia uses cookies and similar technologies.',
   },
   '/accessibility': {
-    title: 'Accessibility | Flow',
-    description: 'Flow is committed to making our platform accessible to all users.',
+    title: 'Accessibility | Navia',
+    description: 'Navia is committed to making our platform accessible to all users.',
   },
 };
 
@@ -271,13 +271,13 @@ app.get('/env-config.js', (req, res) => {
 // *.json from the build context and Flutter may not copy it to build/web/.
 app.get('/manifest.json', (req, res) => {
   res.json({
-    name: 'Flow EdTech Platform',
-    short_name: 'Flow',
+    name: 'Navia — Navigate Your Future',
+    short_name: 'Navia',
     start_url: '/',
     display: 'standalone',
-    background_color: '#373890',
-    theme_color: '#373890',
-    description: 'Global EdTech platform for students, institutions, parents, counselors, and recommenders.',
+    background_color: '#0D1117',
+    theme_color: '#2EC4B6',
+    description: 'Discover, compare, and apply to universities worldwide. AI-powered recommendations for students everywhere.',
     orientation: 'portrait-primary',
     prefer_related_applications: false,
     icons: [
@@ -349,5 +349,5 @@ app.get('*', (req, res, next) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Flow EdTech Web Server running on port ${PORT}`);
+  console.log(`Navia Web Server running on port ${PORT}`);
 });

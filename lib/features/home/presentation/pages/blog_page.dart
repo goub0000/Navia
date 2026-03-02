@@ -119,7 +119,7 @@ class BlogPage extends ConsumerWidget {
                 theme,
                 title: 'Top 20 Universities Worldwide for Engineering',
                 excerpt: 'A comprehensive ranking of the best engineering programs worldwide.',
-                author: 'Flow Research Team',
+                author: 'Navia Research Team',
                 date: 'January 5, 2026',
                 readTime: '12 min read',
                 category: 'University Guides',

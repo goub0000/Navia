@@ -73,7 +73,7 @@ class _AdminSidebarState extends State<AdminSidebar> {
 
   Widget _buildHeader() {
     return Semantics(
-      label: 'Flow Admin Dashboard, navigation header',
+      label: 'Navia Admin Dashboard, navigation header',
       child: Container(
         height: 70,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -106,7 +106,7 @@ class _AdminSidebarState extends State<AdminSidebar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Flow Admin',
+                      'Navia Admin',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

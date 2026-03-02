@@ -237,7 +237,7 @@ class ChatbotService {
       case 'about_flow':
       case 'about':
         return ChatMessage.bot(
-          content: 'Flow is an all-in-one EdTech platform that connects '
+          content: 'Navia is an all-in-one EdTech platform that connects '
               'students, institutions, parents, counselors, and recommenders. '
               'We help streamline the education journey from application to graduation.',
           quickActions: [
@@ -248,7 +248,7 @@ class ChatbotService {
 
       case 'features':
         return ChatMessage.bot(
-          content: 'Flow offers:\n\n'
+          content: 'Navia offers:\n\n'
               '✓ Application Management\n'
               '✓ Progress Tracking\n'
               '✓ Document Storage\n'
@@ -315,7 +315,7 @@ class ChatbotService {
 
       case 'user_types':
         return ChatMessage.bot(
-          content: 'Flow serves:\n\n'
+          content: 'Navia serves:\n\n'
               '• Students - Find opportunities\n'
               '• Institutions - Manage applicants\n'
               '• Parents - Monitor progress\n'

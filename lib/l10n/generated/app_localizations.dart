@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow - African EdTech Platform'**
+  /// **'Navia - African EdTech Platform'**
   String get appTitle;
 
   /// No description provided for @loading.
@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow'**
+  /// **'Navia'**
   String get loginTitle;
 
   /// No description provided for @loginSubtitle.
@@ -233,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @registerTitle.
   ///
   /// In en, this message translates to:
-  /// **'Join Flow'**
+  /// **'Join Navia'**
   String get registerTitle;
 
   /// No description provided for @registerSubtitle.
@@ -575,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingWelcomeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Flow'**
+  /// **'Welcome to Navia'**
   String get onboardingWelcomeTitle;
 
   /// No description provided for @onboardingWelcomeDesc.
@@ -731,7 +731,7 @@ abstract class AppLocalizations {
   /// No description provided for @whyChooseTitle.
   ///
   /// In en, this message translates to:
-  /// **'Why Choose Flow?'**
+  /// **'Why Choose Navia?'**
   String get whyChooseTitle;
 
   /// No description provided for @whyChooseSubtitle.
@@ -953,7 +953,7 @@ abstract class AppLocalizations {
   /// No description provided for @ctaSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Join 50,000+ students, institutions, and educators who trust Flow'**
+  /// **'Join 50,000+ students, institutions, and educators who trust Navia'**
   String get ctaSubtitle;
 
   /// No description provided for @ctaButton.
@@ -1127,7 +1127,7 @@ abstract class AppLocalizations {
   /// No description provided for @footerCopyright.
   ///
   /// In en, this message translates to:
-  /// **'© 2025 Flow EdTech. All rights reserved.'**
+  /// **'© 2025 Navia. All rights reserved.'**
   String get footerCopyright;
 
   /// No description provided for @footerSoc2.
@@ -1337,7 +1337,7 @@ abstract class AppLocalizations {
   /// No description provided for @tourTitle.
   ///
   /// In en, this message translates to:
-  /// **'See Flow in Action'**
+  /// **'See Navia in Action'**
   String get tourTitle;
 
   /// No description provided for @tourSubtitle.
@@ -3167,7 +3167,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatFlowAssistant.
   ///
   /// In en, this message translates to:
-  /// **'Flow Assistant'**
+  /// **'Navia Assistant'**
   String get chatFlowAssistant;
 
   /// No description provided for @chatWaitingForAgent.
@@ -13145,7 +13145,7 @@ abstract class AppLocalizations {
   /// No description provided for @biometricSecurityNoteDesc.
   ///
   /// In en, this message translates to:
-  /// **'Your biometric data stays on your device and is never shared with Flow or third parties.'**
+  /// **'Your biometric data stays on your device and is never shared with Navia or third parties.'**
   String get biometricSecurityNoteDesc;
 
   /// No description provided for @biometricSkipForNow.
@@ -14051,7 +14051,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavWelcome.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Flow'**
+  /// **'Welcome to Navia'**
   String get homeNavWelcome;
 
   /// No description provided for @homeNavSubtitle.
@@ -14273,7 +14273,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavTestimonialQuote1.
   ///
   /// In en, this message translates to:
-  /// **'Flow made my application process so much easier. I could track everything in one place!'**
+  /// **'Navia made my application process so much easier. I could track everything in one place!'**
   String get homeNavTestimonialQuote1;
 
   /// No description provided for @homeNavTestimonialRole2.
@@ -14285,7 +14285,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavTestimonialQuote2.
   ///
   /// In en, this message translates to:
-  /// **'Managing applications has never been this efficient. Flow is a game-changer for institutions.'**
+  /// **'Managing applications has never been this efficient. Navia is a game-changer for institutions.'**
   String get homeNavTestimonialQuote2;
 
   /// No description provided for @homeNavTestimonialRole3.
@@ -14303,7 +14303,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavWhoCanUse.
   ///
   /// In en, this message translates to:
-  /// **'Who Can Use Flow?'**
+  /// **'Who Can Use Navia?'**
   String get homeNavWhoCanUse;
 
   /// No description provided for @homeNavForStudents.
@@ -14321,7 +14321,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavForStudentsDesc.
   ///
   /// In en, this message translates to:
-  /// **'Flow empowers students to take control of their educational journey with comprehensive tools designed for modern learners across Africa.'**
+  /// **'Navia empowers students to take control of their educational journey with comprehensive tools designed for modern learners across Africa.'**
   String get homeNavForStudentsDesc;
 
   /// No description provided for @homeNavCourseAccess.
@@ -14765,13 +14765,13 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavJoinThousands.
   ///
   /// In en, this message translates to:
-  /// **'Join thousands transforming education with Flow.'**
+  /// **'Join thousands transforming education with Navia.'**
   String get homeNavJoinThousands;
 
   /// No description provided for @homeNavFlowEdTech.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech'**
+  /// **'Navia'**
   String get homeNavFlowEdTech;
 
   /// No description provided for @homeNavPrivacy.
@@ -14789,7 +14789,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeNavCopyright.
   ///
   /// In en, this message translates to:
-  /// **'© 2025 Flow EdTech'**
+  /// **'© 2025 Navia'**
   String get homeNavCopyright;
 
   /// No description provided for @homeNavTop.
@@ -14813,13 +14813,13 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'About Flow'**
+  /// **'About Navia'**
   String get aboutPageTitle;
 
   /// No description provided for @aboutPageFlowEdTech.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech'**
+  /// **'Navia'**
   String get aboutPageFlowEdTech;
 
   /// No description provided for @aboutPagePremierPlatform.
@@ -14837,7 +14837,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPageMissionContent.
   ///
   /// In en, this message translates to:
-  /// **'Flow is dedicated to transforming education across Africa by connecting students with universities, counselors, and resources they need to succeed.'**
+  /// **'Navia is dedicated to transforming education across Africa by connecting students with universities, counselors, and resources they need to succeed.'**
   String get aboutPageMissionContent;
 
   /// No description provided for @aboutPageOurVision.
@@ -14945,7 +14945,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutPageMilestone1Desc.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech was founded in Accra, Ghana with a mission to transform education access across Africa.'**
+  /// **'Navia was founded in Accra, Ghana with a mission to transform education access across Africa.'**
   String get aboutPageMilestone1Desc;
 
   /// No description provided for @aboutPageMilestone2Year.
@@ -15125,7 +15125,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsPageSection1Content.
   ///
   /// In en, this message translates to:
-  /// **'By accessing or using Flow EdTech (\"the Service\"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.'**
+  /// **'By accessing or using Navia (\"the Service\"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.'**
   String get termsPageSection1Content;
 
   /// No description provided for @termsPageSection2Title.
@@ -15179,7 +15179,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsPageAgreement.
   ///
   /// In en, this message translates to:
-  /// **'By using Flow, you agree to these terms'**
+  /// **'By using Navia, you agree to these terms'**
   String get termsPageAgreement;
 
   /// No description provided for @contactPageTitle.
@@ -15335,7 +15335,7 @@ abstract class AppLocalizations {
   /// No description provided for @blogPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow Blog'**
+  /// **'Navia Blog'**
   String get blogPageTitle;
 
   /// No description provided for @blogPageSubtitle.
@@ -15413,7 +15413,7 @@ abstract class AppLocalizations {
   /// No description provided for @careersPageWhyJoin.
   ///
   /// In en, this message translates to:
-  /// **'Why Join Flow?'**
+  /// **'Why Join Navia?'**
   String get careersPageWhyJoin;
 
   /// No description provided for @careersPageGlobalImpact.
@@ -15755,7 +15755,7 @@ abstract class AppLocalizations {
   /// No description provided for @compliancePageRegulatoryContent.
   ///
   /// In en, this message translates to:
-  /// **'Flow adheres to international and regional regulations:\n\n• General Data Protection Regulation (GDPR) - EU\n• Protection of Personal Information Act (POPIA) - South Africa\n• Data Protection Act - Ghana, Kenya, Nigeria\n• Children\'s Online Privacy Protection Act (COPPA)\n• California Consumer Privacy Act (CCPA)'**
+  /// **'Navia adheres to international and regional regulations:\n\n• General Data Protection Regulation (GDPR) - EU\n• Protection of Personal Information Act (POPIA) - South Africa\n• Data Protection Act - Ghana, Kenya, Nigeria\n• Children\'s Online Privacy Protection Act (COPPA)\n• California Consumer Privacy Act (CCPA)'**
   String get compliancePageRegulatoryContent;
 
   /// No description provided for @compliancePageThirdParty.
@@ -16211,7 +16211,7 @@ abstract class AppLocalizations {
   /// No description provided for @docsPageSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Everything you need to know about using Flow'**
+  /// **'Everything you need to know about using Navia'**
   String get docsPageSubtitle;
 
   /// No description provided for @docsPageGettingStarted.
@@ -16223,7 +16223,7 @@ abstract class AppLocalizations {
   /// No description provided for @docsPageGettingStartedDesc.
   ///
   /// In en, this message translates to:
-  /// **'Learn the basics of Flow'**
+  /// **'Learn the basics of Navia'**
   String get docsPageGettingStartedDesc;
 
   /// No description provided for @docsPageForStudents.
@@ -16373,13 +16373,13 @@ abstract class AppLocalizations {
   /// No description provided for @mobileAppsPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow on Mobile'**
+  /// **'Navia on Mobile'**
   String get mobileAppsPageTitle;
 
   /// No description provided for @mobileAppsPageSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Take your education journey with you.\nDownload the Flow app on your favorite platform.'**
+  /// **'Take your education journey with you.\nDownload the Navia app on your favorite platform.'**
   String get mobileAppsPageSubtitle;
 
   /// No description provided for @mobileAppsPageDownloadNow.
@@ -16505,7 +16505,7 @@ abstract class AppLocalizations {
   /// No description provided for @partnersPageHeroTitle.
   ///
   /// In en, this message translates to:
-  /// **'Partner With Flow'**
+  /// **'Partner With Navia'**
   String get partnersPageHeroTitle;
 
   /// No description provided for @partnersPageHeroSubtitle.
@@ -16745,7 +16745,7 @@ abstract class AppLocalizations {
   /// No description provided for @pressPageCompanyOverviewContent.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech is Africa\'s leading education technology platform, connecting students with universities, counselors, and educational resources. Founded with the mission to democratize access to quality education guidance across the African continent.'**
+  /// **'Navia is Africa\'s leading education technology platform, connecting students with universities, counselors, and educational resources. Founded with the mission to democratize access to quality education guidance across the African continent.'**
   String get pressPageCompanyOverviewContent;
 
   /// No description provided for @pressPageKeyFacts.
@@ -16877,7 +16877,7 @@ abstract class AppLocalizations {
   /// No description provided for @apiDocsPageSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Integrate Flow into your applications'**
+  /// **'Integrate Navia into your applications'**
   String get apiDocsPageSubtitle;
 
   /// No description provided for @apiDocsPageQuickStart.
@@ -18431,7 +18431,7 @@ abstract class AppLocalizations {
   /// No description provided for @swSettingsFlowPlatform.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech Platform'**
+  /// **'Navia Platform'**
   String get swSettingsFlowPlatform;
 
   /// No description provided for @swSettingsCopyright.
@@ -26621,13 +26621,13 @@ abstract class AppLocalizations {
   /// No description provided for @adminMessagingTemplateWelcomeSubject.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Flow!'**
+  /// **'Welcome to Navia!'**
   String get adminMessagingTemplateWelcomeSubject;
 
   /// No description provided for @adminMessagingTemplateWelcomeContent.
   ///
   /// In en, this message translates to:
-  /// **'Hello! Welcome to Flow, your educational journey starts here. We\'re excited to have you join our community.'**
+  /// **'Hello! Welcome to Navia, your educational journey starts here. We\'re excited to have you join our community.'**
   String get adminMessagingTemplateWelcomeContent;
 
   /// No description provided for @adminMessagingTemplatePaymentName.
@@ -32061,7 +32061,7 @@ abstract class AppLocalizations {
   /// No description provided for @studentHelpAppVersion.
   ///
   /// In en, this message translates to:
-  /// **'Flow App v{version}'**
+  /// **'Navia App v{version}'**
   String studentHelpAppVersion(String version);
 
   /// No description provided for @adminContentEditPageTitle.
@@ -35637,7 +35637,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech Privacy Policy'**
+  /// **'Navia Privacy Policy'**
   String get privacyPolicyHeaderTitle;
 
   /// No description provided for @privacyPolicyLastUpdated.
@@ -35649,7 +35649,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyHeaderDescription.
   ///
   /// In en, this message translates to:
-  /// **'This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.'**
+  /// **'This Privacy Policy describes how Navia collects, uses, and protects your personal information.'**
   String get privacyPolicyHeaderDescription;
 
   /// No description provided for @privacyPolicySection1Title.
@@ -35769,7 +35769,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicySection10Content.
   ///
   /// In en, this message translates to:
-  /// **'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Flow EdTech, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com'**
+  /// **'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com'**
   String get privacyPolicySection10Content;
 
   /// No description provided for @termsOfServiceTitle.
@@ -35793,7 +35793,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceHeaderTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech Terms of Service'**
+  /// **'Navia Terms of Service'**
   String get termsOfServiceHeaderTitle;
 
   /// No description provided for @termsOfServiceEffectiveDate.
@@ -35817,7 +35817,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection1Content.
   ///
   /// In en, this message translates to:
-  /// **'By creating an account and using Flow EdTech, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.\n\nIf you do not agree to these terms, you may not access or use our services.\n\nThese terms constitute a legally binding agreement between you and Flow EdTech.'**
+  /// **'By creating an account and using Navia, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.\n\nIf you do not agree to these terms, you may not access or use our services.\n\nThese terms constitute a legally binding agreement between you and Navia.'**
   String get termsOfServiceSection1Content;
 
   /// No description provided for @termsOfServiceSection2Title.
@@ -35853,7 +35853,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection4Content.
   ///
   /// In en, this message translates to:
-  /// **'All content on Flow EdTech, including:\n\n• Course materials and lectures\n• Text, graphics, logos, and images\n• Software and technology\n• Trademarks and branding\n\nIs owned by Flow EdTech or its licensors and is protected by copyright, trademark, and other intellectual property laws.\n\nUser-Generated Content:\n• You retain ownership of content you create\n• You grant us a license to use, display, and distribute your content\n• You represent that you have rights to any content you upload\n• We may remove content that violates these terms\n\nYou may not copy, modify, distribute, or create derivative works without our explicit permission.'**
+  /// **'All content on Navia, including:\n\n• Course materials and lectures\n• Text, graphics, logos, and images\n• Software and technology\n• Trademarks and branding\n\nIs owned by Navia or its licensors and is protected by copyright, trademark, and other intellectual property laws.\n\nUser-Generated Content:\n• You retain ownership of content you create\n• You grant us a license to use, display, and distribute your content\n• You represent that you have rights to any content you upload\n• We may remove content that violates these terms\n\nYou may not copy, modify, distribute, or create derivative works without our explicit permission.'**
   String get termsOfServiceSection4Content;
 
   /// No description provided for @termsOfServiceSection5Title.
@@ -35973,13 +35973,13 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceSection14Content.
   ///
   /// In en, this message translates to:
-  /// **'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nFlow EdTech\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST'**
+  /// **'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST'**
   String get termsOfServiceSection14Content;
 
   /// No description provided for @termsOfServiceAcknowledgment.
   ///
   /// In en, this message translates to:
-  /// **'By using Flow EdTech, you acknowledge that you have read and understood these Terms of Service.'**
+  /// **'By using Navia, you acknowledge that you have read and understood these Terms of Service.'**
   String get termsOfServiceAcknowledgment;
 
   /// No description provided for @progressReportsTitle.
@@ -37611,13 +37611,13 @@ abstract class AppLocalizations {
   /// No description provided for @privacyPolicyFlowTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech Privacy Policy'**
+  /// **'Navia Privacy Policy'**
   String get privacyPolicyFlowTitle;
 
   /// No description provided for @privacyPolicyIntro.
   ///
   /// In en, this message translates to:
-  /// **'This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.'**
+  /// **'This Privacy Policy describes how Navia collects, uses, and protects your personal information.'**
   String get privacyPolicyIntro;
 
   /// No description provided for @privacyPolicySection1.
@@ -37689,7 +37689,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsOfServiceFlowTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow EdTech Terms of Service'**
+  /// **'Navia Terms of Service'**
   String get termsOfServiceFlowTitle;
 
   /// No description provided for @termsOfServiceEffective.
@@ -37827,7 +37827,7 @@ abstract class AppLocalizations {
   /// No description provided for @appearanceThemeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose how Flow looks to you'**
+  /// **'Choose how Navia looks to you'**
   String get appearanceThemeSubtitle;
 
   /// No description provided for @appearanceTextSizeSection.
@@ -39375,7 +39375,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingWelcomeToFlow.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Flow!'**
+  /// **'Welcome to Navia!'**
   String get onboardingWelcomeToFlow;
 
   /// No description provided for @onboardingFeatureCategoryCore.
@@ -40899,13 +40899,13 @@ abstract class AppLocalizations {
   /// No description provided for @mobileAppsPageHeroTitle.
   ///
   /// In en, this message translates to:
-  /// **'Flow on Mobile'**
+  /// **'Navia on Mobile'**
   String get mobileAppsPageHeroTitle;
 
   /// No description provided for @mobileAppsPageHeroSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Take your education journey with you.\nDownload the Flow app on your favorite platform.'**
+  /// **'Take your education journey with you.\nDownload the Navia app on your favorite platform.'**
   String get mobileAppsPageHeroSubtitle;
 
   String get navSolutions;

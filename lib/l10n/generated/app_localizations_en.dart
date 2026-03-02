@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Flow - African EdTech Platform';
+  String get appTitle => 'Navia - African EdTech Platform';
 
   @override
   String get loading => 'Loading...';
@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navGetStarted => 'Get Started';
 
   @override
-  String get loginTitle => 'Flow';
+  String get loginTitle => 'Navia';
 
   @override
   String get loginSubtitle => 'African EdTech Platform';
@@ -75,7 +75,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginAlreadyHaveAccount => 'Already have an account? ';
 
   @override
-  String get registerTitle => 'Join Flow';
+  String get registerTitle => 'Join Navia';
 
   @override
   String get registerSubtitle => 'Start your educational journey';
@@ -257,7 +257,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailVerifyAutoCheck => 'Auto-checking every 5 seconds';
 
   @override
-  String get onboardingWelcomeTitle => 'Welcome to Flow';
+  String get onboardingWelcomeTitle => 'Welcome to Navia';
 
   @override
   String get onboardingWelcomeDesc =>
@@ -340,7 +340,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get heroStatCountries => 'Countries';
 
   @override
-  String get whyChooseTitle => 'Why Choose Flow?';
+  String get whyChooseTitle => 'Why Choose Navia?';
 
   @override
   String get whyChooseSubtitle => 'Built for Africa, designed for everyone';
@@ -469,7 +469,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ctaSubtitle =>
-      'Join 50,000+ students, institutions, and educators who trust Flow';
+      'Join 50,000+ students, institutions, and educators who trust Navia';
 
   @override
   String get ctaButton => 'Start Your Free Trial';
@@ -557,7 +557,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get footerCompliance => 'Compliance';
 
   @override
-  String get footerCopyright => '© 2025 Flow EdTech. All rights reserved.';
+  String get footerCopyright => '© 2025 Navia. All rights reserved.';
 
   @override
   String get footerSoc2 => 'SOC 2 Certified';
@@ -663,7 +663,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quizTakeTheQuiz => 'Take the quiz';
 
   @override
-  String get tourTitle => 'See Flow in Action';
+  String get tourTitle => 'See Navia in Action';
 
   @override
   String get tourSubtitle => 'A guided tour of the platform';
@@ -1672,7 +1672,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatHumanSupport => 'Human Support';
 
   @override
-  String get chatFlowAssistant => 'Flow Assistant';
+  String get chatFlowAssistant => 'Navia Assistant';
 
   @override
   String get chatWaitingForAgent => 'Waiting for agent...';
@@ -7133,7 +7133,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biometricSecurityNoteDesc =>
-      'Your biometric data stays on your device and is never shared with Flow or third parties.';
+      'Your biometric data stays on your device and is never shared with Navia or third parties.';
 
   @override
   String get biometricSkipForNow => 'Skip for now';
@@ -7638,7 +7638,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNavBadge => 'Africa\'s Premier EdTech Platform';
 
   @override
-  String get homeNavWelcome => 'Welcome to Flow';
+  String get homeNavWelcome => 'Welcome to Navia';
 
   @override
   String get homeNavSubtitle =>
@@ -7761,14 +7761,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeNavTestimonialQuote1 =>
-      'Flow made my application process so much easier. I could track everything in one place!';
+      'Navia made my application process so much easier. I could track everything in one place!';
 
   @override
   String get homeNavTestimonialRole2 => 'Dean, Ashesi University';
 
   @override
   String get homeNavTestimonialQuote2 =>
-      'Managing applications has never been this efficient. Flow is a game-changer for institutions.';
+      'Managing applications has never been this efficient. Navia is a game-changer for institutions.';
 
   @override
   String get homeNavTestimonialRole3 => 'Parent, Nigeria';
@@ -7778,7 +7778,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'I can now monitor my children\'s academic progress even when I\'m traveling. Peace of mind!';
 
   @override
-  String get homeNavWhoCanUse => 'Who Can Use Flow?';
+  String get homeNavWhoCanUse => 'Who Can Use Navia?';
 
   @override
   String get homeNavForStudents => 'For Students';
@@ -7788,7 +7788,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeNavForStudentsDesc =>
-      'Flow empowers students to take control of their educational journey with comprehensive tools designed for modern learners across Africa.';
+      'Navia empowers students to take control of their educational journey with comprehensive tools designed for modern learners across Africa.';
 
   @override
   String get homeNavCourseAccess => 'Course Access';
@@ -8049,10 +8049,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeNavJoinThousands =>
-      'Join thousands transforming education with Flow.';
+      'Join thousands transforming education with Navia.';
 
   @override
-  String get homeNavFlowEdTech => 'Flow EdTech';
+  String get homeNavFlowEdTech => 'Navia';
 
   @override
   String get homeNavPrivacy => 'Privacy';
@@ -8061,7 +8061,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNavTerms => 'Terms';
 
   @override
-  String get homeNavCopyright => '© 2025 Flow EdTech';
+  String get homeNavCopyright => '© 2025 Navia';
 
   @override
   String get homeNavTop => 'Top';
@@ -8075,10 +8075,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNavForPrefix => 'For ';
 
   @override
-  String get aboutPageTitle => 'About Flow';
+  String get aboutPageTitle => 'About Navia';
 
   @override
-  String get aboutPageFlowEdTech => 'Flow EdTech';
+  String get aboutPageFlowEdTech => 'Navia';
 
   @override
   String get aboutPagePremierPlatform => 'Africa\'s Premier Education Platform';
@@ -8088,7 +8088,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutPageMissionContent =>
-      'Flow is dedicated to transforming education across Africa by connecting students with universities, counselors, and resources they need to succeed.';
+      'Navia is dedicated to transforming education across Africa by connecting students with universities, counselors, and resources they need to succeed.';
 
   @override
   String get aboutPageOurVision => 'Our Vision';
@@ -8143,7 +8143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutPageMilestone1Title => 'Founded';
 
   @override
-  String get aboutPageMilestone1Desc => 'Flow EdTech was founded in Accra, Ghana with a mission to transform education access across Africa.';
+  String get aboutPageMilestone1Desc => 'Navia was founded in Accra, Ghana with a mission to transform education access across Africa.';
 
   @override
   String get aboutPageMilestone2Year => '2024';
@@ -8242,7 +8242,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsPageSection1Content =>
-      'By accessing or using Flow EdTech (\"the Service\"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.';
+      'By accessing or using Navia (\"the Service\"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our Service.';
 
   @override
   String get termsPageSection2Title => '2. User Accounts';
@@ -8273,7 +8273,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'For questions about these terms, contact us at: legal@flowedtech.com';
 
   @override
-  String get termsPageAgreement => 'By using Flow, you agree to these terms';
+  String get termsPageAgreement => 'By using Navia, you agree to these terms';
 
   @override
   String get contactPageTitle => 'Contact Us';
@@ -8353,7 +8353,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Thank you for your message! We will get back to you soon.';
 
   @override
-  String get blogPageTitle => 'Flow Blog';
+  String get blogPageTitle => 'Navia Blog';
 
   @override
   String get blogPageSubtitle =>
@@ -8395,7 +8395,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Help us transform education across Africa';
 
   @override
-  String get careersPageWhyJoin => 'Why Join Flow?';
+  String get careersPageWhyJoin => 'Why Join Navia?';
 
   @override
   String get careersPageGlobalImpact => 'Global Impact';
@@ -8582,7 +8582,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compliancePageRegulatoryContent =>
-      'Flow adheres to international and regional regulations:\n\n• General Data Protection Regulation (GDPR) - EU\n• Protection of Personal Information Act (POPIA) - South Africa\n• Data Protection Act - Ghana, Kenya, Nigeria\n• Children\'s Online Privacy Protection Act (COPPA)\n• California Consumer Privacy Act (CCPA)';
+      'Navia adheres to international and regional regulations:\n\n• General Data Protection Regulation (GDPR) - EU\n• Protection of Personal Information Act (POPIA) - South Africa\n• Data Protection Act - Ghana, Kenya, Nigeria\n• Children\'s Online Privacy Protection Act (COPPA)\n• California Consumer Privacy Act (CCPA)';
 
   @override
   String get compliancePageThirdParty => 'Third-Party Security';
@@ -8836,13 +8836,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get docsPageTitle => 'Documentation';
 
   @override
-  String get docsPageSubtitle => 'Everything you need to know about using Flow';
+  String get docsPageSubtitle => 'Everything you need to know about using Navia';
 
   @override
   String get docsPageGettingStarted => 'Getting Started';
 
   @override
-  String get docsPageGettingStartedDesc => 'Learn the basics of Flow';
+  String get docsPageGettingStartedDesc => 'Learn the basics of Navia';
 
   @override
   String get docsPageForStudents => 'For Students';
@@ -8920,11 +8920,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Our support team is here to assist you';
 
   @override
-  String get mobileAppsPageTitle => 'Flow on Mobile';
+  String get mobileAppsPageTitle => 'Navia on Mobile';
 
   @override
   String get mobileAppsPageSubtitle =>
-      'Take your education journey with you.\nDownload the Flow app on your favorite platform.';
+      'Take your education journey with you.\nDownload the Navia app on your favorite platform.';
 
   @override
   String get mobileAppsPageDownloadNow => 'Download Now';
@@ -8990,7 +8990,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get partnersPageTitle => 'Partners';
 
   @override
-  String get partnersPageHeroTitle => 'Partner With Flow';
+  String get partnersPageHeroTitle => 'Partner With Navia';
 
   @override
   String get partnersPageHeroSubtitle =>
@@ -9118,7 +9118,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pressPageCompanyOverviewContent =>
-      'Flow EdTech is Africa\'s leading education technology platform, connecting students with universities, counselors, and educational resources. Founded with the mission to democratize access to quality education guidance across the African continent.';
+      'Navia is Africa\'s leading education technology platform, connecting students with universities, counselors, and educational resources. Founded with the mission to democratize access to quality education guidance across the African continent.';
 
   @override
   String get pressPageKeyFacts => 'Key Facts';
@@ -9185,7 +9185,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apiDocsPageTitle => 'API Reference';
 
   @override
-  String get apiDocsPageSubtitle => 'Integrate Flow into your applications';
+  String get apiDocsPageSubtitle => 'Integrate Navia into your applications';
 
   @override
   String get apiDocsPageQuickStart => 'Quick Start';
@@ -10117,7 +10117,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get swSettingsVersion => 'Version';
 
   @override
-  String get swSettingsFlowPlatform => 'Flow EdTech Platform';
+  String get swSettingsFlowPlatform => 'Navia Platform';
 
   @override
   String get swSettingsCopyright => '© 2025 All rights reserved';
@@ -14608,11 +14608,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminMessagingTemplateWelcomeName => 'Welcome Message';
 
   @override
-  String get adminMessagingTemplateWelcomeSubject => 'Welcome to Flow!';
+  String get adminMessagingTemplateWelcomeSubject => 'Welcome to Navia!';
 
   @override
   String get adminMessagingTemplateWelcomeContent =>
-      'Hello! Welcome to Flow, your educational journey starts here. We\'re excited to have you join our community.';
+      'Hello! Welcome to Navia, your educational journey starts here. We\'re excited to have you join our community.';
 
   @override
   String get adminMessagingTemplatePaymentName => 'Payment Reminder';
@@ -17666,7 +17666,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String studentHelpAppVersion(String version) {
-    return 'Flow App v$version';
+    return 'Navia App v$version';
   }
 
   @override
@@ -19628,14 +19628,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicyShareComingSoon => 'Share functionality coming soon';
 
   @override
-  String get privacyPolicyHeaderTitle => 'Flow EdTech Privacy Policy';
+  String get privacyPolicyHeaderTitle => 'Navia Privacy Policy';
 
   @override
   String get privacyPolicyLastUpdated => 'Last Updated: October 28, 2025';
 
   @override
   String get privacyPolicyHeaderDescription =>
-      'This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.';
+      'This Privacy Policy describes how Navia collects, uses, and protects your personal information.';
 
   @override
   String get privacyPolicySection1Title => '1. Information We Collect';
@@ -19707,7 +19707,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicySection10Content =>
-      'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Flow EdTech, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com';
+      'If you have questions or concerns about this Privacy Policy or our data practices, please contact us:\n\nEmail: privacy@flowedtech.com\nPhone: +1 (555) 123-4567\nAddress: Navia, 123 Education Lane, Tech City, TC 12345\n\nData Protection Officer: dpo@flowedtech.com';
 
   @override
   String get termsOfServiceTitle => 'Terms of Service';
@@ -19719,7 +19719,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsOfServiceShareComingSoon => 'Share functionality coming soon';
 
   @override
-  String get termsOfServiceHeaderTitle => 'Flow EdTech Terms of Service';
+  String get termsOfServiceHeaderTitle => 'Navia Terms of Service';
 
   @override
   String get termsOfServiceEffectiveDate => 'Effective Date: October 28, 2025';
@@ -19733,7 +19733,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection1Content =>
-      'By creating an account and using Flow EdTech, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.\n\nIf you do not agree to these terms, you may not access or use our services.\n\nThese terms constitute a legally binding agreement between you and Flow EdTech.';
+      'By creating an account and using Navia, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.\n\nIf you do not agree to these terms, you may not access or use our services.\n\nThese terms constitute a legally binding agreement between you and Navia.';
 
   @override
   String get termsOfServiceSection2Title =>
@@ -19756,7 +19756,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection4Content =>
-      'All content on Flow EdTech, including:\n\n• Course materials and lectures\n• Text, graphics, logos, and images\n• Software and technology\n• Trademarks and branding\n\nIs owned by Flow EdTech or its licensors and is protected by copyright, trademark, and other intellectual property laws.\n\nUser-Generated Content:\n• You retain ownership of content you create\n• You grant us a license to use, display, and distribute your content\n• You represent that you have rights to any content you upload\n• We may remove content that violates these terms\n\nYou may not copy, modify, distribute, or create derivative works without our explicit permission.';
+      'All content on Navia, including:\n\n• Course materials and lectures\n• Text, graphics, logos, and images\n• Software and technology\n• Trademarks and branding\n\nIs owned by Navia or its licensors and is protected by copyright, trademark, and other intellectual property laws.\n\nUser-Generated Content:\n• You retain ownership of content you create\n• You grant us a license to use, display, and distribute your content\n• You represent that you have rights to any content you upload\n• We may remove content that violates these terms\n\nYou may not copy, modify, distribute, or create derivative works without our explicit permission.';
 
   @override
   String get termsOfServiceSection5Title =>
@@ -19830,11 +19830,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsOfServiceSection14Content =>
-      'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nFlow EdTech\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST';
+      'For questions about these Terms of Service:\n\nGeneral Inquiries:\nEmail: support@flowedtech.com\nPhone: +1 (555) 123-4567\n\nLegal Department:\nEmail: legal@flowedtech.com\n\nMailing Address:\nNavia\n123 Education Lane\nTech City, TC 12345\nUnited States\n\nBusiness Hours: Monday-Friday, 9am-5pm EST';
 
   @override
   String get termsOfServiceAcknowledgment =>
-      'By using Flow EdTech, you acknowledge that you have read and understood these Terms of Service.';
+      'By using Navia, you acknowledge that you have read and understood these Terms of Service.';
 
   @override
   String get progressReportsTitle => 'Progress Reports';
@@ -20723,11 +20723,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get privacyPolicyShareSoon => 'Share functionality coming soon';
 
   @override
-  String get privacyPolicyFlowTitle => 'Flow EdTech Privacy Policy';
+  String get privacyPolicyFlowTitle => 'Navia Privacy Policy';
 
   @override
   String get privacyPolicyIntro =>
-      'This Privacy Policy describes how Flow EdTech collects, uses, and protects your personal information.';
+      'This Privacy Policy describes how Navia collects, uses, and protects your personal information.';
 
   @override
   String get privacyPolicySection1 => '1. Information We Collect';
@@ -20763,7 +20763,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsOfServiceShareSoon => 'Share functionality coming soon';
 
   @override
-  String get termsOfServiceFlowTitle => 'Flow EdTech Terms of Service';
+  String get termsOfServiceFlowTitle => 'Navia Terms of Service';
 
   @override
   String get termsOfServiceEffective => 'Effective Date: October 28, 2025';
@@ -20839,7 +20839,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearanceThemeSection => 'THEME';
 
   @override
-  String get appearanceThemeSubtitle => 'Choose how Flow looks to you';
+  String get appearanceThemeSubtitle => 'Choose how Navia looks to you';
 
   @override
   String get appearanceTextSizeSection => 'TEXT SIZE';
@@ -21661,7 +21661,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Message institutions directly, get personalized counseling, and receive instant notifications for important updates.';
 
   @override
-  String get onboardingWelcomeToFlow => 'Welcome to Flow!';
+  String get onboardingWelcomeToFlow => 'Welcome to Navia!';
 
   @override
   String get onboardingFeatureCategoryCore => 'Core Features';
@@ -22509,11 +22509,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataProtectionPageRelatedCompliance => 'Compliance';
 
   @override
-  String get mobileAppsPageHeroTitle => 'Flow on Mobile';
+  String get mobileAppsPageHeroTitle => 'Navia on Mobile';
 
   @override
   String get mobileAppsPageHeroSubtitle =>
-      'Take your education journey with you.\nDownload the Flow app on your favorite platform.';
+      'Take your education journey with you.\nDownload the Navia app on your favorite platform.';
 
   @override
   String get navSolutions => 'Solutions';
@@ -22555,7 +22555,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get personaStudentFeature3Desc => 'Filter by country, tuition, ranking, programs, and more to find your perfect match.';
   @override
-  String get personaStudentTestimonial => 'Flow helped me discover programs I never knew existed. I applied to 8 universities and got accepted into 5!';
+  String get personaStudentTestimonial => 'Navia helped me discover programs I never knew existed. I applied to 8 universities and got accepted into 5!';
   @override
   String get personaStudentTestimonialAuthor => 'Amara, Student from Nigeria';
   @override
@@ -22590,7 +22590,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get personaInstitutionFeature3Desc => 'Understand where your applicants come from, what they\'re looking for, and how to improve recruitment.';
   @override
-  String get personaInstitutionTestimonial => 'Since joining Flow, we\'ve seen a 40% increase in international applications. The dashboard makes managing them effortless.';
+  String get personaInstitutionTestimonial => 'Since joining Navia, we\'ve seen a 40% increase in international applications. The dashboard makes managing them effortless.';
   @override
   String get personaInstitutionTestimonialAuthor => 'Dr. Kofi, Admissions Director';
   @override
@@ -22625,7 +22625,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get personaParentFeature3Desc => 'Stay connected with your child\'s counselor and get notified about important deadlines and decisions.';
   @override
-  String get personaParentTestimonial => 'I finally feel like I understand my daughter\'s options. Flow made it easy for us to compare universities and make decisions together.';
+  String get personaParentTestimonial => 'I finally feel like I understand my daughter\'s options. Navia made it easy for us to compare universities and make decisions together.';
   @override
   String get personaParentTestimonialAuthor => 'Mrs. Diallo, Parent from Senegal';
   @override
@@ -22660,11 +22660,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get personaCounselorFeature3Desc => 'Share recommendations with parents, coordinate with institutions, and send reminders to students.';
   @override
-  String get personaCounselorTestimonial => 'Flow transformed how I work. I can now support 3x more students with better results. The AI recommendations are surprisingly accurate.';
+  String get personaCounselorTestimonial => 'Navia transformed how I work. I can now support 3x more students with better results. The AI recommendations are surprisingly accurate.';
   @override
   String get personaCounselorTestimonialAuthor => 'Mr. Mensah, School Counselor';
   @override
-  String get personaCounselorCta => 'Start Counseling with Flow';
+  String get personaCounselorCta => 'Start Counseling with Navia';
 
   @override
   String get personaPainPointsTitle => 'We Understand Your Challenges';

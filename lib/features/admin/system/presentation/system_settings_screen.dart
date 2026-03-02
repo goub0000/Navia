@@ -351,7 +351,7 @@ class _SystemSettingsScreenState extends ConsumerState<SystemSettingsScreen> {
               _buildTextSetting(
                 'app_name',
                 context.l10n.adminSystemApplicationName,
-                'Flow Education Platform',
+                'Navia',
                 context.l10n.adminSystemApplicationNameDesc,
               ),
               _buildTextSetting(
@@ -641,7 +641,7 @@ class _SystemSettingsScreenState extends ConsumerState<SystemSettingsScreen> {
               _buildTextSetting(
                 'from_name',
                 context.l10n.adminSystemFromName,
-                'Flow Education',
+                'Navia',
                 context.l10n.adminSystemFromNameDesc,
               ),
             ],

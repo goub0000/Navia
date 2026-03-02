@@ -331,7 +331,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               onTap: () {
                 showLicensePage(
                   context: context,
-                  applicationName: 'Flow',
+                  applicationName: 'Navia',
                   applicationVersion: '1.0.0',
                 );
               },
@@ -346,7 +346,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           title: 'ABOUT',
         ),
         const AboutAppInfo(
-          appName: 'Flow',
+          appName: 'Navia',
           version: '1.0.0',
           buildNumber: '1',
         ),
