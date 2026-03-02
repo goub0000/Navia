@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'navia_logo.dart';
 
 /// Custom AppBar with automatic back button for desktop/web platforms
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -45,20 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     // If we can't pop (at root level), show clickable logo
     else {
       leadingWidget = IconButton(
-        icon: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            'assets/images/logo.png',
-            semanticLabel: 'Flow logo',
-            width: 32,
-            height: 32,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              // Fallback icon if logo doesn't load
-              return const Icon(Icons.home);
-            },
-          ),
-        ),
+        icon: const NaviaLogoIcon(size: 32),
         onPressed: () => context.go('/'),
         tooltip: 'Home',
       );
@@ -77,9 +65,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? 0.0),
-      );
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
 }
 
 /// Extension to easily check if context can pop

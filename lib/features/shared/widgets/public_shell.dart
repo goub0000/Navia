@@ -5,6 +5,7 @@ import '../../../core/constants/user_roles.dart';
 import '../../../core/l10n_extension.dart';
 import '../../../core/services/accessibility_service.dart';
 import '../../authentication/providers/auth_provider.dart';
+import '../../../core/widgets/navia_logo.dart';
 
 /// Persistent navigation shell for public pages (about, universities, etc.).
 /// Provides a consistent top navbar with logo, navigation links, and auth buttons.
@@ -45,10 +46,7 @@ class _PublicShellState extends ConsumerState<PublicShell> {
           Semantics(
             label: 'Main content',
             container: true,
-            child: KeyedSubtree(
-              key: _mainContentKey,
-              child: widget.child,
-            ),
+            child: KeyedSubtree(key: _mainContentKey, child: widget.child),
           ),
           SkipToContentLink(mainContentKey: _mainContentKey),
         ],
@@ -168,7 +166,10 @@ class _PublicNavBar extends StatelessWidget {
                         value: '/universities',
                         child: Text(ctx.l10n.navUniversities),
                       ),
-                      PopupMenuItem(value: '/about', child: Text(ctx.l10n.navAbout)),
+                      PopupMenuItem(
+                        value: '/about',
+                        child: Text(ctx.l10n.navAbout),
+                      ),
                       PopupMenuItem(
                         value: '/contact',
                         child: Text(ctx.l10n.navContact),
@@ -197,31 +198,7 @@ class _LogoBrand extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                'assets/images/logo.png',
-                semanticLabel: 'Flow logo',
-                height: 36,
-                width: 36,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) =>
-                    const Icon(Icons.school, size: 36),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              'Flow',
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
-        ),
+        child: const NaviaLogo(variant: NaviaLogoVariant.light, fontSize: 24),
       ),
     );
   }
@@ -241,9 +218,7 @@ class _NavLink extends StatelessWidget {
   });
 
   bool get _isActive =>
-      path == '/'
-          ? currentPath == '/'
-          : currentPath.startsWith(path);
+      path == '/' ? currentPath == '/' : currentPath.startsWith(path);
 
   @override
   Widget build(BuildContext context) {

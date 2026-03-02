@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/l10n_extension.dart';
+import '../../../core/widgets/navia_logo.dart';
 
 /// Settings Widgets
 ///
@@ -83,7 +84,9 @@ class SettingsTile extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: (iconColor ?? AppColors.primary).withValues(alpha: 0.1),
+                      color: (iconColor ?? AppColors.primary).withValues(
+                        alpha: 0.1,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
@@ -190,11 +193,7 @@ class SettingsSectionHeader extends StatelessWidget {
   final String title;
   final String? subtitle;
 
-  const SettingsSectionHeader({
-    super.key,
-    required this.title,
-    this.subtitle,
-  });
+  const SettingsSectionHeader({super.key, required this.title, this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +302,9 @@ class _ThemeOption extends StatelessWidget {
                 children: [
                   Icon(
                     icon,
-                    color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -328,10 +329,7 @@ class _ThemeOption extends StatelessWidget {
                     ),
                   ),
                   if (isSelected)
-                    const Icon(
-                      Icons.check_circle,
-                      color: AppColors.primary,
-                    ),
+                    const Icon(Icons.check_circle, color: AppColors.primary),
                 ],
               ),
             ),
@@ -411,10 +409,7 @@ class _LanguageOption extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Text(
-                    flag,
-                    style: const TextStyle(fontSize: 24),
-                  ),
+                  Text(flag, style: const TextStyle(fontSize: 24)),
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
@@ -426,10 +421,7 @@ class _LanguageOption extends StatelessWidget {
                     ),
                   ),
                   if (isSelected)
-                    const Icon(
-                      Icons.check_circle,
-                      color: AppColors.primary,
-                    ),
+                    const Icon(Icons.check_circle, color: AppColors.primary),
                 ],
               ),
             ),
@@ -461,10 +453,7 @@ class DataUsageDisplay extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            AppColors.primary,
-            AppColors.primary.withValues(alpha: 0.8),
-          ],
+          colors: [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -513,8 +502,12 @@ class DataUsageDisplay extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                           child: LinearProgressIndicator(
                             value: percentage / 100,
-                            backgroundColor: Colors.white.withValues(alpha: 0.2),
-                            valueColor: const AlwaysStoppedAnimation(Colors.white),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.2,
+                            ),
+                            valueColor: const AlwaysStoppedAnimation(
+                              Colors.white,
+                            ),
                             minHeight: 6,
                           ),
                         ),
@@ -543,10 +536,7 @@ class DataUsageDisplay extends StatelessWidget {
 class DangerZone extends StatelessWidget {
   final List<DangerAction> actions;
 
-  const DangerZone({
-    super.key,
-    required this.actions,
-  });
+  const DangerZone({super.key, required this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -569,11 +559,7 @@ class DangerZone extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(
-                  Icons.warning_rounded,
-                  color: AppColors.error,
-                  size: 20,
-                ),
+                Icon(Icons.warning_rounded, color: AppColors.error, size: 20),
                 const SizedBox(width: 12),
                 Text(
                   context.l10n.swSettingsDangerZone,
@@ -602,11 +588,7 @@ class DangerZone extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Row(
                         children: [
-                          Icon(
-                            action.icon,
-                            color: AppColors.error,
-                            size: 20,
-                          ),
+                          Icon(action.icon, color: AppColors.error, size: 20),
                           const SizedBox(width: 16),
                           Expanded(
                             child: Column(
@@ -671,11 +653,7 @@ class SettingsCard extends StatelessWidget {
   final String? title;
   final List<Widget> children;
 
-  const SettingsCard({
-    super.key,
-    this.title,
-    required this.children,
-  });
+  const SettingsCard({super.key, this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -730,28 +708,7 @@ class AboutAppInfo extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       child: Column(
         children: [
-          if (logoAsset != null)
-            Image.asset(
-              logoAsset!,
-              semanticLabel: 'Flow logo',
-              width: 80,
-              height: 80,
-              errorBuilder: (_, __, ___) => const SizedBox(),
-            )
-          else
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Icon(
-                Icons.school,
-                size: 40,
-                color: AppColors.primary,
-              ),
-            ),
+          const NaviaLogoIcon(size: 80),
           const SizedBox(height: 16),
           Text(
             appName,

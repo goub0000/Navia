@@ -8,6 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:logging/logging.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'core/theme/app_theme.dart';
+import 'core/widgets/navia_logo.dart';
 import 'core/providers/appearance_provider.dart';
 import 'core/providers/cookie_providers.dart';
 import 'core/providers/locale_provider.dart';
@@ -33,7 +34,9 @@ void main() async {
     // Only log to console in debug mode
     // In production, logs will be captured by Sentry
     if (kDebugMode) {
-      debugPrint('[${record.level.name}] ${record.loggerName}: ${record.message}');
+      debugPrint(
+        '[${record.level.name}] ${record.loggerName}: ${record.message}',
+      );
       if (record.error != null) {
         debugPrint('Error: ${record.error}');
       }
@@ -76,7 +79,9 @@ void main() async {
         mainLogger.fine('Found existing session, validating...');
         final response = await Supabase.instance.client.auth.refreshSession();
         if (response.session == null) {
-          mainLogger.warning('Session refresh failed, clearing invalid session...');
+          mainLogger.warning(
+            'Session refresh failed, clearing invalid session...',
+          );
           await Supabase.instance.client.auth.signOut();
         } else {
           mainLogger.fine('Session is valid');
@@ -106,11 +111,11 @@ void main() async {
             // Override SharedPreferences provider for cookie consent
             sharedPreferencesProvider.overrideWithValue(prefs),
             // Override SharedPreferences provider for API services
-            service_providers.sharedPreferencesProvider.overrideWithValue(prefs),
+            service_providers.sharedPreferencesProvider.overrideWithValue(
+              prefs,
+            ),
           ],
-          child: const RestartWidget(
-            child: FlowApp(),
-          ),
+          child: const RestartWidget(child: FlowApp()),
         ),
       );
     } else {
@@ -118,7 +123,9 @@ void main() async {
       await SentryFlutter.init(
         (options) {
           options.dsn = sentryDsn;
-          options.environment = ApiConfig.isProduction ? 'production' : 'development';
+          options.environment = ApiConfig.isProduction
+              ? 'production'
+              : 'development';
           options.tracesSampleRate = 0.2; // 20% of transactions
           options.enableAutoSessionTracking = true;
           options.attachStacktrace = true;
@@ -133,11 +140,11 @@ void main() async {
               // Override SharedPreferences provider for cookie consent
               sharedPreferencesProvider.overrideWithValue(prefs),
               // Override SharedPreferences provider for API services
-              service_providers.sharedPreferencesProvider.overrideWithValue(prefs),
+              service_providers.sharedPreferencesProvider.overrideWithValue(
+                prefs,
+              ),
             ],
-            child: const RestartWidget(
-              child: FlowApp(),
-            ),
+            child: const RestartWidget(child: FlowApp()),
           ),
         ),
       );
@@ -174,10 +181,7 @@ class _RestartWidgetState extends State<RestartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: _key,
-      child: widget.child,
-    );
+    return KeyedSubtree(key: _key, child: widget.child);
   }
 }
 
@@ -199,13 +203,17 @@ class FlowApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       theme: AppTheme.getLightTheme(
         fontSize: appearance.fontSize,
-        fontFamily: appearance.fontFamily != 'System Default' ? appearance.fontFamily : null,
+        fontFamily: appearance.fontFamily != 'System Default'
+            ? appearance.fontFamily
+            : null,
         accentColor: appearance.accentColor,
         compactMode: appearance.compactMode,
       ),
       darkTheme: AppTheme.getDarkTheme(
         fontSize: appearance.fontSize,
-        fontFamily: appearance.fontFamily != 'System Default' ? appearance.fontFamily : null,
+        fontFamily: appearance.fontFamily != 'System Default'
+            ? appearance.fontFamily
+            : null,
         accentColor: appearance.accentColor,
         compactMode: appearance.compactMode,
       ),
@@ -220,28 +228,17 @@ class FlowApp extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    semanticLabel: 'Flow logo',
-                    width: 80,
-                    height: 80,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.school,
-                      size: 80,
-                      color: Color(0xFF6366F1),
-                    ),
-                  ),
+                  const NaviaLogoIcon(size: 80),
                   const SizedBox(height: 24),
                   const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6366F1)),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Color(0xFF6366F1),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Loading...',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                 ],
               ),
@@ -262,9 +259,7 @@ class FlowApp extends ConsumerWidget {
             ),
             // Global chatbot FAB - available on all pages
             // Positioned to fill the screen so chat window can position itself
-            const Positioned.fill(
-              child: ChatbotFAB(),
-            ),
+            const Positioned.fill(child: ChatbotFAB()),
           ],
         );
       },

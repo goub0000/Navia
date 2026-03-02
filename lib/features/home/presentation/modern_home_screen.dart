@@ -13,6 +13,7 @@ import '../../../core/constants/home_constants.dart';
 import '../../../core/constants/user_roles.dart';
 import '../../../core/services/accessibility_service.dart';
 import '../../authentication/providers/auth_provider.dart';
+import '../../../core/widgets/navia_logo.dart';
 import 'dart:math' as math;
 import 'widgets/demo_video_dialog.dart';
 import 'widgets/section_divider.dart';
@@ -103,23 +104,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                     container: true,
                     child: Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            semanticLabel: 'Flow logo',
-                            height: 40,
-                            width: 40,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Flow',
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.5,
-                          ),
+                        const NaviaLogo(
+                          variant: NaviaLogoVariant.light,
+                          fontSize: 24,
                         ),
                         if (isWide) ...[
                           const SizedBox(width: 32),
@@ -2481,27 +2468,9 @@ class _MinimalFooter extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/images/logo.png',
-                                  semanticLabel: 'Flow logo',
-                                  height: 48,
-                                  width: 48,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Text(
-                                'Flow',
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.onSurface,
-                                ),
-                              ),
-                            ],
+                          const NaviaLogo(
+                            variant: NaviaLogoVariant.light,
+                            fontSize: 28,
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -2573,27 +2542,9 @@ class _MinimalFooter extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Logo and Description
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            semanticLabel: 'Flow logo',
-                            height: 48,
-                            width: 48,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Flow',
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onSurface,
-                          ),
-                        ),
-                      ],
+                    const NaviaLogo(
+                      variant: NaviaLogoVariant.light,
+                      fontSize: 28,
                     ),
                     const SizedBox(height: 16),
                     Text(

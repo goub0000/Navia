@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/l10n_extension.dart';
+import '../../../../core/widgets/navia_logo.dart';
 
 /// About page with company information - fetches content from CMS
 class AboutPage extends ConsumerWidget {
@@ -24,137 +25,174 @@ class AboutPage extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                // Hero section
-                Card.filled(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: colorScheme.primary, width: 3),
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              semanticLabel: 'Flow logo',
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) => Icon(
-                                Icons.school,
-                                size: 40,
-                                color: colorScheme.primary,
-                              ),
-                            ),
-                          ),
+              // Hero section
+              Card.filled(
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Column(
+                    children: [
+                      const NaviaLogoIcon.circle(size: 80),
+                      const SizedBox(height: 16),
+                      Text(
+                        context.l10n.aboutPageFlowEdTech,
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.primary,
                         ),
-                        const SizedBox(height: 16),
-                        Text(
-                          context.l10n.aboutPageFlowEdTech,
-                          style: theme.textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.primary,
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        context.l10n.aboutPagePremierPlatform,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          context.l10n.aboutPagePremierPlatform,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 32),
+              const SizedBox(height: 32),
 
-                _buildSection(
-                  theme,
-                  colorScheme: colorScheme,
-                  icon: Icons.flag,
-                  title: context.l10n.aboutPageOurMission,
-                  content: context.l10n.aboutPageMissionContent,
-                ),
+              _buildSection(
+                theme,
+                colorScheme: colorScheme,
+                icon: Icons.flag,
+                title: context.l10n.aboutPageOurMission,
+                content: context.l10n.aboutPageMissionContent,
+              ),
 
-                const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-                _buildSection(
-                  theme,
-                  colorScheme: colorScheme,
-                  icon: Icons.visibility,
-                  title: context.l10n.aboutPageOurVision,
-                  content: context.l10n.aboutPageVisionContent,
-                ),
+              _buildSection(
+                theme,
+                colorScheme: colorScheme,
+                icon: Icons.visibility,
+                title: context.l10n.aboutPageOurVision,
+                content: context.l10n.aboutPageVisionContent,
+              ),
 
-                const SizedBox(height: 32),
+              const SizedBox(height: 32),
 
-                // Team section
-                _buildSectionHeading(theme, colorScheme, Icons.people, context.l10n.aboutPageOurTeam),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  children: [
-                    _buildTeamCard(theme, colorScheme, context.l10n.aboutPageTeamFounderName, context.l10n.aboutPageTeamFounderRole),
-                    _buildTeamCard(theme, colorScheme, context.l10n.aboutPageTeamCtoName, context.l10n.aboutPageTeamCtoRole),
-                    _buildTeamCard(theme, colorScheme, context.l10n.aboutPageTeamEduName, context.l10n.aboutPageTeamEduRole),
-                    _buildTeamCard(theme, colorScheme, context.l10n.aboutPageTeamPartnersName, context.l10n.aboutPageTeamPartnersRole),
-                  ],
-                ),
-
-                const SizedBox(height: 32),
-
-                // Timeline section
-                _buildSectionHeading(theme, colorScheme, Icons.timeline, context.l10n.aboutPageOurJourney),
-                const SizedBox(height: 16),
-                _buildTimeline(theme, colorScheme, [
-                  (context.l10n.aboutPageMilestone1Year, context.l10n.aboutPageMilestone1Title, context.l10n.aboutPageMilestone1Desc),
-                  (context.l10n.aboutPageMilestone2Year, context.l10n.aboutPageMilestone2Title, context.l10n.aboutPageMilestone2Desc),
-                  (context.l10n.aboutPageMilestone3Year, context.l10n.aboutPageMilestone3Title, context.l10n.aboutPageMilestone3Desc),
-                  (context.l10n.aboutPageMilestone4Year, context.l10n.aboutPageMilestone4Title, context.l10n.aboutPageMilestone4Desc),
-                ]),
-
-                const SizedBox(height: 32),
-
-                // Partners section
-                _buildSectionHeading(theme, colorScheme, Icons.handshake, context.l10n.aboutPageOurPartners),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    Chip(label: Text(context.l10n.partnersPagePartnerUnivGhana)),
-                    Chip(label: Text(context.l10n.partnersPagePartnerAshesi)),
-                    Chip(label: Text(context.l10n.partnersPagePartnerKenyatta)),
-                    Chip(label: Text(context.l10n.partnersPagePartnerUnilag)),
-                    Chip(label: Text(context.l10n.partnersPagePartnerKnust)),
-                    Chip(label: Text(context.l10n.partnersPagePartnerMakerere)),
-                  ],
-                ),
-
-                const SizedBox(height: 32),
-
-                Center(
-                  child: FilledButton.icon(
-                    onPressed: () => context.go('/contact'),
-                    icon: const Icon(Icons.mail),
-                    label: Text(context.l10n.aboutPageGetInTouch),
+              // Team section
+              _buildSectionHeading(
+                theme,
+                colorScheme,
+                Icons.people,
+                context.l10n.aboutPageOurTeam,
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  _buildTeamCard(
+                    theme,
+                    colorScheme,
+                    context.l10n.aboutPageTeamFounderName,
+                    context.l10n.aboutPageTeamFounderRole,
                   ),
-                ),
+                  _buildTeamCard(
+                    theme,
+                    colorScheme,
+                    context.l10n.aboutPageTeamCtoName,
+                    context.l10n.aboutPageTeamCtoRole,
+                  ),
+                  _buildTeamCard(
+                    theme,
+                    colorScheme,
+                    context.l10n.aboutPageTeamEduName,
+                    context.l10n.aboutPageTeamEduRole,
+                  ),
+                  _buildTeamCard(
+                    theme,
+                    colorScheme,
+                    context.l10n.aboutPageTeamPartnersName,
+                    context.l10n.aboutPageTeamPartnersRole,
+                  ),
+                ],
+              ),
 
-                const SizedBox(height: 48),
-              ],
-            ),
+              const SizedBox(height: 32),
+
+              // Timeline section
+              _buildSectionHeading(
+                theme,
+                colorScheme,
+                Icons.timeline,
+                context.l10n.aboutPageOurJourney,
+              ),
+              const SizedBox(height: 16),
+              _buildTimeline(theme, colorScheme, [
+                (
+                  context.l10n.aboutPageMilestone1Year,
+                  context.l10n.aboutPageMilestone1Title,
+                  context.l10n.aboutPageMilestone1Desc,
+                ),
+                (
+                  context.l10n.aboutPageMilestone2Year,
+                  context.l10n.aboutPageMilestone2Title,
+                  context.l10n.aboutPageMilestone2Desc,
+                ),
+                (
+                  context.l10n.aboutPageMilestone3Year,
+                  context.l10n.aboutPageMilestone3Title,
+                  context.l10n.aboutPageMilestone3Desc,
+                ),
+                (
+                  context.l10n.aboutPageMilestone4Year,
+                  context.l10n.aboutPageMilestone4Title,
+                  context.l10n.aboutPageMilestone4Desc,
+                ),
+              ]),
+
+              const SizedBox(height: 32),
+
+              // Partners section
+              _buildSectionHeading(
+                theme,
+                colorScheme,
+                Icons.handshake,
+                context.l10n.aboutPageOurPartners,
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  Chip(label: Text(context.l10n.partnersPagePartnerUnivGhana)),
+                  Chip(label: Text(context.l10n.partnersPagePartnerAshesi)),
+                  Chip(label: Text(context.l10n.partnersPagePartnerKenyatta)),
+                  Chip(label: Text(context.l10n.partnersPagePartnerUnilag)),
+                  Chip(label: Text(context.l10n.partnersPagePartnerKnust)),
+                  Chip(label: Text(context.l10n.partnersPagePartnerMakerere)),
+                ],
+              ),
+
+              const SizedBox(height: 32),
+
+              Center(
+                child: FilledButton.icon(
+                  onPressed: () => context.go('/contact'),
+                  icon: const Icon(Icons.mail),
+                  label: Text(context.l10n.aboutPageGetInTouch),
+                ),
+              ),
+
+              const SizedBox(height: 48),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 
-  Widget _buildSectionHeading(ThemeData theme, ColorScheme colorScheme, IconData icon, String title) {
+  Widget _buildSectionHeading(
+    ThemeData theme,
+    ColorScheme colorScheme,
+    IconData icon,
+    String title,
+  ) {
     return Row(
       children: [
         Icon(icon, color: colorScheme.primary),
@@ -169,7 +207,12 @@ class AboutPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildTeamCard(ThemeData theme, ColorScheme colorScheme, String name, String role) {
+  Widget _buildTeamCard(
+    ThemeData theme,
+    ColorScheme colorScheme,
+    String name,
+    String role,
+  ) {
     final initials = name.split(' ').map((w) => w[0]).take(2).join();
     return SizedBox(
       width: 170,
@@ -192,13 +235,17 @@ class AboutPage extends ConsumerWidget {
               const SizedBox(height: 12),
               Text(
                 name,
-                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
               Text(
                 role,
-                style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -208,7 +255,11 @@ class AboutPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildTimeline(ThemeData theme, ColorScheme colorScheme, List<(String year, String title, String desc)> milestones) {
+  Widget _buildTimeline(
+    ThemeData theme,
+    ColorScheme colorScheme,
+    List<(String year, String title, String desc)> milestones,
+  ) {
     return Column(
       children: [
         for (int i = 0; i < milestones.length; i++)
@@ -250,12 +301,16 @@ class AboutPage extends ConsumerWidget {
                           children: [
                             Text(
                               milestones[i].$2,
-                              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               milestones[i].$3,
-                              style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurfaceVariant),
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ],
                         ),

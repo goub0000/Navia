@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_logo.dart';
 import '../../../../core/constants/user_roles.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/utils/auth_error_mapper.dart';
@@ -50,7 +51,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await ref.read(authProvider.notifier).signUp(
+      await ref
+          .read(authProvider.notifier)
+          .signUp(
             email: _emailController.text.trim(),
             password: _passwordController.text,
             confirmPassword: _confirmPasswordController.text,
@@ -88,7 +91,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     if (_errorMessage == null) return const SizedBox.shrink();
 
     final showLoginHint = _errorType == AuthErrorType.emailAlreadyExists;
-    final showForgotPasswordHint = _errorType == AuthErrorType.emailAlreadyExists;
+    final showForgotPasswordHint =
+        _errorType == AuthErrorType.emailAlreadyExists;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -107,11 +111,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.error_outline,
-                color: AppColors.error,
-                size: 20,
-              ),
+              Icon(Icons.error_outline, color: AppColors.error, size: 20),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -143,7 +143,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   icon: const Icon(Icons.login, size: 16),
                   label: Text(context.l10n.registerLoginInstead),
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
 
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
@@ -155,8 +158,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     icon: const Icon(Icons.lock_reset, size: 16),
                     label: Text(context.l10n.registerResetPassword),
                     style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-  
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                   ),
@@ -205,10 +211,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.primary,
-                        width: 3,
-                      ),
+                      border: Border.all(color: AppColors.primary, width: 3),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.primary.withValues(alpha: 0.2),
@@ -217,19 +220,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ],
                     ),
-                    child: ClipOval(
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        color: AppColors.surface,
-                        padding: const EdgeInsets.all(8),
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          semanticLabel: 'Flow logo',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
+                    child: const NaviaLogoIcon.circle(size: 80),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -288,7 +279,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     labelText: context.l10n.registerRoleLabel,
                     prefixIcon: const Icon(Icons.badge_outlined),
                   ),
-                  items: UserRole.values.where((role) => !role.isAdmin).map((role) {
+                  items: UserRole.values.where((role) => !role.isAdmin).map((
+                    role,
+                  ) {
                     return DropdownMenuItem(
                       value: role,
                       child: Row(
@@ -297,7 +290,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             width: 12,
                             height: 12,
                             decoration: BoxDecoration(
-                              color: AppColors.getRoleColor(UserRoleHelper.getRoleName(role)),
+                              color: AppColors.getRoleColor(
+                                UserRoleHelper.getRoleName(role),
+                              ),
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -494,7 +489,10 @@ class _PasswordStrengthIndicator extends StatelessWidget {
           spacing: 16,
           runSpacing: 4,
           children: checks
-              .map((c) => _RequirementChip(label: c.label, met: c.met, theme: theme))
+              .map(
+                (c) =>
+                    _RequirementChip(label: c.label, met: c.met, theme: theme),
+              )
               .toList(),
         ),
       ],
@@ -502,11 +500,11 @@ class _PasswordStrengthIndicator extends StatelessWidget {
   }
 
   List<_Check> _getChecks(AppLocalizations l10n) => [
-        _Check(l10n.passwordReq8Chars, password.length >= 8),
-        _Check(l10n.passwordReqUppercase, password.contains(RegExp(r'[A-Z]'))),
-        _Check(l10n.passwordReqLowercase, password.contains(RegExp(r'[a-z]'))),
-        _Check(l10n.passwordReqNumber, password.contains(RegExp(r'[0-9]'))),
-      ];
+    _Check(l10n.passwordReq8Chars, password.length >= 8),
+    _Check(l10n.passwordReqUppercase, password.contains(RegExp(r'[A-Z]'))),
+    _Check(l10n.passwordReqLowercase, password.contains(RegExp(r'[a-z]'))),
+    _Check(l10n.passwordReqNumber, password.contains(RegExp(r'[0-9]'))),
+  ];
 }
 
 class _Check {

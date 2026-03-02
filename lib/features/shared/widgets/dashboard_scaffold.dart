@@ -6,6 +6,7 @@ import '../../../core/constants/user_roles.dart';
 import '../../../features/authentication/providers/auth_provider.dart';
 import '../../../core/l10n_extension.dart';
 import 'logo_avatar.dart';
+import '../../../core/widgets/navia_logo.dart';
 
 class DashboardScaffold extends ConsumerWidget {
   final String title;
@@ -42,20 +43,7 @@ class DashboardScaffold extends ConsumerWidget {
     } else {
       // Show clickable logo when at root level
       leadingWidget = IconButton(
-        icon: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            'assets/images/logo.png',
-            semanticLabel: 'Flow logo',
-            width: 32,
-            height: 32,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              // Fallback icon if logo doesn't load
-              return const Icon(Icons.home);
-            },
-          ),
-        ),
+        icon: const NaviaLogoIcon(size: 32),
         onPressed: () => context.go('/'),
         tooltip: context.l10n.dashCommonHome,
       );
@@ -67,11 +55,13 @@ class DashboardScaffold extends ConsumerWidget {
         title: Text(title),
         actions: [
           if (actions != null)
-            ...actions!.map((action) => IconButton(
-                  icon: Icon(action.icon),
-                  onPressed: action.onPressed,
-                  tooltip: action.tooltip,
-                )),
+            ...actions!.map(
+              (action) => IconButton(
+                icon: Icon(action.icon),
+                onPressed: action.onPressed,
+                tooltip: action.tooltip,
+              ),
+            ),
           // Role switcher (if user has multiple roles)
           if (user != null && user.hasMultipleRoles)
             PopupMenuButton<UserRole>(
@@ -91,7 +81,9 @@ class DashboardScaffold extends ConsumerWidget {
                           width: 12,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: AppColors.getRoleColor(UserRoleHelper.getRoleName(role)),
+                            color: AppColors.getRoleColor(
+                              UserRoleHelper.getRoleName(role),
+                            ),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -99,8 +91,9 @@ class DashboardScaffold extends ConsumerWidget {
                         Text(
                           role.displayName,
                           style: TextStyle(
-                            fontWeight:
-                                isActive ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isActive
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                         if (isActive) ...[
@@ -131,7 +124,9 @@ class DashboardScaffold extends ConsumerWidget {
                   // Let the tab navigation handle profile display
                   if (navigationItems.any((item) => item.label == 'Profile')) {
                     // Find and switch to profile tab instead of navigating
-                    final profileIndex = navigationItems.indexWhere((item) => item.label == 'Profile');
+                    final profileIndex = navigationItems.indexWhere(
+                      (item) => item.label == 'Profile',
+                    );
                     if (profileIndex != -1) {
                       onNavigationTap(profileIndex);
                     }
@@ -143,7 +138,9 @@ class DashboardScaffold extends ConsumerWidget {
                 case 'settings':
                   // Similar handling for settings
                   if (navigationItems.any((item) => item.label == 'Settings')) {
-                    final settingsIndex = navigationItems.indexWhere((item) => item.label == 'Settings');
+                    final settingsIndex = navigationItems.indexWhere(
+                      (item) => item.label == 'Settings',
+                    );
                     if (settingsIndex != -1) {
                       onNavigationTap(settingsIndex);
                     }
@@ -202,11 +199,13 @@ class DashboardScaffold extends ConsumerWidget {
           onNavigationTap(index);
         },
         items: navigationItems
-            .map((item) => BottomNavigationBarItem(
-                  icon: Icon(item.icon),
-                  activeIcon: Icon(item.activeIcon ?? item.icon),
-                  label: item.label,
-                ))
+            .map(
+              (item) => BottomNavigationBarItem(
+                icon: Icon(item.icon),
+                activeIcon: Icon(item.activeIcon ?? item.icon),
+                label: item.label,
+              ),
+            )
             .toList(),
       ),
     );

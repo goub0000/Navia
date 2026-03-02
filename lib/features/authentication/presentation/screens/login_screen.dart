@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/user_roles.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_logo.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/utils/auth_error_mapper.dart';
 import '../../providers/auth_provider.dart';
@@ -40,10 +41,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     if (_formKey.currentState!.validate()) {
-      await ref.read(authProvider.notifier).signIn(
-            _emailController.text.trim(),
-            _passwordController.text,
-          );
+      await ref
+          .read(authProvider.notifier)
+          .signIn(_emailController.text.trim(), _passwordController.text);
 
       if (mounted) {
         final authState = ref.read(authProvider);
@@ -91,7 +91,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final theme = Theme.of(context);
     if (_errorMessage == null) return const SizedBox.shrink();
 
-    final showForgotPasswordHint = _errorType == AuthErrorType.invalidCredentials;
+    final showForgotPasswordHint =
+        _errorType == AuthErrorType.invalidCredentials;
     final showRegisterHint = _errorType == AuthErrorType.userNotFound;
 
     return Container(
@@ -111,11 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.error_outline,
-                color: AppColors.error,
-                size: 20,
-              ),
+              Icon(Icons.error_outline, color: AppColors.error, size: 20),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -147,7 +144,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   icon: const Icon(Icons.lock_reset, size: 16),
                   label: Text(context.l10n.loginResetPassword),
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
 
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
@@ -165,7 +165,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   icon: const Icon(Icons.person_add, size: 16),
                   label: Text(context.l10n.loginCreateAccount),
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
 
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
@@ -201,10 +204,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.primary,
-                          width: 3,
-                        ),
+                        border: Border.all(color: AppColors.primary, width: 3),
                         boxShadow: [
                           BoxShadow(
                             color: AppColors.primary.withValues(alpha: 0.2),
@@ -213,19 +213,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ],
                       ),
-                      child: ClipOval(
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          color: AppColors.surface,
-                          padding: const EdgeInsets.all(10),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            semanticLabel: 'Flow logo',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
+                      child: const NaviaLogoIcon.circle(size: 100),
                     ),
                   ),
                   const SizedBox(height: 24),

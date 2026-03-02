@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_logo.dart';
 
 /// Onboarding Screen
 ///
@@ -252,19 +253,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: _currentPage == 0
-                        ? Padding(
-                            padding: const EdgeInsets.all(40),
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              semanticLabel: 'Flow onboarding',
-                              fit: BoxFit.contain,
+                        ? const Padding(
+                            padding: EdgeInsets.all(40),
+                            child: NaviaLogo(
+                              variant: NaviaLogoVariant.light,
+                              fontSize: 32,
                             ),
                           )
-                        : Icon(
-                            page.icon,
-                            size: 100,
-                            color: page.color,
-                          ),
+                        : Icon(page.icon, size: 100, color: page.color),
                   ),
                 ),
               );
@@ -284,9 +280,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     page.title,
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: page.color,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: page.color,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -307,9 +303,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Text(
                     page.description,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.textSecondary,
-                          height: 1.5,
-                        ),
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -351,17 +347,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.check_circle,
-                color: page.color,
-                size: 20,
-              ),
+              Icon(Icons.check_circle, color: page.color, size: 20),
               const SizedBox(width: 12),
               Text(
                 feature,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: AppColors.textPrimary),
               ),
             ],
           ),
@@ -379,9 +371,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 8,
       width: isActive ? 24 : 8,
       decoration: BoxDecoration(
-        color: isActive
-            ? pages[_currentPage].color
-            : AppColors.border,
+        color: isActive ? pages[_currentPage].color : AppColors.border,
         borderRadius: BorderRadius.circular(4),
       ),
     );
