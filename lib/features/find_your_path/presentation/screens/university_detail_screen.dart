@@ -277,9 +277,8 @@ class _UniversityDetailScreenState
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.secondary, // Navy at top
-            AppColors.secondaryLight, // Slightly lighter navy
-            AppColors.primaryDark, // Deep teal at bottom
+            AppColors.primaryDark,
+            AppColors.primary,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
