@@ -1,12 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/university_search/presentation/university_search_screen.dart';
 import '../../features/university_search/presentation/university_detail_screen.dart';
 import '../../features/shared/widgets/public_shell.dart';
 import '../../core/models/university_model.dart';
-import '../transitions/shared_axis_page.dart';
 
 /// Routes for university search feature (public, no auth required)
 /// Wrapped in PublicShell for consistent navigation navbar.
+///
+/// Uses MaterialPage instead of SharedAxisPage to avoid
+/// SharedAxisTransition exit animations getting stuck when navigating
+/// out of the ShellRoute (e.g. to /), which leaves a partially
+/// transparent ghost layer over the destination page.
 List<RouteBase> universityRoutes = [
   ShellRoute(
     builder: (context, state, child) => PublicShell(child: child),
@@ -15,7 +20,7 @@ List<RouteBase> universityRoutes = [
       GoRoute(
         path: '/universities',
         name: 'university-search',
-        pageBuilder: (context, state) => SharedAxisPage(
+        pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
           child: const UniversitySearchScreen(),
         ),
@@ -28,7 +33,7 @@ List<RouteBase> universityRoutes = [
           final idStr = state.pathParameters['id']!;
           final id = int.tryParse(idStr) ?? 0;
           final university = state.extra as University?;
-          return SharedAxisPage(
+          return MaterialPage(
             key: state.pageKey,
             child: UniversityDetailScreen(
               universityId: id,
