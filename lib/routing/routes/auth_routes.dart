@@ -28,13 +28,24 @@ import '../transitions/shared_axis_page.dart';
 
 /// Authentication and public routes
 List<RouteBase> authRoutes = [
-  // Home route — has its own custom AppBar, stays outside the shell
+  // Home route — has its own custom AppBar, stays outside the shell.
+  // Uses a simple fade (not SharedAxisTransition) to avoid the
+  // secondaryAnimation getting stuck when navigating from a ShellRoute
+  // child (e.g. /universities) back to this top-level route.
   GoRoute(
     path: '/',
     name: 'home',
-    pageBuilder: (context, state) => SharedAxisPage(
+    pageBuilder: (context, state) => CustomTransitionPage(
       key: state.pageKey,
       child: const ModernHomeScreen(),
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: const Duration(milliseconds: 250),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: CurveTween(curve: Curves.easeOutCubic).animate(animation),
+          child: child,
+        );
+      },
     ),
   ),
 
