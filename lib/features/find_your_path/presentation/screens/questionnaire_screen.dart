@@ -1015,7 +1015,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       final profileState = ref.read(profileProvider);
       if (profileState.error != null) {
         if (mounted) {
-          Navigator.of(context).pop(); // Close loading dialog
+          Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(context.l10n.fypErrorSavingProfile(profileState.error!)),
@@ -1035,7 +1035,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       final recsState = ref.read(recommendationsProvider);
 
       if (mounted) {
-        Navigator.of(context).pop(); // Close loading dialog
+        Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
       }
 
       if (recsState.error != null) {
@@ -1082,7 +1082,7 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       }
     } catch (e) {
       if (mounted) {
-        Navigator.of(context).pop(); // Close loading dialog
+        Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.fypUnexpectedError(e.toString())),
