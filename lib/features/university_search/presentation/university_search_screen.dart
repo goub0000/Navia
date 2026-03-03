@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../../core/l10n_extension.dart';
 import '../../../core/models/university_model.dart';
 import '../../../core/widgets/skeletons/shimmer_effect.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_motion.dart';
+import '../../../core/widgets/navia_footer.dart';
 import '../../chatbot/application/providers/scroll_direction_provider.dart';
 import '../../home/presentation/widgets/staggered_fade_in.dart';
 import '../repositories/university_repository.dart';
@@ -56,134 +58,164 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
 
     return Column(
         children: [
-          // Title bar with clear action
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 8, 0),
-            child: Row(
+          // ── Teal gradient hero header ──────────────────────────────
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [AppColors.primaryDark, AppColors.primary],
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  context.l10n.uniSearchTitle,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                // Title row with clear action
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        context.l10n.uniSearchTitle,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26,
+                        ),
+                      ),
+                    ),
+                    if (state.filters.hasFilters)
+                      TextButton.icon(
+                        onPressed: () {
+                          _searchController.clear();
+                          ref.read(universitySearchProvider.notifier).clearFilters();
+                        },
+                        icon: const Icon(Icons.clear_all, size: 18, color: Colors.white),
+                        label: Text(
+                          context.l10n.uniSearchClearAll,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                  ],
                 ),
                 if (state.totalCount > 0) ...[
-                  const SizedBox(width: 8),
+                  const SizedBox(height: 4),
                   Text(
-                    '(${state.totalCount})',
+                    context.l10n.uniSearchResultCount(state.totalCount),
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                      color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),
                 ],
-                const Spacer(),
-                if (state.filters.hasFilters)
-                  TextButton.icon(
-                    onPressed: () {
-                      _searchController.clear();
-                      ref.read(universitySearchProvider.notifier).clearFilters();
-                    },
-                    icon: const Icon(Icons.clear_all, size: 18),
-                    label: Text(context.l10n.uniSearchClearAll),
-                  ),
-              ],
-            ),
-          ),
-          // Search and Filter Bar
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // Search Field
-                TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: context.l10n.uniSearchHint,
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear),
-                            tooltip: context.l10n.uniSearchClearAll,
-                            onPressed: () {
-                              _searchController.clear();
-                              ref.read(universitySearchProvider.notifier).setSearchQuery('');
-                            },
-                          )
-                        : null,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 16),
+                // Search field inside hero
+                Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(14),
+                  shadowColor: Colors.black.withValues(alpha: 0.15),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: context.l10n.uniSearchHint,
+                      prefixIcon: Icon(Icons.search, color: AppColors.textSecondary),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: Icon(Icons.clear, color: AppColors.textSecondary),
+                              tooltip: context.l10n.uniSearchClearAll,
+                              onPressed: () {
+                                _searchController.clear();
+                                ref.read(universitySearchProvider.notifier).setSearchQuery('');
+                              },
+                            )
+                          : null,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                     ),
-                    filled: true,
-                    fillColor: theme.colorScheme.surfaceContainerHighest,
-                  ),
-                  onChanged: (value) {
-                    ref.read(universitySearchProvider.notifier).setSearchQuery(value);
-                  },
-                ),
-                const SizedBox(height: 12),
-                // Filter Chips Row
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _FilterChip(
-                        label: context.l10n.uniSearchFilters,
-                        icon: Icons.tune,
-                        isActive: state.filters.hasFilters,
-                        onTap: () => _showFilterSheet(context),
-                      ),
-                      const SizedBox(width: 8),
-                      _SortChip(
-                        currentSort: state.sortOption,
-                        onChanged: (option) {
-                          ref.read(universitySearchProvider.notifier).setSortOption(option);
-                        },
-                      ),
-                      if (state.filters.country != null) ...[
-                        const SizedBox(width: 8),
-                        Chip(
-                          label: Text(state.filters.country!),
-                          onDeleted: () {
-                            ref.read(universitySearchProvider.notifier).setCountryFilter(null);
-                          },
-                          deleteIcon: const Icon(Icons.close, size: 18),
-                        ),
-                      ],
-                      if (state.filters.universityType != null) ...[
-                        const SizedBox(width: 8),
-                        Chip(
-                          label: Text(state.filters.universityType!),
-                          onDeleted: () {
-                            ref.read(universitySearchProvider.notifier).setUniversityTypeFilter(null);
-                          },
-                          deleteIcon: const Icon(Icons.close, size: 18),
-                        ),
-                      ],
-                    ],
+                    onChanged: (value) {
+                      ref.read(universitySearchProvider.notifier).setSearchQuery(value);
+                    },
                   ),
                 ),
               ],
             ),
           ),
-          // Results Count
+          // ── Filter / Sort chips row ────────────────────────────────
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _FilterChip(
+                    label: context.l10n.uniSearchFilters,
+                    icon: Icons.tune,
+                    isActive: state.filters.hasFilters,
+                    onTap: () => _showFilterSheet(context),
+                  ),
+                  const SizedBox(width: 8),
+                  _SortChip(
+                    currentSort: state.sortOption,
+                    onChanged: (option) {
+                      ref.read(universitySearchProvider.notifier).setSortOption(option);
+                    },
+                  ),
+                  if (state.filters.country != null) ...[
+                    const SizedBox(width: 8),
+                    Chip(
+                      label: Text(
+                        state.filters.country!,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: AppColors.primary,
+                      onDeleted: () {
+                        ref.read(universitySearchProvider.notifier).setCountryFilter(null);
+                      },
+                      deleteIcon: const Icon(Icons.close, size: 18, color: Colors.white),
+                      deleteIconColor: Colors.white,
+                    ),
+                  ],
+                  if (state.filters.universityType != null) ...[
+                    const SizedBox(width: 8),
+                    Chip(
+                      label: Text(
+                        state.filters.universityType!,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: AppColors.primary,
+                      onDeleted: () {
+                        ref.read(universitySearchProvider.notifier).setUniversityTypeFilter(null);
+                      },
+                      deleteIcon: const Icon(Icons.close, size: 18, color: Colors.white),
+                      deleteIconColor: Colors.white,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          // ── Results Count ──────────────────────────────────────────
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: Row(
               children: [
                 Text(
                   context.l10n.uniSearchResultCount(state.totalCount),
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 if (state.isLoading) ...[
@@ -191,13 +223,16 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
                   const SizedBox(
                     width: 16,
                     height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ],
               ],
             ),
           ),
-          // University List
+          // ── University List ────────────────────────────────────────
           Expanded(
             child: state.isLoading && state.universities.isEmpty
                 ? const _UniversityListSkeleton()
@@ -213,13 +248,23 @@ class _UniversitySearchScreenState extends ConsumerState<UniversitySearchScreen>
                             child: ListView.builder(
                               controller: _scrollController,
                               padding: const EdgeInsets.symmetric(horizontal: 16),
-                              itemCount: state.universities.length + (state.isLoadingMore ? 1 : 0),
+                              itemCount: state.universities.length +
+                                  (state.isLoadingMore
+                                      ? 1
+                                      : (!state.hasMore ? 1 : 0)),
                               itemBuilder: (context, index) {
-                                if (index == state.universities.length) {
+                                // Loading-more spinner
+                                if (state.isLoadingMore && index == state.universities.length) {
                                   return const Padding(
                                     padding: EdgeInsets.all(16),
-                                    child: Center(child: CircularProgressIndicator()),
+                                    child: Center(
+                                      child: CircularProgressIndicator(color: AppColors.primary),
+                                    ),
                                   );
+                                }
+                                // Footer at the end of the list
+                                if (!state.isLoadingMore && !state.hasMore && index == state.universities.length) {
+                                  return const NaviaFooter();
                                 }
                                 return FadeInItem(
                                   delay: Duration(milliseconds: 50 * (index % 20)),
@@ -267,18 +312,17 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ActionChip(
       avatar: Icon(
         icon,
         size: 18,
-        color: isActive ? theme.colorScheme.onPrimary : null,
+        color: isActive ? Colors.white : AppColors.textSecondary,
       ),
       label: Text(label),
-      backgroundColor: isActive ? theme.colorScheme.primary : null,
+      backgroundColor: isActive ? AppColors.primary : AppColors.surface,
+      side: isActive ? BorderSide.none : const BorderSide(color: AppColors.border),
       labelStyle: TextStyle(
-        color: isActive ? theme.colorScheme.onPrimary : null,
+        color: isActive ? Colors.white : AppColors.textSecondary,
       ),
       onPressed: onTap,
     );
@@ -305,7 +349,7 @@ class _SortChip extends StatelessWidget {
                 child: Row(
                   children: [
                     if (option == currentSort)
-                      const Icon(Icons.check, size: 18)
+                      const Icon(Icons.check, size: 18, color: AppColors.primary)
                     else
                       const SizedBox(width: 18),
                     const SizedBox(width: 8),
@@ -315,8 +359,13 @@ class _SortChip extends StatelessWidget {
               ))
           .toList(),
       child: Chip(
-        avatar: const Icon(Icons.sort, size: 18),
-        label: Text(currentSort.label),
+        avatar: const Icon(Icons.sort, size: 18, color: AppColors.textSecondary),
+        label: Text(
+          currentSort.label,
+          style: const TextStyle(color: AppColors.textSecondary),
+        ),
+        backgroundColor: AppColors.surface,
+        side: const BorderSide(color: AppColors.border),
       ),
     );
   }
@@ -574,6 +623,7 @@ class _FilterSheetState extends ConsumerState<_FilterSheet> {
                       Navigator.pop(context);
                     },
                     style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                     child: Text(context.l10n.uniSearchFilterApply),
@@ -652,6 +702,14 @@ class _UniversityCardState extends State<_UniversityCard> {
           margin: const EdgeInsets.only(bottom: 12),
           clipBehavior: Clip.antiAlias,
           elevation: _isHovered ? 4 : 0,
+          shadowColor: _isHovered
+              ? AppColors.primary.withValues(alpha: 0.15)
+              : Colors.transparent,
+          color: AppColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(color: AppColors.border),
+          ),
           child: InkWell(
             onTap: widget.onTap,
             child: Padding(
@@ -670,14 +728,14 @@ class _UniversityCardState extends State<_UniversityCard> {
                           width: 56,
                           height: 56,
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.primaryContainer,
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Center(
                             child: Text(
                               widget.university.name.isNotEmpty ? widget.university.name[0].toUpperCase() : 'U',
                               style: theme.textTheme.headlineSmall?.copyWith(
-                                color: theme.colorScheme.onPrimaryContainer,
+                                color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -700,10 +758,10 @@ class _UniversityCardState extends State<_UniversityCard> {
                             const SizedBox(height: 4),
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.location_on,
                                   size: 16,
-                                  color: theme.colorScheme.onSurfaceVariant,
+                                  color: AppColors.textSecondary,
                                 ),
                                 const SizedBox(width: 4),
                                 Expanded(
@@ -714,7 +772,7 @@ class _UniversityCardState extends State<_UniversityCard> {
                                       widget.university.country,
                                     ].where((s) => s != null && s.isNotEmpty).join(', '),
                                     style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: theme.colorScheme.onSurfaceVariant,
+                                      color: AppColors.textSecondary,
                                     ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -725,9 +783,9 @@ class _UniversityCardState extends State<_UniversityCard> {
                           ],
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.chevron_right,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: AppColors.textSecondary,
                       ),
                     ],
                   ),
@@ -798,13 +856,13 @@ class _StatChip extends StatelessWidget {
         Icon(
           icon,
           size: 14,
-          color: theme.colorScheme.primary,
+          color: AppColors.primaryDark,
         ),
         const SizedBox(width: 4),
         Text(
           label,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
+            color: AppColors.textSecondary,
           ),
         ),
       ],
@@ -831,14 +889,14 @@ class _EmptyView extends StatelessWidget {
             Icon(
               Icons.search_off,
               size: 64,
-              color: theme.colorScheme.onSurfaceVariant,
+              color: AppColors.textSecondary,
               semanticLabel: context.l10n.uniSearchNoResults,
             ),
             const SizedBox(height: 16),
             Text(
               hasFilters ? context.l10n.uniSearchNoMatchFilters : context.l10n.uniSearchNoResults,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -848,7 +906,7 @@ class _EmptyView extends StatelessWidget {
                   ? context.l10n.uniSearchAdjustFilters
                   : context.l10n.uniSearchTrySearching,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -882,21 +940,21 @@ class _ErrorView extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: theme.colorScheme.error,
+              color: AppColors.error,
               semanticLabel: context.l10n.uniSearchError,
             ),
             const SizedBox(height: 16),
             Text(
               context.l10n.uniSearchError,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.error,
+                color: AppColors.error,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               error,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+                color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -905,6 +963,9 @@ class _ErrorView extends StatelessWidget {
               onPressed: onRetry,
               icon: const Icon(Icons.refresh),
               label: Text(context.l10n.uniSearchRetry),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.primary,
+              ),
             ),
           ],
         ),
