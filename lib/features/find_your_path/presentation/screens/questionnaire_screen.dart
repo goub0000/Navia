@@ -999,13 +999,24 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       featuresDesired: _featuresDesired,
     );
 
-    // Show loading dialog
-    if (mounted) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => _LoadingDialog(),
-      );
+    // Capture root navigator BEFORE any async gaps so we can always
+    // dismiss the dialog even if `mounted` becomes false.
+    if (!mounted) return;
+    final rootNav = Navigator.of(context, rootNavigator: true);
+
+    // Show loading dialog on the root navigator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => _LoadingDialog(),
+    );
+
+    bool dialogOpen = true;
+    void closeDialog() {
+      if (dialogOpen) {
+        dialogOpen = false;
+        rootNav.pop();
+      }
     }
 
     try {
@@ -1014,8 +1025,8 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
 
       final profileState = ref.read(profileProvider);
       if (profileState.error != null) {
+        closeDialog();
         if (mounted) {
-          Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(context.l10n.fypErrorSavingProfile(profileState.error!)),
@@ -1034,9 +1045,8 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
 
       final recsState = ref.read(recommendationsProvider);
 
-      if (mounted) {
-        Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
-      }
+      // Always close the dialog before navigating or showing errors
+      closeDialog();
 
       if (recsState.error != null) {
         if (mounted) {
@@ -1081,8 +1091,8 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
         }
       }
     } catch (e) {
+      closeDialog();
       if (mounted) {
-        Navigator.of(context, rootNavigator: true).pop(); // Close loading dialog
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(context.l10n.fypUnexpectedError(e.toString())),
