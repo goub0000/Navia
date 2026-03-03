@@ -58,24 +58,6 @@ class _UniversityDetailScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(context.l10n.fypUniversityDetails),
-        backgroundColor: AppColors.secondaryDark,
-        foregroundColor: Colors.white,
-        actions: [
-          if (_university?.website != null)
-            IconButton(
-              icon: const Icon(Icons.launch),
-              onPressed: () {
-                // Open website - would need url_launcher package
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Website: ${_university!.website}')),
-                );
-              },
-              tooltip: context.l10n.fypVisitWebsite,
-            ),
-        ],
-      ),
       body: _isLoading
           ? const NaviaLoadingIndicator()
           : _error != null

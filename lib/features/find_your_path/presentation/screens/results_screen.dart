@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_footer.dart';
 import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../../authentication/providers/auth_provider.dart';
 import '../../application/providers/find_your_path_provider.dart';
@@ -49,18 +50,6 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(context.l10n.fypYourRecommendations),
-        backgroundColor: AppColors.secondaryDark,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadRecommendations,
-            tooltip: context.l10n.fypRefresh,
-          ),
-        ],
-      ),
       body: recsState.isLoading
           ? const NaviaLoadingIndicator()
           : recsState.error != null
@@ -160,55 +149,98 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
           .toList();
     }
 
-    return Column(
-      children: [
-        // Summary Stats
-        _buildSummaryStats(response),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Hero banner with teal gradient, title, stats, and refresh button
+          _buildHeroBanner(response),
 
-        // Filter Chips
-        _buildFilterChips(response),
+          // Filter chips row
+          _buildFilterChips(response),
 
-        // Results List
-        Expanded(
-          child: recommendations.isEmpty
-              ? Center(
-                  child: Text(
-                    context.l10n.fypNoFilterMatch,
-                    style: TextStyle(color: AppColors.textSecondary),
-                  ),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: recommendations.length,
-                  itemBuilder: (context, index) {
-                    return _buildUniversityCard(
-                      recommendations[index],
-                      index,
-                    );
-                  },
+          // University cards (Column, not ListView)
+          if (recommendations.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 48),
+              child: Center(
+                child: Text(
+                  context.l10n.fypNoFilterMatch,
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
-        ),
-      ],
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  for (int i = 0; i < recommendations.length; i++)
+                    _buildUniversityCard(recommendations[i], i),
+                ],
+              ),
+            ),
+
+          const SizedBox(height: 48),
+
+          // Footer
+          const NaviaFooter(),
+        ],
+      ),
     );
   }
 
-  Widget _buildSummaryStats(RecommendationListResponse response) {
+  Widget _buildHeroBanner(RecommendationListResponse response) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(24, 32, 24, 28),
       decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.secondaryDark,
+            AppColors.secondary,
+          ],
+        ),
       ),
       child: Column(
         children: [
-          Text(
-            context.l10n.fypFoundPerfectMatches,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          // Title row with refresh button
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.l10n.fypYourRecommendations,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.refresh, color: Colors.white),
+                onPressed: _loadRecommendations,
+                tooltip: context.l10n.fypRefresh,
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.white.withValues(alpha: 0.15),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              context.l10n.fypFoundPerfectMatches,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.white.withValues(alpha: 0.9),
+              ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
+          // Stats row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -245,29 +277,29 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
 
   Widget _buildStatCard(String label, String value, Color color, IconData icon) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
       ),
       child: Column(
         children: [
-          Icon(icon, color: color, size: 28),
+          Icon(icon, color: Colors.white, size: 28),
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: color,
+              color: Colors.white,
             ),
           ),
           Text(
             label,
             style: TextStyle(
               fontSize: 12,
-              color: AppColors.textSecondary,
+              color: Colors.white.withValues(alpha: 0.85),
             ),
           ),
         ],

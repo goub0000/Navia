@@ -79,11 +79,6 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(context.l10n.fypQuestionnaireTitle),
-        backgroundColor: AppColors.secondaryDark,
-        foregroundColor: Colors.white,
-      ),
       body: Column(
         children: [
           // Progress Indicator
