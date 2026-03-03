@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/authentication/presentation/screens/register_screen.dart';
@@ -30,23 +29,16 @@ import '../transitions/shared_axis_page.dart';
 /// Authentication and public routes
 List<RouteBase> authRoutes = [
   // Home route — has its own custom AppBar, stays outside the shell.
-  // Uses a simple fade (not SharedAxisTransition) to avoid the
-  // secondaryAnimation getting stuck when navigating from a ShellRoute
-  // child (e.g. /universities) back to this top-level route.
+  // Uses NoTransitionPage to avoid SharedAxisTransition's secondaryAnimation
+  // getting stuck when navigating from a ShellRoute child (e.g. /universities).
+  // The home page has its own staggered entrance animations, so a page-level
+  // transition is not needed.
   GoRoute(
     path: '/',
     name: 'home',
-    pageBuilder: (context, state) => CustomTransitionPage(
+    pageBuilder: (context, state) => NoTransitionPage(
       key: state.pageKey,
       child: const ModernHomeScreen(),
-      transitionDuration: const Duration(milliseconds: 300),
-      reverseTransitionDuration: const Duration(milliseconds: 250),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: CurveTween(curve: Curves.easeOutCubic).animate(animation),
-          child: child,
-        );
-      },
     ),
   ),
 

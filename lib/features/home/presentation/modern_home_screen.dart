@@ -85,20 +85,20 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   snap: true,
                   elevation: 0,
                   backgroundColor: Colors.transparent,
-                  flexibleSpace: ClipRRect(
-                    child: BackdropFilter(
-                      filter: _scrollOffset > 10
-                          ? ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10)
-                          : ui.ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(
-                            alpha: _scrollOffset > 10 ? 0.8 : 0,
+                  flexibleSpace: _scrollOffset > 10
+                      ? ClipRRect(
+                          child: BackdropFilter(
+                            filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.surface.withValues(
+                                  alpha: 0.8,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
+                        )
+                      : null,
                   title: Semantics(
                     label: 'Main navigation',
                     container: true,
