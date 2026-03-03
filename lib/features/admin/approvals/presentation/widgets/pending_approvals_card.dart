@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/l10n_extension.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../models/approval_models.dart';
 
 /// Card widget for displaying pending approval items
@@ -282,7 +283,7 @@ class _StatusBadge extends StatelessWidget {
         displayStatus = context.l10n.adminApprovalStatusInfoNeeded;
         break;
       case 'escalated':
-        color = Colors.purple;
+        color = AppColors.secondary;
         displayStatus = context.l10n.adminApprovalStatusEscalated;
         break;
       case 'approved':

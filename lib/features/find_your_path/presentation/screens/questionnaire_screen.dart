@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../../authentication/providers/auth_provider.dart';
 import '../../domain/models/student_profile.dart';
 import '../../domain/constants/global_education_data.dart';
@@ -80,7 +81,8 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(context.l10n.fypQuestionnaireTitle),
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.secondaryDark,
+        foregroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -1113,11 +1115,11 @@ class _LoadingDialog extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: AppColors.textPrimary.withValues(alpha: 0.1),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -1126,32 +1128,23 @@ class _LoadingDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Animated circular progress indicator
-              const SizedBox(
-                width: 60,
-                height: 60,
-                child: CircularProgressIndicator(
-                  strokeWidth: 4,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
-                ),
-              ),
-              const SizedBox(height: 24),
-              // Loading message
+              const NaviaLoadingIndicator.compact(),
+              const SizedBox(height: 16),
               Text(
                 context.l10n.fypGeneratingRecommendations,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: AppColors.textPrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
               Text(
                 context.l10n.fypGeneratingPleaseWait,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
-                  color: Colors.grey[600],
+                  color: AppColors.textDisabled,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,

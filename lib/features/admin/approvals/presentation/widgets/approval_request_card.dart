@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/l10n_extension.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../models/approval_models.dart';
 
 /// Card widget for displaying an approval request in a list
@@ -240,7 +241,7 @@ class ApprovalRequestCard extends StatelessWidget {
         icon = Icons.info;
         break;
       case 'escalated':
-        color = Colors.purple;
+        color = AppColors.secondary;
         displayStatus = context.l10n.adminApprovalStatusEscalated;
         icon = Icons.arrow_upward;
         break;

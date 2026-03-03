@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/models/notification_models.dart';
 import '../../../core/providers/notification_provider.dart';
 import '../../../core/l10n_extension.dart';
@@ -490,7 +491,7 @@ class NotificationTile extends StatelessWidget {
       case 'green':
         return Colors.green;
       case 'purple':
-        return Colors.purple;
+        return AppColors.secondary;
       case 'orange':
         return Colors.orange;
       case 'amber':
@@ -500,7 +501,7 @@ class NotificationTile extends StatelessWidget {
       case 'teal':
         return Colors.teal;
       case 'indigo':
-        return Colors.indigo;
+        return AppColors.secondary;
       case 'pink':
         return Colors.pink;
       case 'cyan':

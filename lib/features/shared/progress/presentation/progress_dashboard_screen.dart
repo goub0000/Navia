@@ -160,7 +160,7 @@ class _ProgressDashboardScreenState extends State<ProgressDashboardScreen> {
                 icon: Icons.workspace_premium,
                 label: context.l10n.progressCertificates,
                 value: '${_statistics.certificatesEarned}',
-                color: Colors.purple,
+                color: AppColors.secondary,
               ),
             ],
           ),

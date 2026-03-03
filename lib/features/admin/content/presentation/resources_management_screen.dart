@@ -418,7 +418,7 @@ class _ResourcesManagementScreenState
               '${stats.totalDurationMinutes} min',
               context.l10n.adminContentVideoContent,
               Icons.timer,
-              Colors.purple,
+              AppColors.secondary,
             ),
           ),
         ],

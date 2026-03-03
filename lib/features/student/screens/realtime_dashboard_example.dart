@@ -4,6 +4,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_colors.dart';
 import '../providers/student_applications_realtime_provider.dart';
 import '../../shared/providers/notifications_realtime_provider.dart';
 import '../../shared/widgets/connection_status_indicator.dart';
@@ -201,7 +202,7 @@ class _StatisticsCards extends ConsumerWidget {
               _StatCard(
                 title: 'Under Review',
                 count: statistics['under_review'] ?? 0,
-                color: Colors.purple,
+                color: AppColors.secondary,
                 icon: Icons.rate_review,
               ),
             ],

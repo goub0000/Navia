@@ -104,7 +104,7 @@ class _FocusAnalyticsScreenState extends State<FocusAnalyticsScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [AppColors.primary, Colors.deepPurple],
+          colors: [AppColors.primary, AppColors.secondaryDark],
         ),
         borderRadius: BorderRadius.circular(16),
       ),

@@ -96,7 +96,7 @@ class ExamModel {
       case ExamType.practice:
         return Colors.green;
       case ExamType.assignment:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 

@@ -76,7 +76,7 @@ class _AchievementsScreenState extends ConsumerState<AchievementsScreen>
         title: 'Perfect Score',
         description: 'Get 100% on any quiz',
         icon: Icons.grade,
-        color: Colors.purple,
+        color: AppColors.secondary,
         isUnlocked: false,
         progress: 95,
         target: 100,

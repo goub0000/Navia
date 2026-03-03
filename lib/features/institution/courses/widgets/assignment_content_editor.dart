@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/models/quiz_assignment_models.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'content_editor_wrapper.dart';
 
 /// Rubric criterion model for grading assignments
@@ -83,7 +84,7 @@ class ResourceLink {
 enum SubmissionTypeOption {
   text('text', 'Text Submission', Icons.text_fields, Colors.blue),
   file('file', 'File Upload', Icons.upload_file, Colors.orange),
-  url('url', 'URL Submission', Icons.link, Colors.purple),
+  url('url', 'URL Submission', Icons.link, AppColors.secondary),
   combined('combined', 'Text + File', Icons.add_box, Colors.teal);
 
   final String value;
@@ -398,7 +399,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                   _buildSummaryChip(
                     Icons.checklist,
                     '${_rubricCriteria.length} criteria',
-                    Colors.purple,
+                    AppColors.secondary,
                   ),
                 if (_dueDate != null)
                   _buildSummaryChip(
@@ -1031,7 +1032,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
           EditorSection(
             title: 'Grading Rubric',
             icon: Icons.checklist,
-            iconColor: Colors.purple,
+            iconColor: AppColors.secondary,
             subtitle: 'Define grading criteria for consistent assessment',
             trailing: _useRubric
                 ? Container(
@@ -1061,7 +1062,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                   title: 'Use Rubric',
                   subtitle: 'Enable detailed grading rubric for this assignment',
                   icon: Icons.checklist,
-                  iconColor: Colors.purple,
+                  iconColor: AppColors.secondary,
                   value: _useRubric,
                   onChanged: (value) {
                     setState(() {
@@ -1103,7 +1104,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                               width: 48,
                               height: 48,
                               decoration: BoxDecoration(
-                                color: Colors.purple.shade100,
+                                color: AppColors.secondary.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Center(
@@ -1112,7 +1113,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
-                                    color: Colors.purple.shade700,
+                                    color: AppColors.secondaryDark,
                                   ),
                                 ),
                               ),
@@ -1680,7 +1681,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.purple.shade50,
+                    color: AppColors.secondary.withValues(alpha: 0.08),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8),
@@ -1708,7 +1709,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                           'Points',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.purple.shade700,
+                            color: AppColors.secondaryDark,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -1749,7 +1750,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                             '${criterion.points}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple.shade700,
+                              color: AppColors.secondaryDark,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -1783,7 +1784,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
                           '$_totalRubricPoints',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.purple.shade700,
+                            color: AppColors.secondaryDark,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -1963,7 +1964,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.add_circle, color: Colors.purple),
+            Icon(Icons.add_circle, color: AppColors.secondary),
             SizedBox(width: 12),
             Text('Add Rubric Criterion'),
           ],
@@ -2043,7 +2044,7 @@ class _AssignmentContentEditorState extends State<AssignmentContentEditor>
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.edit, color: Colors.purple),
+            Icon(Icons.edit, color: AppColors.secondary),
             SizedBox(width: 12),
             Text('Edit Criterion'),
           ],

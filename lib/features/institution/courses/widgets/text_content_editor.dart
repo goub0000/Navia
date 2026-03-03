@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/models/course_content_models.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'content_editor_wrapper.dart';
 
 /// Attachment model for file attachments
@@ -331,7 +332,7 @@ class _TextContentEditorState extends State<TextContentEditor>
                   _buildSummaryChip(
                     Icons.link,
                     '${_externalLinks.length} links',
-                    Colors.purple,
+                    AppColors.secondary,
                   ),
                 if (_learningObjectives.isNotEmpty)
                   _buildSummaryChip(
@@ -880,12 +881,12 @@ class _TextContentEditorState extends State<TextContentEditor>
           EditorSection(
             title: 'External Links',
             icon: Icons.link,
-            iconColor: Colors.purple,
+            iconColor: AppColors.secondary,
             subtitle: 'Add reference links and resources',
             trailing: Text(
               '${_externalLinks.length} links',
               style: TextStyle(
-                color: Colors.purple.shade700,
+                color: AppColors.secondaryDark,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -908,12 +909,12 @@ class _TextContentEditorState extends State<TextContentEditor>
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            color: Colors.purple.shade100,
+                            color: AppColors.secondary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
                             Icons.link,
-                            color: Colors.purple.shade700,
+                            color: AppColors.secondaryDark,
                           ),
                         ),
                         title: Text(link.title),
@@ -1412,12 +1413,12 @@ class _TextContentEditorState extends State<TextContentEditor>
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.purple.shade50,
+                color: AppColors.secondary.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.link, color: Colors.purple.shade700),
+                  Icon(Icons.link, color: AppColors.secondaryDark),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -1427,7 +1428,7 @@ class _TextContentEditorState extends State<TextContentEditor>
                           link.title,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            color: Colors.purple.shade700,
+                            color: AppColors.secondaryDark,
                           ),
                         ),
                         if (link.description != null)
@@ -1444,7 +1445,7 @@ class _TextContentEditorState extends State<TextContentEditor>
                   Icon(
                     link.openInNewTab ? Icons.open_in_new : Icons.arrow_forward,
                     size: 16,
-                    color: Colors.purple.shade700,
+                    color: AppColors.secondaryDark,
                   ),
                 ],
               ),
@@ -1719,7 +1720,7 @@ class _TextContentEditorState extends State<TextContentEditor>
         builder: (context, setDialogState) => AlertDialog(
           title: const Row(
             children: [
-              Icon(Icons.link, color: Colors.purple),
+              Icon(Icons.link, color: AppColors.secondary),
               SizedBox(width: 12),
               Text('Add External Link'),
             ],
@@ -1810,7 +1811,7 @@ class _TextContentEditorState extends State<TextContentEditor>
         builder: (context, setDialogState) => AlertDialog(
           title: const Row(
             children: [
-              Icon(Icons.edit, color: Colors.purple),
+              Icon(Icons.edit, color: AppColors.secondary),
               SizedBox(width: 12),
               Text('Edit External Link'),
             ],

@@ -759,7 +759,7 @@ class _ContentManagementScreenState
         DataTableAction(
           icon: Icons.person_add,
           tooltip: context.l10n.adminContentAssign,
-          color: Colors.purple,
+          color: AppColors.secondary,
           onPressed: (content) {
             _showAssignContentDialog(content);
           },
@@ -1261,7 +1261,7 @@ class _ContentManagementScreenState
         icon = Icons.live_tv;
         break;
       case 'hybrid':
-        color = Colors.purple;
+        color = AppColors.secondary;
         icon = Icons.layers;
         break;
       default:

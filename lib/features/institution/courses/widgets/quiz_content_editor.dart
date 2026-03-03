@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../../core/models/quiz_assignment_models.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// A professional quiz content editor for creating college-grade assessments.
 /// Supports multiple choice, true/false, short answer, and essay questions
@@ -531,7 +532,7 @@ class _QuizContentEditorState extends State<QuizContentEditor> {
       case QuestionType.shortAnswer:
         return Colors.orange;
       case QuestionType.essay:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 
@@ -810,7 +811,7 @@ class _QuizContentEditorState extends State<QuizContentEditor> {
 
       case QuestionType.essay:
         label = 'Manual grading';
-        color = Colors.purple.shade700;
+        color = AppColors.secondaryDark;
         break;
     }
 
@@ -1016,13 +1017,13 @@ class _QuizContentEditorState extends State<QuizContentEditor> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.edit_note, size: 16, color: Colors.purple.shade700),
+                Icon(Icons.edit_note, size: 16, color: AppColors.secondaryDark),
                 const SizedBox(width: 4),
                 Text(
                   'Requires manual grading',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.purple.shade700,
+                    color: AppColors.secondaryDark,
                   ),
                 ),
               ],
@@ -1643,7 +1644,7 @@ class _QuizContentEditorState extends State<QuizContentEditor> {
         title = 'Essay';
         description = 'Students write a detailed response. Requires manual grading.';
         icon = Icons.notes;
-        color = Colors.purple;
+        color = AppColors.secondary;
         break;
     }
 
@@ -1978,17 +1979,17 @@ class _QuizContentEditorState extends State<QuizContentEditor> {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.purple.shade50,
+            color: AppColors.secondary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             children: [
-              Icon(Icons.edit_note, color: Colors.purple.shade700, size: 20),
+              Icon(Icons.edit_note, color: AppColors.secondaryDark, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'This question requires manual grading by the instructor',
-                  style: TextStyle(fontSize: 12, color: Colors.purple.shade700),
+                  style: TextStyle(fontSize: 12, color: AppColors.secondaryDark),
                 ),
               ),
             ],

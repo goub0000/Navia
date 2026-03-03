@@ -548,7 +548,7 @@ class _CareerResourcesScreenState extends State<CareerResourcesScreen>
       {'icon': Icons.psychology, 'label': 'Interview Prep', 'color': AppColors.info},
       {'icon': Icons.trending_up, 'label': 'Career Growth', 'color': AppColors.success},
       {'icon': Icons.people, 'label': 'Networking', 'color': AppColors.warning},
-      {'icon': Icons.business_center, 'label': 'Job Search', 'color': Colors.purple},
+      {'icon': Icons.business_center, 'label': 'Job Search', 'color': AppColors.secondary},
       {'icon': Icons.school, 'label': 'Skill Development', 'color': Colors.orange},
     ];
 

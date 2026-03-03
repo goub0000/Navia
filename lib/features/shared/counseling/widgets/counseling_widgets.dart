@@ -101,11 +101,11 @@ class SessionTypeBadge extends StatelessWidget {
       case SessionType.academic:
         return AppColors.primary;
       case SessionType.career:
-        return Colors.purple;
+        return AppColors.secondary;
       case SessionType.personal:
         return Colors.teal;
       case SessionType.college:
-        return Colors.indigo;
+        return AppColors.secondary;
       case SessionType.general:
         return Colors.blueGrey;
     }

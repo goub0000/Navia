@@ -97,7 +97,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
         title: 'Mobile App',
         description: 'Using Navia on mobile devices',
         icon: Icons.phone_android,
-        color: Colors.purple,
+        color: AppColors.secondary,
         articleCount: 9,
       ),
     ];

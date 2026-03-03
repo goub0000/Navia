@@ -607,7 +607,7 @@ class _CoursesListScreenState extends ConsumerState<CoursesListScreen>
       case CourseLevel.advanced:
         return Colors.red;
       case CourseLevel.expert:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 

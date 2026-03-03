@@ -397,7 +397,7 @@ class _ExamsListScreenState extends ConsumerState<ExamsListScreen>
               'Avg Score',
               completedCount > 0 ? '${avgScore.toStringAsFixed(0)}%' : '-',
               Icons.grade,
-              Colors.purple,
+              AppColors.secondary,
             ),
           ),
         ],

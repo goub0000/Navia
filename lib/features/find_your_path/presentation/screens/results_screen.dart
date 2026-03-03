@@ -51,7 +51,8 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(context.l10n.fypYourRecommendations),
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.secondaryDark,
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -281,51 +282,62 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            FilterChip(
-              label: Text(context.l10n.fypFilterAll(response.totalCount)),
+            _buildFilterPill(
+              label: context.l10n.fypFilterAll(response.totalCount),
               selected: _filterCategory == null,
-              onSelected: (selected) {
-                setState(() {
-                  _filterCategory = null;
-                });
-              },
+              onSelected: (_) => setState(() => _filterCategory = null),
             ),
             const SizedBox(width: 8),
-            FilterChip(
-              label: Text(context.l10n.fypFilterSafety(response.safetyCount)),
+            _buildFilterPill(
+              label: context.l10n.fypFilterSafety(response.safetyCount),
               selected: _filterCategory == 'Safety',
-              onSelected: (selected) {
-                setState(() {
-                  _filterCategory = selected ? 'Safety' : null;
-                });
-              },
-              selectedColor: AppColors.success.withValues(alpha: 0.2),
+              onSelected: (s) =>
+                  setState(() => _filterCategory = s ? 'Safety' : null),
+              selectedColor: AppColors.success,
             ),
             const SizedBox(width: 8),
-            FilterChip(
-              label: Text(context.l10n.fypFilterMatch(response.matchCount)),
+            _buildFilterPill(
+              label: context.l10n.fypFilterMatch(response.matchCount),
               selected: _filterCategory == 'Match',
-              onSelected: (selected) {
-                setState(() {
-                  _filterCategory = selected ? 'Match' : null;
-                });
-              },
-              selectedColor: AppColors.info.withValues(alpha: 0.2),
+              onSelected: (s) =>
+                  setState(() => _filterCategory = s ? 'Match' : null),
+              selectedColor: AppColors.info,
             ),
             const SizedBox(width: 8),
-            FilterChip(
-              label: Text(context.l10n.fypFilterReach(response.reachCount)),
+            _buildFilterPill(
+              label: context.l10n.fypFilterReach(response.reachCount),
               selected: _filterCategory == 'Reach',
-              onSelected: (selected) {
-                setState(() {
-                  _filterCategory = selected ? 'Reach' : null;
-                });
-              },
-              selectedColor: AppColors.warning.withValues(alpha: 0.2),
+              onSelected: (s) =>
+                  setState(() => _filterCategory = s ? 'Reach' : null),
+              selectedColor: AppColors.warning,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildFilterPill({
+    required String label,
+    required bool selected,
+    required ValueChanged<bool> onSelected,
+    Color? selectedColor,
+  }) {
+    final color = selectedColor ?? AppColors.primary;
+    return FilterChip(
+      label: Text(
+        label,
+        style: TextStyle(
+          color: selected ? Colors.white : AppColors.textPrimary,
+          fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+        ),
+      ),
+      selected: selected,
+      onSelected: onSelected,
+      selectedColor: color,
+      backgroundColor: AppColors.border,
+      checkmarkColor: Colors.white,
+      side: BorderSide.none,
     );
   }
 
@@ -334,9 +346,11 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 2,
+      elevation: 0,
+      color: AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: AppColors.border),
       ),
       child: InkWell(
         onTap: university != null

@@ -235,7 +235,7 @@ class _FileUploadState extends State<FileUpload> {
       case 'png':
       case 'gif':
         icon = Icons.image;
-        color = Colors.purple;
+        color = AppColors.secondary;
         break;
       case 'zip':
       case 'rar':

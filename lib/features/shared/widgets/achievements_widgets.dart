@@ -104,7 +104,7 @@ class Achievement {
       case AchievementRarity.rare:
         return Colors.blue;
       case AchievementRarity.epic:
-        return Colors.purple;
+        return AppColors.secondary;
       case AchievementRarity.legendary:
         return Colors.orange;
     }
@@ -232,7 +232,7 @@ class Milestone {
       case MilestoneType.courseCompleted:
         return AppColors.success;
       case MilestoneType.achievementUnlocked:
-        return Colors.purple;
+        return AppColors.secondary;
       case MilestoneType.levelUp:
         return Colors.orange;
       case MilestoneType.streakMilestone:

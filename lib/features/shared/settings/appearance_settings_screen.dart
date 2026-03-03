@@ -267,7 +267,7 @@ class AppearanceSettingsScreen extends ConsumerWidget {
                         const Color(0xFF6366F1), // Default indigo seed
                         AppColors.primary,
                         Colors.blue,
-                        Colors.purple,
+                        AppColors.secondary,
                         Colors.green,
                         Colors.orange,
                         Colors.pink,

@@ -92,7 +92,7 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
         title: 'Course Master',
         description: 'Complete your first course',
         icon: Icons.workspace_premium,
-        color: Colors.purple,
+        color: AppColors.secondary,
         category: AchievementCategory.mastery,
         rarity: AchievementRarity.rare,
         points: 50,
@@ -178,7 +178,7 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
         title: 'Legendary Learner',
         description: 'Complete 100 lessons',
         icon: Icons.auto_awesome,
-        color: Colors.deepPurple,
+        color: AppColors.secondaryDark,
         category: AchievementCategory.mastery,
         rarity: AchievementRarity.legendary,
         points: 200,
@@ -351,7 +351,7 @@ class _AchievementsGalleryScreenState extends ConsumerState<AchievementsGalleryS
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [AppColors.primary, Colors.purple],
+          colors: [AppColors.primary, AppColors.secondary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

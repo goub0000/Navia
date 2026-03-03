@@ -115,7 +115,7 @@ class _HelpScreenState extends ConsumerState<HelpScreen> {
     HelpCategoryData(
       category: HelpCategory.account,
       icon: Icons.person,
-      color: Colors.purple,
+      color: AppColors.secondary,
       questions: [
         FAQItem(
           question: 'How do I change my password?',

@@ -311,7 +311,7 @@ class _CurriculumManagementScreenState
               stats.totalLessons.toString(),
               context.l10n.adminContentAllLessons,
               Icons.list_alt,
-              Colors.purple,
+              AppColors.secondary,
             ),
           ),
         ],

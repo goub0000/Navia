@@ -241,7 +241,7 @@ class _CounselorsManagementScreenState
                 context.l10n.instCounselorsUpcoming,
                 '${stats['upcoming_sessions'] ?? 0}',
                 Icons.schedule,
-                Colors.purple,
+                AppColors.secondary,
               ),
               const SizedBox(width: 12),
               _buildStatCard(

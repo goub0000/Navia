@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/l10n_extension.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../models/approval_models.dart';
 import '../../providers/approvals_provider.dart';
 
@@ -534,7 +535,7 @@ class _ApprovalDetailScreenState extends ConsumerState<ApprovalDetailScreen> {
         icon = Icons.cancel;
         break;
       case 'escalated':
-        color = Colors.purple;
+        color = AppColors.secondary;
         displayStatus = context.l10n.adminApprovalEscalated;
         icon = Icons.arrow_upward;
         break;

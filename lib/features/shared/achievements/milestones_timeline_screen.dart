@@ -307,7 +307,7 @@ class _MilestonesTimelineScreenState extends State<MilestonesTimelineScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Colors.purple, Colors.deepPurple],
+          colors: [AppColors.secondary, AppColors.secondaryDark],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

@@ -47,7 +47,7 @@ class _FeatureHighlightsScreenState extends State<FeatureHighlightsScreen>
           title: 'Learning Dashboard',
           description:
               'Track your progress, view enrolled courses, and access learning materials',
-          color: Colors.purple,
+          color: AppColors.secondary,
         ),
         FeatureData(
           icon: Icons.chat,
@@ -97,7 +97,7 @@ class _FeatureHighlightsScreenState extends State<FeatureHighlightsScreen>
           title: 'Calendar',
           description:
               'Track deadlines, events, and important dates',
-          color: Colors.indigo,
+          color: AppColors.secondary,
         ),
         FeatureData(
           icon: Icons.notifications,
@@ -133,7 +133,7 @@ class _FeatureHighlightsScreenState extends State<FeatureHighlightsScreen>
           icon: Icons.forum,
           title: 'Discussion Forums',
           description: 'Participate in course discussions and Q&A',
-          color: Colors.deepPurple,
+          color: AppColors.secondaryDark,
         ),
         FeatureData(
           icon: Icons.share,

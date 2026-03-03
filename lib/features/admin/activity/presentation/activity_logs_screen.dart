@@ -431,8 +431,8 @@ class _ActivityLogsScreenState extends ConsumerState<ActivityLogsScreen> {
         icon = Icons.logout;
         break;
       case 'export':
-        backgroundColor = Colors.purple.withValues(alpha: 0.1);
-        textColor = Colors.purple;
+        backgroundColor = AppColors.secondary.withValues(alpha: 0.1);
+        textColor = AppColors.secondary;
         icon = Icons.download;
         break;
       case 'bulk_operation':

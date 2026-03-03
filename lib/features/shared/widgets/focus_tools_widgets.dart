@@ -76,7 +76,7 @@ class FocusSession {
       case SessionType.longBreak:
         return Colors.blue;
       case SessionType.custom:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 

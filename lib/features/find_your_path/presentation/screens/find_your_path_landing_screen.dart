@@ -19,7 +19,8 @@ class FindYourPathLandingScreen extends ConsumerWidget {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(context.l10n.fypTitle),
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.secondaryDark,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),

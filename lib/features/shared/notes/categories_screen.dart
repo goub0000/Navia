@@ -97,7 +97,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         id: '5',
         name: 'Projects',
         icon: Icons.folder,
-        color: Colors.purple,
+        color: AppColors.secondary,
         noteCount: 6,
       ),
     ];
@@ -466,9 +466,9 @@ const List<IconData> _categoryIcons = [
 const List<Color> _categoryColors = [
   Colors.red,
   Colors.pink,
-  Colors.purple,
-  Colors.deepPurple,
-  Colors.indigo,
+  AppColors.secondary,
+  AppColors.secondaryDark,
+  AppColors.secondary,
   Colors.blue,
   Colors.lightBlue,
   Colors.cyan,

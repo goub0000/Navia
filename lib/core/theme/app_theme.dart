@@ -82,14 +82,55 @@ class AppTheme {
     final double verticalPadding = compactMode ? 8.0 : 12.0;
 
     // ── Generate the full M3 tonal palette from the seed ──
+    //
+    // fromSeed derives neutral tonal slots from the seed hue, which can
+    // produce a purple/lavender tint for teal seeds.  We override every
+    // surface, outline and container slot with NAVIA brand neutrals so the
+    // palette stays warm-neutral (Ivory / Sand / Light Gray / Midnight).
     final colorScheme = ColorScheme.fromSeed(
       seedColor: seedColor,
       brightness: brightness,
     ).copyWith(
       // Brand overrides — Navy secondary, Material Red error, Gold tertiary
       secondary: isDark ? AppColors.secondaryLight : AppColors.secondary,
+      onSecondary: Colors.white,
+      secondaryContainer: isDark
+          ? AppColors.primaryDark
+          : AppColors.primary, // Teal — used by selected FilterChips
+      onSecondaryContainer: Colors.white,
       error: isDark ? const Color(0xFFEF5350) : const Color(0xFFD32F2F),
       tertiary: isDark ? AppColors.accentLight : AppColors.accent,
+
+      // ── Surface & neutral overrides (kills M3 purple tint) ──
+      surface: isDark ? AppColors.darkBackground : AppColors.surface,
+      onSurface: isDark ? AppColors.darkTextPrimary : AppColors.textPrimary,
+      onSurfaceVariant:
+          isDark ? AppColors.darkTextSecondary : AppColors.textDisabled,
+      surfaceTint: Colors.transparent, // disable M3 tonal elevation tint
+      surfaceContainerLowest:
+          isDark ? const Color(0xFF080C12) : Colors.white,
+      surfaceContainerLow:
+          isDark ? AppColors.darkSurface : AppColors.background,
+      surfaceContainer:
+          isDark ? AppColors.darkSurfaceContainer : AppColors.background,
+      surfaceContainerHigh:
+          isDark ? AppColors.darkSurfaceContainerHigh : AppColors.sectionWarm,
+      surfaceContainerHighest:
+          isDark ? AppColors.darkSurfaceContainerHighest : AppColors.sectionWarm,
+      inverseSurface:
+          isDark ? AppColors.sectionLight : AppColors.darkBackground,
+      onInverseSurface:
+          isDark ? AppColors.textPrimary : AppColors.darkTextPrimary,
+
+      // ── Outline / border overrides ──
+      outline: isDark ? AppColors.darkBorder : AppColors.border,
+      outlineVariant: isDark ? AppColors.darkDivider : AppColors.border,
+
+      // ── Primary container (avoids purple-tinted container) ──
+      primaryContainer:
+          isDark ? const Color(0xFF0E3A36) : const Color(0xFFD5F5F1),
+      onPrimaryContainer:
+          isDark ? AppColors.primaryLight : AppColors.primaryDark,
     );
 
     // Focus outline color for keyboard-focus-visible indicators

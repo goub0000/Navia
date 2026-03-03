@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/models/course_content_models.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'content_editor_wrapper.dart';
 
 /// Video platform enumeration for supported video services
@@ -12,7 +13,7 @@ enum VideoPlatform {
   vimeo('vimeo', 'Vimeo', Icons.play_circle_outline, Colors.blue),
   direct('direct', 'Direct URL', Icons.link, Colors.grey),
   wistia('wistia', 'Wistia', Icons.video_library, Colors.teal),
-  custom('custom', 'Custom/Other', Icons.settings_input_component, Colors.purple);
+  custom('custom', 'Custom/Other', Icons.settings_input_component, AppColors.secondary);
 
   final String value;
   final String displayName;
@@ -352,7 +353,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                   _buildSummaryChip(
                     Icons.bookmark,
                     '${_chapters.length} chapters',
-                    Colors.purple,
+                    AppColors.secondary,
                   ),
                 ],
                 if (_subtitles.isNotEmpty) ...[
@@ -825,7 +826,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
           EditorSection(
             title: 'Playback Range',
             icon: Icons.content_cut,
-            iconColor: Colors.purple,
+            iconColor: AppColors.secondary,
             subtitle: 'Set start and end points for the video',
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -877,18 +878,18 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.purple.shade50,
+                    color: AppColors.secondary.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.info_outline, size: 20, color: Colors.purple.shade700),
+                      Icon(Icons.info_outline, size: 20, color: AppColors.secondaryDark),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'Students will see the video from $_formatSecondsToTime(_startTimeSeconds) '
                           '${_endTimeSeconds > 0 ? 'to ${_formatSecondsToTime(_endTimeSeconds)}' : 'to end'}',
-                          style: TextStyle(color: Colors.purple.shade700, fontSize: 12),
+                          style: TextStyle(color: AppColors.secondaryDark, fontSize: 12),
                         ),
                       ),
                     ],
@@ -1116,12 +1117,12 @@ class _VideoContentEditorState extends State<VideoContentEditor>
           EditorSection(
             title: 'Chapter Markers',
             icon: Icons.bookmark,
-            iconColor: Colors.purple,
+            iconColor: AppColors.secondary,
             subtitle: 'Add bookmarks for easy navigation',
             trailing: Text(
               '${_chapters.length} chapters',
               style: TextStyle(
-                color: Colors.purple.shade700,
+                color: AppColors.secondaryDark,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -1178,7 +1179,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.purple.shade100,
+                              color: AppColors.secondary.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
@@ -1186,7 +1187,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
-                                color: Colors.purple.shade700,
+                                color: AppColors.secondaryDark,
                               ),
                             ),
                           ),
@@ -1408,7 +1409,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.purple.shade100,
+                      color: AppColors.secondary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -1416,7 +1417,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.purple.shade700,
+                        color: AppColors.secondaryDark,
                       ),
                     ),
                   ),
@@ -1642,7 +1643,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.bookmark_add, color: Colors.purple),
+            Icon(Icons.bookmark_add, color: AppColors.secondary),
             SizedBox(width: 12),
             Text('Add Chapter'),
           ],
@@ -1722,7 +1723,7 @@ class _VideoContentEditorState extends State<VideoContentEditor>
       builder: (context) => AlertDialog(
         title: const Row(
           children: [
-            Icon(Icons.edit, color: Colors.purple),
+            Icon(Icons.edit, color: AppColors.secondary),
             SizedBox(width: 12),
             Text('Edit Chapter'),
           ],

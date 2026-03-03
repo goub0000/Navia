@@ -712,7 +712,7 @@ class _NewConversationSheetState extends ConsumerState<_NewConversationSheet> {
       case 'parent':
         return Colors.orange;
       case 'institution':
-        return Colors.purple;
+        return AppColors.secondary;
       case 'admin':
       case 'super_admin':
         return Colors.red;

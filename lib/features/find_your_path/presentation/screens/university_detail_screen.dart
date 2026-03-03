@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/navia_loading_indicator.dart';
 import '../../data/services/find_your_path_service.dart';
 import '../../domain/models/university.dart';
 
@@ -59,7 +60,8 @@ class _UniversityDetailScreenState
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(context.l10n.fypUniversityDetails),
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.secondaryDark,
+        foregroundColor: Colors.white,
         actions: [
           if (_university?.website != null)
             IconButton(
@@ -75,7 +77,7 @@ class _UniversityDetailScreenState
         ],
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const NaviaLoadingIndicator()
           : _error != null
               ? _buildErrorState()
               : _university == null

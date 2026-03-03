@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/l10n_extension.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../models/approval_models.dart';
 import '../../providers/approvals_provider.dart';
 import '../widgets/approval_stats_card.dart';
@@ -154,7 +155,7 @@ class _ApprovalDashboardScreenState
           title: context.l10n.adminApprovalUnderReview,
           value: stats.underReviewRequests.toString(),
           icon: Icons.rate_review,
-          color: Colors.purple,
+          color: AppColors.secondary,
         ),
         ApprovalStatsCard(
           title: context.l10n.adminApprovalApproved,
@@ -229,7 +230,7 @@ class _ApprovalDashboardScreenState
             title: context.l10n.adminApprovalDelegatedToYou,
             items: pending.delegatedToMe,
             icon: Icons.forward,
-            color: Colors.purple,
+            color: AppColors.secondary,
             onTap: (item) => context.go('/admin/approvals/${item.id}'),
           ),
       ],

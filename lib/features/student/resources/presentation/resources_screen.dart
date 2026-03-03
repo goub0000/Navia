@@ -670,7 +670,7 @@ enum ResourceCategory {
       case ResourceCategory.template:
         return Colors.green;
       case ResourceCategory.externalLink:
-        return Colors.purple;
+        return AppColors.secondary;
       case ResourceCategory.career:
         return Colors.orange;
     }
@@ -711,7 +711,7 @@ enum ResourceType {
       case ResourceType.article:
         return Colors.orange;
       case ResourceType.link:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 }

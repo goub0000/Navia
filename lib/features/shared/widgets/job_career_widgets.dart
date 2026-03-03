@@ -55,7 +55,7 @@ extension JobTypeExtension on JobType {
       case JobType.internship:
         return AppColors.success;
       case JobType.freelance:
-        return Colors.purple;
+        return AppColors.secondary;
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/course_content_models.dart';
 import '../../../../core/l10n_extension.dart';
+import '../../../../core/theme/app_colors.dart';
 
 /// Advanced Module Editor Dialog
 /// Features: Learning objectives management, duration tracking, prerequisites, and more
@@ -300,7 +301,7 @@ class _AdvancedModuleEditorState extends State<AdvancedModuleEditor>
                 _buildStatChip(
                   Icons.playlist_play,
                   context.l10n.instCourseLessonsCount(widget.existingModule?.lessonCount ?? 0),
-                  Colors.purple,
+                  AppColors.secondary,
                 ),
               ],
             ),

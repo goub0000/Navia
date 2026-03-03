@@ -393,7 +393,7 @@ class _DashboardHomeTabState extends ConsumerState<_DashboardHomeTab> with Refre
               QuickAction(
                 label: context.l10n.dashStudentResources,
                 icon: Icons.library_books,
-                color: Colors.purple,
+                color: AppColors.secondary,
                 onTap: () {
                   context.push('/student/resources');
                 },
