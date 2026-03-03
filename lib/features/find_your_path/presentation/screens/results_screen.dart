@@ -198,8 +198,8 @@ class _ResultsScreenState extends ConsumerState<ResultsScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.secondaryDark,
-            AppColors.secondary,
+            AppColors.primaryDark,
+            AppColors.primary,
           ],
         ),
       ),
