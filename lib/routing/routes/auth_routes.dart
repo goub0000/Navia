@@ -24,19 +24,21 @@ import '../../features/home/presentation/pages/compliance_page.dart';
 import '../../features/home/presentation/pages/cookies_page.dart';
 import '../../features/home/presentation/pages/data_protection_page.dart';
 import '../../features/home/presentation/pages/mobile_apps_page.dart';
+import '../transitions/instant_page.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Authentication and public routes
 List<RouteBase> authRoutes = [
-  // Home route — has its own custom AppBar, stays outside the shell.
-  // Uses NoTransitionPage to avoid SharedAxisTransition's secondaryAnimation
-  // getting stuck when navigating from a ShellRoute child (e.g. /universities).
-  // The home page has its own staggered entrance animations, so a page-level
-  // transition is not needed.
+  // Home route — uses InstantPage (fade-aware zero-duration transition).
+  // go_router's NoTransitionPage ignores the animation value, so if the
+  // Navigator takes an extra frame to remove the old route's OverlayEntry
+  // the outgoing page renders at full opacity ("ghost layer" on Flutter web).
+  // InstantPage wraps the child in FadeTransition(opacity: animation) so the
+  // outgoing page is invisible (opacity 0) even during that extra frame.
   GoRoute(
     path: '/',
     name: 'home',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const ModernHomeScreen(),
     ),
@@ -104,14 +106,11 @@ List<RouteBase> authRoutes = [
     },
   ),
 
-  // Public sub-pages — each wraps PublicShell inline (no ShellRoute).
-  // go_router's ShellRoute creates a persistent shell-level page in the
-  // parent Navigator whose exit animation gets stuck, leaving a ghost
-  // layer. Using plain GoRoutes with PublicShell inline avoids this.
+  // Public sub-pages — InstantPage + inline PublicShell (no ShellRoute).
   GoRoute(
     path: '/about',
     name: 'about',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: AboutPage()),
     ),
@@ -119,7 +118,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/contact',
     name: 'contact',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: ContactPage()),
     ),
@@ -127,7 +126,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/privacy',
     name: 'privacy',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: PrivacyPage()),
     ),
@@ -135,7 +134,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/terms',
     name: 'terms',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: TermsPage()),
     ),
@@ -143,7 +142,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/careers',
     name: 'careers',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: CareersPage()),
     ),
@@ -151,7 +150,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/press',
     name: 'press',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: PressPage()),
     ),
@@ -159,7 +158,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/partners',
     name: 'partners',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: PartnersPage()),
     ),
@@ -167,7 +166,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/help',
     name: 'help',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: HelpCenterPage()),
     ),
@@ -175,7 +174,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/docs',
     name: 'docs',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: DocsPage()),
     ),
@@ -183,7 +182,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/api-docs',
     name: 'api-docs',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: ApiDocsPage()),
     ),
@@ -191,7 +190,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/community',
     name: 'community',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: CommunityPage()),
     ),
@@ -199,7 +198,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/blog',
     name: 'blog',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: BlogPage()),
     ),
@@ -207,7 +206,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/compliance',
     name: 'compliance',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: CompliancePage()),
     ),
@@ -215,7 +214,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/cookies',
     name: 'cookies',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: CookiesPage()),
     ),
@@ -223,7 +222,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/data-protection',
     name: 'data-protection',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: DataProtectionPage()),
     ),
@@ -231,7 +230,7 @@ List<RouteBase> authRoutes = [
   GoRoute(
     path: '/mobile-apps',
     name: 'mobile-apps',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: MobileAppsPage()),
     ),

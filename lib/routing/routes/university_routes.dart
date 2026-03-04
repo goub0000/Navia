@@ -3,19 +3,18 @@ import '../../features/university_search/presentation/university_search_screen.d
 import '../../features/university_search/presentation/university_detail_screen.dart';
 import '../../features/shared/widgets/public_shell.dart';
 import '../../core/models/university_model.dart';
+import '../transitions/instant_page.dart';
 
 /// Routes for university search feature (public, no auth required).
 ///
-/// IMPORTANT: These are top-level GoRoutes wrapping PublicShell directly
-/// instead of using ShellRoute. go_router's ShellRoute creates a
-/// separate page in the parent Navigator whose exit animation gets stuck
-/// during shell→non-shell navigation, leaving a ghost layer over the
-/// destination page. Wrapping PublicShell inline avoids this entirely.
+/// Uses [InstantPage] (fade-aware zero-duration transition) instead of
+/// [NoTransitionPage] to prevent the outgoing page from rendering at full
+/// opacity during the one-frame OverlayEntry removal delay on Flutter web.
 List<RouteBase> universityRoutes = [
   GoRoute(
     path: '/universities',
     name: 'university-search',
-    pageBuilder: (context, state) => NoTransitionPage(
+    pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
       child: const PublicShell(child: UniversitySearchScreen()),
     ),
@@ -27,7 +26,7 @@ List<RouteBase> universityRoutes = [
       final idStr = state.pathParameters['id']!;
       final id = int.tryParse(idStr) ?? 0;
       final university = state.extra as University?;
-      return NoTransitionPage(
+      return InstantPage(
         key: state.pageKey,
         child: PublicShell(
           child: UniversityDetailScreen(
