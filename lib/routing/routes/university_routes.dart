@@ -7,13 +7,16 @@ import '../../core/models/university_model.dart';
 /// Routes for university search feature (public, no auth required)
 /// Wrapped in PublicShell for consistent navigation navbar.
 ///
-/// Uses NoTransitionPage to prevent ANY exit animation from getting stuck
-/// when navigating out of the ShellRoute (e.g. to /). Both SharedAxisPage
-/// and MaterialPage transitions get stuck during shell→non-shell navigation
-/// in go_router, leaving ghost layers over the destination page.
+/// The ShellRoute itself uses pageBuilder with NoTransitionPage so the
+/// SHELL's page in the parent Navigator has no exit animation. Previous
+/// attempts only set NoTransitionPage on the child GoRoutes, but the
+/// ghost layer came from the shell-level page that go_router creates
+/// in the parent Navigator with a default animated transition.
 List<RouteBase> universityRoutes = [
   ShellRoute(
-    builder: (context, state, child) => PublicShell(child: child),
+    pageBuilder: (context, state, child) => NoTransitionPage(
+      child: PublicShell(child: child),
+    ),
     routes: [
       // University search screen
       GoRoute(

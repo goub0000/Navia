@@ -105,11 +105,13 @@ List<RouteBase> authRoutes = [
   ),
 
   // Public sub-pages wrapped in PublicShell for consistent navigation.
-  // Uses NoTransitionPage to prevent ANY exit animation from getting stuck
-  // when navigating out of the ShellRoute (both SharedAxisPage and
-  // MaterialPage transitions get stuck during shell→non-shell navigation).
+  // Shell-level pageBuilder uses NoTransitionPage so the shell's own page
+  // in the parent Navigator has no exit animation (prevents ghost layers
+  // when navigating out of the shell to a top-level route like /).
   ShellRoute(
-    builder: (context, state, child) => PublicShell(child: child),
+    pageBuilder: (context, state, child) => NoTransitionPage(
+      child: PublicShell(child: child),
+    ),
     routes: [
       GoRoute(
         path: '/about',
