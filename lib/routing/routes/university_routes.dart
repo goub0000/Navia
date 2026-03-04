@@ -4,46 +4,38 @@ import '../../features/university_search/presentation/university_detail_screen.d
 import '../../features/shared/widgets/public_shell.dart';
 import '../../core/models/university_model.dart';
 
-/// Routes for university search feature (public, no auth required)
-/// Wrapped in PublicShell for consistent navigation navbar.
+/// Routes for university search feature (public, no auth required).
 ///
-/// The ShellRoute itself uses pageBuilder with NoTransitionPage so the
-/// SHELL's page in the parent Navigator has no exit animation. Previous
-/// attempts only set NoTransitionPage on the child GoRoutes, but the
-/// ghost layer came from the shell-level page that go_router creates
-/// in the parent Navigator with a default animated transition.
+/// IMPORTANT: These are top-level GoRoutes wrapping PublicShell directly
+/// instead of using ShellRoute. go_router's ShellRoute creates a
+/// separate page in the parent Navigator whose exit animation gets stuck
+/// during shell→non-shell navigation, leaving a ghost layer over the
+/// destination page. Wrapping PublicShell inline avoids this entirely.
 List<RouteBase> universityRoutes = [
-  ShellRoute(
-    pageBuilder: (context, state, child) => NoTransitionPage(
-      child: PublicShell(child: child),
+  GoRoute(
+    path: '/universities',
+    name: 'university-search',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: UniversitySearchScreen()),
     ),
-    routes: [
-      // University search screen
-      GoRoute(
-        path: '/universities',
-        name: 'university-search',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const UniversitySearchScreen(),
+  ),
+  GoRoute(
+    path: '/universities/:id',
+    name: 'university-detail',
+    pageBuilder: (context, state) {
+      final idStr = state.pathParameters['id']!;
+      final id = int.tryParse(idStr) ?? 0;
+      final university = state.extra as University?;
+      return NoTransitionPage(
+        key: state.pageKey,
+        child: PublicShell(
+          child: UniversityDetailScreen(
+            universityId: id,
+            university: university,
+          ),
         ),
-      ),
-      // University detail screen
-      GoRoute(
-        path: '/universities/:id',
-        name: 'university-detail',
-        pageBuilder: (context, state) {
-          final idStr = state.pathParameters['id']!;
-          final id = int.tryParse(idStr) ?? 0;
-          final university = state.extra as University?;
-          return NoTransitionPage(
-            key: state.pageKey,
-            child: UniversityDetailScreen(
-              universityId: id,
-              university: university,
-            ),
-          );
-        },
-      ),
-    ],
+      );
+    },
   ),
 ];

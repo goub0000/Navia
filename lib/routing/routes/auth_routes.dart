@@ -104,143 +104,136 @@ List<RouteBase> authRoutes = [
     },
   ),
 
-  // Public sub-pages wrapped in PublicShell for consistent navigation.
-  // Shell-level pageBuilder uses NoTransitionPage so the shell's own page
-  // in the parent Navigator has no exit animation (prevents ghost layers
-  // when navigating out of the shell to a top-level route like /).
-  ShellRoute(
-    pageBuilder: (context, state, child) => NoTransitionPage(
-      child: PublicShell(child: child),
+  // Public sub-pages — each wraps PublicShell inline (no ShellRoute).
+  // go_router's ShellRoute creates a persistent shell-level page in the
+  // parent Navigator whose exit animation gets stuck, leaving a ghost
+  // layer. Using plain GoRoutes with PublicShell inline avoids this.
+  GoRoute(
+    path: '/about',
+    name: 'about',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: AboutPage()),
     ),
-    routes: [
-      GoRoute(
-        path: '/about',
-        name: 'about',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const AboutPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/contact',
-        name: 'contact',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const ContactPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/privacy',
-        name: 'privacy',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const PrivacyPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/terms',
-        name: 'terms',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const TermsPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/careers',
-        name: 'careers',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const CareersPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/press',
-        name: 'press',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const PressPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/partners',
-        name: 'partners',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const PartnersPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/help',
-        name: 'help',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const HelpCenterPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/docs',
-        name: 'docs',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const DocsPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/api-docs',
-        name: 'api-docs',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const ApiDocsPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/community',
-        name: 'community',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const CommunityPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/blog',
-        name: 'blog',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const BlogPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/compliance',
-        name: 'compliance',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const CompliancePage(),
-        ),
-      ),
-      GoRoute(
-        path: '/cookies',
-        name: 'cookies',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const CookiesPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/data-protection',
-        name: 'data-protection',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const DataProtectionPage(),
-        ),
-      ),
-      GoRoute(
-        path: '/mobile-apps',
-        name: 'mobile-apps',
-        pageBuilder: (context, state) => NoTransitionPage(
-          key: state.pageKey,
-          child: const MobileAppsPage(),
-        ),
-      ),
-    ],
+  ),
+  GoRoute(
+    path: '/contact',
+    name: 'contact',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: ContactPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/privacy',
+    name: 'privacy',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: PrivacyPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/terms',
+    name: 'terms',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: TermsPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/careers',
+    name: 'careers',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: CareersPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/press',
+    name: 'press',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: PressPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/partners',
+    name: 'partners',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: PartnersPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/help',
+    name: 'help',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: HelpCenterPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/docs',
+    name: 'docs',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: DocsPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/api-docs',
+    name: 'api-docs',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: ApiDocsPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/community',
+    name: 'community',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: CommunityPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/blog',
+    name: 'blog',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: BlogPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/compliance',
+    name: 'compliance',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: CompliancePage()),
+    ),
+  ),
+  GoRoute(
+    path: '/cookies',
+    name: 'cookies',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: CookiesPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/data-protection',
+    name: 'data-protection',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: DataProtectionPage()),
+    ),
+  ),
+  GoRoute(
+    path: '/mobile-apps',
+    name: 'mobile-apps',
+    pageBuilder: (context, state) => NoTransitionPage(
+      key: state.pageKey,
+      child: const PublicShell(child: MobileAppsPage()),
+    ),
   ),
 ];
