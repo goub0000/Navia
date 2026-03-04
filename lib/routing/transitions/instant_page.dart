@@ -1,17 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-/// A zero-duration page transition that **fades with the animation** instead of
-/// ignoring it. go_router's built-in [NoTransitionPage] returns the child
-/// unconditionally, so if the Navigator takes an extra frame to remove the old
-/// route's OverlayEntry, the outgoing page renders at full opacity – producing
-/// the "ghost layer" bug on Flutter web/CanvasKit.
+/// A zero-duration page that avoids **both** ghost-layer bugs on Flutter web:
 ///
-/// [InstantPage] wraps the child in a [FadeTransition] tied to the route's
-/// primary animation. Because [transitionDuration] and
-/// [reverseTransitionDuration] are both [Duration.zero], the animation jumps
-/// to 1.0 on enter and 0.0 on exit in the same frame. If the OverlayEntry
-/// lingers, the child is invisible (opacity 0) instead of fully opaque.
+/// 1. **NoTransitionPage bug**: Its builder returns `child` unconditionally,
+///    so if the Navigator takes an extra frame to remove the old route's
+///    OverlayEntry, the outgoing page renders at full opacity.
+///
+/// 2. **FadeTransition compositing bug**: Wrapping in `FadeTransition` creates
+///    a `RenderAnimatedOpacity` compositing layer even at opacity 1.0.
+///    On CanvasKit this layer can cause the entire page to render washed-out.
+///
+/// **Solution**: Check the animation status directly.
+///   - Dismissed (page exiting) → render nothing (`SizedBox.shrink`).
+///   - Otherwise → return `child` directly (no compositing layer).
 class InstantPage<T> extends CustomTransitionPage<T> {
   const InstantPage({
     required super.child,
@@ -31,6 +33,10 @@ class InstantPage<T> extends CustomTransitionPage<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return FadeTransition(opacity: animation, child: child);
+    // When the route's exit animation completes (value reaches 0),
+    // render nothing so a lingering OverlayEntry is invisible.
+    if (animation.isDismissed) return const SizedBox.shrink();
+    // Otherwise return child directly — no FadeTransition, no compositing layer.
+    return child;
   }
 }

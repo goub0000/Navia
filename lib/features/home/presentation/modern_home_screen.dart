@@ -558,7 +558,7 @@ class _HeroSectionState extends State<_HeroSection>
       builder: (context, _) {
         return Transform.translate(
           offset: _slideAnimations[index].value,
-          child: Opacity(opacity: _fadeAnimations[index].value, child: child),
+          child: child,
         );
       },
     );
