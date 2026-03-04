@@ -24,7 +24,6 @@ import '../../features/home/presentation/pages/compliance_page.dart';
 import '../../features/home/presentation/pages/cookies_page.dart';
 import '../../features/home/presentation/pages/data_protection_page.dart';
 import '../../features/home/presentation/pages/mobile_apps_page.dart';
-import 'package:flutter/material.dart';
 import '../transitions/shared_axis_page.dart';
 
 /// Authentication and public routes
@@ -106,16 +105,16 @@ List<RouteBase> authRoutes = [
   ),
 
   // Public sub-pages wrapped in PublicShell for consistent navigation.
-  // Uses MaterialPage instead of SharedAxisPage to prevent
-  // SharedAxisTransition exit animations from getting stuck when
-  // navigating out of the ShellRoute (leaves a ghost overlay).
+  // Uses NoTransitionPage to prevent ANY exit animation from getting stuck
+  // when navigating out of the ShellRoute (both SharedAxisPage and
+  // MaterialPage transitions get stuck during shell→non-shell navigation).
   ShellRoute(
     builder: (context, state, child) => PublicShell(child: child),
     routes: [
       GoRoute(
         path: '/about',
         name: 'about',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const AboutPage(),
         ),
@@ -123,7 +122,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/contact',
         name: 'contact',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const ContactPage(),
         ),
@@ -131,7 +130,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/privacy',
         name: 'privacy',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const PrivacyPage(),
         ),
@@ -139,7 +138,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/terms',
         name: 'terms',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const TermsPage(),
         ),
@@ -147,7 +146,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/careers',
         name: 'careers',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const CareersPage(),
         ),
@@ -155,7 +154,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/press',
         name: 'press',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const PressPage(),
         ),
@@ -163,7 +162,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/partners',
         name: 'partners',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const PartnersPage(),
         ),
@@ -171,7 +170,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/help',
         name: 'help',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const HelpCenterPage(),
         ),
@@ -179,7 +178,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/docs',
         name: 'docs',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const DocsPage(),
         ),
@@ -187,7 +186,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/api-docs',
         name: 'api-docs',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const ApiDocsPage(),
         ),
@@ -195,7 +194,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/community',
         name: 'community',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const CommunityPage(),
         ),
@@ -203,7 +202,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/blog',
         name: 'blog',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const BlogPage(),
         ),
@@ -211,7 +210,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/compliance',
         name: 'compliance',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const CompliancePage(),
         ),
@@ -219,7 +218,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/cookies',
         name: 'cookies',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const CookiesPage(),
         ),
@@ -227,7 +226,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/data-protection',
         name: 'data-protection',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const DataProtectionPage(),
         ),
@@ -235,7 +234,7 @@ List<RouteBase> authRoutes = [
       GoRoute(
         path: '/mobile-apps',
         name: 'mobile-apps',
-        pageBuilder: (context, state) => MaterialPage(
+        pageBuilder: (context, state) => NoTransitionPage(
           key: state.pageKey,
           child: const MobileAppsPage(),
         ),
