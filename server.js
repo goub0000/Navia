@@ -309,7 +309,13 @@ app.use(express.static(path.join(__dirname, 'build', 'web'), {
     else if (/\.(png|jpg|jpeg|gif|ico|svg|webp)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=2592000');
     }
-    // Cache JS/CSS for 7 days (Flutter rebuilds change these)
+    // Flutter bootstrap & service worker must never be cached — they contain
+    // the version hash that triggers cache invalidation for all other assets.
+    // If these are stale, the browser serves old main.dart.js for days.
+    else if (filePath.endsWith('flutter_bootstrap.js') || filePath.endsWith('flutter_service_worker.js')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+    // Cache other JS/CSS for 7 days (service worker handles versioned invalidation)
     else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
       res.setHeader('Cache-Control', 'public, max-age=604800');
     }

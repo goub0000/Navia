@@ -2254,10 +2254,7 @@ class _FadeInOnScrollState extends State<_FadeInOnScroll>
           builder: (context, _) {
             return Transform.translate(
               offset: _slideAnimations[i].value,
-              child: Opacity(
-                opacity: _fadeAnimations[i].value,
-                child: widget.children[i],
-              ),
+              child: widget.children[i],
             );
           },
         );
