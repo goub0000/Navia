@@ -3,7 +3,6 @@ import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:ui' as ui;
 import '../../../core/l10n_extension.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/providers/locale_provider.dart';
@@ -86,15 +85,10 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   elevation: 0,
                   backgroundColor: Colors.transparent,
                   flexibleSpace: _scrollOffset > 10
-                      ? ClipRRect(
-                          child: BackdropFilter(
-                            filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: theme.colorScheme.surface.withValues(
-                                  alpha: 0.8,
-                                ),
-                              ),
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.surface.withValues(
+                              alpha: 0.95,
                             ),
                           ),
                         )
