@@ -6,6 +6,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const BASE_URL = 'https://web-production-bcafe.up.railway.app';
+const BUILD_VERSION = '2026-03-05-v3'; // bump on each deploy to verify caching
 
 // ---------- Security headers ----------
 app.disable('x-powered-by');
@@ -250,7 +251,7 @@ ${urlEntries}
 
 // Health check endpoint for Railway
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+  res.status(200).json({ status: 'healthy', version: BUILD_VERSION, timestamp: new Date().toISOString() });
 });
 
 // Runtime config: expose env vars to Flutter web app as a JS global.
@@ -355,5 +356,5 @@ app.get('*', (req, res, next) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Navia Web Server running on port ${PORT}`);
+  console.log(`Navia Web Server ${BUILD_VERSION} running on port ${PORT}`);
 });

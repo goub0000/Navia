@@ -99,6 +99,14 @@
 <body>
   <!-- Runtime config: server.js injects env vars before Flutter boots -->
   <script src="/env-config.js"></script>
+  <!-- Force service worker update on every page load to prevent stale cache -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (var reg of registrations) { reg.update(); }
+      });
+    }
+  </script>
   <!-- flutter_bootstrap.js handles service worker registration automatically -->
   <script src="flutter_bootstrap.js" async></script>
 </body>

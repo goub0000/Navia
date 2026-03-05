@@ -423,14 +423,16 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
             ),
           ),
 
-          // Floating Action Button - Extended
-          Positioned(
-            right: 24,
-            bottom: 24,
-            child: AnimatedOpacity(
-              opacity: _scrollOffset > 200 ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 300),
+          // Back-to-top FAB — only rendered when scrolled past 200px.
+          // AnimatedOpacity was replaced with conditional rendering because
+          // RenderAnimatedOpacity creates a compositing layer on CanvasKit
+          // even at opacity 0, which causes rendering artifacts.
+          if (_scrollOffset > 200)
+            Positioned(
+              right: 24,
+              bottom: 24,
               child: FloatingActionButton.small(
+                heroTag: 'back_to_top',
                 onPressed: () {
                   _scrollController.animateTo(
                     0,
@@ -443,7 +445,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                 child: const Icon(Icons.arrow_upward),
               ),
             ),
-          ),
 
           // Skip to main content link (appears on Tab focus)
           SkipToContentLink(mainContentKey: _mainContentKey),
