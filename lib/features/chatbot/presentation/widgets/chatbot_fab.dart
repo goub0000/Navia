@@ -52,10 +52,17 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
     final isExtended = !isScrollingDown && !isVisible;
 
     return Stack(
-      fit: StackFit.expand,
       children: [
-        // Chat Window
-        if (isVisible) const ChatWindow(),
+        // Chat Window — explicitly positioned so it does NOT fill the
+        // screen.  A non-positioned child in a StackFit.expand Stack
+        // creates a full-screen compositing layer that causes teal
+        // rendering artifacts on Flutter web (CanvasKit).
+        if (isVisible)
+          const Positioned(
+            bottom: 80,
+            right: 16,
+            child: ChatWindow(),
+          ),
 
         // FAB with tooltip
         Positioned(

@@ -24,10 +24,6 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
 
-  // Dialog state
-  bool _showEscalationDialogInline = false;
-  bool _showUserMenuInline = false;
-
   @override
   void initState() {
     super.initState();
@@ -112,7 +108,36 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
   }
 
   void _showEscalationDialog() {
-    setState(() => _showEscalationDialogInline = true);
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.l10n.chatTalkToHuman),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(context.l10n.chatConnectWithAgent),
+            const SizedBox(height: 8),
+            Text(
+              context.l10n.chatAgentWillJoin,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(context.l10n.chatCancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _escalateToHuman();
+            },
+            child: Text(context.l10n.chatConnect),
+          ),
+        ],
+      ),
+    );
   }
 
   void _escalateToHuman() {
@@ -140,274 +165,71 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
       }
     });
 
-    final authState = ref.watch(authProvider);
-    final isLoggedIn = authState.isAuthenticated;
-    final user = authState.user;
-
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // Main chat window
-        Positioned(
-          bottom: 80,
-          right: 16,
-          child: SlideTransition(
-            position: _slideAnimation,
-            child: Container(
-              width: size.width > 768 ? 400 : size.width - 32,
-              height: size.height * 0.6,
-              constraints: const BoxConstraints(
-                maxHeight: 600,
-                minHeight: 400,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    blurRadius: 20,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  // Header
-                  _buildHeader(),
-
-                  // Messages
-                  Expanded(
-                    child: state.messages.isEmpty
-                        ? _buildEmptyState()
-                        : ListView.builder(
-                            controller: _scrollController,
-                            padding: const EdgeInsets.all(16),
-                            itemCount: state.messages.length,
-                            itemBuilder: (context, index) {
-                              final message = state.messages[index];
-                              return MessageBubble(message: message);
-                            },
-                          ),
-                  ),
-
-                  // Typing Indicator
-                  if (state.isTyping)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: TypingIndicator(),
-                    ),
-
-                  // Quick Replies
-                  if (state.currentQuickActions != null &&
-                      state.currentQuickActions!.isNotEmpty)
-                    QuickReplies(
-                      actions: state.currentQuickActions!,
-                      onActionTap: _handleQuickAction,
-                    ),
-
-                  // Input Field
-                  ChatInputField(
-                    controller: _inputController,
-                    onSend: _sendMessage,
-                  ),
-                ],
-              ),
-            ),
-          ),
+    // Return just the chat container — no full-screen Stack.
+    // The parent (ChatbotFAB) handles positioning via Positioned(bottom, right).
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Container(
+        width: size.width > 768 ? 400 : size.width - 32,
+        height: size.height * 0.6,
+        constraints: const BoxConstraints(
+          maxHeight: 600,
+          minHeight: 400,
         ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 20,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            children: [
+              // Header
+              _buildHeader(),
 
-        // Inline Escalation Dialog
-        if (_showEscalationDialogInline)
-          _buildInlineDialog(
-            title: Row(
-              children: [
-                Icon(Icons.support_agent, color: AppColors.primary),
-                const SizedBox(width: 12),
-                Text(context.l10n.chatTalkToHuman),
-              ],
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.chatConnectWithAgent,
-                  style: Theme.of(context).textTheme.labelLarge,
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  context.l10n.chatAgentWillJoin,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => setState(() => _showEscalationDialogInline = false),
-                child: Text(context.l10n.chatCancel),
+              // Messages
+              Expanded(
+                child: state.messages.isEmpty
+                    ? _buildEmptyState()
+                    : ListView.builder(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.all(16),
+                        itemCount: state.messages.length,
+                        itemBuilder: (context, index) {
+                          final message = state.messages[index];
+                          return MessageBubble(message: message);
+                        },
+                      ),
               ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  setState(() => _showEscalationDialogInline = false);
-                  _escalateToHuman();
-                },
-                icon: const Icon(Icons.person, size: 18),
-                label: Text(context.l10n.chatConnect),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+
+              // Typing Indicator
+              if (state.isTyping)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TypingIndicator(),
                 ),
+
+              // Quick Replies
+              if (state.currentQuickActions != null &&
+                  state.currentQuickActions!.isNotEmpty)
+                QuickReplies(
+                  actions: state.currentQuickActions!,
+                  onActionTap: _handleQuickAction,
+                ),
+
+              // Input Field
+              ChatInputField(
+                controller: _inputController,
+                onSend: _sendMessage,
               ),
             ],
-          ),
-
-        // Inline User Menu Dialog
-        if (_showUserMenuInline)
-          _buildInlineDialog(
-            title: Row(
-              children: [
-                Icon(
-                  isLoggedIn ? Icons.account_circle : Icons.login,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: 12),
-                Text(isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn),
-              ],
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (isLoggedIn) ...[
-                  Text(
-                    context.l10n.chatSignedInAs,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey[600]),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    user?.displayName ?? context.l10n.chatDefaultUserName,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    context.l10n.chatConversationsSynced,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
-                  ),
-                ] else ...[
-                  Text(
-                    context.l10n.chatSignInDescription,
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    context.l10n.chatHistorySaved,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(color: Colors.grey),
-                  ),
-                ],
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => setState(() => _showUserMenuInline = false),
-                child: Text(context.l10n.chatClose),
-              ),
-              if (!isLoggedIn)
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Close dialog and navigate immediately
-                    setState(() => _showUserMenuInline = false);
-                    ref.read(chatbotPendingReopenProvider.notifier).state = true;
-                    // Hide chat immediately (no animation) and navigate
-                    ref.read(chatbotVisibleProvider.notifier).state = false;
-                    // Use routerProvider directly since context.go() doesn't work in MaterialApp builder
-                    ref.read(routerProvider).go('/login');
-                  },
-                  icon: const Icon(Icons.login, size: 18),
-                  label: Text(context.l10n.chatSignIn),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-              if (isLoggedIn)
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Close dialog and navigate immediately
-                    setState(() => _showUserMenuInline = false);
-                    // Hide chat immediately (no animation) and navigate
-                    ref.read(chatbotVisibleProvider.notifier).state = false;
-                    // Use routerProvider directly since context.go() doesn't work in MaterialApp builder
-                    ref.read(routerProvider).go('/profile');
-                  },
-                  icon: const Icon(Icons.person, size: 18),
-                  label: Text(context.l10n.chatViewProfile),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-            ],
-          ),
-      ],
-    );
-  }
-
-  Widget _buildInlineDialog({
-    required Widget title,
-    required Widget content,
-    required List<Widget> actions,
-  }) {
-    return Positioned.fill(
-      child: GestureDetector(
-        onTap: () => setState(() {
-          _showEscalationDialogInline = false;
-          _showUserMenuInline = false;
-        }),
-        child: Container(
-          color: Colors.black54,
-          child: Center(
-            child: GestureDetector(
-              onTap: () {}, // Prevent closing when tapping dialog
-              child: Container(
-                margin: const EdgeInsets.all(32),
-                padding: const EdgeInsets.all(20),
-                constraints: const BoxConstraints(maxWidth: 400),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 20,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DefaultTextStyle(
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ) ?? const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
-                      child: title,
-                    ),
-                    const SizedBox(height: 16),
-                    content,
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: actions,
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
         ),
       ),
@@ -510,7 +332,61 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
   }
 
   void _showUserMenu(bool isLoggedIn, String? userName) {
-    setState(() => _showUserMenuInline = true);
+    final router = ref.read(routerProvider);
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(
+          isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isLoggedIn) ...[
+              Text('${context.l10n.chatSignedInAs} ${userName ?? context.l10n.chatDefaultUserName}'),
+              const SizedBox(height: 8),
+              Text(
+                context.l10n.chatConversationsSynced,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ] else ...[
+              Text(context.l10n.chatSignInDescription),
+              const SizedBox(height: 8),
+              Text(
+                context.l10n.chatHistorySaved,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(context.l10n.chatClose),
+          ),
+          if (isLoggedIn)
+            FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                ref.read(chatbotVisibleProvider.notifier).state = false;
+                router.go('/profile');
+              },
+              child: Text(context.l10n.chatViewProfile),
+            )
+          else
+            FilledButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                ref.read(chatbotPendingReopenProvider.notifier).state = true;
+                ref.read(chatbotVisibleProvider.notifier).state = false;
+                router.go('/login');
+              },
+              child: Text(context.l10n.chatSignIn),
+            ),
+        ],
+      ),
+    );
   }
 
   Widget _buildEmptyState() {
