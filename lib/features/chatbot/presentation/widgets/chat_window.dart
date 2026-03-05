@@ -142,19 +142,28 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
       }
     });
 
-    // Use Material instead of Container+ClipRRect+BoxDecoration.
-    // On CanvasKit, the combination of ClipRRectLayer + boxShadow painting
-    // creates compositing artifacts (teal bleed) during route transitions.
-    // Material uses a single PhysicalShapeLayer for elevation, clipping,
-    // and rounded corners — no separate clip/shadow layers to conflict.
+    // ZERO compositing layers. On CanvasKit, ANY compositing layer
+    // (ClipRRect, Material+elevation, Opacity, Transform) in this widget
+    // causes rendering artifacts during route transitions.
+    // DecoratedBox only issues canvas paint commands — no layers.
+    final chatWidth = size.width > 768 ? 400.0 : size.width - 32;
+    final chatHeight = (size.height * 0.6).clamp(400.0, 600.0);
+
     return SizedBox(
-      width: size.width > 768 ? 400 : size.width - 32,
-      height: (size.height * 0.6).clamp(400, 600),
-      child: Material(
-        elevation: 8,
-        borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
-        color: Colors.white,
+      width: chatWidth,
+      height: chatHeight,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.15),
+              blurRadius: 20,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
         child: Column(
           children: [
             // Header
@@ -210,7 +219,13 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      color: isEscalated ? AppColors.warning : AppColors.primary,
+      decoration: BoxDecoration(
+        color: isEscalated ? AppColors.warning : AppColors.primary,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       child: Row(
         children: [
           CircleAvatar(
