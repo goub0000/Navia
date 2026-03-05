@@ -239,9 +239,14 @@ class FlowApp extends ConsumerWidget {
               right: 0,
               child: OfflineStatusIndicator(),
             ),
-            // Global chatbot FAB - available on all pages
-            // Positioned to fill the screen so chat window can position itself
-            const Positioned.fill(child: ChatbotFAB()),
+            // Global chatbot FAB — anchored to bottom-right.
+            // NOT Positioned.fill: a full-screen compositing layer causes
+            // teal rendering artifacts on Flutter web (CanvasKit).
+            const Positioned(
+              bottom: 16,
+              right: 16,
+              child: ChatbotFAB(),
+            ),
           ],
         );
       },

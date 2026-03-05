@@ -17,33 +17,13 @@ class ChatWindow extends ConsumerStatefulWidget {
   ConsumerState<ChatWindow> createState() => _ChatWindowState();
 }
 
-class _ChatWindowState extends ConsumerState<ChatWindow>
-    with SingleTickerProviderStateMixin {
+class _ChatWindowState extends ConsumerState<ChatWindow> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _inputController = TextEditingController();
-  late AnimationController _animationController;
-  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize animation
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
-
-    // Start animation
-    _animationController.forward();
-
     // Send initial greeting
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(chatbotProvider.notifier).sendInitialGreeting();
@@ -52,7 +32,6 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
 
   @override
   void dispose() {
-    _animationController.dispose();
     _scrollController.dispose();
     _inputController.dispose();
     super.dispose();
@@ -148,9 +127,7 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
   }
 
   void _close() {
-    _animationController.reverse().then((_) {
-      ref.read(chatbotVisibleProvider.notifier).state = false;
-    });
+    ref.read(chatbotVisibleProvider.notifier).state = false;
   }
 
   @override
@@ -165,11 +142,10 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
       }
     });
 
-    // Return just the chat container — no full-screen Stack.
-    // The parent (ChatbotFAB) handles positioning via Positioned(bottom, right).
-    return SlideTransition(
-      position: _slideAnimation,
-      child: Container(
+    // Return just the chat container — no compositing-layer wrappers.
+    // SlideTransition was removed because it creates a persistent compositing
+    // layer on CanvasKit that causes teal rendering artifacts.
+    return Container(
         width: size.width > 768 ? 400 : size.width - 32,
         height: size.height * 0.6,
         constraints: const BoxConstraints(
@@ -232,7 +208,6 @@ class _ChatWindowState extends ConsumerState<ChatWindow>
             ],
           ),
         ),
-      ),
     );
   }
 

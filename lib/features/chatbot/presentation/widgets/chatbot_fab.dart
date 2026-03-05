@@ -50,119 +50,115 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
     final isScrollingDown = ref.watch(isScrollingDownProvider);
     final theme = Theme.of(context);
     final isExtended = !isScrollingDown && !isVisible;
+    final isPulsing = _showTooltip && !isVisible;
 
-    return Stack(
+    // Use a Column instead of a Stack so the entire chatbot subtree is
+    // sized to its children — no full-screen compositing layer.
+    // The parent (main.dart Positioned) anchors this to the bottom-right.
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Chat Window — explicitly positioned so it does NOT fill the
-        // screen.  A non-positioned child in a StackFit.expand Stack
-        // creates a full-screen compositing layer that causes teal
-        // rendering artifacts on Flutter web (CanvasKit).
-        if (isVisible)
-          const Positioned(
-            bottom: 80,
-            right: 16,
-            child: ChatWindow(),
-          ),
+        // Chat Window
+        if (isVisible) ...[
+          const ChatWindow(),
+          const SizedBox(height: 16),
+        ],
 
-        // FAB with tooltip
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Tooltip
-              if (_showTooltip && !isVisible)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8, right: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        context.l10n.chatHiNeedHelp,
-                        style: theme.textTheme.labelLarge,
-                      ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () => setState(() => _showTooltip = false),
-                        child: Icon(
-                          Icons.close,
-                          size: 16,
-                          semanticLabel: 'Dismiss',
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
+        // Tooltip
+        if (_showTooltip && !isVisible) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.l10n.chatHiNeedHelp,
+                  style: theme.textTheme.labelLarge,
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () => setState(() => _showTooltip = false),
+                  child: Icon(
+                    Icons.close,
+                    size: 16,
+                    semanticLabel: 'Dismiss',
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-
-              // Floating Action Button — extended or collapsed
-              AnimatedBuilder(
-                animation: _pulseController,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _showTooltip && !isVisible
-                        ? 1.0 + (_pulseController.value * 0.1)
-                        : 1.0,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
-                      transitionBuilder: (child, animation) => ScaleTransition(
-                        scale: animation,
-                        child: child,
-                      ),
-                      child: isExtended
-                          ? FloatingActionButton.extended(
-                              key: const ValueKey('fab-extended'),
-                              heroTag: 'chatbot_fab',
-                              onPressed: _toggleChat,
-                              backgroundColor:
-                                  theme.colorScheme.primaryContainer,
-                              foregroundColor:
-                                  theme.colorScheme.onPrimaryContainer,
-                              icon: const Icon(
-                                Icons.chat_bubble,
-                                semanticLabel: 'Open chat',
-                              ),
-                              label: const Text('Chat'),
-                            )
-                          : FloatingActionButton(
-                              key: const ValueKey('fab-collapsed'),
-                              heroTag: 'chatbot_fab',
-                              onPressed: _toggleChat,
-                              backgroundColor:
-                                  theme.colorScheme.primaryContainer,
-                              foregroundColor:
-                                  theme.colorScheme.onPrimaryContainer,
-                              child: Icon(
-                                isVisible ? Icons.close : Icons.chat_bubble,
-                                semanticLabel:
-                                    isVisible ? 'Close chat' : 'Open chat',
-                              ),
-                            ),
-                    ),
-                  );
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          const SizedBox(height: 8),
+        ],
+
+        // Floating Action Button
+        _buildFab(theme, isExtended, isVisible, isPulsing),
       ],
     );
+  }
+
+  Widget _buildFab(
+    ThemeData theme,
+    bool isExtended,
+    bool isVisible,
+    bool isPulsing,
+  ) {
+    Widget fab = isExtended
+        ? FloatingActionButton.extended(
+            key: const ValueKey('fab-extended'),
+            heroTag: 'chatbot_fab',
+            onPressed: _toggleChat,
+            backgroundColor: theme.colorScheme.primaryContainer,
+            foregroundColor: theme.colorScheme.onPrimaryContainer,
+            icon: const Icon(
+              Icons.chat_bubble,
+              semanticLabel: 'Open chat',
+            ),
+            label: const Text('Chat'),
+          )
+        : FloatingActionButton(
+            key: const ValueKey('fab-collapsed'),
+            heroTag: 'chatbot_fab',
+            onPressed: _toggleChat,
+            backgroundColor: theme.colorScheme.primaryContainer,
+            foregroundColor: theme.colorScheme.onPrimaryContainer,
+            child: Icon(
+              isVisible ? Icons.close : Icons.chat_bubble,
+              semanticLabel: isVisible ? 'Close chat' : 'Open chat',
+            ),
+          );
+
+    // Only apply pulse Transform.scale when tooltip is showing.
+    // Transform.scale creates a compositing layer on CanvasKit even at
+    // scale 1.0, so we avoid it when not pulsing.
+    if (isPulsing) {
+      fab = AnimatedBuilder(
+        animation: _pulseController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: 1.0 + (_pulseController.value * 0.1),
+            child: child,
+          );
+        },
+        child: fab,
+      );
+    }
+
+    return fab;
   }
 }
