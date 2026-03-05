@@ -239,28 +239,11 @@ class FlowApp extends ConsumerWidget {
               right: 0,
               child: OfflineStatusIndicator(),
             ),
-            // DIAGNOSTIC: Chatbot temporarily hidden to isolate teal artifact
-            // const Positioned(
-            //   bottom: 16,
-            //   right: 16,
-            //   child: ChatbotFAB(),
-            // ),
-
-            // DIAGNOSTIC: Version badge to confirm Flutter code is current
-            Positioned(
+            // Global chatbot FAB — anchored to bottom-right.
+            const Positioned(
               bottom: 16,
               right: 16,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Text(
-                  'BUILD v3-diag',
-                  style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
-                ),
-              ),
+              child: ChatbotFAB(),
             ),
           ],
         );

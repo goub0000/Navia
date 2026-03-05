@@ -142,72 +142,62 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
       }
     });
 
-    // Return just the chat container — no compositing-layer wrappers.
-    // SlideTransition was removed because it creates a persistent compositing
-    // layer on CanvasKit that causes teal rendering artifacts.
-    return Container(
-        width: size.width > 768 ? 400 : size.width - 32,
-        height: size.height * 0.6,
-        constraints: const BoxConstraints(
-          maxHeight: 600,
-          minHeight: 400,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.15),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
+    // Use Material instead of Container+ClipRRect+BoxDecoration.
+    // On CanvasKit, the combination of ClipRRectLayer + boxShadow painting
+    // creates compositing artifacts (teal bleed) during route transitions.
+    // Material uses a single PhysicalShapeLayer for elevation, clipping,
+    // and rounded corners — no separate clip/shadow layers to conflict.
+    return SizedBox(
+      width: size.width > 768 ? 400 : size.width - 32,
+      height: (size.height * 0.6).clamp(400, 600),
+      child: Material(
+        elevation: 8,
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        color: Colors.white,
+        child: Column(
+          children: [
+            // Header
+            _buildHeader(),
+
+            // Messages
+            Expanded(
+              child: state.messages.isEmpty
+                  ? _buildEmptyState()
+                  : ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.messages.length,
+                      itemBuilder: (context, index) {
+                        final message = state.messages[index];
+                        return MessageBubble(message: message);
+                      },
+                    ),
+            ),
+
+            // Typing Indicator
+            if (state.isTyping)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: TypingIndicator(),
+              ),
+
+            // Quick Replies
+            if (state.currentQuickActions != null &&
+                state.currentQuickActions!.isNotEmpty)
+              QuickReplies(
+                actions: state.currentQuickActions!,
+                onActionTap: _handleQuickAction,
+              ),
+
+            // Input Field
+            ChatInputField(
+              controller: _inputController,
+              onSend: _sendMessage,
             ),
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Column(
-            children: [
-              // Header
-              _buildHeader(),
-
-              // Messages
-              Expanded(
-                child: state.messages.isEmpty
-                    ? _buildEmptyState()
-                    : ListView.builder(
-                        controller: _scrollController,
-                        padding: const EdgeInsets.all(16),
-                        itemCount: state.messages.length,
-                        itemBuilder: (context, index) {
-                          final message = state.messages[index];
-                          return MessageBubble(message: message);
-                        },
-                      ),
-              ),
-
-              // Typing Indicator
-              if (state.isTyping)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TypingIndicator(),
-                ),
-
-              // Quick Replies
-              if (state.currentQuickActions != null &&
-                  state.currentQuickActions!.isNotEmpty)
-                QuickReplies(
-                  actions: state.currentQuickActions!,
-                  onActionTap: _handleQuickAction,
-                ),
-
-              // Input Field
-              ChatInputField(
-                controller: _inputController,
-                onSend: _sendMessage,
-              ),
-            ],
-          ),
-        ),
+      ),
     );
   }
 
@@ -220,13 +210,7 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isEscalated ? AppColors.warning : AppColors.primary,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
+      color: isEscalated ? AppColors.warning : AppColors.primary,
       child: Row(
         children: [
           CircleAvatar(
