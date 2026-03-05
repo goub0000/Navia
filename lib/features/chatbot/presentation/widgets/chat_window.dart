@@ -279,28 +279,45 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
               ],
             ),
           ),
-          // User account button
-          IconButton(
-            icon: Icon(
-              isLoggedIn ? Icons.account_circle : Icons.login,
-              color: Colors.white,
-            ),
-            onPressed: () => _showUserMenu(isLoggedIn, user?.displayName),
+          // User account button — GestureDetector instead of IconButton
+          // to avoid Material compositing layers on CanvasKit.
+          _headerIcon(
+            icon: isLoggedIn ? Icons.account_circle : Icons.login,
+            onTap: () => _showUserMenu(isLoggedIn, user?.displayName),
             tooltip: isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
           ),
           // Talk to Human button
           if (!isEscalated)
-            IconButton(
-              icon: const Icon(Icons.person_add, color: Colors.white),
-              onPressed: _showEscalationDialog,
+            _headerIcon(
+              icon: Icons.person_add,
+              onTap: _showEscalationDialog,
               tooltip: context.l10n.chatTalkToHuman,
             ),
-          IconButton(
-            icon: const Icon(Icons.close, color: Colors.white),
-            onPressed: _close,
+          _headerIcon(
+            icon: Icons.close,
+            onTap: _close,
             tooltip: context.l10n.chatClose,
           ),
         ],
+      ),
+    );
+  }
+
+  /// Icon button for the chat header that creates zero compositing layers.
+  Widget _headerIcon({
+    required IconData icon,
+    required VoidCallback onTap,
+    required String tooltip,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(icon, color: Colors.white, size: 22),
+        ),
       ),
     );
   }

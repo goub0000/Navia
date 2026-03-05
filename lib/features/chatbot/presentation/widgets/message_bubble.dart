@@ -438,19 +438,21 @@ class _MessageBubbleState extends State<MessageBubble> {
     required VoidCallback onTap,
     required Color color,
   }) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(6),
+      behavior: HitTestBehavior.opaque,
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(
-          icon,
-          size: 16,
-          color: color,
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Icon(
+            icon,
+            size: 16,
+            color: color,
+          ),
         ),
       ),
     );

@@ -39,21 +39,41 @@ class QuickReplies extends StatelessWidget {
     final actionType = _getActionType(action.action);
     final colors = _getActionColors(actionType);
 
-    return ActionChip(
-      label: Text(
-        action.label,
-        style: theme.textTheme.bodySmall?.copyWith(
-          fontWeight: FontWeight.w500,
-          color: colors.foreground,
+    // GestureDetector + DecoratedBox instead of ActionChip to avoid
+    // Material compositing layers that cause CanvasKit rendering artifacts.
+    final avatar = action.icon != null
+        ? Icon(action.icon, size: 16, color: colors.foreground)
+        : _getDefaultIcon(actionType, colors.foreground);
+
+    return GestureDetector(
+      onTap: () => onActionTap(action.action),
+      behavior: HitTestBehavior.opaque,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colors.background,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: colors.border),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (avatar != null) ...[
+                avatar,
+                const SizedBox(width: 8),
+              ],
+              Text(
+                action.label,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: colors.foreground,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      avatar: action.icon != null
-          ? Icon(action.icon, size: 16, color: colors.foreground)
-          : _getDefaultIcon(actionType, colors.foreground),
-      onPressed: () => onActionTap(action.action),
-      backgroundColor: colors.background,
-      side: BorderSide(color: colors.border),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
     );
   }
 

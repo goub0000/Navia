@@ -12,31 +12,15 @@ class ChatbotFAB extends ConsumerStatefulWidget {
   ConsumerState<ChatbotFAB> createState() => _ChatbotFABState();
 }
 
-class _ChatbotFABState extends ConsumerState<ChatbotFAB>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
+class _ChatbotFABState extends ConsumerState<ChatbotFAB> {
   bool _showTooltip = true;
 
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
-
-    // Hide tooltip after 10 seconds
     Future.delayed(const Duration(seconds: 10), () {
-      if (mounted) {
-        setState(() => _showTooltip = false);
-      }
+      if (mounted) setState(() => _showTooltip = false);
     });
-  }
-
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
   }
 
   void _toggleChat() {
@@ -50,11 +34,7 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
     final isScrollingDown = ref.watch(isScrollingDownProvider);
     final theme = Theme.of(context);
     final isExtended = !isScrollingDown && !isVisible;
-    final isPulsing = _showTooltip && !isVisible;
 
-    // Use a Column instead of a Stack so the entire chatbot subtree is
-    // sized to its children — no full-screen compositing layer.
-    // The parent (main.dart Positioned) anchors this to the bottom-right.
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -67,11 +47,7 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
 
         // Tooltip
         if (_showTooltip && !isVisible) ...[
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8,
-            ),
+          DecoratedBox(
             decoration: BoxDecoration(
               color: theme.colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(20),
@@ -83,82 +59,105 @@ class _ChatbotFABState extends ConsumerState<ChatbotFAB>
                 ),
               ],
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.l10n.chatHiNeedHelp,
-                  style: theme.textTheme.labelLarge,
-                ),
-                const SizedBox(width: 4),
-                GestureDetector(
-                  onTap: () => setState(() => _showTooltip = false),
-                  child: Icon(
-                    Icons.close,
-                    size: 16,
-                    semanticLabel: 'Dismiss',
-                    color: theme.colorScheme.onSurfaceVariant,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.l10n.chatHiNeedHelp,
+                    style: theme.textTheme.labelLarge,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => setState(() => _showTooltip = false),
+                    child: Icon(
+                      Icons.close,
+                      size: 16,
+                      semanticLabel: 'Dismiss',
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 8),
         ],
 
-        // Floating Action Button
-        _buildFab(theme, isExtended, isVisible, isPulsing),
+        // Custom FAB — no Material, no compositing layers.
+        _ChatFabButton(
+          onTap: _toggleChat,
+          isExtended: isExtended,
+          isVisible: isVisible,
+          theme: theme,
+        ),
       ],
     );
   }
+}
 
-  Widget _buildFab(
-    ThemeData theme,
-    bool isExtended,
-    bool isVisible,
-    bool isPulsing,
-  ) {
-    Widget fab = isExtended
-        ? FloatingActionButton.extended(
-            key: const ValueKey('fab-extended'),
-            heroTag: 'chatbot_fab',
-            onPressed: _toggleChat,
-            backgroundColor: theme.colorScheme.primaryContainer,
-            foregroundColor: theme.colorScheme.onPrimaryContainer,
-            icon: const Icon(
-              Icons.chat_bubble,
-              semanticLabel: 'Open chat',
-            ),
-            label: const Text('Chat'),
-          )
-        : FloatingActionButton(
-            key: const ValueKey('fab-collapsed'),
-            heroTag: 'chatbot_fab',
-            onPressed: _toggleChat,
-            backgroundColor: theme.colorScheme.primaryContainer,
-            foregroundColor: theme.colorScheme.onPrimaryContainer,
-            child: Icon(
-              isVisible ? Icons.close : Icons.chat_bubble,
-              semanticLabel: isVisible ? 'Close chat' : 'Open chat',
-            ),
-          );
+/// Custom FAB replacement that creates ZERO compositing layers.
+/// FloatingActionButton uses Material(elevation, Clip.antiAlias, InkWell)
+/// internally, all of which create compositing layers that cause rendering
+/// artifacts on Flutter web CanvasKit.
+class _ChatFabButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final bool isExtended;
+  final bool isVisible;
+  final ThemeData theme;
 
-    // Only apply pulse Transform.scale when tooltip is showing.
-    // Transform.scale creates a compositing layer on CanvasKit even at
-    // scale 1.0, so we avoid it when not pulsing.
-    if (isPulsing) {
-      fab = AnimatedBuilder(
-        animation: _pulseController,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: 1.0 + (_pulseController.value * 0.1),
-            child: child,
-          );
-        },
-        child: fab,
-      );
-    }
+  const _ChatFabButton({
+    required this.onTap,
+    required this.isExtended,
+    required this.isVisible,
+    required this.theme,
+  });
 
-    return fab;
+  @override
+  Widget build(BuildContext context) {
+    final bg = theme.colorScheme.primaryContainer;
+    final fg = theme.colorScheme.onPrimaryContainer;
+    final icon = isVisible ? Icons.close : Icons.chat_bubble;
+    final label = isVisible ? 'Close chat' : 'Open chat';
+
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        onTap: onTap,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(isExtended ? 28 : 56),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: isExtended
+                ? const EdgeInsets.symmetric(horizontal: 20, vertical: 16)
+                : const EdgeInsets.all(16),
+            child: isExtended
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.chat_bubble, color: fg, size: 22,
+                          semanticLabel: 'Open chat'),
+                      const SizedBox(width: 10),
+                      Text('Chat',
+                          style: theme.textTheme.labelLarge
+                              ?.copyWith(color: fg)),
+                    ],
+                  )
+                : Icon(icon, color: fg, size: 24, semanticLabel: label),
+          ),
+        ),
+      ),
+    );
   }
 }

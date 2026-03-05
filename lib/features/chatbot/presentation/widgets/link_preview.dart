@@ -39,9 +39,9 @@ class LinkPreview extends StatelessWidget {
           ),
         ],
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: onTap ?? () => _launchUrl(url),
-        borderRadius: BorderRadius.circular(12),
+        behavior: HitTestBehavior.opaque,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -200,8 +200,9 @@ class InlineLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => _launchUrl(url),
+      behavior: HitTestBehavior.opaque,
       child: Text(
         text,
         style: (style ?? const TextStyle()).copyWith(
@@ -336,8 +337,9 @@ class LinkList extends StatelessWidget {
 
   Widget _buildLinkItem(BuildContext context, LinkListItem link) {
     final theme = Theme.of(context);
-    return InkWell(
+    return GestureDetector(
       onTap: () => _launchUrl(link.url),
+      behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(

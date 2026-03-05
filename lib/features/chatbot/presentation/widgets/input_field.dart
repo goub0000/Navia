@@ -59,18 +59,28 @@ class ChatInputField extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          IconButton(
-            onPressed: () {
-              final text = controller.text;
-              if (text.trim().isNotEmpty) {
-                onSend(text);
-              }
-            },
-            tooltip: 'Send message',
-            icon: Icon(Icons.send, color: AppColors.primary),
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              padding: const EdgeInsets.all(12),
+          // GestureDetector instead of IconButton to avoid Material
+          // compositing layers that cause CanvasKit rendering artifacts.
+          Tooltip(
+            message: 'Send message',
+            child: GestureDetector(
+              onTap: () {
+                final text = controller.text;
+                if (text.trim().isNotEmpty) {
+                  onSend(text);
+                }
+              },
+              behavior: HitTestBehavior.opaque,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(Icons.send, color: AppColors.primary),
+                ),
+              ),
             ),
           ),
         ],

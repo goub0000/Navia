@@ -156,9 +156,9 @@ class _CarouselCard extends StatelessWidget {
           ),
         ],
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: item.onTap,
-        borderRadius: BorderRadius.circular(12),
+        behavior: HitTestBehavior.opaque,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

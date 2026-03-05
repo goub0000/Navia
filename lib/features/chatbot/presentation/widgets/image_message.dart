@@ -151,12 +151,21 @@ class ImageMessage extends StatelessWidget {
             Positioned(
               top: 8,
               right: 8,
-              child: IconButton(
-                onPressed: () => Navigator.of(ctx).pop(),
-                icon: const Icon(Icons.close, color: Colors.white),
-                tooltip: context.l10n.chatClose,
-                style: IconButton.styleFrom(
-                  backgroundColor: Colors.black54,
+              child: Tooltip(
+                message: context.l10n.chatClose,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(ctx).pop(),
+                  behavior: HitTestBehavior.opaque,
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.black54,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Icon(Icons.close, color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -357,12 +366,21 @@ class _ImageGalleryViewerState extends State<_ImageGalleryViewer> {
           Positioned(
             top: 40,
             right: 16,
-            child: IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close, color: Colors.white),
-              tooltip: context.l10n.chatClose,
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.black54,
+            child: Tooltip(
+              message: context.l10n.chatClose,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                behavior: HitTestBehavior.opaque,
+                child: const DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(Icons.close, color: Colors.white),
+                  ),
+                ),
               ),
             ),
           ),

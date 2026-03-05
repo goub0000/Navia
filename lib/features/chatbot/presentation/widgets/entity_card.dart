@@ -160,19 +160,19 @@ class UniversityCard extends EntityCard {
               children: [
                 // Favorite button
                 if (onFavorite != null)
-                  IconButton(
-                    onPressed: onFavorite,
-                    icon: Icon(
-                      isFavorited ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorited ? Colors.red : AppColors.textSecondary,
-                      size: 20,
-                    ),
-                    tooltip: isFavorited
-                        ? context.l10n.studentResourcesFavorites
-                        : context.l10n.studentResourcesFavorites,
-                    constraints: const BoxConstraints(
-                      minWidth: 36,
-                      minHeight: 36,
+                  Tooltip(
+                    message: context.l10n.studentResourcesFavorites,
+                    child: GestureDetector(
+                      onTap: onFavorite,
+                      behavior: HitTestBehavior.opaque,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Icon(
+                          isFavorited ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorited ? Colors.red : AppColors.textSecondary,
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ),
                 const Spacer(),
@@ -401,13 +401,23 @@ class CourseCard extends EntityCard {
                   Row(
                     children: [
                       Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: progress!,
-                            backgroundColor: AppColors.border,
-                            color: AppColors.success,
-                            minHeight: 6,
+                        child: SizedBox(
+                          height: 6,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AppColors.border,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: FractionallySizedBox(
+                              alignment: Alignment.centerLeft,
+                              widthFactor: progress!.clamp(0.0, 1.0),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: AppColors.success,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -593,13 +603,23 @@ class ApplicationCard extends EntityCard {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: LinearProgressIndicator(
-                      value: completionProgress!,
-                      backgroundColor: AppColors.border,
-                      color: AppColors.primary,
-                      minHeight: 6,
+                  SizedBox(
+                    height: 6,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: AppColors.border,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: FractionallySizedBox(
+                        alignment: Alignment.centerLeft,
+                        widthFactor: completionProgress!.clamp(0.0, 1.0),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
