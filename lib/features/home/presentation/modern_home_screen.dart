@@ -59,442 +59,212 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
     final authState = ref.watch(authProvider);
     final isWide = MediaQuery.of(context).size.width > 900;
 
-    return RepaintBoundary(
-      child: Scaffold(
+    // v21 DIAGNOSTIC: no RepaintBoundary, no overlays, just SliverAppBar + Hero + placeholder footer
+    return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: Stack(
-        clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
-        children: [
-          // Main Content
-          Semantics(
-            scopesRoute: true,
-            label: 'Main content',
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                // Transparent App Bar
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  elevation: 0,
-                  scrolledUnderElevation: 0,
-                  surfaceTintColor: Colors.transparent,
-                  forceMaterialTransparency: true,
-                  backgroundColor: Colors.transparent,
-                  flexibleSpace: _scrollOffset > 10
-                      ? ColoredBox(
-                          color: theme.colorScheme.surface,
-                        )
-                      : null,
-                  title: Semantics(
-                    label: 'Main navigation',
-                    container: true,
-                    child: Row(
-                      children: [
-                        const NaviaLogo(
-                          variant: NaviaLogoVariant.light,
-                          fontSize: 24,
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          // Full App Bar (same as original)
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.transparent,
+            forceMaterialTransparency: true,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: _scrollOffset > 10
+                ? ColoredBox(
+                    color: theme.colorScheme.surface,
+                  )
+                : null,
+            title: Semantics(
+              label: 'Main navigation',
+              container: true,
+              child: Row(
+                children: [
+                  const NaviaLogo(
+                    variant: NaviaLogoVariant.light,
+                    fontSize: 24,
+                  ),
+                  if (isWide) ...[
+                    const SizedBox(width: 32),
+                    _NavTextButton(
+                      label: context.l10n.navUniversities,
+                      path: '/universities',
+                      theme: theme,
+                    ),
+                    PopupMenuButton<String>(
+                      tooltip: '',
+                      onSelected: (path) => context.go(path),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
                         ),
-                        if (isWide) ...[
-                          const SizedBox(width: 32),
-                          _NavTextButton(
-                            label: context.l10n.navUniversities,
-                            path: '/universities',
-                            theme: theme,
-                          ),
-                          PopupMenuButton<String>(
-                            tooltip: '', // Empty to suppress Tooltip (saveLayer bug)
-                            onSelected: (path) => context.go(path),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    context.l10n.navSolutions,
-                                    style: TextStyle(
-                                      color: theme.colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 20,
-                                    color: theme.colorScheme.onSurface,
-                                  ),
-                                ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              context.l10n.navSolutions,
+                              style: TextStyle(
+                                color: theme.colorScheme.onSurface,
                               ),
                             ),
-                            itemBuilder: (ctx) => [
-                              PopupMenuItem(
-                                value: '/for-students',
-                                child: Text(ctx.l10n.forStudents),
-                              ),
-                              PopupMenuItem(
-                                value: '/for-institutions',
-                                child: Text(ctx.l10n.forInstitutions),
-                              ),
-                              PopupMenuItem(
-                                value: '/for-parents',
-                                child: Text(ctx.l10n.forParents),
-                              ),
-                              PopupMenuItem(
-                                value: '/for-counselors',
-                                child: Text(ctx.l10n.forCounselors),
-                              ),
-                            ],
-                          ),
-                          _NavTextButton(
-                            label: context.l10n.navAbout,
-                            path: '/about',
-                            theme: theme,
-                          ),
-                          _NavTextButton(
-                            label: context.l10n.navContact,
-                            path: '/contact',
-                            theme: theme,
-                          ),
-                        ],
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              size: 20,
+                              color: theme.colorScheme.onSurface,
+                            ),
+                          ],
+                        ),
+                      ),
+                      itemBuilder: (ctx) => [
+                        PopupMenuItem(
+                          value: '/for-students',
+                          child: Text(ctx.l10n.forStudents),
+                        ),
+                        PopupMenuItem(
+                          value: '/for-institutions',
+                          child: Text(ctx.l10n.forInstitutions),
+                        ),
+                        PopupMenuItem(
+                          value: '/for-parents',
+                          child: Text(ctx.l10n.forParents),
+                        ),
+                        PopupMenuItem(
+                          value: '/for-counselors',
+                          child: Text(ctx.l10n.forCounselors),
+                        ),
                       ],
                     ),
-                  ),
-                  actions: [
-                    const _LanguageToggle(),
-                    const SizedBox(width: 4),
-                    _DarkModeToggle(),
-                    const SizedBox(width: 8),
-                    if (authState.isAuthenticated) ...[
-                      FilledButton.icon(
-                        onPressed: () => context.go(
-                          authState.user?.activeRole.dashboardRoute ?? '/login',
-                        ),
-                        icon: const Icon(Icons.dashboard, size: 18),
-                        label: Text(context.l10n.navDashboard),
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                        ),
-                      ),
-                    ] else ...[
-                      TextButton(
-                        onPressed: () => context.go('/login'),
-                        style: TextButton.styleFrom(
-                          foregroundColor: theme.colorScheme.onSurface,
-                        ),
-                        child: Text(context.l10n.navSignIn),
-                      ),
-                      const SizedBox(width: 8),
-                      FilledButton.icon(
-                        onPressed: () => context.go('/register'),
-                        icon: const Icon(Icons.arrow_forward, size: 18),
-                        label: Text(context.l10n.navGetStarted),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: theme.colorScheme.primary,
-                          foregroundColor: theme.colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                    if (!isWide) ...[
-                      const SizedBox(width: 4),
-                      PopupMenuButton<String>(
-                        tooltip: '', // Empty to suppress Tooltip (saveLayer bug)
-                        icon: const Icon(Icons.menu),
-                        onSelected: (path) => context.go(path),
-                        itemBuilder: (ctx) => [
-                          PopupMenuItem(
-                            value: '/universities',
-                            child: Text(ctx.l10n.navUniversities),
-                          ),
-                          PopupMenuItem(
-                            value: '/about',
-                            child: Text(ctx.l10n.navAbout),
-                          ),
-                          PopupMenuItem(
-                            value: '/contact',
-                            child: Text(ctx.l10n.navContact),
-                          ),
-                          const PopupMenuDivider(),
-                          PopupMenuItem(
-                            enabled: false,
-                            child: Text(
-                              ctx.l10n.navSolutions,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(ctx).colorScheme.primary,
-                              ),
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: '/for-students',
-                            child: Text('  ${ctx.l10n.forStudents}'),
-                          ),
-                          PopupMenuItem(
-                            value: '/for-institutions',
-                            child: Text('  ${ctx.l10n.forInstitutions}'),
-                          ),
-                          PopupMenuItem(
-                            value: '/for-parents',
-                            child: Text('  ${ctx.l10n.forParents}'),
-                          ),
-                          PopupMenuItem(
-                            value: '/for-counselors',
-                            child: Text('  ${ctx.l10n.forCounselors}'),
-                          ),
-                        ],
-                      ),
-                    ],
-                    const SizedBox(width: 16),
+                    _NavTextButton(
+                      label: context.l10n.navAbout,
+                      path: '/about',
+                      theme: theme,
+                    ),
+                    _NavTextButton(
+                      label: context.l10n.navContact,
+                      path: '/contact',
+                      theme: theme,
+                    ),
                   ],
-                ),
-
-                // Hero Section
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Hero',
-                    container: true,
-                    child: KeyedSubtree(
-                      key: _mainContentKey,
-                      child: const _HeroSection(),
+                ],
+              ),
+            ),
+            actions: [
+              const _LanguageToggle(),
+              const SizedBox(width: 4),
+              _DarkModeToggle(),
+              const SizedBox(width: 8),
+              if (authState.isAuthenticated) ...[
+                FilledButton.icon(
+                  onPressed: () => context.go(
+                    authState.user?.activeRole.dashboardRoute ?? '/login',
+                  ),
+                  icon: const Icon(Icons.dashboard, size: 18),
+                  label: Text(context.l10n.navDashboard),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
                     ),
                   ),
                 ),
-
-                // Interactive Quiz Teaser Section
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Quiz teaser',
-                    container: true,
-                    child: const _QuizTeaserSection(),
+              ] else ...[
+                TextButton(
+                  onPressed: () => context.go('/login'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: theme.colorScheme.onSurface,
                   ),
+                  child: Text(context.l10n.navSignIn),
                 ),
-
-                // Wave Divider - Hero to Value Props
-                SliverToBoxAdapter(
-                  child: WaveDivider(
-                    color: theme.colorScheme.surfaceContainerLowest,
-                    height: 36,
-                    style: WaveStyle.gentle,
-                  ),
-                ),
-
-                // Value Proposition - Light background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Why choose Navia',
-                    container: true,
-                    child: Container(
-                      color: theme.colorScheme.surfaceContainerLowest,
-                      child: const _FadeInOnScroll(
-                        children: [_ValuePropositionSection()],
-                      ),
+                const SizedBox(width: 8),
+                FilledButton.icon(
+                  onPressed: () => context.go('/register'),
+                  icon: const Icon(Icons.arrow_forward, size: 18),
+                  label: Text(context.l10n.navGetStarted),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: theme.colorScheme.primary,
+                    foregroundColor: theme.colorScheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
                     ),
-                  ),
-                ),
-
-                // Social Proof with University Logos - White background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Trusted institutions',
-                    container: true,
-                    child: const _FadeInOnScroll(
-                      children: [_SocialProofSection()],
-                    ),
-                  ),
-                ),
-
-                // Wave Divider - Social Proof to University Search
-                SliverToBoxAdapter(
-                  child: WaveDivider(
-                    color: theme.colorScheme.secondary.withValues(alpha: 0.1),
-                    height: 30,
-                    style: WaveStyle.minimal,
-                  ),
-                ),
-
-                // University Search Section
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'University search',
-                    container: true,
-                    child: const _UniversitySearchSection(),
-                  ),
-                ),
-
-                // Find Your Path Feature Highlight
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Find your path',
-                    container: true,
-                    child: const _FindYourPathSection(),
-                  ),
-                ),
-
-                // Key Features - Tinted background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Key features',
-                    container: true,
-                    child: Container(
-                      color: theme.colorScheme.surfaceContainerLowest,
-                      child: const _FadeInOnScroll(
-                        children: [_KeyFeaturesSection()],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // User Types - White background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Built for everyone',
-                    container: true,
-                    child: const _FadeInOnScroll(
-                      children: [_UserTypesSection()],
-                    ),
-                  ),
-                ),
-
-                // Testimonials Section - Tinted background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Testimonials',
-                    container: true,
-                    child: Container(
-                      color: theme.colorScheme.surfaceContainerLowest,
-                      child: const _FadeInOnScroll(
-                        children: [_TestimonialsSection()],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Wave Divider before Final CTA
-                SliverToBoxAdapter(
-                  child: WaveDivider(
-                    color: theme.colorScheme.primaryContainer,
-                    height: 36,
-                    style: WaveStyle.curved,
-                  ),
-                ),
-
-                // Final CTA
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Call to action',
-                    container: true,
-                    child: const _FadeInOnScroll(
-                      children: [_FinalCTASection()],
-                    ),
-                  ),
-                ),
-
-                // Minimal Footer - Dark background
-                SliverToBoxAdapter(
-                  child: Semantics(
-                    label: 'Footer',
-                    container: true,
-                    child: NaviaFooter(),
                   ),
                 ),
               ],
-            ),
+              if (!isWide) ...[
+                const SizedBox(width: 4),
+                PopupMenuButton<String>(
+                  tooltip: '',
+                  icon: const Icon(Icons.menu),
+                  onSelected: (path) => context.go(path),
+                  itemBuilder: (ctx) => [
+                    PopupMenuItem(
+                      value: '/universities',
+                      child: Text(ctx.l10n.navUniversities),
+                    ),
+                    PopupMenuItem(
+                      value: '/about',
+                      child: Text(ctx.l10n.navAbout),
+                    ),
+                    PopupMenuItem(
+                      value: '/contact',
+                      child: Text(ctx.l10n.navContact),
+                    ),
+                    const PopupMenuDivider(),
+                    PopupMenuItem(
+                      enabled: false,
+                      child: Text(
+                        ctx.l10n.navSolutions,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(ctx).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: '/for-students',
+                      child: Text('  ${ctx.l10n.forStudents}'),
+                    ),
+                    PopupMenuItem(
+                      value: '/for-institutions',
+                      child: Text('  ${ctx.l10n.forInstitutions}'),
+                    ),
+                    PopupMenuItem(
+                      value: '/for-parents',
+                      child: Text('  ${ctx.l10n.forParents}'),
+                    ),
+                    PopupMenuItem(
+                      value: '/for-counselors',
+                      child: Text('  ${ctx.l10n.forCounselors}'),
+                    ),
+                  ],
+                ),
+              ],
+              const SizedBox(width: 16),
+            ],
           ),
 
-          // Back-to-top FAB — only rendered when scrolled past 200px.
-          // AnimatedOpacity was replaced with conditional rendering because
-          // RenderAnimatedOpacity creates a compositing layer on CanvasKit
-          // even at opacity 0, which causes rendering artifacts.
-          if (_scrollOffset > 200)
-            Positioned(
-              right: 24,
-              bottom: 24,
-              child: Semantics(
-                button: true,
-                label: context.l10n.backToTop,
-                child: GestureDetector(
-                  onTap: () {
-                    _scrollController.animateTo(
-                      0,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
-                          blurRadius: 6,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Icon(
-                        Icons.arrow_upward,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          // Hero Section (with static placeholders from v20)
+          const SliverToBoxAdapter(
+            child: _HeroSection(),
+          ),
 
-          // Skip to main content link (appears on Tab focus)
-          SkipToContentLink(mainContentKey: _mainContentKey),
-
-          // Scroll progress indicator (purely decorative)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Semantics(
-              excludeSemantics: true,
-              child: AnimatedBuilder(
-                animation: _scrollController,
-                builder: (context, _) {
-                  double progress = 0;
-                  if (_scrollController.hasClients &&
-                      _scrollController.position.maxScrollExtent > 0) {
-                    progress =
-                        (_scrollOffset /
-                                _scrollController.position.maxScrollExtent)
-                            .clamp(0.0, 1.0);
-                  }
-                  // Plain Container instead of LinearProgressIndicator
-                  // to avoid ClipRect compositing layer on CanvasKit.
-                  return SizedBox(
-                    height: 4,
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: progress,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  );
-                },
+          // v21: placeholder instead of all below-hero sections
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, i) => ListTile(
+                title: Text('Placeholder section $i — v21 diagnostic'),
               ),
+              childCount: 20,
             ),
           ),
         ],
       ),
-    ),
     );
   }
 }
