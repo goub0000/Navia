@@ -435,7 +435,34 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
           // Skip to main content link
           SkipToContentLink(mainContentKey: _mainContentKey),
 
-          // v26: scroll progress indicator removed to test if it's the culprit
+          // Scroll progress indicator — only rendered after the user starts
+          // scrolling. Rendering this at _scrollOffset == 0 (e.g. right after
+          // GoRouter navigation) causes a CanvasKit compositing bug that washes
+          // out the entire page. Guarding with _scrollOffset > 0 keeps it out
+          // of the initial render tree and avoids the corruption.
+          if (_scrollOffset > 0)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                height: 4,
+                child: FractionallySizedBox(
+                  alignment: Alignment.centerLeft,
+                  widthFactor: _scrollController.hasClients &&
+                          _scrollController.position.maxScrollExtent > 0
+                      ? (_scrollOffset /
+                              _scrollController.position.maxScrollExtent)
+                          .clamp(0.0, 1.0)
+                      : 0.0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     ),
