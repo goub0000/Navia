@@ -337,7 +337,51 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
         ],
       ),
     ),
-    // v23: no overlay children in Stack — just the CustomScrollView
+    // v24: add back FAB + SkipToContentLink, but NOT scroll progress indicator
+
+          // Back-to-top FAB
+          if (_scrollOffset > 200)
+            Positioned(
+              right: 24,
+              bottom: 24,
+              child: Semantics(
+                button: true,
+                label: context.l10n.backToTop,
+                child: GestureDetector(
+                  onTap: () {
+                    _scrollController.animateTo(
+                      0,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(
+                        Icons.arrow_upward,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          // Skip to main content link
+          SkipToContentLink(mainContentKey: _mainContentKey),
         ],
       ),
     ),
