@@ -31,27 +31,72 @@ class ModernHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
-  // v18 DIAGNOSTIC: minimal build to isolate routing-layer bug.
-  // If this plain ListView is ALSO washed-out / unscrollable on
-  // context.go('/'), the bug is in GoRouter / Navigator / FlowApp.builder.
-  // If it works fine, the bug is somewhere in the real home page content.
+  // v19 DIAGNOSTIC: same Stack + CustomScrollView + SliverAppBar structure
+  // as the real home page, but with minimal content.
+  // Tests whether the bug is in the STRUCTURE or in a specific WIDGET.
+  final ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      setState(() {
+        _scrollOffset = _scrollController.offset;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Home v18 diagnostic')),
-      body: ListView.builder(
-        itemCount: 50,
-        itemBuilder: (context, i) => ListTile(
-          leading: CircleAvatar(child: Text('$i')),
-          title: Text('Item $i — scroll test'),
-          subtitle: const Text('If you can see and scroll this, the routing layer is fine'),
-        ),
+      backgroundColor: theme.colorScheme.surface,
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                snap: true,
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                surfaceTintColor: Colors.transparent,
+                forceMaterialTransparency: true,
+                backgroundColor: Colors.transparent,
+                title: Text('Home v19 — structure test',
+                    style: TextStyle(color: theme.colorScheme.onSurface)),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) => ListTile(
+                    leading: CircleAvatar(child: Text('$i')),
+                    title: Text('Item $i — scroll offset: ${_scrollOffset.toStringAsFixed(0)}'),
+                  ),
+                  childCount: 50,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-class _ModernHomeScreenState_DISABLED extends ConsumerState<ModernHomeScreen> {
+// ============================================================
+// ORIGINAL BUILD METHOD — disabled during v19 diagnostic
+// ============================================================
+class _OriginalModernHomeScreenState_DISABLED extends ConsumerState<ModernHomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _mainContentKey = GlobalKey();
   double _scrollOffset = 0;
