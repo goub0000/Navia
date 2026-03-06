@@ -69,7 +69,8 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: Stack(
+      body: RepaintBoundary(
+        child: Stack(
         children: [
           // Main Content
           Semantics(
@@ -110,7 +111,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                             theme: theme,
                           ),
                           PopupMenuButton<String>(
-                            tooltip: context.l10n.navSolutions,
+                            tooltip: '', // Empty to suppress Tooltip (saveLayer bug)
                             onSelected: (path) => context.go(path),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -213,6 +214,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                     if (!isWide) ...[
                       const SizedBox(width: 4),
                       PopupMenuButton<String>(
+                        tooltip: '', // Empty to suppress Tooltip (saveLayer bug)
                         icon: const Icon(Icons.menu),
                         onSelected: (path) => context.go(path),
                         itemBuilder: (ctx) => [
@@ -496,6 +498,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
             ),
           ),
         ],
+      ),
       ),
     );
   }
@@ -2845,14 +2848,23 @@ class _DarkModeToggle extends ConsumerWidget {
     final brightness = Theme.of(context).brightness;
     final isDark = brightness == Brightness.dark;
 
-    return IconButton(
-      icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
-      tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
-      onPressed: () {
-        ref
-            .read(appearanceProvider.notifier)
-            .setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
-      },
+    // No IconButton/Tooltip — both trigger saveLayer compositing in
+    // Skwasm/CanvasKit which causes rendering artifacts on route transitions.
+    return Semantics(
+      button: true,
+      label: isDark ? 'Switch to light mode' : 'Switch to dark mode',
+      child: GestureDetector(
+        onTap: () {
+          ref
+              .read(appearanceProvider.notifier)
+              .setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+        ),
+      ),
     );
   }
 }
@@ -2866,39 +2878,39 @@ class _LanguageToggle extends ConsumerWidget {
     final isEnglish = locale.languageCode == 'en';
     final theme = Theme.of(context);
 
-    return Material(
-      color: theme.colorScheme.surfaceContainerHighest,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: theme.colorScheme.outline.withValues(alpha: 0.3),
-          ),
+    // No Material/InkWell — both create compositing layers that cause
+    // rendering artifacts on Skwasm/CanvasKit during route transitions.
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: theme.colorScheme.outline.withValues(alpha: 0.3),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Semantics(
-              button: true,
-              label: 'English',
-              selected: isEnglish,
-              child: InkWell(
-                onTap: () => ref
-                    .read(localeProvider.notifier)
-                    .setLocale(const Locale('en')),
-                borderRadius: BorderRadius.circular(20),
-                focusColor: theme.colorScheme.primary.withValues(alpha: 0.12),
-                child: Container(
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Semantics(
+            button: true,
+            label: 'English',
+            selected: isEnglish,
+            child: GestureDetector(
+              onTap: () => ref
+                  .read(localeProvider.notifier)
+                  .setLocale(const Locale('en')),
+              behavior: HitTestBehavior.opaque,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: isEnglish
+                      ? theme.colorScheme.primary
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isEnglish
-                        ? theme.colorScheme.primary
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     'EN',
@@ -2912,26 +2924,27 @@ class _LanguageToggle extends ConsumerWidget {
                 ),
               ),
             ),
-            Semantics(
-              button: true,
-              label: 'French',
-              selected: !isEnglish,
-              child: InkWell(
-                onTap: () => ref
-                    .read(localeProvider.notifier)
-                    .setLocale(const Locale('fr')),
-                borderRadius: BorderRadius.circular(20),
-                focusColor: theme.colorScheme.primary.withValues(alpha: 0.12),
-                child: Container(
+          ),
+          Semantics(
+            button: true,
+            label: 'French',
+            selected: !isEnglish,
+            child: GestureDetector(
+              onTap: () => ref
+                  .read(localeProvider.notifier)
+                  .setLocale(const Locale('fr')),
+              behavior: HitTestBehavior.opaque,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: !isEnglish
+                      ? theme.colorScheme.primary
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: !isEnglish
-                        ? theme.colorScheme.primary
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     'FR',
@@ -2945,8 +2958,8 @@ class _LanguageToggle extends ConsumerWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
