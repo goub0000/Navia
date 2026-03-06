@@ -43,9 +43,13 @@ RUN flutter gen-l10n
 # --pwa-strategy=offline-first  → aggressive service worker caching
 # --dart2js-optimization=O4     → maximum JS minification
 # --no-source-maps              → smaller output (no debug maps in prod)
+# --no-wasm disables the Skwasm (OffscreenCanvas + bitmaprenderer worker)
+# renderer that has known compositing bugs (saveLayer gray-out, teal overlays).
+# Forces CanvasKit JS renderer on all browsers.
 RUN flutter build web --release \
     --pwa-strategy=offline-first \
-    --no-source-maps
+    --no-source-maps \
+    --no-wasm
 
 # ---------------------------------------------------------------------------
 # Stage 2: Serve with Node.js

@@ -69,8 +69,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: RepaintBoundary(
-        child: Stack(
+      body: Stack(
         children: [
           // Main Content
           Semantics(
@@ -498,7 +497,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
             ),
           ),
         ],
-      ),
       ),
     );
   }
