@@ -17,9 +17,8 @@ import 'widgets/demo_video_dialog.dart';
 import 'widgets/section_divider.dart';
 import 'widgets/testimonial_carousel.dart';
 import 'widgets/university_logos_section.dart';
-// v20 DIAGNOSTIC: temporarily unused while testing static placeholders
-// import 'widgets/animated_counter.dart';
-// import 'widgets/search_preview.dart';
+import 'widgets/animated_counter.dart';
+import 'widgets/search_preview.dart';
 import 'widgets/mini_quiz_preview.dart';
 import '../data/testimonials_data.dart';
 
@@ -59,7 +58,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
     final authState = ref.watch(authProvider);
     final isWide = MediaQuery.of(context).size.width > 900;
 
-    // v23 DIAGNOSTIC: add back RepaintBoundary + Stack + Semantics wrappers, NO overlay children
     return RepaintBoundary(
       child: Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -256,14 +254,25 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
             ],
           ),
 
-          // Hero Section (with static placeholders from v20)
-          const SliverToBoxAdapter(
-            child: _HeroSection(),
+          // Hero Section
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Hero',
+              container: true,
+              child: KeyedSubtree(
+                key: _mainContentKey,
+                child: const _HeroSection(),
+              ),
+            ),
           ),
 
-          // v22: all original below-hero sections restored
+          // Interactive Quiz Teaser Section
           SliverToBoxAdapter(
-            child: const _QuizTeaserSection(),
+            child: Semantics(
+              label: 'Quiz teaser',
+              container: true,
+              child: const _QuizTeaserSection(),
+            ),
           ),
           SliverToBoxAdapter(
             child: WaveDivider(
@@ -272,17 +281,27 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
               style: WaveStyle.gentle,
             ),
           ),
+          // Value Proposition
           SliverToBoxAdapter(
-            child: Container(
-              color: theme.colorScheme.surfaceContainerLowest,
-              child: const _FadeInOnScroll(
-                children: [_ValuePropositionSection()],
+            child: Semantics(
+              label: 'Why choose Navia',
+              container: true,
+              child: Container(
+                color: theme.colorScheme.surfaceContainerLowest,
+                child: const _FadeInOnScroll(
+                  children: [_ValuePropositionSection()],
+                ),
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: _FadeInOnScroll(
-              children: [_SocialProofSection()],
+          // Social Proof
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Trusted institutions',
+              container: true,
+              child: const _FadeInOnScroll(
+                children: [_SocialProofSection()],
+              ),
             ),
           ),
           SliverToBoxAdapter(
@@ -292,30 +311,55 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
               style: WaveStyle.minimal,
             ),
           ),
-          const SliverToBoxAdapter(
-            child: _UniversitySearchSection(),
-          ),
-          const SliverToBoxAdapter(
-            child: _FindYourPathSection(),
-          ),
+          // University Search
           SliverToBoxAdapter(
-            child: Container(
-              color: theme.colorScheme.surfaceContainerLowest,
-              child: const _FadeInOnScroll(
-                children: [_KeyFeaturesSection()],
+            child: Semantics(
+              label: 'University search',
+              container: true,
+              child: const _UniversitySearchSection(),
+            ),
+          ),
+          // Find Your Path
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Find your path',
+              container: true,
+              child: const _FindYourPathSection(),
+            ),
+          ),
+          // Key Features
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Key features',
+              container: true,
+              child: Container(
+                color: theme.colorScheme.surfaceContainerLowest,
+                child: const _FadeInOnScroll(
+                  children: [_KeyFeaturesSection()],
+                ),
               ),
             ),
           ),
-          const SliverToBoxAdapter(
-            child: _FadeInOnScroll(
-              children: [_UserTypesSection()],
+          // User Types
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Built for everyone',
+              container: true,
+              child: const _FadeInOnScroll(
+                children: [_UserTypesSection()],
+              ),
             ),
           ),
+          // Testimonials
           SliverToBoxAdapter(
-            child: Container(
-              color: theme.colorScheme.surfaceContainerLowest,
-              child: const _FadeInOnScroll(
-                children: [_TestimonialsSection()],
+            child: Semantics(
+              label: 'Testimonials',
+              container: true,
+              child: Container(
+                color: theme.colorScheme.surfaceContainerLowest,
+                child: const _FadeInOnScroll(
+                  children: [_TestimonialsSection()],
+                ),
               ),
             ),
           ),
@@ -326,19 +370,27 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
               style: WaveStyle.curved,
             ),
           ),
-          const SliverToBoxAdapter(
-            child: _FadeInOnScroll(
-              children: [_FinalCTASection()],
+          // Final CTA
+          SliverToBoxAdapter(
+            child: Semantics(
+              label: 'Call to action',
+              container: true,
+              child: const _FadeInOnScroll(
+                children: [_FinalCTASection()],
+              ),
             ),
           ),
+          // Footer
           SliverToBoxAdapter(
-            child: NaviaFooter(),
+            child: Semantics(
+              label: 'Footer',
+              container: true,
+              child: NaviaFooter(),
+            ),
           ),
         ],
       ),
     ),
-    // v24: add back FAB + SkipToContentLink, but NOT scroll progress indicator
-
           // Back-to-top FAB
           if (_scrollOffset > 200)
             Positioned(
@@ -382,6 +434,43 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
 
           // Skip to main content link
           SkipToContentLink(mainContentKey: _mainContentKey),
+
+          // Scroll progress indicator — reads _scrollOffset directly (already
+          // updated via setState). DO NOT wrap in AnimatedBuilder(animation:
+          // _scrollController) — that creates a compositing layer on CanvasKit
+          // that corrupts all sibling rendering during GoRouter navigation.
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Semantics(
+              excludeSemantics: true,
+              child: Builder(
+                builder: (context) {
+                  double progress = 0;
+                  if (_scrollController.hasClients &&
+                      _scrollController.position.maxScrollExtent > 0) {
+                    progress =
+                        (_scrollOffset /
+                                _scrollController.position.maxScrollExtent)
+                            .clamp(0.0, 1.0);
+                  }
+                  return SizedBox(
+                    height: 4,
+                    child: FractionallySizedBox(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: progress,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     ),
@@ -595,23 +684,8 @@ class _HeroSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
 
-                    // v20 DIAGNOSTIC: static placeholder instead of SearchBarButton
-                    Container(
-                      height: 56,
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(28),
-                        border: Border.all(color: theme.colorScheme.outline),
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          Icon(Icons.search, color: theme.colorScheme.onSurfaceVariant),
-                          const SizedBox(width: 12),
-                          Text('Search universities...', style: TextStyle(color: theme.colorScheme.onSurfaceVariant)),
-                        ],
-                      ),
-                    ),
+                    // Interactive Search Bar
+                    const SearchBarButton(),
                     const SizedBox(height: 32),
 
                     // CTA Buttons
@@ -690,16 +764,28 @@ class _HeroSection extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // v20 DIAGNOSTIC: static text instead of AnimatedStatsRow
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: isMobile ? 32 : 64,
-                        runSpacing: 24,
-                        children: [
-                          _StaticStat(icon: Icons.people_rounded, value: '50K+', label: context.l10n.heroStatActiveUsers),
-                          _StaticStat(icon: Icons.account_balance_rounded, value: '18K+', label: context.l10n.heroStatUniversities),
-                          _StaticStat(icon: Icons.public_rounded, value: '100+', label: context.l10n.heroStatCountries),
+                      child: AnimatedStatsRow(
+                        stats: [
+                          StatItem(
+                            icon: Icons.people_rounded,
+                            value: 50000,
+                            suffix: '+',
+                            label: context.l10n.heroStatActiveUsers,
+                          ),
+                          StatItem(
+                            icon: Icons.account_balance_rounded,
+                            value: 18000,
+                            suffix: '+',
+                            label: context.l10n.heroStatUniversities,
+                          ),
+                          StatItem(
+                            icon: Icons.public_rounded,
+                            value: 100,
+                            suffix: '+',
+                            label: context.l10n.heroStatCountries,
+                          ),
                         ],
+                        spacing: isMobile ? 32 : 64,
                       ),
                     ),
                   ],
@@ -1938,28 +2024,6 @@ class _UserType {
 /// but the AnimationControllers (started via Future.delayed) would get stuck
 /// when GoRouter re-created the widget during in-app navigation — leaving
 /// content at offset (0, 20) permanently. Replaced with static rendering.
-/// v20 DIAGNOSTIC: static stat placeholder (no AnimationController, no GlobalKey)
-class _StaticStat extends StatelessWidget {
-  final IconData icon;
-  final String value;
-  final String label;
-  const _StaticStat({required this.icon, required this.value, required this.label});
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 28, color: theme.colorScheme.primary),
-        const SizedBox(height: 8),
-        Text(value, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
-        const SizedBox(height: 4),
-        Text(label, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-      ],
-    );
-  }
-}
-
 class _FadeInOnScroll extends StatelessWidget {
   final List<Widget> children;
 
