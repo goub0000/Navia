@@ -107,13 +107,12 @@
       });
     }
   </script>
-  <!-- Load Flutter with CanvasKit renderer forced.
-       Skwasm (auto-selected on modern Chrome) has compositing bugs:
-       saveLayer gray-out, teal overlays during route transitions. -->
+  <!-- v16 diagnostic: switch to HTML renderer to test if the washed-out/
+       unscrollable bug on context.go('/') is CanvasKit-specific.
+       Previous: canvaskit (had compositing bugs), skwasm (had saveLayer bugs). -->
   <script>
-    // Override flutter_bootstrap.js to force CanvasKit renderer
     window.flutterConfiguration = {
-      renderer: "canvaskit"
+      renderer: "html"
     };
   </script>
   <script src="flutter_bootstrap.js" async></script>
