@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:flutter/services.dart';
 
 /// Accessibility Service
 /// Provides helper methods and widgets for improved accessibility
@@ -245,25 +246,42 @@ class _SkipToContentLinkState extends State<SkipToContentLink> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
+    // AnimatedOpacity + Material + InkWell all create compositing layers on
+    // CanvasKit that can corrupt sibling rendering in the same Stack.
+    // Hide via off-screen positioning instead (top: -100 when unfocused).
     return Positioned(
       top: _isFocused ? 8 : -100,
       left: 8,
       child: FocusTraversalOrder(
         order: const NumericFocusOrder(0),
-        child: AnimatedOpacity(
-          opacity: _isFocused ? 1.0 : 0.0,
-          duration: const Duration(milliseconds: 200),
-          child: Semantics(
-            link: true,
-            label: 'Skip to main content',
-            child: Material(
-              color: colorScheme.primary,
-              borderRadius: BorderRadius.circular(20),
-              elevation: 6,
-              child: InkWell(
-                focusNode: _focusNode,
-                onTap: _skipToContent,
-                borderRadius: BorderRadius.circular(20),
+        child: Semantics(
+          link: true,
+          label: 'Skip to main content',
+          child: Focus(
+            focusNode: _focusNode,
+            onKeyEvent: (node, event) {
+              if (event is KeyDownEvent &&
+                  (event.logicalKey == LogicalKeyboardKey.enter ||
+                   event.logicalKey == LogicalKeyboardKey.space)) {
+                _skipToContent();
+                return KeyEventResult.handled;
+              }
+              return KeyEventResult.ignored;
+            },
+            child: GestureDetector(
+              onTap: _skipToContent,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 6,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,

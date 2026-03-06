@@ -29,16 +29,14 @@ import '../transitions/shared_axis_page.dart';
 
 /// Authentication and public routes
 List<RouteBase> authRoutes = [
-  // Home route — uses InstantPage (fade-aware zero-duration transition).
-  // go_router's NoTransitionPage ignores the animation value, so if the
-  // Navigator takes an extra frame to remove the old route's OverlayEntry
-  // the outgoing page renders at full opacity ("ghost layer" on Flutter web).
-  // InstantPage wraps the child in FadeTransition(opacity: animation) so the
-  // outgoing page is invisible (opacity 0) even during that extra frame.
+  // Home route — uses NoTransitionPage (zero-duration, no compositing).
+  // InstantPage was replaced because its `animation.isDismissed` check
+  // returns SizedBox.shrink() on the first frame, delaying the child's
+  // mount by one frame and causing rendering artifacts on CanvasKit.
   GoRoute(
     path: '/',
     name: 'home',
-    pageBuilder: (context, state) => InstantPage(
+    pageBuilder: (context, state) => NoTransitionPage(
       key: state.pageKey,
       child: const ModernHomeScreen(),
     ),
