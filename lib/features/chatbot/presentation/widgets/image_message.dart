@@ -151,8 +151,9 @@ class ImageMessage extends StatelessWidget {
             Positioned(
               top: 8,
               right: 8,
-              child: Tooltip(
-                message: context.l10n.chatClose,
+              child: Semantics(
+                button: true,
+                label: context.l10n.chatClose,
                 child: GestureDetector(
                   onTap: () => Navigator.of(ctx).pop(),
                   behavior: HitTestBehavior.opaque,
@@ -366,8 +367,9 @@ class _ImageGalleryViewerState extends State<_ImageGalleryViewer> {
           Positioned(
             top: 40,
             right: 16,
-            child: Tooltip(
-              message: context.l10n.chatClose,
+            child: Semantics(
+              button: true,
+              label: context.l10n.chatClose,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
                 behavior: HitTestBehavior.opaque,

@@ -160,8 +160,9 @@ class UniversityCard extends EntityCard {
               children: [
                 // Favorite button
                 if (onFavorite != null)
-                  Tooltip(
-                    message: context.l10n.studentResourcesFavorites,
+                  Semantics(
+                    button: true,
+                    label: context.l10n.studentResourcesFavorites,
                     child: GestureDetector(
                       onTap: onFavorite,
                       behavior: HitTestBehavior.opaque,

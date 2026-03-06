@@ -59,10 +59,11 @@ class ChatInputField extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          // GestureDetector instead of IconButton to avoid Material
-          // compositing layers that cause CanvasKit rendering artifacts.
-          Tooltip(
-            message: 'Send message',
+          // No Tooltip — Flutter's Tooltip triggers saveLayer in Skwasm/CanvasKit
+          // which grays out the chat body. Semantics provides accessibility.
+          Semantics(
+            button: true,
+            label: 'Send message',
             child: GestureDetector(
               onTap: () {
                 final text = controller.text;

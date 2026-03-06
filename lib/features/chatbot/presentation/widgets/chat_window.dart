@@ -164,47 +164,54 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
             ),
           ],
         ),
-        child: Column(
-          children: [
-            // Header
-            _buildHeader(),
+        // RepaintBoundary isolates the chat body from any overlay
+        // compositing (e.g. tooltip saveLayer) that could gray it out.
+        child: RepaintBoundary(
+          child: Column(
+            children: [
+              // Header
+              _buildHeader(),
 
-            // Messages
-            Expanded(
-              child: state.messages.isEmpty
-                  ? _buildEmptyState()
-                  : ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.all(16),
-                      itemCount: state.messages.length,
-                      itemBuilder: (context, index) {
-                        final message = state.messages[index];
-                        return MessageBubble(message: message);
-                      },
-                    ),
-            ),
-
-            // Typing Indicator
-            if (state.isTyping)
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: TypingIndicator(),
+              // Messages — wrapped in its own RepaintBoundary so overlay
+              // compositing from the header area cannot bleed into it.
+              Expanded(
+                child: RepaintBoundary(
+                  child: state.messages.isEmpty
+                      ? _buildEmptyState()
+                      : ListView.builder(
+                          controller: _scrollController,
+                          padding: const EdgeInsets.all(16),
+                          itemCount: state.messages.length,
+                          itemBuilder: (context, index) {
+                            final message = state.messages[index];
+                            return MessageBubble(message: message);
+                          },
+                        ),
+                ),
               ),
 
-            // Quick Replies
-            if (state.currentQuickActions != null &&
-                state.currentQuickActions!.isNotEmpty)
-              QuickReplies(
-                actions: state.currentQuickActions!,
-                onActionTap: _handleQuickAction,
-              ),
+              // Typing Indicator
+              if (state.isTyping)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TypingIndicator(),
+                ),
 
-            // Input Field
-            ChatInputField(
-              controller: _inputController,
-              onSend: _sendMessage,
-            ),
-          ],
+              // Quick Replies
+              if (state.currentQuickActions != null &&
+                  state.currentQuickActions!.isNotEmpty)
+                QuickReplies(
+                  actions: state.currentQuickActions!,
+                  onActionTap: _handleQuickAction,
+                ),
+
+              // Input Field
+              ChatInputField(
+                controller: _inputController,
+                onSend: _sendMessage,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -304,13 +311,16 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
   }
 
   /// Icon button for the chat header that creates zero compositing layers.
+  /// No Tooltip — Flutter's Tooltip triggers saveLayer/compositing in
+  /// Skwasm/CanvasKit which grays out the chat body. Use Semantics only.
   Widget _headerIcon({
     required IconData icon,
     required VoidCallback onTap,
     required String tooltip,
   }) {
-    return Tooltip(
-      message: tooltip,
+    return Semantics(
+      button: true,
+      label: tooltip,
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,

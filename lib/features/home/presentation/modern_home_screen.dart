@@ -425,8 +425,9 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
             Positioned(
               right: 24,
               bottom: 24,
-              child: Tooltip(
-                message: context.l10n.backToTop,
+              child: Semantics(
+                button: true,
+                label: context.l10n.backToTop,
                 child: GestureDetector(
                   onTap: () {
                     _scrollController.animateTo(
