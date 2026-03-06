@@ -181,99 +181,15 @@ class _AnimatedStatItem extends StatefulWidget {
   State<_AnimatedStatItem> createState() => _AnimatedStatItemState();
 }
 
-class _AnimatedStatItemState extends State<_AnimatedStatItem>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _fadeController;
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-  bool _hasAnimated = false;
-  final GlobalKey _key = GlobalKey();
-  ScrollPosition? _scrollPosition;
-  Timer? _fallbackTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _fadeController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-
-    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOut),
-    );
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 20),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOut),
-    );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkVisibility());
-    // Fallback: ensure stats are visible even if scroll detection fails
-    _fallbackTimer = Timer(const Duration(seconds: 3), _forceComplete);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Listen to the ancestor scrollable so we detect scroll-into-view
-    _scrollPosition?.removeListener(_checkVisibility);
-    _scrollPosition = Scrollable.maybeOf(context)?.position;
-    _scrollPosition?.addListener(_checkVisibility);
-  }
-
-  void _checkVisibility() {
-    if (!mounted || _hasAnimated) return;
-
-    final RenderObject? renderObject = _key.currentContext?.findRenderObject();
-    if (renderObject == null || !renderObject.attached) return;
-
-    final RenderBox box = renderObject as RenderBox;
-    final Offset position = box.localToGlobal(Offset.zero);
-    final double screenHeight = MediaQuery.of(context).size.height;
-
-    if (position.dy < screenHeight * 0.85) {
-      _startAnimation();
-    }
-  }
-
-  void _startAnimation() {
-    if (_hasAnimated) return;
-    _hasAnimated = true;
-    _fallbackTimer?.cancel();
-    Future.delayed(widget.delay, () {
-      if (mounted) _fadeController.forward();
-    });
-  }
-
-  void _forceComplete() {
-    if (!mounted || _hasAnimated) return;
-    _hasAnimated = true;
-    _fadeController.value = 1.0; // snap to fully visible
-  }
-
-  @override
-  void dispose() {
-    _fallbackTimer?.cancel();
-    _scrollPosition?.removeListener(_checkVisibility);
-    _fadeController.dispose();
-    super.dispose();
-  }
-
+class _AnimatedStatItemState extends State<_AnimatedStatItem> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return AnimatedBuilder(
-      key: _key,
-      animation: _fadeController,
-      builder: (context, child) {
-        // Opacity removed — saveLayer compositing bug on CanvasKit.
-        return Transform.translate(
-          offset: _slideAnimation.value,
-          child: Column(
+    // Slide/fade animation removed — AnimationControllers started via
+    // Future.delayed in initState get stuck during GoRouter navigation,
+    // leaving content at offset/opacity 0. Render immediately instead.
+    return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
@@ -299,10 +215,7 @@ class _AnimatedStatItemState extends State<_AnimatedStatItem>
                   ),
                 ),
               ],
-            ),
-        );
-      },
-    );
+            );
   }
 }
 

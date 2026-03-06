@@ -507,84 +507,16 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
   }
 }
 
-/// Hero Section with Animated Gradient and Staggered Animations
-class _HeroSection extends StatefulWidget {
+/// Hero Section with Animated Gradient
+///
+/// Stagger fade-in animations were removed because their AnimationControllers
+/// (started via Future.delayed in initState) get stuck when GoRouter
+/// re-creates the widget during in-app navigation — leaving hero content
+/// at opacity 0 / offset 30 permanently. Content now renders immediately.
+class _HeroSection extends StatelessWidget {
   final AnimationController animationController;
 
   const _HeroSection({required this.animationController});
-
-  @override
-  State<_HeroSection> createState() => _HeroSectionState();
-}
-
-class _HeroSectionState extends State<_HeroSection>
-    with TickerProviderStateMixin {
-  late List<AnimationController> _staggerControllers;
-  late List<Animation<double>> _fadeAnimations;
-  late List<Animation<Offset>> _slideAnimations;
-
-  @override
-  void initState() {
-    super.initState();
-    _initStaggerAnimations();
-  }
-
-  void _initStaggerAnimations() {
-    // 5 elements: badge, title, subtitle, CTAs, stats
-    _staggerControllers = List.generate(5, (index) {
-      return AnimationController(
-        vsync: this,
-        duration: HomeConstants.fadeInDuration,
-      );
-    });
-
-    _fadeAnimations = _staggerControllers.map((controller) {
-      return Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(parent: controller, curve: HomeConstants.fadeInCurve),
-      );
-    }).toList();
-
-    _slideAnimations = _staggerControllers.map((controller) {
-      return Tween<Offset>(
-        begin: const Offset(0, 30),
-        end: Offset.zero,
-      ).animate(
-        CurvedAnimation(parent: controller, curve: HomeConstants.fadeInCurve),
-      );
-    }).toList();
-
-    // Start staggered animations
-    _startStaggeredAnimations();
-  }
-
-  Future<void> _startStaggeredAnimations() async {
-    for (int i = 0; i < _staggerControllers.length; i++) {
-      await Future.delayed(HomeConstants.staggerDelay);
-      if (mounted) {
-        _staggerControllers[i].forward();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    for (final controller in _staggerControllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  Widget _buildAnimatedChild(int index, Widget child) {
-    return AnimatedBuilder(
-      animation: _staggerControllers[index],
-      builder: (context, _) {
-        return Transform.translate(
-          offset: _slideAnimations[index].value,
-          child: child,
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -600,7 +532,7 @@ class _HeroSectionState extends State<_HeroSection>
         children: [
           // Animated Gradient Background with African warmth
           AnimatedBuilder(
-            animation: widget.animationController,
+            animation: animationController,
             builder: (context, child) {
               return Container(
                 decoration: BoxDecoration(
@@ -617,7 +549,7 @@ class _HeroSectionState extends State<_HeroSection>
                       0.5 +
                           (0.15 *
                               math.sin(
-                                widget.animationController.value * 2 * math.pi,
+                                animationController.value * 2 * math.pi,
                               )),
                       1.0,
                     ],
@@ -740,9 +672,7 @@ class _HeroSectionState extends State<_HeroSection>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // 0: Trust Badge - with PulsingElement
-                    _buildAnimatedChild(
-                      0,
-                      PulsingElement(
+                    PulsingElement(
                         minScale: 0.98,
                         maxScale: 1.02,
                         duration: const Duration(seconds: 3),
@@ -793,9 +723,7 @@ class _HeroSectionState extends State<_HeroSection>
                     const SizedBox(height: 32),
 
                     // 1: Main Headline - Benefit-focused
-                    _buildAnimatedChild(
-                      1,
-                      Semantics(
+                    Semantics(
                         header: true,
                         child: Text(
                           context.l10n.heroHeadline,
@@ -809,13 +737,10 @@ class _HeroSectionState extends State<_HeroSection>
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
                     const SizedBox(height: 24),
 
                     // 2: Subheadline - Benefit-focused
-                    _buildAnimatedChild(
-                      2,
-                      Text(
+                    Text(
                         context.l10n.heroSubheadline,
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
@@ -825,17 +750,14 @@ class _HeroSectionState extends State<_HeroSection>
                         ),
                         textAlign: TextAlign.center,
                       ),
-                    ),
                     const SizedBox(height: 32),
 
                     // 2.5: Interactive Search Bar
-                    _buildAnimatedChild(2, const SearchBarButton()),
+                    const SearchBarButton(),
                     const SizedBox(height: 32),
 
                     // 3: CTA Buttons - Larger with min height
-                    _buildAnimatedChild(
-                      3,
-                      Wrap(
+                    Wrap(
                         alignment: WrapAlignment.center,
                         spacing: 16,
                         runSpacing: 16,
@@ -888,13 +810,10 @@ class _HeroSectionState extends State<_HeroSection>
                           ),
                         ],
                       ),
-                    ),
                     const SizedBox(height: 48),
 
                     // 4: Animated Stats Counters
-                    _buildAnimatedChild(
-                      4,
-                      Container(
+                    Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
                           vertical: 28,
@@ -939,7 +858,6 @@ class _HeroSectionState extends State<_HeroSection>
                           spacing: isMobile ? 32 : 64,
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -2170,120 +2088,20 @@ class _UserType {
   });
 }
 
-/// Fade-in-on-scroll widget that triggers a staggered fade + slide-up
-/// animation when the widget scrolls into view (~80% of viewport).
-/// Respects reduced-motion preference — renders children immediately when
-/// [MediaQuery.disableAnimations] is true.
-class _FadeInOnScroll extends StatefulWidget {
+/// Renders children immediately in a Column.
+///
+/// Previously animated children with a staggered slide-up effect on scroll,
+/// but the AnimationControllers (started via Future.delayed) would get stuck
+/// when GoRouter re-created the widget during in-app navigation — leaving
+/// content at offset (0, 20) permanently. Replaced with static rendering.
+class _FadeInOnScroll extends StatelessWidget {
   final List<Widget> children;
 
   const _FadeInOnScroll({required this.children});
 
   @override
-  State<_FadeInOnScroll> createState() => _FadeInOnScrollState();
-}
-
-class _FadeInOnScrollState extends State<_FadeInOnScroll>
-    with TickerProviderStateMixin {
-  final GlobalKey _key = GlobalKey();
-  late List<AnimationController> _controllers;
-  late List<Animation<double>> _fadeAnimations;
-  late List<Animation<Offset>> _slideAnimations;
-  bool _hasTriggered = false;
-  ScrollPosition? _scrollPosition;
-
-  @override
-  void initState() {
-    super.initState();
-    _controllers = List.generate(widget.children.length, (index) {
-      return AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 400),
-      );
-    });
-
-    _fadeAnimations = _controllers.map((c) {
-      return Tween<double>(
-        begin: 0.0,
-        end: 1.0,
-      ).animate(CurvedAnimation(parent: c, curve: Curves.easeOut));
-    }).toList();
-
-    _slideAnimations = _controllers.map((c) {
-      return Tween<Offset>(
-        begin: const Offset(0, 20),
-        end: Offset.zero,
-      ).animate(CurvedAnimation(parent: c, curve: Curves.easeOut));
-    }).toList();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkVisibility());
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _scrollPosition?.removeListener(_checkVisibility);
-    _scrollPosition = Scrollable.maybeOf(context)?.position;
-    _scrollPosition?.addListener(_checkVisibility);
-  }
-
-  void _checkVisibility() {
-    if (!mounted || _hasTriggered) return;
-    final renderObject = _key.currentContext?.findRenderObject();
-    if (renderObject == null || !renderObject.attached) return;
-
-    final box = renderObject as RenderBox;
-    final position = box.localToGlobal(Offset.zero);
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    if (position.dy < screenHeight * 0.85 && position.dy > -box.size.height) {
-      _trigger();
-    }
-  }
-
-  Future<void> _trigger() async {
-    if (_hasTriggered) return;
-    _hasTriggered = true;
-    for (int i = 0; i < _controllers.length; i++) {
-      if (!mounted) return;
-      _controllers[i].forward();
-      if (i < _controllers.length - 1) {
-        await Future.delayed(const Duration(milliseconds: 100));
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollPosition?.removeListener(_checkVisibility);
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.of(context).disableAnimations;
-
-    if (reduceMotion) {
-      return Column(key: _key, children: widget.children);
-    }
-
-    return Column(
-      key: _key,
-      children: List.generate(widget.children.length, (i) {
-        return AnimatedBuilder(
-          animation: _controllers[i],
-          builder: (context, _) {
-            return Transform.translate(
-              offset: _slideAnimations[i].value,
-              child: widget.children[i],
-            );
-          },
-        );
-      }),
-    );
+    return Column(children: children);
   }
 }
 
