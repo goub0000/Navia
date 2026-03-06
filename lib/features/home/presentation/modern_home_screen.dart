@@ -435,42 +435,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
           // Skip to main content link
           SkipToContentLink(mainContentKey: _mainContentKey),
 
-          // Scroll progress indicator — reads _scrollOffset directly (already
-          // updated via setState). DO NOT wrap in AnimatedBuilder(animation:
-          // _scrollController) — that creates a compositing layer on CanvasKit
-          // that corrupts all sibling rendering during GoRouter navigation.
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Semantics(
-              excludeSemantics: true,
-              child: Builder(
-                builder: (context) {
-                  double progress = 0;
-                  if (_scrollController.hasClients &&
-                      _scrollController.position.maxScrollExtent > 0) {
-                    progress =
-                        (_scrollOffset /
-                                _scrollController.position.maxScrollExtent)
-                            .clamp(0.0, 1.0);
-                  }
-                  return SizedBox(
-                    height: 4,
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: progress,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
+          // v26: scroll progress indicator removed to test if it's the culprit
         ],
       ),
     ),
