@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,13 +12,11 @@ import '../../../core/services/accessibility_service.dart';
 import '../../authentication/providers/auth_provider.dart';
 import '../../../core/widgets/navia_logo.dart';
 import '../../../core/widgets/navia_footer.dart';
-import 'dart:math' as math;
 import 'widgets/demo_video_dialog.dart';
 import 'widgets/section_divider.dart';
 import 'widgets/testimonial_carousel.dart';
 import 'widgets/university_logos_section.dart';
 import 'widgets/animated_counter.dart';
-import 'widgets/floating_elements.dart';
 import 'widgets/search_preview.dart';
 import 'widgets/mini_quiz_preview.dart';
 import '../data/testimonials_data.dart';
@@ -32,9 +29,7 @@ class ModernHomeScreen extends ConsumerStatefulWidget {
   ConsumerState<ModernHomeScreen> createState() => _ModernHomeScreenState();
 }
 
-class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _mainContentKey = GlobalKey();
   double _scrollOffset = 0;
@@ -42,10 +37,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 20),
-    )..repeat();
 
     _scrollController.addListener(() {
       setState(() {
@@ -56,7 +47,6 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 
   @override
   void dispose() {
-    _animationController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -270,9 +260,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                     container: true,
                     child: KeyedSubtree(
                       key: _mainContentKey,
-                      child: _HeroSection(
-                        animationController: _animationController,
-                      ),
+                      child: const _HeroSection(),
                     ),
                   ),
                 ),
@@ -514,9 +502,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
 /// re-creates the widget during in-app navigation — leaving hero content
 /// at opacity 0 / offset 30 permanently. Content now renders immediately.
 class _HeroSection extends StatelessWidget {
-  final AnimationController animationController;
-
-  const _HeroSection({required this.animationController});
+  const _HeroSection();
 
   @override
   Widget build(BuildContext context) {
@@ -531,129 +517,97 @@ class _HeroSection extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
         children: [
-          // Animated Gradient Background with African warmth
-          AnimatedBuilder(
-            animation: animationController,
-            builder: (context, child) {
-              return Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      theme.colorScheme.primary.withValues(alpha: 0.10),
-                      theme.colorScheme.tertiary.withValues(alpha: 0.07),
-                      AppColors.accent.withValues(alpha: 0.05),
-                    ],
-                    stops: [
-                      0.0,
-                      0.5 +
-                          (0.15 *
-                              math.sin(
-                                animationController.value * 2 * math.pi,
-                              )),
-                      1.0,
-                    ],
-                  ),
+          // Static Gradient Background (v15: removed AnimatedBuilder to diagnose render bug)
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    theme.colorScheme.primary.withValues(alpha: 0.10),
+                    theme.colorScheme.tertiary.withValues(alpha: 0.07),
+                    AppColors.accent.withValues(alpha: 0.05),
+                  ],
                 ),
-              );
-            },
+              ),
+            ),
           ),
 
-          // Decorative floating circles (web-compatible)
+          // Static decorative circles (v15: removed FloatingElement wrappers to diagnose render bug)
           if (!isMobile) ...[
-            // Top right decorative circle - large, floating
+            // Top right decorative circle
             Positioned(
               top: -50,
               right: -50,
-              child: FloatingElement(
-                floatHeight: 12,
-                duration: const Duration(seconds: 5),
-                delay: 0,
-                child: Container(
-                  width: 260,
-                  height: 260,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        theme.colorScheme.primary.withValues(alpha: 0.18),
-                        theme.colorScheme.primary.withValues(alpha: 0.06),
-                        theme.colorScheme.primary.withValues(alpha: 0.0),
-                      ],
-                      stops: const [0.0, 0.6, 1.0],
-                    ),
+              child: Container(
+                width: 260,
+                height: 260,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      theme.colorScheme.primary.withValues(alpha: 0.18),
+                      theme.colorScheme.primary.withValues(alpha: 0.06),
+                      theme.colorScheme.primary.withValues(alpha: 0.0),
+                    ],
+                    stops: const [0.0, 0.6, 1.0],
                   ),
                 ),
               ),
             ),
-            // Bottom left decorative circle - floating
+            // Bottom left decorative circle
             Positioned(
               bottom: -30,
               left: -30,
-              child: FloatingElement(
-                floatHeight: 10,
-                duration: const Duration(seconds: 6),
-                delay: 0.5,
-                child: Container(
-                  width: 220,
-                  height: 220,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        theme.colorScheme.tertiary.withValues(alpha: 0.15),
-                        theme.colorScheme.tertiary.withValues(alpha: 0.05),
-                        theme.colorScheme.tertiary.withValues(alpha: 0.0),
-                      ],
-                      stops: const [0.0, 0.6, 1.0],
-                    ),
+              child: Container(
+                width: 220,
+                height: 220,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      theme.colorScheme.tertiary.withValues(alpha: 0.15),
+                      theme.colorScheme.tertiary.withValues(alpha: 0.05),
+                      theme.colorScheme.tertiary.withValues(alpha: 0.0),
+                    ],
+                    stops: const [0.0, 0.6, 1.0],
                   ),
                 ),
               ),
             ),
-            // Middle right accent circle - floating
+            // Middle right accent circle
             Positioned(
               top: size.height * 0.3,
               right: 60,
-              child: FloatingElement(
-                floatHeight: 8,
-                duration: const Duration(seconds: 4),
-                delay: 1.0,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        AppColors.accent.withValues(alpha: 0.14),
-                        AppColors.accent.withValues(alpha: 0.0),
-                      ],
-                    ),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      AppColors.accent.withValues(alpha: 0.14),
+                      AppColors.accent.withValues(alpha: 0.0),
+                    ],
                   ),
                 ),
               ),
             ),
-            // Top left small accent circle - floating
+            // Top left small accent circle
             Positioned(
               top: size.height * 0.15,
               left: 40,
-              child: FloatingElement(
-                floatHeight: 6,
-                duration: const Duration(seconds: 3),
-                delay: 1.5,
-                child: Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        theme.colorScheme.primary.withValues(alpha: 0.12),
-                        theme.colorScheme.primary.withValues(alpha: 0.0),
-                      ],
-                    ),
+              child: Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      theme.colorScheme.primary.withValues(alpha: 0.12),
+                      theme.colorScheme.primary.withValues(alpha: 0.0),
+                    ],
                   ),
                 ),
               ),
@@ -672,52 +626,47 @@ class _HeroSection extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Trust Badge
-                    PulsingElement(
-                      minScale: 0.98,
-                      maxScale: 1.02,
-                      duration: const Duration(seconds: 3),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
+                    // Trust Badge (v15: removed PulsingElement wrapper)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(
+                          color: theme.colorScheme.primary.withValues(
+                            alpha: 0.2,
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(
+                        boxShadow: [
+                          BoxShadow(
                             color: theme.colorScheme.primary.withValues(
                               alpha: 0.2,
                             ),
+                            blurRadius: 20,
+                            offset: const Offset(0, 4),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: theme.colorScheme.primary.withValues(
-                                alpha: 0.2,
-                              ),
-                              blurRadius: 20,
-                              offset: const Offset(0, 4),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.verified_rounded,
+                            size: 18,
+                            color: theme.colorScheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            context.l10n.heroTrustBadge,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer,
+                              fontWeight: FontWeight.w600,
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.verified_rounded,
-                              size: 18,
-                              color: theme.colorScheme.primary,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              context.l10n.heroTrustBadge,
-                              style: theme.textTheme.labelLarge?.copyWith(
-                                color: theme.colorScheme.onPrimaryContainer,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 32),
