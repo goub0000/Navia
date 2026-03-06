@@ -31,6 +31,27 @@ class ModernHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
+  // v18 DIAGNOSTIC: minimal build to isolate routing-layer bug.
+  // If this plain ListView is ALSO washed-out / unscrollable on
+  // context.go('/'), the bug is in GoRouter / Navigator / FlowApp.builder.
+  // If it works fine, the bug is somewhere in the real home page content.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home v18 diagnostic')),
+      body: ListView.builder(
+        itemCount: 50,
+        itemBuilder: (context, i) => ListTile(
+          leading: CircleAvatar(child: Text('$i')),
+          title: Text('Item $i — scroll test'),
+          subtitle: const Text('If you can see and scroll this, the routing layer is fine'),
+        ),
+      ),
+    );
+  }
+}
+
+class _ModernHomeScreenState_DISABLED extends ConsumerState<ModernHomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _mainContentKey = GlobalKey();
   double _scrollOffset = 0;
