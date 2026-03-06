@@ -58,7 +58,8 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
     final authState = ref.watch(authProvider);
     final isWide = MediaQuery.of(context).size.width > 900;
 
-    return Scaffold(
+    return RepaintBoundary(
+      child: Scaffold(
       backgroundColor: theme.colorScheme.surface,
       body: Stack(
         clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
@@ -492,6 +493,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
           ),
         ],
       ),
+    ),
     );
   }
 }

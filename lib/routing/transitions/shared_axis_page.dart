@@ -3,14 +3,9 @@ import 'package:go_router/go_router.dart';
 
 /// Page transition that avoids compositing layers on Flutter Web CanvasKit.
 ///
-/// Previously used [SharedAxisTransition] from the `animations` package,
-/// which internally wraps the child in [FadeTransition]. FadeTransition
-/// creates a [RenderAnimatedOpacity] that ALWAYS triggers `saveLayer`
-/// compositing — even at opacity 1.0. On Skwasm/CanvasKit this causes
-/// gray overlays and washed-out rendering artifacts during route transitions.
-///
-/// Now uses the same zero-compositing-layer approach as [InstantPage]:
-/// check animation status directly and return child without any wrapper.
+/// Uses a 1 ms duration (not Duration.zero) so the AnimationController's
+/// Ticker properly fires and transitions the animation status to `dismissed`.
+/// See [InstantPage] for the full rationale.
 class SharedAxisPage<T> extends CustomTransitionPage<T> {
   SharedAxisPage({
     required super.child,
@@ -19,8 +14,8 @@ class SharedAxisPage<T> extends CustomTransitionPage<T> {
     super.arguments,
     super.restorationId,
   }) : super(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
+          transitionDuration: const Duration(milliseconds: 1),
+          reverseTransitionDuration: const Duration(milliseconds: 1),
           transitionsBuilder: _builder,
         );
 
@@ -30,7 +25,10 @@ class SharedAxisPage<T> extends CustomTransitionPage<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    if (animation.isDismissed) return const SizedBox.shrink();
+    final isExiting = animation.value <= 0.0 || animation.isDismissed;
+    if (isExiting) {
+      return const Offstage(child: SizedBox.shrink());
+    }
     return child;
   }
 }

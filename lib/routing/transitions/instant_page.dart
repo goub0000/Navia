@@ -1,19 +1,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-/// A zero-duration page that avoids **both** ghost-layer bugs on Flutter web:
+/// A near-instant page transition that avoids ghost-layer bugs on CanvasKit.
 ///
-/// 1. **NoTransitionPage bug**: Its builder returns `child` unconditionally,
-///    so if the Navigator takes an extra frame to remove the old route's
-///    OverlayEntry, the outgoing page renders at full opacity.
+/// Uses a 1 ms duration (not Duration.zero) so the AnimationController's
+/// Ticker properly fires and transitions the animation status to `dismissed`.
+/// With Duration.zero, the status update can race the ticker on CanvasKit,
+/// leaving the exiting page's OverlayEntry permanently visible — producing
+/// a washed-out, unscrollable home page.
 ///
-/// 2. **FadeTransition compositing bug**: Wrapping in `FadeTransition` creates
-///    a `RenderAnimatedOpacity` compositing layer even at opacity 1.0.
-///    On CanvasKit this layer can cause the entire page to render washed-out.
-///
-/// **Solution**: Check the animation status directly.
-///   - Dismissed (page exiting) → render nothing (`SizedBox.shrink`).
-///   - Otherwise → return `child` directly (no compositing layer).
+/// When exiting (animation value ≤ 0), renders an [Offstage] + [IgnorePointer]
+/// to guarantee the old page is both invisible AND non-interactive.
 class InstantPage<T> extends CustomTransitionPage<T> {
   const InstantPage({
     required super.child,
@@ -22,8 +19,8 @@ class InstantPage<T> extends CustomTransitionPage<T> {
     super.arguments,
     super.restorationId,
   }) : super(
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
+          transitionDuration: const Duration(milliseconds: 1),
+          reverseTransitionDuration: const Duration(milliseconds: 1),
           transitionsBuilder: _builder,
         );
 
@@ -33,10 +30,13 @@ class InstantPage<T> extends CustomTransitionPage<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // When the route's exit animation completes (value reaches 0),
-    // render nothing so a lingering OverlayEntry is invisible.
-    if (animation.isDismissed) return const SizedBox.shrink();
-    // Otherwise return child directly — no FadeTransition, no compositing layer.
+    // Use value check (synchronous) instead of isDismissed (may lag ticker).
+    // Offstage + IgnorePointer ensures the exiting page is fully invisible
+    // and cannot absorb pointer events, even if the OverlayEntry lingers.
+    final isExiting = animation.value <= 0.0 || animation.isDismissed;
+    if (isExiting) {
+      return const Offstage(child: SizedBox.shrink());
+    }
     return child;
   }
 }

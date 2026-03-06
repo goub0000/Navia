@@ -220,14 +220,11 @@ class FlowApp extends ConsumerWidget {
       themeMode: appearance.themeMode,
       routerConfig: router,
       builder: (context, child) {
-        // Show loading screen while auth state is being determined
-        // This prevents flash of wrong content during page refresh
-        if (authState.isLoading) {
-          return const Scaffold(
-            body: NaviaLoadingIndicator.hero(message: 'Loading...'),
-          );
-        }
-
+        // ALWAYS keep the router child in the widget tree so that the
+        // Navigator's OverlayEntries and route animations are never
+        // orphaned during auth state transitions. Previously, replacing
+        // the entire Stack with a loading Scaffold could leave stale
+        // OverlayEntries when the tree was rebuilt.
         return Stack(
           fit: StackFit.expand,
           clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
@@ -246,6 +243,15 @@ class FlowApp extends ConsumerWidget {
               right: 16,
               child: ChatbotFAB(),
             ),
+            // Loading overlay while auth state is being determined.
+            // Overlaid on top (not replacing) so the Navigator stays mounted.
+            if (authState.isLoading)
+              const Positioned.fill(
+                child: ColoredBox(
+                  color: Color(0xFF0D1117), // matches dark theme background
+                  child: NaviaLoadingIndicator.hero(message: 'Loading...'),
+                ),
+              ),
           ],
         );
       },
