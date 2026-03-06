@@ -59,12 +59,19 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
     final authState = ref.watch(authProvider);
     final isWide = MediaQuery.of(context).size.width > 900;
 
-    // v21 DIAGNOSTIC: no RepaintBoundary, no overlays, just SliverAppBar + Hero + placeholder footer
-    return Scaffold(
+    // v23 DIAGNOSTIC: add back RepaintBoundary + Stack + Semantics wrappers, NO overlay children
+    return RepaintBoundary(
+      child: Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
+      body: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Semantics(
+            scopesRoute: true,
+            label: 'Main content',
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
           // Full App Bar (same as original)
           SliverAppBar(
             floating: true,
@@ -329,6 +336,11 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
           ),
         ],
       ),
+    ),
+    // v23: no overlay children in Stack — just the CustomScrollView
+        ],
+      ),
+    ),
     );
   }
 }
