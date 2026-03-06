@@ -43,12 +43,9 @@ class _FloatingElementState extends State<FloatingElement>
       curve: widget.curve,
     ));
 
-    // Start with delay
-    Future.delayed(Duration(milliseconds: (widget.delay * 1000).toInt()), () {
-      if (mounted) {
-        _controller.repeat(reverse: true);
-      }
-    });
+    // Start immediately — Future.delayed + mounted check can fail during
+    // GoRouter navigation, leaving the animation controller stuck at 0.
+    _controller.repeat(reverse: true);
   }
 
   @override

@@ -70,6 +70,7 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       body: Stack(
+        clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
         children: [
           // Main Content
           Semantics(
@@ -83,14 +84,13 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                   floating: true,
                   snap: true,
                   elevation: 0,
+                  scrolledUnderElevation: 0,
+                  surfaceTintColor: Colors.transparent,
+                  forceMaterialTransparency: true,
                   backgroundColor: Colors.transparent,
                   flexibleSpace: _scrollOffset > 10
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.surface.withValues(
-                              alpha: 0.95,
-                            ),
-                          ),
+                      ? ColoredBox(
+                          color: theme.colorScheme.surface,
                         )
                       : null,
                   title: Semantics(
@@ -529,6 +529,7 @@ class _HeroSection extends StatelessWidget {
         minHeight: isMobile ? size.height * 0.95 : size.height * 0.9,
       ),
       child: Stack(
+        clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
         children: [
           // Animated Gradient Background with African warmth
           AnimatedBuilder(
@@ -818,9 +819,7 @@ class _HeroSection extends StatelessWidget {
                         vertical: 28,
                       ),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.surface.withValues(
-                          alpha: 0.9,
-                        ),
+                        color: theme.colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: theme.colorScheme.outlineVariant,

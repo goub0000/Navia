@@ -230,6 +230,7 @@ class FlowApp extends ConsumerWidget {
 
         return Stack(
           fit: StackFit.expand,
+          clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
           children: [
             if (child != null) child,
             // Offline status indicator at the top
