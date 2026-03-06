@@ -483,13 +483,18 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen>
                                 _scrollController.position.maxScrollExtent)
                             .clamp(0.0, 1.0);
                   }
-                  return Container(
+                  // Plain Container instead of LinearProgressIndicator
+                  // to avoid ClipRect compositing layer on CanvasKit.
+                  return SizedBox(
                     height: 4,
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      backgroundColor: Colors.transparent,
-                      color: theme.colorScheme.primary,
-                      minHeight: 4,
+                    child: FractionallySizedBox(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: progress,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -1609,8 +1614,10 @@ class _DeviceFrame extends StatelessWidget {
         ],
       ),
       padding: EdgeInsets.all(bezelWidth),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(bezelRadius - bezelWidth),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(bezelRadius - bezelWidth),
+        ),
         child: child,
       ),
     );
@@ -2111,9 +2118,9 @@ class _AccessibleTabState extends State<_AccessibleTab> {
                   width: isFocused ? 2 : 1,
                 ),
               ),
-              child: InkWell(
+              child: GestureDetector(
                 onTap: widget.onTap,
-                borderRadius: BorderRadius.circular(12),
+                behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,

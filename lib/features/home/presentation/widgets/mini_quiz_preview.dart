@@ -72,13 +72,23 @@ class _MiniQuizPreviewState extends State<MiniQuizPreview> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // Progress indicator
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: progress,
-            minHeight: 6,
-            color: colorScheme.primary,
-            backgroundColor: colorScheme.surfaceContainerHighest,
+        SizedBox(
+          height: 6,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: progress,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 24),
@@ -134,18 +144,17 @@ class _MiniQuizPreviewState extends State<MiniQuizPreview> {
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           transitionBuilder: (child, animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0.1, 0),
-                  end: Offset.zero,
-                ).animate(CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.easeOutCubic,
-                )),
-                child: child,
-              ),
+            // FadeTransition removed — saveLayer compositing bug on CanvasKit.
+            // SlideTransition alone provides a clean visual effect.
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.1, 0),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutCubic,
+              )),
+              child: child,
             );
           },
           child: Column(

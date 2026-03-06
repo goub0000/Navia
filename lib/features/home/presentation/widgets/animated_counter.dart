@@ -270,11 +270,10 @@ class _AnimatedStatItemState extends State<_AnimatedStatItem>
       key: _key,
       animation: _fadeController,
       builder: (context, child) {
+        // Opacity removed — saveLayer compositing bug on CanvasKit.
         return Transform.translate(
           offset: _slideAnimation.value,
-          child: Opacity(
-            opacity: _fadeAnimation.value,
-            child: Column(
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
@@ -301,7 +300,6 @@ class _AnimatedStatItemState extends State<_AnimatedStatItem>
                 ),
               ],
             ),
-          ),
         );
       },
     );

@@ -92,12 +92,10 @@ class _AnimatedSectionState extends State<AnimatedSection>
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
+            // Opacity removed — saveLayer compositing bug on CanvasKit.
             return Transform.translate(
               offset: _slideAnimation.value,
-              child: Opacity(
-                opacity: _fadeAnimation.value,
-                child: widget.child,
-              ),
+              child: widget.child,
             );
           },
         ),

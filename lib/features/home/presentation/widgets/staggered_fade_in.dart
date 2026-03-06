@@ -93,12 +93,12 @@ class _StaggeredFadeInState extends State<StaggeredFadeIn>
         return AnimatedBuilder(
           animation: _controllers[index],
           builder: (context, child) {
+            // Opacity removed — it creates a compositing layer (saveLayer)
+            // on CanvasKit during the 0→1 transition, causing rendering
+            // artifacts on Flutter Web. Slide-up alone gives a clean effect.
             return Transform.translate(
               offset: _slideAnimations[index].value,
-              child: Opacity(
-                opacity: _fadeAnimations[index].value,
-                child: widget.children[index],
-              ),
+              child: widget.children[index],
             );
           },
         );
@@ -180,12 +180,10 @@ class _FadeInItemState extends State<FadeInItem>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
+        // Opacity removed — saveLayer compositing bug on CanvasKit.
         return Transform.translate(
           offset: _slideAnimation.value,
-          child: Opacity(
-            opacity: _fadeAnimation.value,
-            child: widget.child,
-          ),
+          child: widget.child,
         );
       },
     );

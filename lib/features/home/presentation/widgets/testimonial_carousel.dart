@@ -265,9 +265,7 @@ class _TestimonialCard extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: isActive ? 0 : 16),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: Stack(
+      child: Stack(
           children: [
             // Card body
             Container(
@@ -410,10 +408,17 @@ class _TestimonialCard extends StatelessWidget {
               left: 0,
               top: 0,
               bottom: 0,
-              child: Container(width: 3, color: theme.colorScheme.primary),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary,
+                  borderRadius: const BorderRadius.horizontal(
+                    left: Radius.circular(24),
+                  ),
+                ),
+                child: const SizedBox(width: 3),
+              ),
             ),
           ],
-        ),
       ),
     );
   }
