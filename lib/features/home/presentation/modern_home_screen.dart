@@ -671,193 +671,192 @@ class _HeroSection extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // 0: Trust Badge - with PulsingElement
+                    // Trust Badge
                     PulsingElement(
-                        minScale: 0.98,
-                        maxScale: 1.02,
-                        duration: const Duration(seconds: 3),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
+                      minScale: 0.98,
+                      maxScale: 1.02,
+                      duration: const Duration(seconds: 3),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.2,
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(
+                          boxShadow: [
+                            BoxShadow(
                               color: theme.colorScheme.primary.withValues(
                                 alpha: 0.2,
                               ),
+                              blurRadius: 20,
+                              offset: const Offset(0, 4),
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: theme.colorScheme.primary.withValues(
-                                  alpha: 0.2,
-                                ),
-                                blurRadius: 20,
-                                offset: const Offset(0, 4),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.verified_rounded,
+                              size: 18,
+                              color: theme.colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              context.l10n.heroTrustBadge,
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: theme.colorScheme.onPrimaryContainer,
+                                fontWeight: FontWeight.w600,
                               ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.verified_rounded,
-                                size: 18,
-                                color: theme.colorScheme.primary,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                context.l10n.heroTrustBadge,
-                                style: theme.textTheme.labelLarge?.copyWith(
-                                  color: theme.colorScheme.onPrimaryContainer,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                     const SizedBox(height: 32),
 
-                    // 1: Main Headline - Benefit-focused
+                    // Main Headline
                     Semantics(
-                        header: true,
-                        child: Text(
-                          context.l10n.heroHeadline,
-                          style: theme.textTheme.displayLarge?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            fontSize: isMobile ? 40 : 56,
-                            height: 1.1,
-                            letterSpacing: -1.5,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    const SizedBox(height: 24),
-
-                    // 2: Subheadline - Benefit-focused
-                    Text(
-                        context.l10n.heroSubheadline,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                          height: 1.6,
-                          fontSize: isMobile ? 16 : 20,
-                          fontWeight: FontWeight.w400,
+                      header: true,
+                      child: Text(
+                        context.l10n.heroHeadline,
+                        style: theme.textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          fontSize: isMobile ? 40 : 56,
+                          height: 1.1,
+                          letterSpacing: -1.5,
+                          color: theme.colorScheme.onSurface,
                         ),
                         textAlign: TextAlign.center,
                       ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Subheadline
+                    Text(
+                      context.l10n.heroSubheadline,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        height: 1.6,
+                        fontSize: isMobile ? 16 : 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 32),
 
-                    // 2.5: Interactive Search Bar
+                    // Interactive Search Bar
                     const SearchBarButton(),
                     const SizedBox(height: 32),
 
-                    // 3: CTA Buttons - Larger with min height
+                    // CTA Buttons
                     Wrap(
-                        alignment: WrapAlignment.center,
-                        spacing: 16,
-                        runSpacing: 16,
-                        children: [
-                          SizedBox(
-                            height: HomeConstants.buttonMinHeight,
-                            child: FilledButton.icon(
-                              onPressed: () => context.go('/register'),
-                              icon: const Icon(Icons.rocket_launch_rounded),
-                              label: Text(context.l10n.heroStartFreeTrial),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: theme.colorScheme.primary,
-                                foregroundColor: theme.colorScheme.onPrimary,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 40,
-                                  vertical: 0,
-                                ),
-                                textStyle: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                elevation: 2,
-                                shadowColor: theme.colorScheme.primary
-                                    .withValues(alpha: 0.3),
+                      alignment: WrapAlignment.center,
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: [
+                        SizedBox(
+                          height: HomeConstants.buttonMinHeight,
+                          child: FilledButton.icon(
+                            onPressed: () => context.go('/register'),
+                            icon: const Icon(Icons.rocket_launch_rounded),
+                            label: Text(context.l10n.heroStartFreeTrial),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: theme.colorScheme.primary,
+                              foregroundColor: theme.colorScheme.onPrimary,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 40,
+                                vertical: 0,
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              elevation: 2,
+                              shadowColor: theme.colorScheme.primary
+                                  .withValues(alpha: 0.3),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: HomeConstants.buttonMinHeight,
+                          child: OutlinedButton.icon(
+                            onPressed: () => showDemoVideoDialog(context),
+                            icon: const Icon(Icons.play_circle_outline),
+                            label: Text(context.l10n.heroTakeATour),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: theme.colorScheme.primary,
+                              side: BorderSide(
+                                color: theme.colorScheme.outline,
+                                width: 1.5,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 40,
+                                vertical: 0,
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: HomeConstants.buttonMinHeight,
-                            child: OutlinedButton.icon(
-                              onPressed: () => showDemoVideoDialog(context),
-                              icon: const Icon(Icons.play_circle_outline),
-                              label: Text(context.l10n.heroTakeATour),
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: theme.colorScheme.primary,
-                                side: BorderSide(
-                                  color: theme.colorScheme.outline,
-                                  width: 1.5,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 40,
-                                  vertical: 0,
-                                ),
-                                textStyle: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 48),
+
+                    // Stats Counters
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 28,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface.withValues(
+                          alpha: 0.9,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: theme.colorScheme.outlineVariant,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
                           ),
                         ],
                       ),
-                    const SizedBox(height: 48),
-
-                    // 4: Animated Stats Counters
-                    Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 28,
-                        ),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surface.withValues(
-                            alpha: 0.9,
+                      child: AnimatedStatsRow(
+                        stats: [
+                          StatItem(
+                            icon: Icons.people_rounded,
+                            value: 50000,
+                            suffix: '+',
+                            label: context.l10n.heroStatActiveUsers,
                           ),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: theme.colorScheme.outlineVariant,
+                          StatItem(
+                            icon: Icons.account_balance_rounded,
+                            value: 18000,
+                            suffix: '+',
+                            label: context.l10n.heroStatUniversities,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.05),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: AnimatedStatsRow(
-                          stats: [
-                            StatItem(
-                              icon: Icons.people_rounded,
-                              value: 50000,
-                              suffix: '+',
-                              label: context.l10n.heroStatActiveUsers,
-                            ),
-                            StatItem(
-                              icon: Icons.account_balance_rounded,
-                              value: 18000,
-                              suffix: '+',
-                              label: context.l10n.heroStatUniversities,
-                            ),
-                            StatItem(
-                              icon: Icons.public_rounded,
-                              value: 100,
-                              suffix: '+',
-                              label: context.l10n.heroStatCountries,
-                            ),
-                          ],
-                          spacing: isMobile ? 32 : 64,
-                        ),
+                          StatItem(
+                            icon: Icons.public_rounded,
+                            value: 100,
+                            suffix: '+',
+                            label: context.l10n.heroStatCountries,
+                          ),
+                        ],
+                        spacing: isMobile ? 32 : 64,
                       ),
+                    ),
                   ],
                 ),
               ),
