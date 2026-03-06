@@ -17,8 +17,9 @@ import 'widgets/demo_video_dialog.dart';
 import 'widgets/section_divider.dart';
 import 'widgets/testimonial_carousel.dart';
 import 'widgets/university_logos_section.dart';
-import 'widgets/animated_counter.dart';
-import 'widgets/search_preview.dart';
+// v20 DIAGNOSTIC: temporarily unused while testing static placeholders
+// import 'widgets/animated_counter.dart';
+// import 'widgets/search_preview.dart';
 import 'widgets/mini_quiz_preview.dart';
 import '../data/testimonials_data.dart';
 
@@ -31,72 +32,6 @@ class ModernHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
-  // v19 DIAGNOSTIC: same Stack + CustomScrollView + SliverAppBar structure
-  // as the real home page, but with minimal content.
-  // Tests whether the bug is in the STRUCTURE or in a specific WIDGET.
-  final ScrollController _scrollController = ScrollController();
-  double _scrollOffset = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      setState(() {
-        _scrollOffset = _scrollController.offset;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      backgroundColor: theme.colorScheme.surface,
-      body: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                elevation: 0,
-                scrolledUnderElevation: 0,
-                surfaceTintColor: Colors.transparent,
-                forceMaterialTransparency: true,
-                backgroundColor: Colors.transparent,
-                title: Text('Home v19 — structure test',
-                    style: TextStyle(color: theme.colorScheme.onSurface)),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, i) => ListTile(
-                    leading: CircleAvatar(child: Text('$i')),
-                    title: Text('Item $i — scroll offset: ${_scrollOffset.toStringAsFixed(0)}'),
-                  ),
-                  childCount: 50,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ============================================================
-// ORIGINAL BUILD METHOD — disabled during v19 diagnostic
-// ============================================================
-class _OriginalModernHomeScreenState_DISABLED extends ConsumerState<ModernHomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _mainContentKey = GlobalKey();
   double _scrollOffset = 0;
@@ -770,8 +705,23 @@ class _HeroSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
 
-                    // Interactive Search Bar
-                    const SearchBarButton(),
+                    // v20 DIAGNOSTIC: static placeholder instead of SearchBarButton
+                    Container(
+                      height: 56,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(28),
+                        border: Border.all(color: theme.colorScheme.outline),
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          Icon(Icons.search, color: theme.colorScheme.onSurfaceVariant),
+                          const SizedBox(width: 12),
+                          Text('Search universities...', style: TextStyle(color: theme.colorScheme.onSurfaceVariant)),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 32),
 
                     // CTA Buttons
@@ -850,28 +800,16 @@ class _HeroSection extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: AnimatedStatsRow(
-                        stats: [
-                          StatItem(
-                            icon: Icons.people_rounded,
-                            value: 50000,
-                            suffix: '+',
-                            label: context.l10n.heroStatActiveUsers,
-                          ),
-                          StatItem(
-                            icon: Icons.account_balance_rounded,
-                            value: 18000,
-                            suffix: '+',
-                            label: context.l10n.heroStatUniversities,
-                          ),
-                          StatItem(
-                            icon: Icons.public_rounded,
-                            value: 100,
-                            suffix: '+',
-                            label: context.l10n.heroStatCountries,
-                          ),
-                        ],
+                      // v20 DIAGNOSTIC: static text instead of AnimatedStatsRow
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
                         spacing: isMobile ? 32 : 64,
+                        runSpacing: 24,
+                        children: [
+                          _StaticStat(icon: Icons.people_rounded, value: '50K+', label: context.l10n.heroStatActiveUsers),
+                          _StaticStat(icon: Icons.account_balance_rounded, value: '18K+', label: context.l10n.heroStatUniversities),
+                          _StaticStat(icon: Icons.public_rounded, value: '100+', label: context.l10n.heroStatCountries),
+                        ],
                       ),
                     ),
                   ],
@@ -2110,6 +2048,28 @@ class _UserType {
 /// but the AnimationControllers (started via Future.delayed) would get stuck
 /// when GoRouter re-created the widget during in-app navigation — leaving
 /// content at offset (0, 20) permanently. Replaced with static rendering.
+/// v20 DIAGNOSTIC: static stat placeholder (no AnimationController, no GlobalKey)
+class _StaticStat extends StatelessWidget {
+  final IconData icon;
+  final String value;
+  final String label;
+  const _StaticStat({required this.icon, required this.value, required this.label});
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 28, color: theme.colorScheme.primary),
+        const SizedBox(height: 8),
+        Text(value, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: theme.colorScheme.onSurface)),
+        const SizedBox(height: 4),
+        Text(label, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+      ],
+    );
+  }
+}
+
 class _FadeInOnScroll extends StatelessWidget {
   final List<Widget> children;
 
