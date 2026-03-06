@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const BASE_URL = 'https://web-production-bcafe.up.railway.app';
-const BUILD_VERSION = '2026-03-06-v21'; // bump on each deploy to verify caching
+const BUILD_VERSION = '2026-03-06-v22'; // bump on each deploy to verify caching
 
 // ---------- Security headers ----------
 app.disable('x-powered-by');

@@ -254,14 +254,78 @@ class _ModernHomeScreenState extends ConsumerState<ModernHomeScreen> {
             child: _HeroSection(),
           ),
 
-          // v21: placeholder instead of all below-hero sections
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, i) => ListTile(
-                title: Text('Placeholder section $i — v21 diagnostic'),
-              ),
-              childCount: 20,
+          // v22: all original below-hero sections restored
+          SliverToBoxAdapter(
+            child: const _QuizTeaserSection(),
+          ),
+          SliverToBoxAdapter(
+            child: WaveDivider(
+              color: theme.colorScheme.surfaceContainerLowest,
+              height: 36,
+              style: WaveStyle.gentle,
             ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: theme.colorScheme.surfaceContainerLowest,
+              child: const _FadeInOnScroll(
+                children: [_ValuePropositionSection()],
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: _FadeInOnScroll(
+              children: [_SocialProofSection()],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: WaveDivider(
+              color: theme.colorScheme.secondary.withValues(alpha: 0.1),
+              height: 30,
+              style: WaveStyle.minimal,
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: _UniversitySearchSection(),
+          ),
+          const SliverToBoxAdapter(
+            child: _FindYourPathSection(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: theme.colorScheme.surfaceContainerLowest,
+              child: const _FadeInOnScroll(
+                children: [_KeyFeaturesSection()],
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: _FadeInOnScroll(
+              children: [_UserTypesSection()],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: theme.colorScheme.surfaceContainerLowest,
+              child: const _FadeInOnScroll(
+                children: [_TestimonialsSection()],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: WaveDivider(
+              color: theme.colorScheme.primaryContainer,
+              height: 36,
+              style: WaveStyle.curved,
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: _FadeInOnScroll(
+              children: [_FinalCTASection()],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: NaviaFooter(),
           ),
         ],
       ),
