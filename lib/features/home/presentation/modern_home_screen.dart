@@ -492,7 +492,7 @@ class _HeroSection extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none, // Avoid clip compositing layer on CanvasKit
         children: [
-          // Static Gradient Background (v15: removed AnimatedBuilder to diagnose render bug)
+          // Gradient Background
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -509,7 +509,7 @@ class _HeroSection extends StatelessWidget {
             ),
           ),
 
-          // Static decorative circles (v15: removed FloatingElement wrappers to diagnose render bug)
+          // Decorative circles
           if (!isMobile) ...[
             // Top right decorative circle
             Positioned(
@@ -601,7 +601,7 @@ class _HeroSection extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Trust Badge (v15: removed PulsingElement wrapper)
+                    // Trust Badge
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
