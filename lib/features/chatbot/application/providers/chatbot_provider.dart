@@ -471,11 +471,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
   }
 }
 
-/// Chatbot service provider with API integration
-final chatbotServiceProvider = Provider<ChatbotService>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  return ChatbotService(authService: authService);
-});
+// chatbotServiceProvider is defined in chatbot_service.dart (re-exported via import)
 
 /// Conversation storage service provider
 final conversationStorageServiceProvider =

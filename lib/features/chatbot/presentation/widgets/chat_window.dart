@@ -20,6 +20,8 @@ class ChatWindow extends ConsumerStatefulWidget {
 class _ChatWindowState extends ConsumerState<ChatWindow> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _inputController = TextEditingController();
+  bool _showEscalationConfirm = false;
+  bool _showUserMenuPanel = false;
 
   @override
   void initState() {
@@ -86,40 +88,15 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
     _scrollToBottom();
   }
 
-  void _showEscalationDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(context.l10n.chatTalkToHuman),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(context.l10n.chatConnectWithAgent),
-            const SizedBox(height: 8),
-            Text(
-              context.l10n.chatAgentWillJoin,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(context.l10n.chatCancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _escalateToHuman();
-            },
-            child: Text(context.l10n.chatConnect),
-          ),
-        ],
-      ),
-    );
+  void _toggleEscalationConfirm() {
+    setState(() {
+      _showEscalationConfirm = !_showEscalationConfirm;
+      _showUserMenuPanel = false;
+    });
   }
 
   void _escalateToHuman() {
+    setState(() => _showEscalationConfirm = false);
     ref.read(chatbotProvider.notifier).escalateToHuman(
       reason: context.l10n.chatUserRequestedHumanSupport,
     );
@@ -172,6 +149,12 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
               // Header
               _buildHeader(),
 
+              // Inline panels (replace showDialog to avoid Navigator context
+              // issues — ChatWindow lives in MaterialApp.builder, which is
+              // a sibling of the Router/Navigator, not a descendant)
+              if (_showEscalationConfirm) _buildEscalationConfirm(),
+              if (_showUserMenuPanel) _buildUserMenuPanel(),
+
               // Messages — wrapped in its own RepaintBoundary so overlay
               // compositing from the header area cannot bleed into it.
               Expanded(
@@ -222,7 +205,6 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
     final authState = ref.watch(authProvider);
     final isEscalated = state.isEscalated;
     final isLoggedIn = authState.isAuthenticated;
-    final user = authState.user;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -290,20 +272,93 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
           // to avoid Material compositing layers on CanvasKit.
           _headerIcon(
             icon: isLoggedIn ? Icons.account_circle : Icons.login,
-            onTap: () => _showUserMenu(isLoggedIn, user?.displayName),
+            onTap: _toggleUserMenu,
             tooltip: isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
           ),
           // Talk to Human button
           if (!isEscalated)
             _headerIcon(
               icon: Icons.person_add,
-              onTap: _showEscalationDialog,
+              onTap: _toggleEscalationConfirm,
               tooltip: context.l10n.chatTalkToHuman,
             ),
           _headerIcon(
             icon: Icons.close,
             onTap: _close,
             tooltip: context.l10n.chatClose,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEscalationConfirm() {
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.amber[50],
+        border: Border(
+          bottom: BorderSide(color: Colors.amber[200]!),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.chatConnectWithAgent,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            context.l10n.chatAgentWillJoin,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: _toggleEscalationConfirm,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 6),
+                  child: Text(
+                    context.l10n.chatCancel,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: _escalateToHuman,
+                behavior: HitTestBehavior.opaque,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 6),
+                    child: Text(
+                      context.l10n.chatConnect,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -332,59 +387,105 @@ class _ChatWindowState extends ConsumerState<ChatWindow> {
     );
   }
 
-  void _showUserMenu(bool isLoggedIn, String? userName) {
+  void _toggleUserMenu() {
+    setState(() {
+      _showUserMenuPanel = !_showUserMenuPanel;
+      _showEscalationConfirm = false;
+    });
+  }
+
+  Widget _buildUserMenuPanel() {
+    final theme = Theme.of(context);
+    final authState = ref.watch(authProvider);
+    final isLoggedIn = authState.isAuthenticated;
+    final userName = authState.user?.displayName;
     final router = ref.read(routerProvider);
 
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(
-          isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.blue[50],
+        border: Border(
+          bottom: BorderSide(color: Colors.blue[200]!),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isLoggedIn) ...[
-              Text('${context.l10n.chatSignedInAs} ${userName ?? context.l10n.chatDefaultUserName}'),
-              const SizedBox(height: 8),
-              Text(
-                context.l10n.chatConversationsSynced,
-                style: Theme.of(context).textTheme.bodySmall,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isLoggedIn ? context.l10n.chatYourAccount : context.l10n.chatSignIn,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 4),
+          if (isLoggedIn) ...[
+            Text(
+              '${context.l10n.chatSignedInAs} ${userName ?? context.l10n.chatDefaultUserName}',
+              style: theme.textTheme.bodySmall,
+            ),
+          ] else ...[
+            Text(
+              context.l10n.chatSignInDescription,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: Colors.grey[700],
               ),
-            ] else ...[
-              Text(context.l10n.chatSignInDescription),
-              const SizedBox(height: 8),
-              Text(
-                context.l10n.chatHistorySaved,
-                style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: _toggleUserMenu,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12, vertical: 6),
+                  child: Text(
+                    context.l10n.chatClose,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: () {
+                  setState(() => _showUserMenuPanel = false);
+                  ref.read(chatbotVisibleProvider.notifier).state = false;
+                  if (isLoggedIn) {
+                    router.go('/profile');
+                  } else {
+                    ref.read(chatbotPendingReopenProvider.notifier).state =
+                        true;
+                    router.go('/login');
+                  }
+                },
+                behavior: HitTestBehavior.opaque,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 6),
+                    child: Text(
+                      isLoggedIn
+                          ? context.l10n.chatViewProfile
+                          : context.l10n.chatSignIn,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(context.l10n.chatClose),
           ),
-          if (isLoggedIn)
-            FilledButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-                ref.read(chatbotVisibleProvider.notifier).state = false;
-                router.go('/profile');
-              },
-              child: Text(context.l10n.chatViewProfile),
-            )
-          else
-            FilledButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-                ref.read(chatbotPendingReopenProvider.notifier).state = true;
-                ref.read(chatbotVisibleProvider.notifier).state = false;
-                router.go('/login');
-              },
-              child: Text(context.l10n.chatSignIn),
-            ),
         ],
       ),
     );
