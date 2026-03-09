@@ -238,40 +238,9 @@ class AppTheme {
       ),
 
       // ── Inputs ──
-      // filled:false — filled:true + height on TextStyle causes CanvasKit to
-      // render the cursor at position 0 on Flutter web.
-      inputDecorationTheme: InputDecorationTheme(
-        filled: false,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: verticalPadding),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.outline),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.outline),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.error),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: colorScheme.error, width: 2),
-        ),
-        labelStyle: getFont.copyWith(
-          fontSize: 14,
-          color: colorScheme.onSurfaceVariant,
-        ),
-        hintStyle: getFont.copyWith(
-          fontSize: 14,
-          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-        ),
-      ),
+      // Stripped to bare defaults to fix cursor position bug on Flutter web.
+      // Will restore styling after confirming cursor works.
+      inputDecorationTheme: const InputDecorationTheme(),
 
       // ── Divider ──
       dividerTheme: DividerThemeData(
@@ -395,11 +364,11 @@ class AppTheme {
         height: 1.4,
         color: textColor,
       ),
-      titleMedium: getFont.copyWith(
+      // titleMedium: NO custom font — TextFormField uses this style and
+      // custom fonts cause cursor position bugs on Flutter web.
+      titleMedium: TextStyle(
         fontSize: 16 * multiplier,
         fontWeight: FontWeight.w500,
-        // height removed — explicit line-height multiplier causes CanvasKit
-        // to miscalculate cursor x-offset in TextFormField on Flutter web.
         color: textColor,
       ),
       titleSmall: getFont.copyWith(
