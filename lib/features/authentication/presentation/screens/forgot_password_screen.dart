@@ -178,7 +178,6 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
             decoration: InputDecoration(
               labelText: context.l10n.forgotPasswordEmailLabel,
               hintText: context.l10n.forgotPasswordEmailHint,
-              prefixIcon: const Icon(Icons.email_outlined),
             ),
             validator: Validators.email,
             enabled: !_isLoading,

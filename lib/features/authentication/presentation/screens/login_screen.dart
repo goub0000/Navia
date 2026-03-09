@@ -239,12 +239,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   _buildErrorWidget(),
 
                   // Email Field
+                  // No prefixIcon — CanvasKit renders the cursor at
+                  // position 0 when prefixIcon + filled:true are combined.
                   TextFormField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: context.l10n.loginEmailLabel,
-                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: Validators.email,
                     enabled: !authState.isLoading,
@@ -258,7 +259,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       labelText: context.l10n.loginPasswordLabel,
-                      prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword

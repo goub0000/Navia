@@ -250,7 +250,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: context.l10n.registerFullNameLabel,
-                    prefixIcon: const Icon(Icons.person_outlined),
                   ),
                   validator: Validators.fullName,
                   enabled: !authState.isLoading,
@@ -264,7 +263,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: context.l10n.registerEmailLabel,
-                    prefixIcon: const Icon(Icons.email_outlined),
                   ),
                   validator: Validators.email,
                   enabled: !authState.isLoading,
@@ -277,7 +275,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   initialValue: UserRole.student,
                   decoration: InputDecoration(
                     labelText: context.l10n.registerRoleLabel,
-                    prefixIcon: const Icon(Icons.badge_outlined),
                   ),
                   items: UserRole.values.where((role) => !role.isAdmin).map((
                     role,
@@ -315,7 +312,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   obscureText: _obscurePassword,
                   decoration: InputDecoration(
                     labelText: context.l10n.registerPasswordLabel,
-                    prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword
@@ -351,7 +347,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   obscureText: _obscureConfirmPassword,
                   decoration: InputDecoration(
                     labelText: context.l10n.registerConfirmPasswordLabel,
-                    prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirmPassword
