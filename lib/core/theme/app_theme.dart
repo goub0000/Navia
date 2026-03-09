@@ -235,9 +235,10 @@ class AppTheme {
       ),
 
       // ── Inputs ──
+      // filled:false — filled:true + height on TextStyle causes CanvasKit to
+      // render the cursor at position 0 on Flutter web.
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: colorScheme.surfaceContainerHighest,
+        filled: false,
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: verticalPadding),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -394,7 +395,8 @@ class AppTheme {
       titleMedium: getFont.copyWith(
         fontSize: 16 * multiplier,
         fontWeight: FontWeight.w500,
-        height: 1.4,
+        // height removed — explicit line-height multiplier causes CanvasKit
+        // to miscalculate cursor x-offset in TextFormField on Flutter web.
         color: textColor,
       ),
       titleSmall: getFont.copyWith(
