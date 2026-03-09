@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -23,6 +24,12 @@ import 'features/chatbot/presentation/widgets/chatbot_fab.dart';
 void main() async {
   // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Disable GoogleFonts runtime fetching on web — use the bundled Inter font
+  // from pubspec.yaml instead. This fixes the cursor position bug where async
+  // font loading causes TextPainter to calculate cursor offset with fallback
+  // font metrics, placing the caret at position 0 instead of after last char.
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   // Enable semantics tree for screen readers without requiring user opt-in
   SemanticsBinding.instance.ensureSemantics();

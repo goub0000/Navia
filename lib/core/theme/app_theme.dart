@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 /// App theme configuration with light and dark themes.
@@ -153,9 +152,13 @@ class AppTheme {
       isDark: isDark,
     );
 
+    // Use bundled Inter font directly instead of GoogleFonts runtime loading.
+    // GoogleFonts.config.allowRuntimeFetching is disabled in main.dart, so
+    // GoogleFonts.inter() would fall back to the bundled 'Inter' from pubspec.
+    // Using TextStyle directly is simpler and avoids any font-name mismatch.
     final getFont = fontFamily != null
-        ? GoogleFonts.getFont(fontFamily)
-        : GoogleFonts.inter();
+        ? TextStyle(fontFamily: fontFamily)
+        : const TextStyle(fontFamily: 'Inter');
 
     return ThemeData(
       useMaterial3: true,
@@ -346,8 +349,8 @@ class AppTheme {
     final textColor = colorScheme.onSurface;
     final secondaryColor = colorScheme.onSurfaceVariant;
     final getFont = fontFamily != null
-        ? GoogleFonts.getFont(fontFamily)
-        : GoogleFonts.inter();
+        ? TextStyle(fontFamily: fontFamily)
+        : const TextStyle(fontFamily: 'Inter');
 
     return TextTheme(
       displayLarge: getFont.copyWith(
