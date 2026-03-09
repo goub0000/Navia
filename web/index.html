@@ -91,6 +91,11 @@
   <meta name="apple-mobile-web-app-title" content="Navia">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
+  <!-- Preload Inter font (default app font) to prevent CanvasKit cursor bug -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
@@ -107,12 +112,13 @@
       });
     }
   </script>
-  <!-- v16 diagnostic: switch to HTML renderer to test if the washed-out/
-       unscrollable bug on context.go('/') is CanvasKit-specific.
-       Previous: canvaskit (had compositing bugs), skwasm (had saveLayer bugs). -->
+  <!-- v29: switch to "auto" renderer (prefers Skwasm on modern browsers).
+       CanvasKit has a cursor-position bug with lazy-loaded Google Fonts —
+       the caret renders at position 0 instead of after the last character.
+       Skwasm handles text editing natively via browser <input> elements. -->
   <script>
     window.flutterConfiguration = {
-      renderer: "canvaskit"
+      renderer: "auto"
     };
   </script>
   <script src="flutter_bootstrap.js" async></script>
