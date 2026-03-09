@@ -238,9 +238,39 @@ class AppTheme {
       ),
 
       // ── Inputs ──
-      // Stripped to bare defaults to fix cursor position bug on Flutter web.
-      // Will restore styling after confirming cursor works.
-      inputDecorationTheme: const InputDecorationTheme(),
+      // No filled:true and no custom fontFamily on titleMedium — both cause
+      // cursor position bugs on Flutter web (caret at position 0).
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: verticalPadding),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: colorScheme.outline),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: colorScheme.outline),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: colorScheme.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: colorScheme.error, width: 2),
+        ),
+        labelStyle: TextStyle(
+          fontSize: 14,
+          color: colorScheme.onSurfaceVariant,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 14,
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
 
       // ── Divider ──
       dividerTheme: DividerThemeData(
