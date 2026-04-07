@@ -1,11 +1,12 @@
 import 'package:go_router/go_router.dart';
 import '../../core/models/counseling_models.dart';
-import '../../features/counselor/dashboard/presentation/counselor_dashboard_screen.dart';
-import '../../features/counselor/students/presentation/students_list_screen.dart';
-import '../../features/counselor/students/presentation/student_detail_screen.dart';
-import '../../features/counselor/sessions/presentation/sessions_list_screen.dart';
-import '../../features/counselor/sessions/presentation/create_session_screen.dart';
+import '../../features/counselor/dashboard/presentation/counselor_dashboard_screen.dart' deferred as counselor_dashboard;
+import '../../features/counselor/students/presentation/students_list_screen.dart' deferred as counselor_students_list;
+import '../../features/counselor/students/presentation/student_detail_screen.dart' deferred as counselor_student_detail;
+import '../../features/counselor/sessions/presentation/sessions_list_screen.dart' deferred as counselor_sessions_list;
+import '../../features/counselor/sessions/presentation/create_session_screen.dart' deferred as counselor_create_session;
 import '../transitions/shared_axis_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Counselor-specific routes
 List<RouteBase> counselorRoutes = [
@@ -14,7 +15,10 @@ List<RouteBase> counselorRoutes = [
     name: 'counselor-dashboard',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const CounselorDashboardScreen(),
+      child: DeferredRouteLoader(
+        loader: counselor_dashboard.loadLibrary,
+        childBuilder: () => counselor_dashboard.CounselorDashboardScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -22,7 +26,10 @@ List<RouteBase> counselorRoutes = [
     name: 'counselor-students',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const StudentsListScreen(),
+      child: DeferredRouteLoader(
+        loader: counselor_students_list.loadLibrary,
+        childBuilder: () => counselor_students_list.StudentsListScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -33,7 +40,10 @@ List<RouteBase> counselorRoutes = [
       final student = state.extra as StudentRecord;
       return SharedAxisPage(
         key: state.pageKey,
-        child: StudentDetailScreen(student: student),
+        child: DeferredRouteLoader(
+          loader: counselor_student_detail.loadLibrary,
+          childBuilder: () => counselor_student_detail.StudentDetailScreen(student: student),
+        ),
       );
     },
   ),
@@ -42,7 +52,10 @@ List<RouteBase> counselorRoutes = [
     name: 'counselor-sessions',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const SessionsListScreen(),
+      child: DeferredRouteLoader(
+        loader: counselor_sessions_list.loadLibrary,
+        childBuilder: () => counselor_sessions_list.SessionsListScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -53,7 +66,10 @@ List<RouteBase> counselorRoutes = [
       final student = extra?['student'] as StudentRecord?;
       return SharedAxisPage(
         key: state.pageKey,
-        child: CreateSessionScreen(student: student),
+        child: DeferredRouteLoader(
+          loader: counselor_create_session.loadLibrary,
+          childBuilder: () => counselor_create_session.CreateSessionScreen(student: student),
+        ),
       );
     },
   ),

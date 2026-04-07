@@ -4,22 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/models/applicant_model.dart';
 import '../../core/models/program_model.dart';
 import '../../core/models/course_model.dart';
-import '../../features/institution/dashboard/presentation/institution_dashboard_screen.dart';
-import '../../features/institution/applicants/presentation/applicants_list_screen.dart';
+import '../../features/institution/dashboard/presentation/institution_dashboard_screen.dart' deferred as inst_dashboard;
+import '../../features/institution/applicants/presentation/applicants_list_screen.dart' deferred as inst_applicants_list;
 import '../../features/institution/applicants/presentation/applicant_detail_screen.dart';
-import '../../features/institution/programs/presentation/programs_list_screen.dart';
-import '../../features/institution/programs/presentation/create_program_screen.dart';
-import '../../features/institution/programs/presentation/program_detail_screen.dart';
-import '../../features/institution/courses/presentation/institution_courses_screen.dart';
-import '../../features/institution/courses/presentation/create_course_screen.dart';
-import '../../features/institution/courses/presentation/course_permissions_screen.dart';
-import '../../features/institution/courses/presentation/course_enrollments_screen.dart';
-import '../../features/institution/courses/presentation/institution_course_detail_screen.dart';
-import '../../features/institution/courses/presentation/course_content_builder_screen.dart';
-import '../../features/institution/counselors/presentation/counselors_management_screen.dart';
+import '../../features/institution/programs/presentation/programs_list_screen.dart' deferred as inst_programs_list;
+import '../../features/institution/programs/presentation/create_program_screen.dart' deferred as inst_create_program;
+import '../../features/institution/programs/presentation/program_detail_screen.dart' deferred as inst_program_detail;
+import '../../features/institution/courses/presentation/institution_courses_screen.dart' deferred as inst_courses;
+import '../../features/institution/courses/presentation/create_course_screen.dart' deferred as inst_create_course;
+import '../../features/institution/courses/presentation/course_permissions_screen.dart' deferred as inst_course_permissions;
+import '../../features/institution/courses/presentation/course_enrollments_screen.dart' deferred as inst_course_enrollments;
+import '../../features/institution/courses/presentation/institution_course_detail_screen.dart' deferred as inst_course_detail;
+import '../../features/institution/courses/presentation/course_content_builder_screen.dart' deferred as inst_course_builder;
+import '../../features/institution/counselors/presentation/counselors_management_screen.dart' deferred as inst_counselors;
 import '../../features/institution/providers/institution_applicants_provider.dart';
 import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Institution-specific routes
 List<RouteBase> institutionRoutes = [
@@ -28,7 +29,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-dashboard',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const InstitutionDashboardScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_dashboard.loadLibrary,
+        childBuilder: () => inst_dashboard.InstitutionDashboardScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -36,7 +40,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-applicants',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const ApplicantsListScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_applicants_list.loadLibrary,
+        childBuilder: () => inst_applicants_list.ApplicantsListScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -66,7 +73,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-programs',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const ProgramsListScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_programs_list.loadLibrary,
+        childBuilder: () => inst_programs_list.ProgramsListScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -74,7 +84,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-create-program',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const CreateProgramScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_create_program.loadLibrary,
+        childBuilder: () => inst_create_program.CreateProgramScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -98,7 +111,10 @@ List<RouteBase> institutionRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: ProgramDetailScreen(program: program),
+        child: DeferredRouteLoader(
+          loader: inst_program_detail.loadLibrary,
+          childBuilder: () => inst_program_detail.ProgramDetailScreen(program: program),
+        ),
       );
     },
   ),
@@ -107,7 +123,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-courses',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const InstitutionCoursesScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_courses.loadLibrary,
+        childBuilder: () => inst_courses.InstitutionCoursesScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -115,7 +134,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-create-course',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const CreateCourseScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_create_course.loadLibrary,
+        childBuilder: () => inst_create_course.CreateCourseScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -137,7 +159,10 @@ List<RouteBase> institutionRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: InstitutionCourseDetailScreen(course: course),
+        child: DeferredRouteLoader(
+          loader: inst_course_detail.loadLibrary,
+          childBuilder: () => inst_course_detail.InstitutionCourseDetailScreen(course: course),
+        ),
       );
     },
   ),
@@ -160,7 +185,10 @@ List<RouteBase> institutionRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: CreateCourseScreen(course: course),
+        child: DeferredRouteLoader(
+          loader: inst_create_course.loadLibrary,
+          childBuilder: () => inst_create_course.CreateCourseScreen(course: course),
+        ),
       );
     },
   ),
@@ -183,7 +211,10 @@ List<RouteBase> institutionRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: CoursePermissionsScreen(course: course),
+        child: DeferredRouteLoader(
+          loader: inst_course_permissions.loadLibrary,
+          childBuilder: () => inst_course_permissions.CoursePermissionsScreen(course: course),
+        ),
       );
     },
   ),
@@ -205,7 +236,10 @@ List<RouteBase> institutionRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: CourseEnrollmentsScreen(course: course),
+        child: DeferredRouteLoader(
+          loader: inst_course_enrollments.loadLibrary,
+          childBuilder: () => inst_course_enrollments.CourseEnrollmentsScreen(course: course),
+        ),
       );
     },
   ),
@@ -217,9 +251,12 @@ List<RouteBase> institutionRoutes = [
       final course = state.extra as Course?;
       return SharedAxisPage(
         key: state.pageKey,
-        child: CourseContentBuilderScreen(
-          courseId: courseId,
-          course: course,
+        child: DeferredRouteLoader(
+          loader: inst_course_builder.loadLibrary,
+          childBuilder: () => inst_course_builder.CourseContentBuilderScreen(
+            courseId: courseId,
+            course: course,
+          ),
         ),
       );
     },
@@ -230,7 +267,10 @@ List<RouteBase> institutionRoutes = [
     name: 'institution-counselors',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const CounselorsManagementScreen(),
+      child: DeferredRouteLoader(
+        loader: inst_counselors.loadLibrary,
+        childBuilder: () => inst_counselors.CounselorsManagementScreen(),
+      ),
     ),
   ),
 ];

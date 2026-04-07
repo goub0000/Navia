@@ -80,7 +80,7 @@ All services are accessible via Riverpod providers:
 - `applicationsServiceProvider`
 - `messagingServiceProvider`
 - `notificationsServiceProvider`
-- `realtimeServiceProvider`
+- `enhancedRealtimeServiceProvider`
 - `currentUserProvider`
 - `isAuthenticatedProvider`
 - `unreadMessagesCountProvider`

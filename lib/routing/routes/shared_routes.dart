@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/shared/profile/profile_screen.dart';
-import '../../features/shared/profile/edit_profile_screen.dart';
-import '../../features/shared/profile/change_password_screen.dart';
-import '../../features/shared/settings/settings_screen.dart';
-import '../../features/shared/settings/notification_preferences_screen.dart';
-import '../../features/shared/cookies/presentation/cookie_settings_screen.dart';
-import '../../features/shared/notifications/notifications_screen.dart';
-import '../../features/shared/messages/presentation/messages_list_screen.dart';
-import '../../features/shared/messages/presentation/conversation_detail_screen.dart';
-import '../../features/shared/documents/documents_screen.dart';
-import '../../features/shared/documents/document_viewer_screen.dart';
-import '../../features/shared/payments/payment_method_screen.dart';
-import '../../features/shared/payments/payment_history_screen.dart';
-import '../../features/shared/resources/resource_viewer_screen.dart';
-import '../../features/shared/schedule/add_event_screen.dart';
-import '../../features/shared/schedule/event_details_screen.dart';
-import '../../features/shared/exams/exam_results_screen.dart';
-import '../../features/shared/exams/take_exam_screen.dart';
-import '../../features/shared/quizzes/quiz_taking_screen.dart';
-import '../../features/shared/quizzes/quiz_results_screen.dart';
-import '../../features/shared/tasks/add_task_screen.dart';
-import '../../features/shared/tasks/task_details_screen.dart';
-import '../../features/shared/collaboration/study_groups_screen.dart';
+import '../../features/shared/profile/profile_screen.dart' deferred as shared_profile;
+import '../../features/shared/profile/edit_profile_screen.dart' deferred as shared_edit_profile;
+import '../../features/shared/profile/change_password_screen.dart' deferred as shared_change_password;
+import '../../features/shared/settings/settings_screen.dart' deferred as shared_settings;
+import '../../features/shared/settings/notification_preferences_screen.dart' deferred as shared_notif_prefs;
+import '../../features/shared/cookies/presentation/cookie_settings_screen.dart' deferred as shared_cookie_settings;
+import '../../features/shared/notifications/notifications_screen.dart' deferred as shared_notifications;
+import '../../features/shared/messages/presentation/messages_list_screen.dart' deferred as shared_messages_list;
+import '../../features/shared/messages/presentation/conversation_detail_screen.dart' deferred as shared_conversation;
+import '../../features/shared/documents/documents_screen.dart' deferred as shared_documents;
+import '../../features/shared/documents/document_viewer_screen.dart' deferred as shared_doc_viewer;
+import '../../features/shared/payments/payment_method_screen.dart' deferred as shared_payment_method;
+import '../../features/shared/payments/payment_history_screen.dart' deferred as shared_payment_history;
+import '../../features/shared/resources/resource_viewer_screen.dart' deferred as shared_resource_viewer;
+import '../../features/shared/schedule/add_event_screen.dart' deferred as shared_add_event;
+import '../../features/shared/schedule/event_details_screen.dart' deferred as shared_event_details;
+import '../../features/shared/exams/exam_results_screen.dart' deferred as shared_exam_results;
+import '../../features/shared/exams/take_exam_screen.dart' deferred as shared_take_exam;
+import '../../features/shared/quizzes/quiz_taking_screen.dart' deferred as shared_quiz_taking;
+import '../../features/shared/quizzes/quiz_results_screen.dart' deferred as shared_quiz_results;
+import '../../features/shared/tasks/add_task_screen.dart' deferred as shared_add_task;
+import '../../features/shared/tasks/task_details_screen.dart' deferred as shared_task_details;
+import '../../features/shared/collaboration/study_groups_screen.dart' deferred as shared_study_groups;
 
 // Model imports for type safety
 import '../../features/shared/widgets/schedule_widgets.dart'; // EventModel
@@ -33,6 +33,7 @@ import '../../features/shared/widgets/resource_widgets.dart'; // ResourceModel
 import '../../core/models/document_model.dart' as doc_model; // Document
 import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Shared routes available to all authenticated users
 List<RouteBase> sharedRoutes = [
@@ -42,7 +43,10 @@ List<RouteBase> sharedRoutes = [
     name: 'profile',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const ProfileScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_profile.loadLibrary,
+        childBuilder: () => shared_profile.ProfileScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -50,7 +54,10 @@ List<RouteBase> sharedRoutes = [
     name: 'edit-profile',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const EditProfileScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_edit_profile.loadLibrary,
+        childBuilder: () => shared_edit_profile.EditProfileScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -58,7 +65,10 @@ List<RouteBase> sharedRoutes = [
     name: 'change-password',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const ChangePasswordScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_change_password.loadLibrary,
+        childBuilder: () => shared_change_password.ChangePasswordScreen(),
+      ),
     ),
   ),
 
@@ -68,7 +78,10 @@ List<RouteBase> sharedRoutes = [
     name: 'settings',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const SettingsScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_settings.loadLibrary,
+        childBuilder: () => shared_settings.SettingsScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -76,7 +89,10 @@ List<RouteBase> sharedRoutes = [
     name: 'notification-preferences',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const NotificationPreferencesScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_notif_prefs.loadLibrary,
+        childBuilder: () => shared_notif_prefs.NotificationPreferencesScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -87,7 +103,10 @@ List<RouteBase> sharedRoutes = [
       final userId = state.uri.queryParameters['userId'] ?? 'demo-user';
       return SharedAxisPage(
         key: state.pageKey,
-        child: CookieSettingsScreen(userId: userId),
+        child: DeferredRouteLoader(
+          loader: shared_cookie_settings.loadLibrary,
+          childBuilder: () => shared_cookie_settings.CookieSettingsScreen(userId: userId),
+        ),
       );
     },
   ),
@@ -98,7 +117,10 @@ List<RouteBase> sharedRoutes = [
     name: 'notifications',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const NotificationsScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_notifications.loadLibrary,
+        childBuilder: () => shared_notifications.NotificationsScreen(),
+      ),
     ),
   ),
 
@@ -108,7 +130,10 @@ List<RouteBase> sharedRoutes = [
     name: 'messages',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const MessagesListScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_messages_list.loadLibrary,
+        childBuilder: () => shared_messages_list.MessagesListScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -118,8 +143,11 @@ List<RouteBase> sharedRoutes = [
       final conversationId = state.pathParameters['id']!;
       return SharedAxisPage(
         key: state.pageKey,
-        child: ConversationDetailScreen(
-          conversationId: conversationId,
+        child: DeferredRouteLoader(
+          loader: shared_conversation.loadLibrary,
+          childBuilder: () => shared_conversation.ConversationDetailScreen(
+            conversationId: conversationId,
+          ),
         ),
       );
     },
@@ -131,7 +159,10 @@ List<RouteBase> sharedRoutes = [
     name: 'documents',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const DocumentsScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_documents.loadLibrary,
+        childBuilder: () => shared_documents.DocumentsScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -154,7 +185,10 @@ List<RouteBase> sharedRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: DocumentViewerScreen(document: document),
+        child: DeferredRouteLoader(
+          loader: shared_doc_viewer.loadLibrary,
+          childBuilder: () => shared_doc_viewer.DocumentViewerScreen(document: document),
+        ),
       );
     },
   ),
@@ -167,12 +201,15 @@ List<RouteBase> sharedRoutes = [
       final extra = state.extra as Map<String, dynamic>?;
       return SharedAxisPage(
         key: state.pageKey,
-        child: PaymentMethodScreen(
-          itemId: extra?['itemId'] ?? '',
-          itemName: extra?['itemName'] ?? '',
-          itemType: extra?['itemType'] ?? '',
-          amount: extra?['amount'] ?? 0.0,
-          currency: extra?['currency'] ?? 'USD',
+        child: DeferredRouteLoader(
+          loader: shared_payment_method.loadLibrary,
+          childBuilder: () => shared_payment_method.PaymentMethodScreen(
+            itemId: extra?['itemId'] ?? '',
+            itemName: extra?['itemName'] ?? '',
+            itemType: extra?['itemType'] ?? '',
+            amount: extra?['amount'] ?? 0.0,
+            currency: extra?['currency'] ?? 'USD',
+          ),
         ),
       );
     },
@@ -182,7 +219,10 @@ List<RouteBase> sharedRoutes = [
     name: 'payment-history',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const PaymentHistoryScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_payment_history.loadLibrary,
+        childBuilder: () => shared_payment_history.PaymentHistoryScreen(),
+      ),
     ),
   ),
 
@@ -194,7 +234,10 @@ List<RouteBase> sharedRoutes = [
       final resource = state.extra as ResourceModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: ResourceViewerScreen(resource: resource),
+        child: DeferredRouteLoader(
+          loader: shared_resource_viewer.loadLibrary,
+          childBuilder: () => shared_resource_viewer.ResourceViewerScreen(resource: resource),
+        ),
       );
     },
   ),
@@ -207,7 +250,10 @@ List<RouteBase> sharedRoutes = [
       final date = state.extra as DateTime?;
       return SharedAxisPage(
         key: state.pageKey,
-        child: AddEventScreen(initialDate: date),
+        child: DeferredRouteLoader(
+          loader: shared_add_event.loadLibrary,
+          childBuilder: () => shared_add_event.AddEventScreen(initialDate: date),
+        ),
       );
     },
   ),
@@ -218,7 +264,10 @@ List<RouteBase> sharedRoutes = [
       final event = state.extra as EventModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: EventDetailsScreen(event: event),
+        child: DeferredRouteLoader(
+          loader: shared_event_details.loadLibrary,
+          childBuilder: () => shared_event_details.EventDetailsScreen(event: event),
+        ),
       );
     },
   ),
@@ -229,7 +278,10 @@ List<RouteBase> sharedRoutes = [
       final event = state.extra as EventModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: EventDetailsScreen(event: event),
+        child: DeferredRouteLoader(
+          loader: shared_event_details.loadLibrary,
+          childBuilder: () => shared_event_details.EventDetailsScreen(event: event),
+        ),
       );
     },
   ),
@@ -242,7 +294,10 @@ List<RouteBase> sharedRoutes = [
       final exam = state.extra as ExamModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: ExamResultsScreen(exam: exam),
+        child: DeferredRouteLoader(
+          loader: shared_exam_results.loadLibrary,
+          childBuilder: () => shared_exam_results.ExamResultsScreen(exam: exam),
+        ),
       );
     },
   ),
@@ -253,7 +308,10 @@ List<RouteBase> sharedRoutes = [
       final exam = state.extra as ExamModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: TakeExamScreen(exam: exam),
+        child: DeferredRouteLoader(
+          loader: shared_take_exam.loadLibrary,
+          childBuilder: () => shared_take_exam.TakeExamScreen(exam: exam),
+        ),
       );
     },
   ),
@@ -264,7 +322,10 @@ List<RouteBase> sharedRoutes = [
       final exam = state.extra as ExamModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: TakeExamScreen(exam: exam),
+        child: DeferredRouteLoader(
+          loader: shared_take_exam.loadLibrary,
+          childBuilder: () => shared_take_exam.TakeExamScreen(exam: exam),
+        ),
       );
     },
   ),
@@ -277,7 +338,10 @@ List<RouteBase> sharedRoutes = [
       final quiz = state.extra as QuizModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: QuizTakingScreen(quiz: quiz),
+        child: DeferredRouteLoader(
+          loader: shared_quiz_taking.loadLibrary,
+          childBuilder: () => shared_quiz_taking.QuizTakingScreen(quiz: quiz),
+        ),
       );
     },
   ),
@@ -294,13 +358,16 @@ List<RouteBase> sharedRoutes = [
       final answers = extraData['answers'] as Map<String, dynamic>;
       return SharedAxisPage(
         key: state.pageKey,
-        child: QuizResultsScreen(
-          quiz: quiz,
-          score: score,
-          totalPoints: totalPoints,
-          timeTaken: timeTaken,
-          passed: passed,
-          answers: answers,
+        child: DeferredRouteLoader(
+          loader: shared_quiz_results.loadLibrary,
+          childBuilder: () => shared_quiz_results.QuizResultsScreen(
+            quiz: quiz,
+            score: score,
+            totalPoints: totalPoints,
+            timeTaken: timeTaken,
+            passed: passed,
+            answers: answers,
+          ),
         ),
       );
     },
@@ -312,7 +379,10 @@ List<RouteBase> sharedRoutes = [
     name: 'add-task',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const AddTaskScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_add_task.loadLibrary,
+        childBuilder: () => shared_add_task.AddTaskScreen(),
+      ),
     ),
   ),
   GoRoute(
@@ -322,7 +392,10 @@ List<RouteBase> sharedRoutes = [
       final task = state.extra as TaskModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: TaskDetailsScreen(task: task),
+        child: DeferredRouteLoader(
+          loader: shared_task_details.loadLibrary,
+          childBuilder: () => shared_task_details.TaskDetailsScreen(task: task),
+        ),
       );
     },
   ),
@@ -333,7 +406,10 @@ List<RouteBase> sharedRoutes = [
       final task = state.extra as TaskModel;
       return SharedAxisPage(
         key: state.pageKey,
-        child: TaskDetailsScreen(task: task),
+        child: DeferredRouteLoader(
+          loader: shared_task_details.loadLibrary,
+          childBuilder: () => shared_task_details.TaskDetailsScreen(task: task),
+        ),
       );
     },
   ),
@@ -344,7 +420,10 @@ List<RouteBase> sharedRoutes = [
     name: 'study-group',
     pageBuilder: (context, state) => SharedAxisPage(
       key: state.pageKey,
-      child: const StudyGroupsScreen(),
+      child: DeferredRouteLoader(
+        loader: shared_study_groups.loadLibrary,
+        childBuilder: () => shared_study_groups.StudyGroupsScreen(),
+      ),
     ),
   ),
 ];

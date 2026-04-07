@@ -346,7 +346,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 
   void _subscribeToMessages() async {
-    final realtimeService = ref.read(realtimeServiceProvider);
+    final realtimeService = ref.read(enhancedRealtimeServiceProvider);
 
     // Subscribe to conversation
     await realtimeService.subscribeToConversation(widget.conversationId);
@@ -364,7 +364,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   @override
   void dispose() {
     _messageSubscription?.cancel();
-    final realtimeService = ref.read(realtimeServiceProvider);
+    final realtimeService = ref.read(enhancedRealtimeServiceProvider);
     realtimeService.unsubscribeFromMessages();
     super.dispose();
   }
@@ -381,7 +381,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
 ```dart
 // Subscribe to typing indicators
-final realtimeService = ref.watch(realtimeServiceProvider);
+final realtimeService = ref.watch(enhancedRealtimeServiceProvider);
 await realtimeService.subscribeToTyping(conversationId);
 
 // Listen to typing stream
@@ -464,7 +464,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   }
 
   void _subscribeToNotifications() async {
-    final realtimeService = ref.read(realtimeServiceProvider);
+    final realtimeService = ref.read(enhancedRealtimeServiceProvider);
     final currentUser = ref.read(currentUserProvider);
 
     if (currentUser != null) {
@@ -487,7 +487,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   @override
   void dispose() {
     _notificationSubscription?.cancel();
-    final realtimeService = ref.read(realtimeServiceProvider);
+    final realtimeService = ref.read(enhancedRealtimeServiceProvider);
     realtimeService.unsubscribeFromNotifications();
     super.dispose();
   }

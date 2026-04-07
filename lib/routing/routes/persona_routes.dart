@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
-import '../../features/home/presentation/persona_landing_page.dart';
+import '../../features/home/presentation/persona_landing_page.dart' deferred as persona_landing;
 import '../../features/shared/widgets/public_shell.dart';
 import '../transitions/instant_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Routes for persona-specific landing pages (public, no auth required).
 ///
@@ -13,8 +14,11 @@ List<RouteBase> personaRoutes = [
     name: 'for-students',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(
-        child: PersonaLandingPage(personaType: PersonaType.student),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: persona_landing.loadLibrary,
+          childBuilder: () => persona_landing.PersonaLandingPage(personaType: persona_landing.PersonaType.student),
+        ),
       ),
     ),
   ),
@@ -23,8 +27,11 @@ List<RouteBase> personaRoutes = [
     name: 'for-institutions',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(
-        child: PersonaLandingPage(personaType: PersonaType.institution),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: persona_landing.loadLibrary,
+          childBuilder: () => persona_landing.PersonaLandingPage(personaType: persona_landing.PersonaType.institution),
+        ),
       ),
     ),
   ),
@@ -33,8 +40,11 @@ List<RouteBase> personaRoutes = [
     name: 'for-parents',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(
-        child: PersonaLandingPage(personaType: PersonaType.parent),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: persona_landing.loadLibrary,
+          childBuilder: () => persona_landing.PersonaLandingPage(personaType: persona_landing.PersonaType.parent),
+        ),
       ),
     ),
   ),
@@ -43,8 +53,11 @@ List<RouteBase> personaRoutes = [
     name: 'for-counselors',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(
-        child: PersonaLandingPage(personaType: PersonaType.counselor),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: persona_landing.loadLibrary,
+          childBuilder: () => persona_landing.PersonaLandingPage(personaType: persona_landing.PersonaType.counselor),
+        ),
       ),
     ),
   ),

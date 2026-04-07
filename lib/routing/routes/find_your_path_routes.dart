@@ -1,10 +1,11 @@
 import 'package:go_router/go_router.dart';
-import '../../features/find_your_path/presentation/screens/find_your_path_landing_screen.dart';
-import '../../features/find_your_path/presentation/screens/questionnaire_screen.dart';
-import '../../features/find_your_path/presentation/screens/results_screen.dart';
-import '../../features/find_your_path/presentation/screens/university_detail_screen.dart';
+import '../../features/find_your_path/presentation/screens/find_your_path_landing_screen.dart' deferred as fyp_landing;
+import '../../features/find_your_path/presentation/screens/questionnaire_screen.dart' deferred as fyp_questionnaire;
+import '../../features/find_your_path/presentation/screens/results_screen.dart' deferred as fyp_results;
+import '../../features/find_your_path/presentation/screens/university_detail_screen.dart' deferred as fyp_university_detail;
 import '../../features/shared/widgets/public_shell.dart';
 import '../transitions/instant_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Find Your Path feature routes (public access).
 ///
@@ -16,7 +17,12 @@ List<RouteBase> findYourPathRoutes = [
     name: 'find-your-path',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(child: FindYourPathLandingScreen()),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: fyp_landing.loadLibrary,
+          childBuilder: () => fyp_landing.FindYourPathLandingScreen(),
+        ),
+      ),
     ),
   ),
   GoRoute(
@@ -24,7 +30,12 @@ List<RouteBase> findYourPathRoutes = [
     name: 'find-your-path-questionnaire',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(child: QuestionnaireScreen()),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: fyp_questionnaire.loadLibrary,
+          childBuilder: () => fyp_questionnaire.QuestionnaireScreen(),
+        ),
+      ),
     ),
   ),
   GoRoute(
@@ -32,7 +43,12 @@ List<RouteBase> findYourPathRoutes = [
     name: 'find-your-path-results',
     pageBuilder: (context, state) => InstantPage(
       key: state.pageKey,
-      child: const PublicShell(child: ResultsScreen()),
+      child: PublicShell(
+        child: DeferredRouteLoader(
+          loader: fyp_results.loadLibrary,
+          childBuilder: () => fyp_results.ResultsScreen(),
+        ),
+      ),
     ),
   ),
   GoRoute(
@@ -43,7 +59,10 @@ List<RouteBase> findYourPathRoutes = [
       return InstantPage(
         key: state.pageKey,
         child: PublicShell(
-          child: UniversityDetailScreen(universityId: id),
+          child: DeferredRouteLoader(
+            loader: fyp_university_detail.loadLibrary,
+            childBuilder: () => fyp_university_detail.UniversityDetailScreen(universityId: id),
+          ),
         ),
       );
     },

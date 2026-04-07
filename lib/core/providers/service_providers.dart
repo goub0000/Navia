@@ -15,7 +15,6 @@ import '../services/enrollments_service.dart';
 import '../services/applications_service.dart';
 import '../services/messaging_service.dart';
 import '../services/notifications_service.dart';
-import '../services/realtime_service.dart';
 import '../services/enhanced_realtime_service.dart';
 import '../models/user_model.dart';
 
@@ -121,12 +120,6 @@ final unreadNotificationsCountProvider = FutureProvider<int>((ref) async {
     return response.data!['count'] ?? 0;
   }
   return 0;
-});
-
-/// Realtime Service Provider
-final realtimeServiceProvider = Provider<RealtimeService>((ref) {
-  final supabase = ref.watch(supabaseClientProvider);
-  return RealtimeService(supabase);
 });
 
 /// Enhanced Realtime Service Provider

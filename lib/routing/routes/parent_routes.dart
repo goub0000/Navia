@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/models/child_model.dart';
-import '../../features/parent/dashboard/presentation/parent_dashboard_screen.dart';
-import '../../features/parent/children/presentation/child_detail_screen.dart';
+import '../../features/parent/dashboard/presentation/parent_dashboard_screen.dart' deferred as parent_dashboard;
+import '../../features/parent/children/presentation/child_detail_screen.dart' deferred as parent_child_detail;
 import '../../core/widgets/navia_loading_indicator.dart';
 import '../transitions/shared_axis_page.dart';
+import '../deferred_route_loader.dart';
 
 /// Parent-specific routes
 List<RouteBase> parentRoutes = [
@@ -16,7 +17,10 @@ List<RouteBase> parentRoutes = [
       final tabIndex = int.tryParse(state.uri.queryParameters['tab'] ?? '0') ?? 0;
       return SharedAxisPage(
         key: state.pageKey,
-        child: ParentDashboardScreen(initialTab: tabIndex),
+        child: DeferredRouteLoader(
+          loader: parent_dashboard.loadLibrary,
+          childBuilder: () => parent_dashboard.ParentDashboardScreen(initialTab: tabIndex),
+        ),
       );
     },
   ),
@@ -46,7 +50,10 @@ List<RouteBase> parentRoutes = [
       }
       return SharedAxisPage(
         key: state.pageKey,
-        child: ChildDetailScreen(child: child),
+        child: DeferredRouteLoader(
+          loader: parent_child_detail.loadLibrary,
+          childBuilder: () => parent_child_detail.ChildDetailScreen(child: child),
+        ),
       );
     },
   ),
